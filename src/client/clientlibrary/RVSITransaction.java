@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import client.communication.ClientContacts;
 import kvs.table.Cell;
 import kvs.table.Column;
 import kvs.table.Row;
@@ -33,7 +34,7 @@ public class RVSITransaction implements ITransaction
 	{
 		try
 		{
-			this.sts = SIMaster.INSTANCE.start();
+			this.sts = ClientContacts.INSTANCE.getRemote_master().start();
 		} catch (InterruptedException | ExecutionException e)
 		{
 			// TODO: to remove
