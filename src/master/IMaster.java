@@ -2,6 +2,7 @@ package master;
 
 import java.rmi.Remote;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import client.clientlibrary.RVSITransaction.Update;
 import kvs.table.Cell;
@@ -16,7 +17,7 @@ import kvs.table.Row;
  */
 public interface IMaster extends Remote
 {
-	public void start();
+	public long start() throws InterruptedException, ExecutionException;
 	public Cell read(Row row, Column col);
 	public boolean commit(List<Update> updates /** leaving version constraint blank now **/);
 }

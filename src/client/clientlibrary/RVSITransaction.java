@@ -5,10 +5,12 @@ package client.clientlibrary;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import kvs.table.Cell;
 import kvs.table.Column;
 import kvs.table.Row;
+import master.SIMaster;
 
 /**
  * @author hengxin
@@ -16,7 +18,7 @@ import kvs.table.Row;
  * 
  * Implement our RVSI transaction which is enhanced by rvsi specification.
  */
-public class RVSITransaction implements Transaction
+public class RVSITransaction implements ITransaction
 {
 	private long sts = 0L;	// start-timestamp
 	private long cts = 0L;	// commit-timestamp
@@ -27,39 +29,49 @@ public class RVSITransaction implements Transaction
 	 * @see client.clientlibrary.Transaction#begin()
 	 */
 	@Override
-	public void begin()
+	public boolean begin()
 	{
-		// TODO Auto-generated method stub
+		try
+		{
+			this.sts = SIMaster.INSTANCE.start();
+		} catch (InterruptedException | ExecutionException e)
+		{
+			// TODO: to remove
+			e.printStackTrace();
+			return false;
+		}
 
+		return true;
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see client.clientlibrary.Transaction#read(kvs.table.Row, kvs.table.Column)
 	 */
 	@Override
-	public void read(Row r, Column c)
+	public boolean read(Row r, Column c)
 	{
 		// TODO Auto-generated method stub
-
+		return false;
 	}
 
 	/* 
 	 * @see client.clientlibrary.Transaction#write(kvs.table.Row, kvs.table.Column, kvs.table.Cell)
 	 */
 	@Override
-	public void write(Row r, Column c, Cell data)
+	public boolean write(Row r, Column c, Cell data)
 	{
 		this.updates.add(new Update(r, c, data));
+		return true;
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see client.clientlibrary.Transaction#end()
 	 */
 	@Override
-	public void end()
+	public boolean end()
 	{
 		// TODO Auto-generated method stub
-
+		return false;
 	}
 
 	public void setRVSISpecification()
