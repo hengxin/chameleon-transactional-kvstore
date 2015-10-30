@@ -1,6 +1,7 @@
 package master;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -17,7 +18,7 @@ import kvs.table.Row;
  */
 public interface IMaster extends Remote
 {
-	public long start() throws InterruptedException, ExecutionException;
-	public Cell read(Row row, Column col);
-	public boolean commit(List<Update> updates /** leaving version constraint blank now **/);
+	public long start() throws RemoteException, InterruptedException, ExecutionException;
+	public Cell read(Row row, Column col) throws RemoteException;
+	public boolean commit(List<Update> updates /** leaving version constraint blank now **/) throws RemoteException;
 }

@@ -3,6 +3,7 @@
  */
 package client.clientlibrary;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -35,7 +36,7 @@ public class RVSITransaction implements ITransaction
 		try
 		{
 			this.sts = ClientContacts.INSTANCE.getRemote_master().start();
-		} catch (InterruptedException | ExecutionException e)
+		} catch (InterruptedException | ExecutionException | RemoteException e)
 		{
 			// TODO: to remove
 			e.printStackTrace();
