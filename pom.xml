@@ -1,14 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>chameleon-transactional-kvstore</groupId>
-	<artifactId>chameleon-transactional-kvstore</artifactId>
+	<groupId>cn.edu.nju.ics</groupId>
+	<artifactId>chameleon-transactional-kvstore-maven</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>chameleon</name>
-	<description>chameleon-transactional-kvstore</description>
+	<name>chameleon-transactional-kvstore-maven</name>
+	<description>A distributed, partitioned, replicated, transactional key-value store.</description>
+
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -20,6 +21,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.google.guava</groupId>	<!-- google's core libraries -->
