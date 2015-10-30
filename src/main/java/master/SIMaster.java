@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
 import client.clientlibrary.RVSITransaction.Update;
@@ -31,7 +32,9 @@ public enum SIMaster implements IMaster
 	public long start() throws InterruptedException, ExecutionException
 	{
         // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
-		return (long) exec.submit(()->{this.ts.incrementAndGet();}).get();	
+//		Future<Long> sts = exec.submit(()->{this.ts.incrementAndGet(); return this.ts.get();});
+		
+		return (long) exec.submit(()->{return this.ts.incrementAndGet();}).get();	
 	}
 
 	@Override

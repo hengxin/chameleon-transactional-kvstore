@@ -1,10 +1,12 @@
 package client.communication;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.List;
 
 import master.IMaster;
+import master.communication.MasterLauncher;
 import slave.ISlave;
 
 /**
@@ -25,8 +27,8 @@ public enum ClientContacts
 		try
 		{
             // TODO: host name for the remote master
-			this.remote_master = (IMaster) LocateRegistry.getRegistry("");
-		} catch (RemoteException re)
+			this.remote_master = (IMaster) LocateRegistry.getRegistry(MasterLauncher.MASTER_IP).lookup(MasterLauncher.SIMASTER_REGISTRY_NAME);
+		} catch (RemoteException | NotBoundException re)
 		{
 			re.printStackTrace();
 		}
