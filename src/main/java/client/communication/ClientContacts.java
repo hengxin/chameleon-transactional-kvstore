@@ -5,6 +5,9 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import master.IMaster;
 import master.communication.MasterLauncher;
 import slave.ISlave;
@@ -19,6 +22,8 @@ public enum ClientContacts
 {
 	INSTANCE;
 	
+	private final Logger LOGGER = LoggerFactory.getLogger(ClientContacts.class);
+	
 	private IMaster remote_master;
 	private List<ISlave> remote_slaves;
 	
@@ -28,6 +33,7 @@ public enum ClientContacts
 		{
             // TODO: host name for the remote master
 			this.remote_master = (IMaster) LocateRegistry.getRegistry(MasterLauncher.MASTER_IP).lookup(MasterLauncher.SIMASTER_REGISTRY_NAME);
+			LOGGER.debug("Client has contacted the master: {}.", this.remote_master.toString());
 		} catch (RemoteException | NotBoundException re)
 		{
 			re.printStackTrace();

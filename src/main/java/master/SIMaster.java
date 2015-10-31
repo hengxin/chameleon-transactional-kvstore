@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.RVSITransaction.Update;
 import kvs.table.Cell;
@@ -23,18 +25,21 @@ import kvs.table.Row;
 public enum SIMaster implements IMaster
 {
 	INSTANCE;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
 	
-	private AtomicLong ts;	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
+	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
 	
 	private final ExecutorService exec = Executors.newCachedThreadPool();
-	
+
 	@Override
 	public long start() throws InterruptedException, ExecutionException
 	{
         // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
-//		Future<Long> sts = exec.submit(()->{this.ts.incrementAndGet(); return this.ts.get();});
-		
-		return (long) exec.submit(()->{return this.ts.incrementAndGet();}).get();	
+		return exec.submit( () -> 
+		{
+			return SIMaster.this.ts.incrementAndGet();
+		}).get();
 	}
 
 	@Override

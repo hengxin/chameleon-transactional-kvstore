@@ -81,6 +81,14 @@ public class RVSITransaction implements ITransaction
 		
 	}
 	
+	/**
+	 * protected only for test
+	 * @return {@link #sts}
+	 */
+	protected long getSts()
+	{
+		return this.sts;
+	}
 	
 	/**
 	 * @author hengxin
