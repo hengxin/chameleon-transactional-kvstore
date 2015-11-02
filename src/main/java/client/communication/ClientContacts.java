@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import master.IMaster;
 import master.communication.MasterLauncher;
+import network.membership.StaticMembership;
 import slave.ISlave;
 
 /**
@@ -31,8 +32,7 @@ public enum ClientContacts
 	{
 		try
 		{
-            // TODO: host name for the remote master
-			this.remote_master = (IMaster) LocateRegistry.getRegistry(MasterLauncher.MASTER_ADDR).lookup(MasterLauncher.SIMASTER_REGISTRY_NAME);
+			this.remote_master = (IMaster) LocateRegistry.getRegistry(StaticMembership.INSTANCE.getMasterAddr()).lookup(MasterLauncher.SIMASTER_REGISTRY_NAME);
 			LOGGER.debug("Client has contacted the master: {}.", this.remote_master.toString());
 		} catch (RemoteException | NotBoundException re)
 		{
@@ -44,6 +44,5 @@ public enum ClientContacts
 	{
 		return this.remote_master;
 	}
-	
 	
 }
