@@ -69,5 +69,4 @@ public class RVSITransactionTest
 	{
 		fail("Not yet implemented"); // TODO
 	}
-
 }
