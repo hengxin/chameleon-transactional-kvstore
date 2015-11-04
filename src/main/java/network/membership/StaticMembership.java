@@ -3,6 +3,7 @@
  */
 package network.membership;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,7 +70,8 @@ public enum StaticMembership implements IMembership
 	{
 		try
 		{
-			InputStream is = ClassLoader.getSystemResourceAsStream(file); 
+			InputStream is = new FileInputStream(file);
+//			InputStream is = ClassLoader.getSystemResourceAsStream(file); 
 			prop.load(is);
 			is.close();
 		} catch (FileNotFoundException fnfe)

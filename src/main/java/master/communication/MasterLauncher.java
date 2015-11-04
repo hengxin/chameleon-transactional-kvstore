@@ -22,9 +22,7 @@ public class MasterLauncher
 	private static final Logger logger = LoggerFactory.getLogger(MasterLauncher.class);
 
 	public static final String SIMASTER_REGISTRY_NAME = "SIMaster";
-//	public static final String MASTER_ADDR = "ubuntu";
 	private static final int REGISTRY_PORT = 1099;
-//	private static final String MASTER_DEFAULT_ADDR = "0.0.0.0"; 
 	
 	public static void main(String[] args)
 	{
