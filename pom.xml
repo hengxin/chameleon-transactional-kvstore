@@ -23,16 +23,19 @@
 	</build>
 
 	<dependencies>
+        <!-- google's core libraries -->	
 		<dependency>
-			<groupId>com.google.guava</groupId>	<!-- google's core libraries -->
+			<groupId>com.google.guava</groupId>		
 			<artifactId>guava</artifactId>
 			<version>19.0-rc2</version>
 		</dependency>
+        <!-- for unit test -->
 		<dependency>
-			<groupId>junit</groupId>
+			<groupId>junit</groupId>				
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+		<!-- The next group is for logging. -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -47,6 +50,32 @@
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 			<version>2.4.5</version>
+		</dependency>
+		<!-- The next group is for JMS (HornetQ) -->
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-core-client</artifactId>
+			<version>2.4.7.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-jms-client</artifactId>
+			<version>2.4.7.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-transports</artifactId>
+			<version>2.1.0.r9031</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.10.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jnp-client</artifactId>
+			<version>4.2.2.GA</version>
 		</dependency>
 	</dependencies>
 </project>
