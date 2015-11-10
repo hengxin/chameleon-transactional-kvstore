@@ -6,7 +6,7 @@ package kvs.table;
  * 
  * Interface for timestamped-cells, {@link Cell}s associated with {@link Timestamp}s.
  */
-public interface ITimestampedCell
+public interface ITimestampedCell extends Comparable<ITimestampedCell>
 {
 	public Timestamp getTS();
 	public Cell getCell();

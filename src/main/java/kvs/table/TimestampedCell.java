@@ -1,9 +1,7 @@
 package kvs.table;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.base.Objects;
+import com.google.common.collect.ComparisonChain;
 
 /**
  * @author hengxin
@@ -13,11 +11,12 @@ import com.google.common.base.Objects;
  */
 public class TimestampedCell implements ITimestampedCell
 {
-//	private Pair<Timestamp, Cell> ts_cell = new ImmutablePair<>(Timestamp.TIMESTAMP_INIT, Cell.CELL_INIT);
-	
 	private Timestamp ts = Timestamp.TIMESTAMP_INIT;
 	private Cell cell = Cell.CELL_INIT;
 	
+	/**
+	 * default constructor: with {@value Timestamp#TIMESTAMP_INIT} and {@value Cell#CELL_INIT}
+	 */
 	public TimestampedCell() {}
 	
 	public TimestampedCell(Timestamp ts, Cell c)
@@ -39,6 +38,12 @@ public class TimestampedCell implements ITimestampedCell
 	}
 	
 	@Override
+	public int compareTo(ITimestampedCell that)
+	{
+		return ComparisonChain.start().compare(this.ts, ((TimestampedCell) that).ts).result();
+	}
+
+	@Override
 	public int hashCode()
 	{
 		return Objects.hashCode(this.ts, this.cell);
@@ -53,6 +58,7 @@ public class TimestampedCell implements ITimestampedCell
 			return false;
 		
 		TimestampedCell that = (TimestampedCell) o;
-		return Objects.equal(this.ts, that.ts) && Objects.equal(this.cell, that.cell);
+		return Objects.equal(this.ts, that.ts); // && Objects.equal(this.cell, that.cell); // uniquely identified by its {@link Timestamp}
 	}
+
 }

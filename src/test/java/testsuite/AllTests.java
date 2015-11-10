@@ -5,11 +5,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import client.clientlibrary.RVSITransactionTest;
-import network.membership.StaticMembershipTest;
+import client.clientlibrary.ClientLibraryTestSuite;
+import kvs.table.KVSTableTestSuite;
+import network.NetworkTestSuite;
 
 @RunWith(Suite.class)
-@SuiteClasses({RVSITransactionTest.class, StaticMembershipTest.class})
+@SuiteClasses({ClientLibraryTestSuite.class, KVSTableTestSuite.class, NetworkTestSuite.class})
 public class AllTests
 {
 	public static void main(String[] args) throws Exception 

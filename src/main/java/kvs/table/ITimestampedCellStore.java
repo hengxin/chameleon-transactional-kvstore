@@ -15,7 +15,7 @@ public interface ITimestampedCellStore
 	public void update(ITimestampedCell ts_cell);
 
 	/**
-	 * get the latest preceding {@link ITimestampedCell} with smaller {@link Timestamp} than @param ts 
+	 * get the latest preceding {@link ITimestampedCell} with smaller or equal {@link Timestamp} than @param ts 
 	 * @param ts {@link Timestamp}
 	 * @return a {@link ITimestampedCell}
 	 */

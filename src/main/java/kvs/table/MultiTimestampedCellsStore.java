@@ -3,7 +3,9 @@
  */
 package kvs.table;
 
+import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * @author hengxin
@@ -15,15 +17,15 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class MultiTimestampedCellsStore implements ITimestampedCellStore
 {
 	// TODO consider other data structures (how do real databases implement this?)
-	private ConcurrentSkipListMap<Timestamp, Cell> ts_cells = new ConcurrentSkipListMap<>();
+	private SortedSet<ITimestampedCell> ts_cells = new ConcurrentSkipListSet<>();
 	
 	/* 
-	 * @see kvs.table.ITimestampedCell#update(kvs.table.Timestamp, kvs.table.Cell)
+	 * @see kvs.table.ITimestampedCell#update(kvs.table.ITimestampedCell)
 	 */
 	@Override
-	public void update(Timestamp ts, Cell c)
+	public void update(ITimestampedCell ts_cell)
 	{
-		this.ts_cells.put(ts, c);
+		this.ts_cells.add(ts_cell);
 	}
 
 	/* 
@@ -32,7 +34,8 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 	@Override
 	public ITimestampedCell get(Timestamp ts)
 	{
-		return this.ts_cells.floorEntry(ts);
+		// TODO floor (<=) or lower (<)?
+		return ((ConcurrentSkipListSet<ITimestampedCell>) this.ts_cells).floor(new TimestampedCell(ts, Cell.CELL_INIT));
 	}
 
 	/**
@@ -41,7 +44,7 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 	@Override
 	public ITimestampedCell get()
 	{
-		return this.ts_cells.lastEntry();
+		return ((ConcurrentSkipListSet<ITimestampedCell>) this.ts_cells).last();
 	}
 
 }
