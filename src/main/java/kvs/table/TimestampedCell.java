@@ -1,37 +1,58 @@
-/**
- * 
- */
 package kvs.table;
 
-import java.util.concurrent.ConcurrentSkipListMap;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.common.base.Objects;
 
 /**
  * @author hengxin
  * @date Created on 11-10-2015
  * 
- * Implement {@link ITimestampedCell} using {@link ConcurrentSkipListMap}
+ * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp}.
  */
 public class TimestampedCell implements ITimestampedCell
 {
-	// TODO consider other data structures (how do real databases implement this?)
-	private ConcurrentSkipListMap<Timestamp, Cell> ts_cells = new ConcurrentSkipListMap<>();
+//	private Pair<Timestamp, Cell> ts_cell = new ImmutablePair<>(Timestamp.TIMESTAMP_INIT, Cell.CELL_INIT);
 	
-	/* 
-	 * @see kvs.table.ITimestampedCell#update(kvs.table.Timestamp, kvs.table.Cell)
-	 */
-	@Override
-	public void update(Timestamp ts, Cell c)
+	private Timestamp ts = Timestamp.TIMESTAMP_INIT;
+	private Cell cell = Cell.CELL_INIT;
+	
+	public TimestampedCell() {}
+	
+	public TimestampedCell(Timestamp ts, Cell c)
 	{
-		this.ts_cells.put(ts, c);
+		this.ts = ts;
+		this.cell = c;
 	}
 
-	/* 
-	 * @see kvs.table.ITimestampedCell#getLatest(kvs.table.Timestamp)
-	 */
 	@Override
-	public Cell getLatest(Timestamp ts)
+	public Timestamp getTS()
 	{
-		return this.ts_cells.floorEntry(ts).getValue();
+		return this.ts;
 	}
-
+	
+	@Override
+	public Cell getCell()
+	{
+		return this.cell;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(this.ts, this.cell);
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o == null)
+			return false;
+		if(! (o instanceof TimestampedCell))
+			return false;
+		
+		TimestampedCell that = (TimestampedCell) o;
+		return Objects.equal(this.ts, that.ts) && Objects.equal(this.cell, that.cell);
+	}
 }

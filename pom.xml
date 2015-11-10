@@ -23,15 +23,21 @@
 	</build>
 
 	<dependencies>
-        <!-- google's core libraries -->	
+		<!-- Google's core libraries -->
 		<dependency>
-			<groupId>com.google.guava</groupId>		
+			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>19.0-rc2</version>
 		</dependency>
-        <!-- for unit test -->
+		<!-- Apache Commons Lang -->
 		<dependency>
-			<groupId>junit</groupId>				
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		<!-- for unit test -->
+		<dependency>
+			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>

@@ -8,5 +8,4 @@ package slave;
  */
 public interface ISlave
 {
-
 }
