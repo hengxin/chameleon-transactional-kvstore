@@ -9,7 +9,7 @@ package client.clientlibrary.rvsispec;
  * 
  * k1-bv (backward view) specification
  */
-public class BVSpecification extends RVSISpecification
+public class BVSpecification extends AbstractRVSISpecification
 {
 
 	@Override

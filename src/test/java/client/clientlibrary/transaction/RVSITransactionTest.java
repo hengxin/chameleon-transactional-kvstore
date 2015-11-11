@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.clientlibrary;
+package client.clientlibrary.transaction;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,6 +9,9 @@ import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import client.clientlibrary.transaction.ITransaction;
+import client.clientlibrary.transaction.RVSITransaction;
 
 /**
  * @author hengxin
@@ -28,7 +31,7 @@ public class RVSITransactionTest
 	}
 
 	/**
-	 * Test method for {@link client.clientlibrary.RVSITransaction#begin()}.
+	 * Test method for {@link client.clientlibrary.transaction.RVSITransaction#begin()}.
 	 * @throws SecurityException 
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
@@ -44,7 +47,7 @@ public class RVSITransactionTest
 	}
 
 	/**
-	 * Test method for {@link client.clientlibrary.RVSITransaction#read(kvs.table.Row, kvs.table.Column)}.
+	 * Test method for {@link client.clientlibrary.transaction.RVSITransaction#read(kvs.table.Row, kvs.table.Column)}.
 	 */
 	@Test
 	public void testRead()
@@ -53,7 +56,7 @@ public class RVSITransactionTest
 	}
 
 	/**
-	 * Test method for {@link client.clientlibrary.RVSITransaction#write(kvs.table.Row, kvs.table.Column, kvs.table.Cell)}.
+	 * Test method for {@link client.clientlibrary.transaction.RVSITransaction#write(kvs.table.Row, kvs.table.Column, kvs.table.Cell)}.
 	 */
 	@Test
 	public void testWrite()
@@ -62,7 +65,7 @@ public class RVSITransactionTest
 	}
 
 	/**
-	 * Test method for {@link client.clientlibrary.RVSITransaction#end()}.
+	 * Test method for {@link client.clientlibrary.transaction.RVSITransaction#end()}.
 	 */
 	@Test
 	public void testEnd()

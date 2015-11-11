@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import client.clientlibrary.RVSITransaction.Update;
+import client.clientlibrary.transaction.RVSITransaction.Update;
 import kvs.table.Cell;
 import kvs.table.Column;
 import kvs.table.Row;

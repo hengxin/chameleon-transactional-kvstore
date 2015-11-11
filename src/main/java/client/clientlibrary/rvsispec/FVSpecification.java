@@ -7,7 +7,7 @@ package client.clientlibrary.rvsispec;
  * @author hengxin
  * @date 10-27-2015
  */
-public class FVSpecification extends RVSISpecification
+public class FVSpecification extends AbstractRVSISpecification
 {
 
 	/* 

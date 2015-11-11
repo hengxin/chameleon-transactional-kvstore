@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.clientlibrary;
+package client.clientlibrary.transaction;
 
 import kvs.table.Cell;
 import kvs.table.Column;

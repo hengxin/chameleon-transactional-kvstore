@@ -15,7 +15,7 @@ import kvs.table.CompoundKey;
  * 
  * Specification for rvsi, including k1-bv (backward view), k2-fv (forward view), and k3-sv (snapshot view)
  */
-public abstract class RVSISpecification
+public abstract class AbstractRVSISpecification
 {
 	private Map<HashSet<CompoundKey>, Integer> spec_map = new HashMap<>();
 	

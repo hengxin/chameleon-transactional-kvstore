@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.clientlibrary;
+package client.clientlibrary.transaction;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ public class RVSITransaction implements ITransaction
 	private long cts = 0L;	// commit-timestamp
 
 	private List<Update> updates = new ArrayList<>();	// to buffer write operations
+	private QueryResults query_results = new QueryResults();	// to store query results
 	
 	/* 
 	 * @see client.clientlibrary.Transaction#begin()

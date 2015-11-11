@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import client.clientlibrary.RVSITransaction.Update;
+import client.clientlibrary.transaction.RVSITransaction.Update;
 import kvs.table.Cell;
 import kvs.table.Column;
 import kvs.table.Row;
