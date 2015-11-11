@@ -4,6 +4,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import kvs.component.Timestamp;
+import kvs.compound.ITimestampedCell;
+import kvs.compound.TimestampedCell;
+
 /**
  * @author hengxin
  * @data Created on 11-10-2015

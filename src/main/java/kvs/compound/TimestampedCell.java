@@ -1,7 +1,10 @@
-package kvs.table;
+package kvs.compound;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
+
+import kvs.component.Cell;
+import kvs.component.Timestamp;
 
 /**
  * @author hengxin

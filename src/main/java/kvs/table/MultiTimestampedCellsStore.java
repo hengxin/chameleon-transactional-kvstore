@@ -7,6 +7,11 @@ import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import kvs.component.Cell;
+import kvs.component.Timestamp;
+import kvs.compound.ITimestampedCell;
+import kvs.compound.TimestampedCell;
+
 /**
  * @author hengxin
  * @date Created on 11-10-2015

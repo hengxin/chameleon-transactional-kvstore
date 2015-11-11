@@ -1,8 +1,10 @@
-package kvs.table;
+package kvs.component;
 
 import java.io.Serializable;
 
 import com.google.common.base.Objects;
+
+import kvs.table.Table;
 
 /**
  * @author hengxin

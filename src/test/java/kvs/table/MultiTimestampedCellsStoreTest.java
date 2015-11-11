@@ -5,6 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import kvs.component.Cell;
+import kvs.component.Timestamp;
+import kvs.compound.ITimestampedCell;
+import kvs.compound.TimestampedCell;
+
 public class MultiTimestampedCellsStoreTest
 {
 	private ITimestampedCellStore multi_ts_cells_store = new MultiTimestampedCellsStore();

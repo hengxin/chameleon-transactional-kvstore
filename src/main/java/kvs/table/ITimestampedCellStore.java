@@ -1,5 +1,8 @@
 package kvs.table;
 
+import kvs.component.Timestamp;
+import kvs.compound.ITimestampedCell;
+
 /**
  * @author hengxin
  * @date Created on 11-10-2015

@@ -3,9 +3,9 @@
  */
 package client.clientlibrary.transaction;
 
-import kvs.table.Cell;
-import kvs.table.Column;
-import kvs.table.Row;
+import kvs.component.Cell;
+import kvs.component.Column;
+import kvs.component.Row;
 
 /**
  * @author hengxin

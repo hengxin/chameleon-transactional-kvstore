@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import client.clientlibrary.rvsispec.AbstractRVSISpecification;
-import kvs.table.CompoundKey;
-import kvs.table.TimestampedCell;
+import kvs.compound.CompoundKey;
+import kvs.compound.TimestampedCell;
 
 /**
  * @author hengxin

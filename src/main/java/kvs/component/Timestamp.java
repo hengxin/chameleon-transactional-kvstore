@@ -1,4 +1,4 @@
-package kvs.table;
+package kvs.component;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;

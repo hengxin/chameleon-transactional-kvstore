@@ -1,7 +1,9 @@
 /**
  * 
  */
-package kvs.table;
+package kvs.component;
+
+import kvs.table.Table;
 
 /**
  * @author hengxin

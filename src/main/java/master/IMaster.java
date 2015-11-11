@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import client.clientlibrary.transaction.RVSITransaction.Update;
-import kvs.table.Cell;
-import kvs.table.Column;
-import kvs.table.Row;
+import kvs.component.Cell;
+import kvs.component.Column;
+import kvs.component.Row;
 
 /**
  * @author hengxin

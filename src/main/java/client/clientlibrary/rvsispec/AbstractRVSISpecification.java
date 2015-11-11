@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import kvs.table.CompoundKey;
+import kvs.compound.CompoundKey;
 
 /**
  * @author hengxin

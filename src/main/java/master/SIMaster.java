@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.transaction.RVSITransaction.Update;
-import kvs.table.Cell;
-import kvs.table.Column;
-import kvs.table.Row;
+import kvs.component.Cell;
+import kvs.component.Column;
+import kvs.component.Row;
 
 /**
  * @author hengxin

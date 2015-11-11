@@ -1,7 +1,11 @@
 /**
  * 
  */
-package kvs.table;
+package kvs.compound;
+
+import kvs.component.Cell;
+import kvs.component.Column;
+import kvs.component.Row;
 
 /**
  * @author hengxin

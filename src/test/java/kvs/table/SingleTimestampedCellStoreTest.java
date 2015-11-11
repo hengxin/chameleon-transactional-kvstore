@@ -5,6 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import kvs.component.Cell;
+import kvs.component.Timestamp;
+import kvs.compound.ITimestampedCell;
+import kvs.compound.TimestampedCell;
+
 /**
  * @author hengxin
  * @date Created on 11-10-2015
