@@ -16,6 +16,9 @@ public class Cell implements Serializable
 {
 	private static final long serialVersionUID = 4358362337464864235L;
 
+	/**
+	 * Initial value: "NULL"
+	 */
 	public static Cell CELL_INIT = new Cell("NULL");
 	
 	public String data;

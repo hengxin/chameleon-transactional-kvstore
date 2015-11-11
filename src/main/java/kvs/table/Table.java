@@ -4,6 +4,7 @@
 package kvs.table;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.SortedMap;
 
 import com.google.common.collect.TreeBasedTable;
@@ -19,9 +20,9 @@ import kvs.compound.ITimestampedCell;
  * 
  * <b>WARNING:</b> Making it thread-safe while keeping it efficient. 
  */
-public class Table
+public abstract class Table
 {
-	TreeBasedTable<Row, Column, ITimestampedCellStore> table = TreeBasedTable.create();
+	private TreeBasedTable<Row, Column, ITimestampedCellStore> table = TreeBasedTable.create();
 	
 	/**
 	 * get a row with a specific row key
@@ -40,40 +41,48 @@ public class Table
 	 * get the <i>latest</i> {@link ITimestampedCell} indexed by a {@link Row} key (@param row)
 	 * and a {@link Column} key (@param col)
 	 * 
+	 * <b>Note:</b> The result could be null, represented by <code>Optional.empty()</code>.
+	 * 
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
-	 * @return an {@link ITimestampedCell}
+	 * @return an {@link Optional} wrapper of {@link ITimestampedCell}
 	 */
-	public ITimestampedCell getTimestampedCell(Row row, Column col)
+	public Optional<ITimestampedCell> getTimestampedCell(Row row, Column col)
 	{
-		return this.getTimestampedCellStore(row, col).get();
+		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
+		return ts_cell_store.isPresent() ? Optional.of(ts_cell_store.get().get()) : Optional.empty(); 
 	}
 	
 	/**
 	 * get the <i>latest</i> preceding {@link ITimestampedCell} with {@link Timestamp} smaller than @param ts, 
-	 * indexed by a {@link Row} key (@param row) and a {@link Column} key (@param col)
+	 * indexed by a {@link Row} key (@param row) and a {@link Column} key (@param col).
+	 * 
+	 * <b>Note:</b> The result could be null, represented by <code>Optional.empty()</code>.
 	 * 
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
 	 * @param ts {@link Timestamp} to compare
-	 * @return an {@link ITimestampedCell}
+	 * @return an {@link Optional} wrapper of {@link ITimestampedCell}
 	 */
-	public ITimestampedCell getTimestampedCell(Row row, Column col, Timestamp ts)
+	public Optional<ITimestampedCell> getTimestampedCell(Row row, Column col, Timestamp ts)
 	{
-		return this.getTimestampedCellStore(row, col).get(ts);
+		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
+		return ts_cell_store.isPresent() ? Optional.of(ts_cell_store.get().get(ts)) : Optional.empty(); 
 	}
 	
 	/**
 	 * get an {@link ITimestampedCellStore} indexed 
 	 * by a {@link Row} key (@param row) and a {@link Column} key (@param col)
 	 * 
+	 * <b>Note:</b> The result could be null, represented by <code>Optional.empty()</code>.
+	 * 
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
-	 * @return an {@link ITimestampedCellStore}
+	 * @return an {@link Optional} wrapper of {@link ITimestampedCellStore}
 	 */
-	private ITimestampedCellStore getTimestampedCellStore(Row row, Column col)
+	private Optional<ITimestampedCellStore> getTimestampedCellStore(Row row, Column col)
 	{
-		return table.get(row, col);
+		return Optional.of(table.get(row, col));
 	}
 	
 	public void put(Row row, Map<Column, ITimestampedCell> col_data_map)
@@ -83,12 +92,11 @@ public class Table
 	
 	
 	/**
-	 * put a triple (row, column, timestamped-cell)
+	 * adding data (row, column, timestamped-cell)
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
 	 * @param tc {@link ITimestampedCell}
 	 */
-	public void put(Row row, Column col, ITimestampedCell tc)
-	{
-	}
+	public abstract void put(Row row, Column col, ITimestampedCell tc);
+//		ITimestampedCellStore ts_cell_store = this.getTimestampedCellStore(row, col).orElseGet(() -> new )
 }

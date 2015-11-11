@@ -1,4 +1,4 @@
-package kvs.table;
+package kvs.compound;
 
 import static org.junit.Assert.*;
 

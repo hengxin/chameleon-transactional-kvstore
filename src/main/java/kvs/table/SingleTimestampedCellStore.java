@@ -39,6 +39,10 @@ public class SingleTimestampedCellStore implements ITimestampedCellStore
 		}
 	}
 
+	/**
+	 * ignore the {@link Timestamp} parameter;
+	 * just get the latest one
+	 */
 	@Override
 	public ITimestampedCell get(Timestamp ts)
 	{

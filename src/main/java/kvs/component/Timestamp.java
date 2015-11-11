@@ -9,6 +9,9 @@ import com.google.common.collect.ComparisonChain;
  */
 public class Timestamp implements Comparable<Timestamp>
 {
+	/**
+	 * Initial value: 0
+	 */
 	public static Timestamp TIMESTAMP_INIT = new Timestamp();
 	
 	private long ts = 0L;
