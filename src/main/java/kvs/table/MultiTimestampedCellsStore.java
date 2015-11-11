@@ -24,11 +24,25 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 	// TODO consider other data structures (how do real databases implement this?)
 	private SortedSet<ITimestampedCell> ts_cells = new ConcurrentSkipListSet<>();
 	
+	/**
+	 * Default constructor: an empty store
+	 */
+	public MultiTimestampedCellsStore() {}
+	
+	/**
+	 * Initialize the store with an {@link ITimestampedCell}
+	 * @param ts_cell an {@link ITimestampedCell}
+	 */
+	public MultiTimestampedCellsStore(ITimestampedCell ts_cell)
+	{
+		this.put(ts_cell);
+	}
+
 	/* 
 	 * @see kvs.table.ITimestampedCell#update(kvs.table.ITimestampedCell)
 	 */
 	@Override
-	public void update(ITimestampedCell ts_cell)
+	public void put(ITimestampedCell ts_cell)
 	{
 		this.ts_cells.add(ts_cell);
 	}

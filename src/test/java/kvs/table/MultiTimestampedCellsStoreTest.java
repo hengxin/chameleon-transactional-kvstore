@@ -21,9 +21,9 @@ public class MultiTimestampedCellsStoreTest
 	@Before
 	public void setUp() throws Exception
 	{
-		this.multi_ts_cells_store.update(ts_cell_0L);
-		this.multi_ts_cells_store.update(ts_cell_4L);
-		this.multi_ts_cells_store.update(ts_cell_2L);
+		this.multi_ts_cells_store.put(ts_cell_0L);
+		this.multi_ts_cells_store.put(ts_cell_4L);
+		this.multi_ts_cells_store.put(ts_cell_2L);
 	}
 
 	@Test

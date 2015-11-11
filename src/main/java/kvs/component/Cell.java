@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import com.google.common.base.Objects;
 
-import kvs.table.Table;
+import kvs.table.AbstractTable;
 
 /**
  * @author hengxin
  * @date 10-27-2015
  * 
- * The actual values stored in the {@link Table}. 
+ * The actual values stored in the {@link AbstractTable}. 
  */
 public class Cell implements Serializable
 {

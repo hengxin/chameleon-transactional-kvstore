@@ -18,6 +18,11 @@ public class TimestampedCell implements ITimestampedCell
 	private Cell cell = Cell.CELL_INIT;
 	
 	/**
+	 * initial value: {@value Timestamp#TIMESTAMP_INIT} and {@value Cell#CELL_INIT}
+	 */
+	public static TimestampedCell TIMESTAMPED_CELL_INIT = new TimestampedCell();
+	
+	/**
 	 * default constructor: with {@value Timestamp#TIMESTAMP_INIT} and {@value Cell#CELL_INIT}
 	 */
 	public TimestampedCell() {}

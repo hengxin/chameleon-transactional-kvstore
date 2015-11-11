@@ -42,7 +42,7 @@ public class SingleTimestampedCellStoreTest
 		ITimestampedCell ts_cell = new TimestampedCell(ts, c);
 		
 		// update
-		this.store.update(ts_cell);
+		this.store.put(ts_cell);
 		
 		// the value read before should not be changed
 		assertEquals("The value read before should not be changed.", new TimestampedCell(), init_ts_cell);

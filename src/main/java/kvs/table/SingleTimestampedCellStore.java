@@ -17,16 +17,28 @@ import kvs.compound.TimestampedCell;
  */
 public class SingleTimestampedCellStore implements ITimestampedCellStore
 {
-
-//	private Pair<Timestamp, Cell> ts_cell = new ImmutablePair<>(Timestamp.TIMESTAMP_INIT, Cell.CELL_INIT);
-	private ITimestampedCell single_ts_cell = new TimestampedCell();
+	private ITimestampedCell single_ts_cell = TimestampedCell.TIMESTAMPED_CELL_INIT;
 	
 	private final ReadWriteLock rw_lock = new ReentrantReadWriteLock(true);
 	private final Lock rl = rw_lock.readLock();
 	private final Lock wl = rw_lock.writeLock();
 
+	/**
+	 * Default constructor: initialize this store with {@value TimestampedCell#TIMESTAMPED_CELL_INIT}
+	 */
+	public SingleTimestampedCellStore() {}
+
+	/**
+	 * Constructor: initialize this store with @param ts_cell
+	 * @param ts_cell an {@link ITimestampedCell}
+	 */
+	public SingleTimestampedCellStore(ITimestampedCell ts_cell)
+	{
+		this.single_ts_cell = ts_cell;
+	}
+
 	@Override
-	public void update(ITimestampedCell ts_cell)
+	public void put(ITimestampedCell ts_cell)
 	{
 		this.wl.lock();
 		try

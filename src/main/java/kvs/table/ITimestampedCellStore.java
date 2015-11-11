@@ -12,10 +12,10 @@ import kvs.compound.ITimestampedCell;
 public interface ITimestampedCellStore
 {
 	/**
-	 * update this store with an {@ITimestampedCell}
-	 * @param ts_cell {@link ITimestampedCell}
+	 * put an {@ITimestampedCell} into this {@link ITimestampedCellStore}
+	 * @param ts_cell an {@link ITimestampedCell} to put
 	 */
-	public void update(ITimestampedCell ts_cell);
+	public void put(ITimestampedCell ts_cell);
 
 	/**
 	 * get the latest preceding {@link ITimestampedCell} with smaller or equal {@link Timestamp} than @param ts 
