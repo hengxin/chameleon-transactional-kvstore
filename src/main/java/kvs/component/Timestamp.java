@@ -39,8 +39,8 @@ public class Timestamp implements Comparable<Timestamp>
 	@Override
 	public boolean equals(Object o)
 	{
-		if(o == null)
-			return false;
+		if(o == this)
+			return true;
 		if(! (o instanceof Timestamp))
 			return false;
 		

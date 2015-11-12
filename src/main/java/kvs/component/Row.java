@@ -48,8 +48,8 @@ public class Row implements Comparable<Row>, Serializable
 	@Override
 	public boolean equals(Object o)
 	{
-		if(o == null)
-			return false;
+		if(o == this)
+			return true;
 		if(! (o instanceof Row))
 			return false;
 		

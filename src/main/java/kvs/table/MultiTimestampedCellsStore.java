@@ -7,6 +7,8 @@ import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import org.junit.Assert;
+
 import com.google.common.base.MoreObjects;
 
 import kvs.component.Cell;
@@ -42,10 +44,16 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 
 	/* 
 	 * @see kvs.table.ITimestampedCell#update(kvs.table.ITimestampedCell)
+	 * 
+	 * <p> <b>Note:</b> The <code>put</code> semantics is to add the element <em>if</em> 
+	 * it is not already present.
+	 * This works as expected because {@link MultiTimestampedCellsStore} maintains
+	 * multi-timestamped data and is not intended to replace some existing data. 
 	 */
 	@Override
 	public void put(ITimestampedCell ts_cell)
 	{
+		Assert.assertTrue("It is not intended to replace an existing data.", this.ts_cells.contains(ts_cell));
 		this.ts_cells.add(ts_cell);
 	}
 

@@ -64,8 +64,8 @@ public class TimestampedCell implements ITimestampedCell
 	@Override
 	public boolean equals(Object o)
 	{
-		if(o == null)
-			return false;
+		if(o == this)
+			return true;
 		if(! (o instanceof TimestampedCell))
 			return false;
 		

@@ -48,8 +48,8 @@ public class Cell implements Serializable
 	@Override
 	public boolean equals(Object o)
 	{
-		if(o == null)
-			return false;
+		if(o == this)
+			return true;
 		
 		if(! (o instanceof Cell))
 			return false;

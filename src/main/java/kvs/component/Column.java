@@ -45,8 +45,8 @@ public class Column implements Comparable<Column>, Serializable
 	@Override
 	public boolean equals(Object o)
 	{
-		if(o == null)
-			return false;
+		if(o == this)
+			return true;
 		if(! (o instanceof Column))
 			return false;
 		
