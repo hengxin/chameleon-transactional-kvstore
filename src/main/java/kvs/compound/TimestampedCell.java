@@ -1,5 +1,6 @@
 package kvs.compound;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
@@ -11,6 +12,9 @@ import kvs.component.Timestamp;
  * @date Created on 11-10-2015
  * 
  * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp}.
+ * 
+ * <p> <b>Note:</b> A {@link TimestampedCell} is uniquely identified by its {@value #ts} ({@link Timestamp}) field.
+ * See its {@link #compareTo(ITimestampedCell)}, {@link #hashCode()}, and {@link #equals(Object)}.
  */
 public class TimestampedCell implements ITimestampedCell
 {
@@ -54,7 +58,7 @@ public class TimestampedCell implements ITimestampedCell
 	@Override
 	public int hashCode()
 	{
-		return Objects.hashCode(this.ts, this.cell);
+		return Objects.hashCode(this.ts); // , this.cell);
 	}
 	
 	@Override
@@ -69,4 +73,11 @@ public class TimestampedCell implements ITimestampedCell
 		return Objects.equal(this.ts, that.ts); // && Objects.equal(this.cell, that.cell); // uniquely identified by its {@link Timestamp}
 	}
 
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this)
+				.addValue(this.ts).addValue(this.cell)
+				.toString();
+	}
 }

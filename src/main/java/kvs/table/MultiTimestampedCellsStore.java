@@ -7,6 +7,8 @@ import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import com.google.common.base.MoreObjects;
+
 import kvs.component.Cell;
 import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;
@@ -66,4 +68,11 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 		return ((ConcurrentSkipListSet<ITimestampedCell>) this.ts_cells).last();
 	}
 
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this)
+				.add("TimestampedCells", this.ts_cells)
+				.toString();
+	}
 }

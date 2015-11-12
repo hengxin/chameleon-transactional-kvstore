@@ -4,6 +4,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import com.google.common.base.MoreObjects;
+
 import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
@@ -75,4 +77,11 @@ public class SingleTimestampedCellStore implements ITimestampedCellStore
 		}
 	}
 
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this)
+				.addValue(this.single_ts_cell)
+				.toString();
+	}
 }

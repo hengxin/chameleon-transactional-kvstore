@@ -2,6 +2,7 @@ package kvs.component;
 
 import java.io.Serializable;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import kvs.table.AbstractTable;
@@ -53,7 +54,13 @@ public class Cell implements Serializable
 		if(! (o instanceof Cell))
 			return false;
 		
-		Cell c = (Cell) o;
-		return Objects.equal(this.data, c.data);
+		Cell that = (Cell) o;
+		return Objects.equal(this.data, that.data);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this).add("data", this.data).toString();
 	}
 }

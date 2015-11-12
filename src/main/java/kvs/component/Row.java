@@ -3,6 +3,9 @@
  */
 package kvs.component;
 
+import java.io.Serializable;
+
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
@@ -14,8 +17,10 @@ import kvs.table.AbstractTable;
  * 
  * Row keys of the {@link AbstractTable}.
  */
-public class Row implements Comparable<Row>
+public class Row implements Comparable<Row>, Serializable
 {
+	private static final long serialVersionUID = -971488511398300319L;
+
 	private final String row_key;
 	
 	public Row(String key)
@@ -35,6 +40,12 @@ public class Row implements Comparable<Row>
 	}
 	
 	@Override
+	public int hashCode() 
+	{
+		return Objects.hashCode(this.row_key);
+	}
+	
+	@Override
 	public boolean equals(Object o)
 	{
 		if(o == null)
@@ -44,5 +55,11 @@ public class Row implements Comparable<Row>
 		
 		Row that = (Row) o;
 		return Objects.equal(this.row_key, that.row_key);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this).add("row_key", this.row_key).toString();
 	}
 }

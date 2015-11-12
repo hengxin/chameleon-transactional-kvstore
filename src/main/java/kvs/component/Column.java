@@ -1,5 +1,8 @@
 package kvs.component;
 
+import java.io.Serializable;
+
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
@@ -11,26 +14,34 @@ import kvs.table.AbstractTable;
  * 
  * Column keys of the {@link AbstractTable}.
  */
-public class Column implements Comparable<Column>
+public class Column implements Comparable<Column>, Serializable
 {
-	private final String column_key;
+	private static final long serialVersionUID = -1528275933592207808L;
+
+	private final String col_key;
 	
 	public Column(String key)
 	{
-		this.column_key = key;
+		this.col_key = key;
 	}
 
 	public String getColumnKey()
 	{
-		return this.column_key;
+		return this.col_key;
 	}
 
 	@Override
 	public int compareTo(Column that)
 	{
-		return ComparisonChain.start().compare(this.column_key, that.column_key).result();
+		return ComparisonChain.start().compare(this.col_key, that.col_key).result();
 	}
 
+	@Override
+	public int hashCode() 
+	{
+		return Objects.hashCode(this.col_key);
+	}
+	
 	@Override
 	public boolean equals(Object o)
 	{
@@ -40,6 +51,12 @@ public class Column implements Comparable<Column>
 			return false;
 		
 		Column that = (Column) o;
-		return Objects.equal(this.column_key, that.column_key);
+		return Objects.equal(this.col_key, that.col_key);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this).add("col_key", this.col_key).toString();
 	}
 }

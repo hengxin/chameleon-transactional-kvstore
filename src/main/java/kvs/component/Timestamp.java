@@ -1,5 +1,6 @@
 package kvs.component;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
@@ -45,5 +46,11 @@ public class Timestamp implements Comparable<Timestamp>
 		
 		Timestamp that = (Timestamp) o;
 		return Objects.equal(this.ts, that.ts);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this).add("ts", this.ts).toString();
 	}
 }
