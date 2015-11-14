@@ -1,6 +1,5 @@
 package master;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import client.clientlibrary.transaction.RVSITransaction.Update;
+import client.clientlibrary.transaction.BufferedUpdates;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
@@ -50,7 +49,7 @@ public enum SIMaster implements IMaster
 	}
 
 	@Override
-	public boolean commit(List<Update> updates)
+	public boolean commit(BufferedUpdates updates)
 	{
 		// TODO Auto-generated method stub
 		return false;

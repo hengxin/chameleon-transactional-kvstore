@@ -4,15 +4,12 @@
 package client.clientlibrary.transaction;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import client.communication.ClientContacts;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
-import master.SIMaster;
 
 /**
  * @author hengxin
@@ -25,8 +22,8 @@ public class RVSITransaction implements ITransaction
 	private long sts = 0L;	// start-timestamp
 	private long cts = 0L;	// commit-timestamp
 
-	private List<Update> updates = new ArrayList<>();	// to buffer write operations
-	private QueryResults query_results = new QueryResults();	// to store query results
+	private BufferedUpdates buffered_updates = new BufferedUpdates();	// to buffer write operations
+	private QueryResults query_results = new QueryResults();			// to store query results
 	
 	/* 
 	 * @see client.clientlibrary.Transaction#begin()
@@ -63,7 +60,7 @@ public class RVSITransaction implements ITransaction
 	@Override
 	public boolean write(Row r, Column c, Cell data)
 	{
-		this.updates.add(new Update(r, c, data));
+		this.buffered_updates.intoBuffer(r, c, data);
 		return true;
 	}
 
@@ -89,40 +86,5 @@ public class RVSITransaction implements ITransaction
 	protected long getSts()
 	{
 		return this.sts;
-	}
-	
-	/**
-	 * @author hengxin
-	 * @date 10-27-2015
-	 * 
-	 * update records for write operations in transactions
-	 */
-	public class Update
-	{
-		private final Row row;
-		private final Column col;
-		private final Cell data;
-
-		public Update(Row row, Column col, Cell data)
-		{
-			this.row = row;
-			this.col = col;
-			this.data = data;
-		}
-
-		public Row getRow()
-		{
-			return row;
-		}
-
-		public Column getCol()
-		{
-			return col;
-		}
-
-		public Cell getData()
-		{
-			return data;
-		}
 	};
 }
