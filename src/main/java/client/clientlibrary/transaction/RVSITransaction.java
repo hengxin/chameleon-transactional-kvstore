@@ -70,8 +70,21 @@ public class RVSITransaction implements ITransaction
 	@Override
 	public boolean end()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		try
+		{
+			boolean success = ClientContacts.INSTANCE.getRemote_master().commit(this.buffered_updates);
+			if(! success)
+			{
+				// TODO restart the transaction???
+			}
+		} catch (RemoteException re)
+		{
+			// TODO: to remove
+			re.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 
 	public void setRVSISpecification()

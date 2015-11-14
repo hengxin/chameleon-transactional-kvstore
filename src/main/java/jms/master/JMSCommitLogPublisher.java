@@ -30,15 +30,17 @@ public class JMSCommitLogPublisher extends AbstractJMSParticipant
 	}
 	
 	/**
-	 * Send (i.e., push) messages.
-	 * @param msg An {@link AbstractMessage} to send
-	 * @throws JMSException
+	 * @param msg An {@link AbstractMessage} to publish
+     * @throws JMSException  if the JMS provider fails to publish the message due to some internal error
 	 */
-	public void send(AbstractMessage msg) throws JMSException
+	public void publish(AbstractMessage msg) throws JMSException
 	{
-		// FIXME using createByteMessage instead of createObjectMessage for good performance
-		// not necessary??? {@link AbstractMessage} implements {@link Serializable}
-//		session.createBytesMessage().
+		/**
+		 * FIXME using #createByteMessage() instead of #createObjectMessage() 
+		 * for good performance and portability.
+		 * 
+		 * <p> not necessary??? {@link AbstractMessage} implements {@link Serializable}
+		 */
 		this.publisher.publish(super.session.createObjectMessage(msg));
 	}
 }

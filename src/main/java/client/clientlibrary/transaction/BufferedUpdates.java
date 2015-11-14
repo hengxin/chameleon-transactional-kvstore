@@ -1,5 +1,6 @@
 package client.clientlibrary.transaction;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,8 +19,10 @@ import kvs.compound.CompoundKey;
  * 
  * <b>Note:</b> It uses {@link LinkedHashMap}, which is not thread-safe.
  */
-public class BufferedUpdates
+public class BufferedUpdates implements Serializable
 {
+	private static final long serialVersionUID = 8322087463777227998L;
+
 	// TODO Do you really need the insertion-order of {@link LinkedHashMap}; or try {@link HashMap}
 	private Map<CompoundKey, Cell> buffered_update_map = new LinkedHashMap<>();
 	

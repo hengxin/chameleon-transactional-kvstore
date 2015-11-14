@@ -35,6 +35,15 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
+		<!-- nmdp-bioinformatics/ngs-range; use its RangeTree (an implementation 
+			of IntervalTree) -->
+		<!-- 
+		<dependency>
+			<groupId>org.nmdp.ngs</groupId>
+			<artifactId>ngs-range</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		-->
 		<!-- for unit test -->
 		<dependency>
 			<groupId>junit</groupId>
