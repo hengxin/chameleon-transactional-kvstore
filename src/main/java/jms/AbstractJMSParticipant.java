@@ -4,10 +4,13 @@
 package jms;
 
 import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Session;
 import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -19,12 +22,13 @@ import javax.naming.NamingException;
  */
 public abstract class AbstractJMSParticipant
 {
-	private static final String TOPIC = "/topic/CommitLogTopic";
-	private static final String CONNECTION_FACTORY = "/ConnectionFactory";
+	// FIXME using command-line args or configuration file
+	private static final String TOPIC = "CommitLogTopic";
+	private static final String CONNECTION_FACTORY = "TopicCF";
 	
 	protected Topic cl_topic = null;
-	private Connection connection = null;
-	protected Session session = null;
+	private TopicConnection connection = null;
+	protected TopicSession session = null;
 	
 	
 	/**
@@ -35,13 +39,14 @@ public abstract class AbstractJMSParticipant
 	 */
 	public AbstractJMSParticipant() throws JMSException, NamingException
 	{
-		InitialContext ic = new InitialContext();
-		this.cl_topic = (Topic) ic.lookup(AbstractJMSParticipant.TOPIC);
-		ConnectionFactory cf = (ConnectionFactory) ic.lookup(AbstractJMSParticipant.CONNECTION_FACTORY);
+		Context ctx = new InitialContext();
+		TopicConnectionFactory cf = (TopicConnectionFactory) ctx.lookup(AbstractJMSParticipant.CONNECTION_FACTORY);
 		
-		this.connection = cf.createConnection();
-		this.session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		this.connection = cf.createTopicConnection();
+		this.session = this.connection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 		
+		this.cl_topic = (Topic) ctx.lookup(AbstractJMSParticipant.TOPIC);
+
 		this.connection.start();
 	}
 	

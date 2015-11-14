@@ -1,7 +1,7 @@
 package jms.master;
 
 import javax.jms.JMSException;
-import javax.jms.MessageProducer;
+import javax.jms.TopicPublisher;
 import javax.naming.NamingException;
 
 import jms.AbstractJMSParticipant;
@@ -11,22 +11,22 @@ import messages.AbstractMessage;
  * @author hengxin
  * @date Created on 11-12-2015
  * 
- * <p> The producer of the commit logs. It is the master.
+ * <p> The publisher of the commit logs. It is the master.
  */
-public class JMSProducer extends AbstractJMSParticipant
+public class JMSCommitLogPublisher extends AbstractJMSParticipant
 {
-	private MessageProducer producer = null;
+	private TopicPublisher publisher = null;
 	
 	/**
-	 * Initialize the {@value #producer} (an {@link MessageProducer}).
+	 * Initialize the {@value #publisher} (an {@link TopicPublisher}).
 	 * @throws NamingException May be thrown by super constructor.
-	 * @throws JMSException Thrown when it fails to create an {@link MessageProducer}, or
+	 * @throws JMSException Thrown when it fails to create an {@link TopicPublisher}, or
 	 *  thrown by super constructor.
 	 */
-	public JMSProducer() throws NamingException, JMSException
+	public JMSCommitLogPublisher() throws NamingException, JMSException
 	{
 		super();
-		this.producer = super.session.createProducer(super.cl_topic);
+		this.publisher = super.session.createPublisher(super.cl_topic);
 	}
 	
 	/**
@@ -39,6 +39,6 @@ public class JMSProducer extends AbstractJMSParticipant
 		// FIXME using createByteMessage instead of createObjectMessage for good performance
 		// not necessary??? {@link AbstractMessage} implements {@link Serializable}
 //		session.createBytesMessage().
-		this.producer.send(super.session.createObjectMessage(msg));
+		this.publisher.publish(super.session.createObjectMessage(msg));
 	}
 }
