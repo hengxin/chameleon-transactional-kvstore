@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Assert;
-
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
 import client.clientlibrary.transaction.QueryResults;
@@ -22,7 +20,7 @@ import client.clientlibrary.transaction.QueryResults;
  */
 public class RVSIManager
 {
-	// FIXME try {@link Stream} in Java 8.
+	// FIXME try {@link Stream} in Java 8 directly.
 	private List<AbstractRVSISpecification> rvsi_spec_list = new ArrayList<>();
 	private List<AbstractVersionConstraint> vc_list = new ArrayList<>();
 
@@ -33,6 +31,10 @@ public class RVSIManager
 		this.rvsi_spec_list.add(rvsi_spec);
 	}
 
+	/**
+	 * Set the {@link #query_results} which will be used to generate {@link AbstractVersionConstraint}.
+	 * @param query_results {@link QueryResults} to be set
+	 */
 	public void setQueryResults(QueryResults query_results)
 	{
 		this.query_results = query_results;
@@ -51,10 +53,13 @@ public class RVSIManager
 					.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Check whether all the {@link AbstractVersionConstraint} can be satisfied.
+	 * @return <code>true</code> if all can be satisfied; <code>false</code>, otherwise.
+	 */
 	public boolean check()
 	{
-//		return this.vc_list.stream().map(AbstractVersionConstraint::check)
-				
-		return false;
+		return this.vc_list.stream().map(AbstractVersionConstraint::check)
+				.allMatch(check_result -> check_result == true);
 	}
 }

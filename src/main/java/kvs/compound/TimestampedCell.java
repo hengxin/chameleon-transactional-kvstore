@@ -5,13 +5,14 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
 import kvs.component.Cell;
+import kvs.component.Ordinal;
 import kvs.component.Timestamp;
 
 /**
  * @author hengxin
  * @date Created on 11-10-2015
  * 
- * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp}.
+ * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp} (beside its {@link Ordinal}).
  * 
  * <p> <b>Note:</b> A {@link TimestampedCell} is uniquely identified by its {@value #ts} ({@link Timestamp}) field.
  * See its {@link #compareTo(ITimestampedCell)}, {@link #hashCode()}, and {@link #equals(Object)}.
@@ -19,18 +20,20 @@ import kvs.component.Timestamp;
 public class TimestampedCell implements ITimestampedCell
 {
 	private Timestamp ts = Timestamp.TIMESTAMP_INIT;
+	private Ordinal ord = Ordinal.ORDINAL_INIT;
 	private Cell cell = Cell.CELL_INIT;
 	
 	/**
-	 * initial value: {@value Timestamp#TIMESTAMP_INIT} and {@value Cell#CELL_INIT}
+	 * initial value: {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
 	 */
 	public static TimestampedCell TIMESTAMPED_CELL_INIT = new TimestampedCell();
 	
 	/**
-	 * default constructor: with {@value Timestamp#TIMESTAMP_INIT} and {@value Cell#CELL_INIT}
+	 * default constructor: with {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
 	 */
 	public TimestampedCell() {}
 	
+	// FIXME to include Ordinal
 	public TimestampedCell(Timestamp ts, Cell c)
 	{
 		this.ts = ts;
@@ -66,6 +69,8 @@ public class TimestampedCell implements ITimestampedCell
 	{
 		if(o == this)
 			return true;
+		if(o == null)
+			return false;
 		if(! (o instanceof TimestampedCell))
 			return false;
 		
@@ -77,7 +82,7 @@ public class TimestampedCell implements ITimestampedCell
 	public String toString()
 	{
 		return MoreObjects.toStringHelper(this)
-				.addValue(this.ts).addValue(this.cell)
+				.addValue(this.ts).addValue(this.ord).addValue(this.cell)
 				.toString();
 	}
 }

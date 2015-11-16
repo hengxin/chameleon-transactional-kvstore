@@ -18,7 +18,7 @@ public class BVSpecification extends AbstractRVSISpecification
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results)
 	{
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

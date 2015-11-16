@@ -50,7 +50,8 @@ public class Cell implements Serializable
 	{
 		if(o == this)
 			return true;
-		
+		if(o == null)
+			return false;
 		if(! (o instanceof Cell))
 			return false;
 		

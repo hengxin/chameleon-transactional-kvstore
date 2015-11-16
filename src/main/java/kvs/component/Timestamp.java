@@ -41,6 +41,8 @@ public class Timestamp implements Comparable<Timestamp>
 	{
 		if(o == this)
 			return true;
+		if(o == null)
+			return false;
 		if(! (o instanceof Timestamp))
 			return false;
 		

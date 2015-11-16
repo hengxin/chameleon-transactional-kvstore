@@ -47,6 +47,8 @@ public class Column implements Comparable<Column>, Serializable
 	{
 		if(o == this)
 			return true;
+		if(o == null)
+			return false;
 		if(! (o instanceof Column))
 			return false;
 		

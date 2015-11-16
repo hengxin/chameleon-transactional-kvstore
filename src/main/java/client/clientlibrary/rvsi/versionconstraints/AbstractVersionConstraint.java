@@ -1,6 +1,6 @@
 package client.clientlibrary.rvsi.versionconstraints;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 
@@ -13,10 +13,7 @@ import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
  */
 public abstract class AbstractVersionConstraint
 {
-	private Timestamp self_ts;
-	private Timestamp other_ts;
-	private int bound;
-	
+	private List<VersionConstraintElement> vc_element_list;
 	
 	public abstract boolean check();
 }

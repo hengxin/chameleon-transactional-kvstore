@@ -50,6 +50,8 @@ public class Row implements Comparable<Row>, Serializable
 	{
 		if(o == this)
 			return true;
+		if(o == null)
+			return false;
 		if(! (o instanceof Row))
 			return false;
 		

@@ -44,14 +44,16 @@ public class CompoundKey
 	}
 	
 	@Override
-	public boolean equals(Object obj)
+	public boolean equals(Object o)
 	{
-		if(obj == this)
+		if(o == this)
 			return true;
-		if(! (obj instanceof CompoundKey))
+		if(o == null)
+			return false;
+		if(! (o instanceof CompoundKey))
 			return false;
 		
-		CompoundKey that = (CompoundKey) obj;
+		CompoundKey that = (CompoundKey) o;
 		return Objects.equal(this.row, that.row) && Objects.equal(this.col, that.col);
 	}
 
