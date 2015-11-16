@@ -3,7 +3,7 @@ package client.clientlibrary.transaction;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import client.clientlibrary.rvsispec.AbstractRVSISpecification;
+import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import kvs.compound.CompoundKey;
 import kvs.compound.TimestampedCell;
 

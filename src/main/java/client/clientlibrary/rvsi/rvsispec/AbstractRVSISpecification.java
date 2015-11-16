@@ -1,12 +1,14 @@
 /**
  * 
  */
-package client.clientlibrary.rvsispec;
+package client.clientlibrary.rvsi.rvsispec;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
+import client.clientlibrary.transaction.QueryResults;
 import kvs.compound.CompoundKey;
 
 /**
@@ -29,5 +31,5 @@ public abstract class AbstractRVSISpecification
 		return this.spec_map;
 	}
 	
-	public abstract boolean check();
+	public abstract AbstractVersionConstraint generateVersionConstraint(QueryResults query_results);
 }

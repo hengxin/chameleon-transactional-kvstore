@@ -33,6 +33,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
-	<classpathentry kind="lib" path="/home/hengxin/eclipse-mars-projects/IntervalTree-master/intervaltree-master.jar" sourcepath="/IntervalTree-master"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
