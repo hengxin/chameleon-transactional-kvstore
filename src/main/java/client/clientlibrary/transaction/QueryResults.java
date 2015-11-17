@@ -33,4 +33,9 @@ public class QueryResults
 	{
 		this.query_results.put(ck, tc);
 	}
+	
+	public Map<CompoundKey, TimestampedCell> getQueryResults()
+	{
+		return this.query_results;
+	}
 }

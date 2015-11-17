@@ -27,6 +27,12 @@ public class CompoundKey
 		this.col = c;
 	}
 
+	public CompoundKey(String r, String c)
+	{
+		this.row = new Row(r);
+		this.col = new Column(c);
+	}
+	
 	public Row getRow()
 	{
 		return this.row;

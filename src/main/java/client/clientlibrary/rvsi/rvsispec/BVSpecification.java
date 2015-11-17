@@ -18,7 +18,13 @@ public class BVSpecification extends AbstractRVSISpecification
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results)
 	{
-		
+		// TODO to complete this!
+		super.rvsi_spec_map.entrySet().forEach(
+				rvsi_spec_entry -> 
+				{query_results.getQueryResults().entrySet().forEach(
+						query_result_entry ->
+						{});
+				});
 		return null;
 	}
 
