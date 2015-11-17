@@ -21,6 +21,11 @@ public final class Ordinal
 		this.ord++;
 	}
 	
+	public long getOrd()
+	{
+		return ord;
+	}
+	
 	@Override
 	public int hashCode()
 	{

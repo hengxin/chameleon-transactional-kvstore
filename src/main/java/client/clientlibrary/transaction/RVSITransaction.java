@@ -6,10 +6,17 @@ package client.clientlibrary.transaction;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutionException;
 
+import client.clientlibrary.rvsi.rvsimanager.RVSIManager;
+import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
+import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
+import client.clientlibrary.rvsi.rvsispec.BVSpecification;
+import client.clientlibrary.rvsi.rvsispec.FVSpecification;
+import client.clientlibrary.rvsi.rvsispec.SVSpecification;
 import client.communication.ClientContacts;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
+import kvs.component.Timestamp;
 
 /**
  * @author hengxin
@@ -19,12 +26,14 @@ import kvs.component.Row;
  */
 public class RVSITransaction implements ITransaction
 {
-	private long sts = 0L;	// start-timestamp
-	private long cts = 0L;	// commit-timestamp
+	private Timestamp sts = Timestamp.TIMESTAMP_INIT;	// start-timestamp
+	private Timestamp cts = Timestamp.TIMESTAMP_INIT;	// commit-timestamp
 
 	private BufferedUpdates buffered_updates = new BufferedUpdates();	// to buffer write operations
 	private QueryResults query_results = new QueryResults();			// to store query results
 	
+	private RVSIManager rvsi_manager = new RVSIManager();				// to deal with {@link AbstractRVSISpecification}-related things
+
 	/* 
 	 * @see client.clientlibrary.Transaction#begin()
 	 */
@@ -70,9 +79,15 @@ public class RVSITransaction implements ITransaction
 	@Override
 	public boolean end()
 	{
+		/**
+		 * Compute the version constraints.
+		 * The version constraints are maintained by {@link RVSIManager#rvsi_manager}
+		 */
+		VersionConstraintManager vc_manager = this.rvsi_manager.generateVersionConstraintManager();
+		
 		try
 		{
-			boolean success = ClientContacts.INSTANCE.getRemote_master().commit(this.buffered_updates);
+			boolean success = ClientContacts.INSTANCE.getRemote_master().commit(this.buffered_updates, vc_manager);
 			if(! success)
 			{
 				// TODO restart the transaction???
@@ -87,16 +102,22 @@ public class RVSITransaction implements ITransaction
 		return true;
 	}
 
-	public void setRVSISpecification()
+	/**
+	 * Collect {@link AbstractRVSISpecification} whose type could be {@link BVSpecification}, 
+	 * {@link FVSpecification}, or {@link SVSpecification}.
+	 * 
+	 * @param rvsi_spec an {@link AbstractRVSISpecification}
+	 */
+	public void collectRVSISpecification(AbstractRVSISpecification rvsi_spec)
 	{
-		
+		this.rvsi_manager.collectRVSISpecification(rvsi_spec);
 	}
 	
 	/**
 	 * protected only for test
 	 * @return {@link #sts}
 	 */
-	protected long getSts()
+	protected Timestamp getSts()
 	{
 		return this.sts;
 	};

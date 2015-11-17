@@ -8,10 +8,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.BufferedUpdates;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
+import kvs.component.Timestamp;
 
 /**
  * @author hengxin
@@ -32,13 +34,15 @@ public enum SIMaster implements IMaster
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 
 	@Override
-	public long start() throws InterruptedException, ExecutionException
+	public Timestamp start() throws InterruptedException, ExecutionException
 	{
         // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
-		return exec.submit( () -> 
+		long sts = exec.submit( () -> 
 		{
 			return SIMaster.this.ts.incrementAndGet();
 		}).get();
+		
+		return new Timestamp(sts);
 	}
 
 	@Override
@@ -49,7 +53,7 @@ public enum SIMaster implements IMaster
 	}
 
 	@Override
-	public boolean commit(BufferedUpdates updates)
+	public boolean commit(BufferedUpdates updates, VersionConstraintManager vc_manager)
 	{
 		// TODO Auto-generated method stub
 		return false;

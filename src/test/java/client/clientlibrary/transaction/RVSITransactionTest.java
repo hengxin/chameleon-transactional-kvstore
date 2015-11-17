@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import client.clientlibrary.transaction.ITransaction;
 import client.clientlibrary.transaction.RVSITransaction;
+import kvs.component.Timestamp;
 
 /**
  * @author hengxin
@@ -43,7 +44,7 @@ public class RVSITransactionTest
 		ITransaction tx = new RVSITransaction();
 		assertTrue("Transaction does not begin successfully.", tx.begin());
 		
-		assertEquals("Start-timestamp has not been assigned correctly.", 1, ((RVSITransaction) tx).getSts());
+		assertEquals("Start-timestamp has not been assigned correctly.", new Timestamp(1L), ((RVSITransaction) tx).getSts());
 	}
 
 	/**

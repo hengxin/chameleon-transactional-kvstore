@@ -14,19 +14,17 @@ import client.clientlibrary.transaction.QueryResults;
  * 
  *       <p>
  *       Manage the rvsi specifications (of {@link AbstractRVSISpecification})
- *       related tasks, including collecting rvsi specifications, generating
- *       version constraints (of {@link AbstractVersionConstraint}), and
- *       triggering the check procedures for the version constraints.
+ *       related tasks, including collecting rvsi specifications and generating
+ *       version constraints (of {@link AbstractVersionConstraint}).
  */
 public class RVSIManager
 {
 	// FIXME try {@link Stream} in Java 8 directly.
 	private List<AbstractRVSISpecification> rvsi_spec_list = new ArrayList<>();
-	private List<AbstractVersionConstraint> vc_list = new ArrayList<>();
 
 	private QueryResults query_results;
 
-	public void collectRVSISpec(AbstractRVSISpecification rvsi_spec)
+	public void collectRVSISpecification(AbstractRVSISpecification rvsi_spec)
 	{
 		this.rvsi_spec_list.add(rvsi_spec);
 	}
@@ -45,21 +43,16 @@ public class RVSIManager
 	 * according to the rvsi specifications (of
 	 * {@link AbstractRVSISpecification}) collected in {@value #rvsi_spec_list}.
 	 */
-	public void generateVersionConstraints()
+	public VersionConstraintManager generateVersionConstraintManager()
 	{
 		if (this.query_results != null)		// TODO try Optional in Java 8
-			this.vc_list = this.rvsi_spec_list.stream()
+		{
+			List<AbstractVersionConstraint> vc_list = this.rvsi_spec_list.stream()
 					.map(rvsi_spec -> rvsi_spec.generateVersionConstraint(this.query_results))	// TODO try :: operator here
 					.collect(Collectors.toList());
-	}
-	
-	/**
-	 * Check whether all the {@link AbstractVersionConstraint} can be satisfied.
-	 * @return <code>true</code> if all can be satisfied; <code>false</code>, otherwise.
-	 */
-	public boolean check()
-	{
-		return this.vc_list.stream().map(AbstractVersionConstraint::check)
-				.allMatch(check_result -> check_result == true);
+			return new VersionConstraintManager(vc_list);
+		}
+		else
+			return new VersionConstraintManager();
 	}
 }

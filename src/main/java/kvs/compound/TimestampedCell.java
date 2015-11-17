@@ -46,6 +46,11 @@ public class TimestampedCell implements ITimestampedCell
 		return this.ts;
 	}
 	
+	public Ordinal getOrdinal()
+	{
+		return this.ord;
+	}
+	
 	@Override
 	public Cell getCell()
 	{
