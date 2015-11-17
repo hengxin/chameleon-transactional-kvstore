@@ -6,17 +6,13 @@ package client.clientlibrary.rvsi.rvsispec;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.tuple.Triple;
-
 import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.compound.CompoundKey;
-import kvs.compound.TimestampedCell;
 
 /**
  * @author hengxin
@@ -67,26 +63,6 @@ public abstract class AbstractRVSISpecification
 //						);}
 //				);
 //		return flatten_map;
-	}
-	
-	/**
-	 * Extract elements from {@link AbstractRVSISpecification} and {@link QueryResults} 
-	 * for generating {@link AbstractVersionConstraint}.
-	 * 
-	 * <p> This method will be used by {@link BVSpecification} and {@link FVSpecification}
-	 * to generate their respective {@link AbstractVersionConstraint}. 
-	 * 
-	 * @return a list of triple of ({@link CompoundKey}, {@link TimestampedCell}, {@link Integer})
-	 */
-	public List<Triple<CompoundKey, TimestampedCell, Integer>> extractVersionConstraintElements()
-	{
-//		return this.flattenRVSISpecMap().keySet().stream()
-//			.<Triple<CompoundKey, TimestampedCell, Integer>>map(ck ->
-//				new Triple<L, M, R>()
-//				{
-//				});
-		
-		return null;
 	}
 	
 	public abstract AbstractVersionConstraint generateVersionConstraint(QueryResults query_results);

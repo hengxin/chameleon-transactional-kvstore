@@ -3,8 +3,14 @@
  */
 package client.clientlibrary.rvsi.rvsispec;
 
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.Triple;
+
 import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
 import client.clientlibrary.transaction.QueryResults;
+import kvs.compound.CompoundKey;
+import kvs.compound.TimestampedCell;
 
 /**
  * @author hengxin
@@ -18,13 +24,8 @@ public class BVSpecification extends AbstractRVSISpecification
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results)
 	{
-		// TODO to complete this!
-		super.rvsi_spec_map.entrySet().forEach(
-				rvsi_spec_entry -> 
-				{query_results.getQueryResults().entrySet().forEach(
-						query_result_entry ->
-						{});
-				});
+		List<Triple<CompoundKey, TimestampedCell, Integer>> vc_triple_list = AbstractVersionConstraint.extractVersionConstraintElements(this, query_results);
+		// TODO generate vc
 		return null;
 	}
 
