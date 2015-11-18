@@ -79,11 +79,7 @@ public class RVSITransaction implements ITransaction
 	@Override
 	public boolean end()
 	{
-		/**
-		 * Compute the version constraints.
-		 * The version constraints are maintained by {@link RVSIManager#rvsi_manager}
-		 */
-		VersionConstraintManager vc_manager = this.rvsi_manager.generateVersionConstraintManager();
+		VersionConstraintManager vc_manager = this.generateVersionConstraintManager();
 		
 		try
 		{
@@ -113,12 +109,18 @@ public class RVSITransaction implements ITransaction
 		this.rvsi_manager.collectRVSISpecification(rvsi_spec);
 	}
 	
-	/**
-	 * protected only for test
-	 * @return {@link #sts}
-	 */
-	protected Timestamp getSts()
+	public VersionConstraintManager generateVersionConstraintManager()
+	{
+		return this.rvsi_manager.generateVersionConstraintManager(this);
+	}
+	
+	public Timestamp getSts()
 	{
 		return this.sts;
-	};
+	}
+	
+	public QueryResults getQueryResults()
+	{
+		return this.query_results;
+	}
 }

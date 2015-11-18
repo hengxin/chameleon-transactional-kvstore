@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
 import client.clientlibrary.transaction.QueryResults;
+import client.clientlibrary.transaction.RVSITransaction;
+import kvs.component.Timestamp;
 
 /**
  * @author hengxin
@@ -21,7 +23,9 @@ public class RVSIManager
 {
 	// FIXME try {@link Stream} in Java 8 directly.
 	private List<AbstractRVSISpecification> rvsi_spec_list = new ArrayList<>();
-
+	private Timestamp sts; // start-timestamp of a transaction; needed for
+							// {@link BVSpecification} and {@link
+							// FVSpecification}
 	private QueryResults query_results;
 
 	public void collectRVSISpecification(AbstractRVSISpecification rvsi_spec)
@@ -30,29 +34,18 @@ public class RVSIManager
 	}
 
 	/**
-	 * Set the {@link #query_results} which will be used to generate {@link AbstractVersionConstraint}.
-	 * @param query_results {@link QueryResults} to be set
-	 */
-	public void setQueryResults(QueryResults query_results)
-	{
-		this.query_results = query_results;
-	}
-
-	/**
 	 * Generate the version constraints (of {@link AbstractVersionConstraint})
 	 * according to the rvsi specifications (of
 	 * {@link AbstractRVSISpecification}) collected in {@value #rvsi_spec_list}.
 	 */
-	public VersionConstraintManager generateVersionConstraintManager()
+	public VersionConstraintManager generateVersionConstraintManager(RVSITransaction rvsi_tx)
 	{
-		if (this.query_results != null)		// TODO try Optional in Java 8
-		{
-			List<AbstractVersionConstraint> vc_list = this.rvsi_spec_list.stream()
-					.map(rvsi_spec -> rvsi_spec.generateVersionConstraint(this.query_results))	// TODO try :: operator here
-					.collect(Collectors.toList());
-			return new VersionConstraintManager(vc_list);
-		}
-		else
-			return new VersionConstraintManager();
+		this.sts = rvsi_tx.getSts();
+		this.query_results = rvsi_tx.getQueryResults();
+
+		List<AbstractVersionConstraint> vc_list = this.rvsi_spec_list.stream()
+				.map(rvsi_spec -> rvsi_spec.generateVersionConstraint(this.sts, this.query_results)) // TODO try :: operator here
+				.collect(Collectors.toList());
+		return new VersionConstraintManager(vc_list);
 	}
 }

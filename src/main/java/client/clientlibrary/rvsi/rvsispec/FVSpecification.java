@@ -5,6 +5,7 @@ package client.clientlibrary.rvsi.rvsispec;
 
 import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
 import client.clientlibrary.transaction.QueryResults;
+import kvs.component.Timestamp;
 
 /**
  * @author hengxin
@@ -14,7 +15,7 @@ public class FVSpecification extends AbstractRVSISpecification
 {
 
 	@Override
-	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results)
+	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts, QueryResults query_results)
 	{
 		// TODO Auto-generated method stub
 		return null;

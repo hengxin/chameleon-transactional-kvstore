@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
 import client.clientlibrary.transaction.QueryResults;
+import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 
 /**
@@ -65,5 +66,12 @@ public abstract class AbstractRVSISpecification
 //		return flatten_map;
 	}
 	
-	public abstract AbstractVersionConstraint generateVersionConstraint(QueryResults query_results);
+	/**
+	 * Generate {@link AbstractVersionConstraint} according to the {@link QueryResults} 
+	 * and (possibly) the start-timestamp of the transaction.  
+	 * @param sts start-timestamp
+	 * @param query_results {@link QueryResults}
+	 * @return {@link AbstractVersionConstraint}
+	 */
+	public abstract AbstractVersionConstraint generateVersionConstraint(Timestamp sts, QueryResults query_results);
 }
