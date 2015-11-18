@@ -26,33 +26,35 @@ import kvs.compound.CompoundKey;
  */
 public abstract class AbstractRVSISpecification
 {
-	protected Map<HashSet<CompoundKey>, Integer> rvsi_spec_map = new HashMap<>();
+	protected Map<HashSet<CompoundKey>, Long> rvsi_spec_map = new HashMap<>();
 	
-	public void addSpec(HashSet<CompoundKey> ckey_set_r1, int bound)
+	public void addSpec(HashSet<CompoundKey> ckey_set_r1, long bound)
 	{
 		this.rvsi_spec_map.put(ckey_set_r1, bound);
 	}
 
 	/**
 	 * Flatten the {@link #rvsi_spec_map}.
-	 * For example, if {@link #rvsi_spec_map} is:
-	 * { {x,y} -> 2; {z} -> 3; {u,v,w} -> 4 },
-	 * then the result flatten_map is:
-	 * {x -> 2; y -> 2, z -> 3, u -> 4, v -> 4, w -> 4}.
-	 * This method will be used by {@link BVSpecification} and {@link FVSpecification}
-	 * when they are ready to generate their respective {@link AbstractVersionConstraint}.
+	 * For example, if {@link #rvsi_spec_map} is
+	 * { {x,y} -> 2, {z} -> 3, {u,v,w} -> 4 },
+	 * then the result flatten_map is
+	 * {x -> 2, y -> 2, z -> 3, u -> 4, v -> 4, w -> 4}.
+	 * 
+	 * <p> This utility method is <em>only</em> for {@link BVSpecification} and {@link FVSpecification}
+	 * to generate their respective {@link AbstractVersionConstraint}.
+	 * {@SVSpecification} does not use it.
 	 * 
 	 * <p> <b>Note:</b> The implementation using Java 8 Stream APIs is due to Tagir Valeev from StackOverflow.
 	 * See <a href="http://stackoverflow.com/a/33748545/1833118">Flatten the map and associate values using Java 8 Stream APIs</a>
 	 * 
 	 * @return a <em>flatten</em> map representation of RVSI specifications.
 	 */
-	public Map<CompoundKey, Integer> flattenRVSISpecMap()
+	public Map<CompoundKey, Long> flattenRVSISpecMap()
 	{
 		return this.rvsi_spec_map.entrySet().stream()
-		   .<Entry<CompoundKey, Integer>>flatMap(rvsi_spec_entry -> 
+		   .<Entry<CompoundKey, Long>>flatMap(rvsi_spec_entry -> 
 		       rvsi_spec_entry.getKey().stream()
-		            .map(s -> new AbstractMap.SimpleImmutableEntry<>(s, rvsi_spec_entry.getValue())))
+		            .map(ck -> new AbstractMap.SimpleImmutableEntry<>(ck, rvsi_spec_entry.getValue())))
 		   .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 		       
 //		Map<CompoundKey, Integer> flatten_map = new HashMap<>();

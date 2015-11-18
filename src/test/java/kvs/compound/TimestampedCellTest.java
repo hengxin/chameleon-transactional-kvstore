@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import kvs.component.Cell;
+import kvs.component.Ordinal;
 import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
@@ -13,11 +14,11 @@ import kvs.compound.TimestampedCell;
 public class TimestampedCellTest
 {
 
-	ITimestampedCell ts_cell = new TimestampedCell(new Timestamp(1L), new Cell("TS_Cell"));
+	ITimestampedCell ts_cell = new TimestampedCell(new Timestamp(1L), Ordinal.ORDINAL_INIT, new Cell("TS_Cell"));
 
 	ITimestampedCell ts_cell_smaller = new TimestampedCell();
-	ITimestampedCell ts_cell_equal = new TimestampedCell(new Timestamp(1L), new Cell("TS_Cell_Equal"));
-	ITimestampedCell ts_cell_larger = new TimestampedCell(new Timestamp(2L), Cell.CELL_INIT);
+	ITimestampedCell ts_cell_equal = new TimestampedCell(new Timestamp(1L), new Ordinal(2L), new Cell("TS_Cell_Equal"));
+	ITimestampedCell ts_cell_larger = new TimestampedCell(new Timestamp(2L), new Ordinal(), Cell.CELL_INIT);
 
 	@Before
 	public void setUp() throws Exception
@@ -36,7 +37,7 @@ public class TimestampedCellTest
 	@Test
 	public void testEquals()
 	{
-		assertTrue("These two TimestampedCells should be equal.", ts_cell_equal.equals(ts_cell));
+		assertEquals("These two TimestampedCells should be equal.", ts_cell, ts_cell_equal);
 	}
 
 }

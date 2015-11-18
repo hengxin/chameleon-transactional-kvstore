@@ -1,5 +1,7 @@
 package client.clientlibrary.rvsi.versionconstraints;
 
+import java.util.List;
+
 /**
  * @author hengxin
  * @date Created on 11-16-2015
@@ -11,6 +13,11 @@ package client.clientlibrary.rvsi.versionconstraints;
  */
 public class SVVersionConstraint extends AbstractVersionConstraint
 {
+
+	public SVVersionConstraint(List<VersionConstraintElement> vc_element_list)
+	{
+		super(vc_element_list);
+	}
 
 	@Override
 	public boolean check()

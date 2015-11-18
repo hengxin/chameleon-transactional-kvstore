@@ -33,13 +33,33 @@ public class TimestampedCell implements ITimestampedCell
 	 */
 	public TimestampedCell() {}
 	
-	// FIXME to include Ordinal
+	public TimestampedCell(Timestamp ts, Ordinal ord, Cell c)
+	{
+		this.ts = ts;
+		this.ord = ord;
+		this.cell = c;
+	}
+
+	/**
+	 * Constructor only with the {@link #ts} field, if {@link #ord} and {@link #cell} are not relevant.
+	 * @param ts {@link Timestamp}
+	 */
+	public TimestampedCell(Timestamp ts)
+	{
+		this.ts = ts;
+	}
+
+	/**
+	 * Constructor with the {@link #ts} and {@link #cell}, if {@link #ord}.
+	 * @param ts {@link Timestamp}
+	 * @param c {@link Cell}
+	 */
 	public TimestampedCell(Timestamp ts, Cell c)
 	{
 		this.ts = ts;
 		this.cell = c;
 	}
-
+	
 	@Override
 	public Timestamp getTS()
 	{

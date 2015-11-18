@@ -16,6 +16,12 @@ public final class Ordinal
 	
 	private long ord = 0L;	// TODO Or AtomicLong???
 	
+	public Ordinal() {}
+	public Ordinal(long ord)
+	{
+		this.ord = ord;
+	}
+	
 	public void increment()
 	{
 		this.ord++;

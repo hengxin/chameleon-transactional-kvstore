@@ -60,16 +60,16 @@ public class AbstractRVSISpecificationTest
 	@Test
 	public void testFlattenRVSISpecMap()
 	{
-		Map<CompoundKey, Integer> flatten_map = this.rvsi_spec.flattenRVSISpecMap();
+		Map<CompoundKey, Long> flatten_map = this.rvsi_spec.flattenRVSISpecMap();
 		
 		@SuppressWarnings("serial")
-		Map<CompoundKey, Integer> expected_map = new HashMap<CompoundKey, Integer>()
+		Map<CompoundKey, Long> expected_map = new HashMap<CompoundKey, Long>()
 		{
 				{
-					put(ck_r1_c1, 1);
-					put(ck_r1_c2, 1);
-					put(ck_r2_c1, 2);
-					put(ck_r2_c2, 2);
+					put(ck_r1_c1, 1L);
+					put(ck_r1_c2, 1L);
+					put(ck_r2_c1, 2L);
+					put(ck_r2_c2, 2L);
 				}
 		};
 		

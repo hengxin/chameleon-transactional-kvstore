@@ -3,7 +3,11 @@ package client.clientlibrary.rvsi.versionconstraints;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.Triple;
+
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
@@ -22,6 +26,11 @@ import kvs.compound.TimestampedCell;
 public abstract class AbstractVersionConstraint
 {
 	private List<VersionConstraintElement> vc_element_list;
+	
+	public AbstractVersionConstraint(List<VersionConstraintElement> vc_element_list)
+	{
+		this.vc_element_list = vc_element_list;
+	}
 	
 	public abstract boolean check();
 	
@@ -43,17 +52,44 @@ public abstract class AbstractVersionConstraint
 	 * @param rvsi_spec {@link AbstractRVSISpecification}
 	 * @param query_result {@link QueryResults}
 	 * 
-	 * @return a list of triple of ({@link CompoundKey}, {@link TimestampedCell}, {@link Integer})
+	 * @return a list of triple of ({@link CompoundKey}, {@link TimestampedCell}, {@link Long})
 	 */
-	public static List<Triple<CompoundKey, TimestampedCell, Integer>> extractVersionConstraintElements(AbstractRVSISpecification rvsi_spec, QueryResults query_results)
+	public static List<Triple<CompoundKey, TimestampedCell, Long>> extractVersionConstraintElements(AbstractRVSISpecification rvsi_spec, QueryResults query_results)
 	{
 		return rvsi_spec.flattenRVSISpecMap().entrySet().stream()
-			.<Triple<CompoundKey, TimestampedCell, Integer>>map(flatten_rvsi_spec_entry ->
+			.<Triple<CompoundKey, TimestampedCell, Long>>map(flatten_rvsi_spec_entry ->
 				{
 					CompoundKey ck = flatten_rvsi_spec_entry.getKey();
 					return Triple.of(ck, query_results.getQueryResults().get(ck), flatten_rvsi_spec_entry.getValue());
 				})
 			.filter(triple -> triple.getMiddle() != null)
 			.collect(Collectors.toList());
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(this.vc_element_list);
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o == this)
+			return true;
+		if(o == null)
+			return false;
+		if(! (o.getClass() == this.getClass()))
+			return false;
+		
+		return CollectionUtils.isEqualCollection(this.vc_element_list, ((AbstractVersionConstraint) o).vc_element_list);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this)
+				.add("VC_Element_List", this.vc_element_list)
+				.toString();
 	}
 }

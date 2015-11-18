@@ -64,7 +64,7 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 	public ITimestampedCell get(Timestamp ts)
 	{
 		// TODO floor (<=) or lower (<)?
-		return ((ConcurrentSkipListSet<ITimestampedCell>) this.ts_cells).floor(new TimestampedCell(ts, Cell.CELL_INIT));
+		return ((ConcurrentSkipListSet<ITimestampedCell>) this.ts_cells).floor(new TimestampedCell(ts));
 	}
 
 	/**

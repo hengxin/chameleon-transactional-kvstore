@@ -14,7 +14,7 @@ import kvs.compound.TimestampedCell;
  * The client stores the query results and uses them, along with {@link AbstractRVSISpecification}, 
  * to compute the version constraints when the transaction is about to commit.
  * 
- * WARNING: Although in the normal case only the single client thread manipulates the {@link QueryResults}, 
+ * <p> WARNING: Although in the normal case only the single client thread manipulates the {@link QueryResults}, 
  *   we implemented it as thread-safe. 
  *   Thus, it can be safely used in some cases where multiple threads are allowed to 
  *   concurrently access it for optimization.

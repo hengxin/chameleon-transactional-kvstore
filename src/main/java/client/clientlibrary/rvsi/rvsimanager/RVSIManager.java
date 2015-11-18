@@ -23,9 +23,7 @@ public class RVSIManager
 {
 	// FIXME try {@link Stream} in Java 8 directly.
 	private List<AbstractRVSISpecification> rvsi_spec_list = new ArrayList<>();
-	private Timestamp sts; // start-timestamp of a transaction; needed for
-							// {@link BVSpecification} and {@link
-							// FVSpecification}
+	private Timestamp sts; // start-timestamp of a transaction; needed for {@link BVSpecification} and {@link FVSpecification}
 	private QueryResults query_results;
 
 	public void collectRVSISpecification(AbstractRVSISpecification rvsi_spec)

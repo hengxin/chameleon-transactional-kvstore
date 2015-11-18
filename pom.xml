@@ -35,6 +35,12 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
+		<!-- Apache Commons Collections -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.0</version>
+		</dependency>
 		<!-- nmdp-bioinformatics/ngs-range; use its RangeTree (an implementation 
 			of IntervalTree) -->
 		<!-- <dependency> <groupId>org.nmdp.ngs</groupId> <artifactId>ngs-range</artifactId> 
