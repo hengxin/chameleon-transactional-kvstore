@@ -1,26 +1,21 @@
 package master;
 
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
-
-import javax.swing.text.MaskFormatter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.BufferedUpdates;
+import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
-import kvs.compound.CompoundKey;
 import kvs.table.AbstractTable;
-import kvs.table.ITimestampedCellStore;
 import kvs.table.MasterTable;
 import master.mvcc.StartCommitLogs;
 
@@ -63,14 +58,10 @@ public enum SIMaster implements IMaster
 	}
 
 	@Override
-	public boolean commit(Timestamp sts, BufferedUpdates updates, VersionConstraintManager vc_manager)
+	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager)
 	{
-		return false;
-	}
-	
-	private boolean conflictCheck(Timestamp sts, BufferedUpdates updates)
-	{
-//		this.logs.searchContainings(sts)
+		if (! this.logs.conflictCheck(tx) && vc_manager.check())
+			return true;
 		return false;
 	}
 

@@ -80,10 +80,11 @@ public class RVSITransaction implements ITransaction
 	public boolean end()
 	{
 		VersionConstraintManager vc_manager = this.generateVersionConstraintManager();
+		ToCommitTransaction tx = new ToCommitTransaction(this.sts, this.buffered_updates);
 		
 		try
 		{
-			boolean success = ClientContacts.INSTANCE.getRemote_master().commit(this.sts, this.buffered_updates, vc_manager);
+			boolean success = ClientContacts.INSTANCE.getRemote_master().commit(tx, vc_manager);
 			if(! success)
 			{
 				// TODO restart the transaction???

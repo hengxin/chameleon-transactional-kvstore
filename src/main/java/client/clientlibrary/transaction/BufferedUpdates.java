@@ -3,6 +3,7 @@ package client.clientlibrary.transaction;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.base.MoreObjects;
 
@@ -39,6 +40,11 @@ public class BufferedUpdates implements Serializable
 	public Map<CompoundKey, Cell> getBufferedUpdateMap()
 	{
 		return this.buffered_update_map;
+	}
+	
+	public Set<CompoundKey> getUpdatedCKeys()
+	{
+		return this.buffered_update_map.keySet();
 	}
 	
 	@Override
