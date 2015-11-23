@@ -7,7 +7,7 @@ import kvs.compound.ITimestampedCell;
  * @author hengxin
  * @date Created on 11-10-2015
  * 
- * Interface for data stores at sites (including the master and the slaves)
+ * <p> Interface for data stores at sites (including the master and the slaves)
  */
 public interface ITimestampedCellStore
 {
@@ -25,7 +25,7 @@ public interface ITimestampedCellStore
 	public ITimestampedCell get(Timestamp ts);
 	
 	/**
-	 * get the latest {@link ITimestampedCell}
+	 * get the <em>latest</em> {@link ITimestampedCell}
 	 * @return a {@link ITimestampedCell}
 	 */
 	public ITimestampedCell get();

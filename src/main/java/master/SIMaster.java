@@ -1,9 +1,13 @@
 package master;
 
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
+
+import javax.swing.text.MaskFormatter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +18,11 @@ import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
+import kvs.compound.CompoundKey;
+import kvs.table.AbstractTable;
+import kvs.table.ITimestampedCellStore;
+import kvs.table.MasterTable;
+import master.mvcc.StartCommitLogs;
 
 /**
  * @author hengxin
@@ -28,10 +37,11 @@ public enum SIMaster implements IMaster
 	INSTANCE;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
+	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
-	
-	private final ExecutorService exec = Executors.newCachedThreadPool();
+	private AbstractTable tbl = new MasterTable();	// the underlying database in the "table" form
+	private StartCommitLogs logs = new StartCommitLogs();	// commit log: each entry is composed of start-timestamp, commit-timestamp, and buffered updates of a transaction
 
 	@Override
 	public Timestamp start() throws InterruptedException, ExecutionException
@@ -53,9 +63,14 @@ public enum SIMaster implements IMaster
 	}
 
 	@Override
-	public boolean commit(BufferedUpdates updates, VersionConstraintManager vc_manager)
+	public boolean commit(Timestamp sts, BufferedUpdates updates, VersionConstraintManager vc_manager)
 	{
-		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	private boolean conflictCheck(Timestamp sts, BufferedUpdates updates)
+	{
+//		this.logs.searchContainings(sts)
 		return false;
 	}
 

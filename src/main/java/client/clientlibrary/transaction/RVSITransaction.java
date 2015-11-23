@@ -83,7 +83,7 @@ public class RVSITransaction implements ITransaction
 		
 		try
 		{
-			boolean success = ClientContacts.INSTANCE.getRemote_master().commit(this.buffered_updates, vc_manager);
+			boolean success = ClientContacts.INSTANCE.getRemote_master().commit(this.sts, this.buffered_updates, vc_manager);
 			if(! success)
 			{
 				// TODO restart the transaction???

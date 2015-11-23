@@ -36,6 +36,11 @@ public class BufferedUpdates implements Serializable
 		this.buffered_update_map.put(new CompoundKey(r, c), data);
 	}
 	
+	public Map<CompoundKey, Cell> getBufferedUpdateMap()
+	{
+		return this.buffered_update_map;
+	}
+	
 	@Override
 	public String toString()
 	{

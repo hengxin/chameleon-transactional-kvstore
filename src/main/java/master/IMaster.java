@@ -21,5 +21,5 @@ public interface IMaster extends Remote
 {
 	public Timestamp start() throws RemoteException, InterruptedException, ExecutionException;
 	public Cell read(Row row, Column col) throws RemoteException;
-	public boolean commit(BufferedUpdates updates, VersionConstraintManager vc_manager) throws RemoteException;
+	public boolean commit(Timestamp sts, BufferedUpdates updates, VersionConstraintManager vc_manager) throws RemoteException;
 }

@@ -58,7 +58,7 @@ public abstract class AbstractTable
 	}
 	
 	/**
-	 * get the <i>latest</i> preceding {@link ITimestampedCell} with {@link Timestamp} smaller than @param ts, 
+	 * get the <em>latest</em> preceding {@link ITimestampedCell} with {@link Timestamp} smaller than @param ts, 
 	 * indexed by a {@link Row} key (@param row) and a {@link Column} key (@param col).
 	 * 
 	 * <b>Note:</b> The result could be "NULL" (the initial value), 

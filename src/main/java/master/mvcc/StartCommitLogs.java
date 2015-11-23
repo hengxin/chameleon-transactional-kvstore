@@ -1,6 +1,7 @@
 package master.mvcc;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import intervaltree.IntervalTree;
@@ -30,5 +31,16 @@ public class StartCommitLogs
 	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates)
 	{
 		this.start_commit_logs.put(sts, cts, updates);
+	}
+	
+	/**
+	 * @param sts start-timestamp of a transaction
+	 * @return a collection of {@link BufferedUpdates} that contain @param sts
+	 * 
+	 * <p> TODO test it!!!
+	 */
+	public Collection<BufferedUpdates> searchContainings(Timestamp sts)
+	{
+		return this.start_commit_logs.searchContaining(sts, sts);
 	}
 }
