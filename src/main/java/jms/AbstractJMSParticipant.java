@@ -3,6 +3,10 @@
  */
 package jms;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.Session;
@@ -24,16 +28,16 @@ import javax.naming.NamingException;
  */
 public abstract class AbstractJMSParticipant
 {
-	// FIXME using command-line args or configuration file
-	private static final String TOPIC = "CommitLogTopic";
-	private static final String CONNECTION_FACTORY = "TopicCF";
+	private static final String JMS_CONFIG_PROPERTIES_FILE = "jms-config.properties";
+	private static String TOPIC;
+	private static String CONNECTION_FACTORY;
 
 	protected Topic cl_topic = null;
 	private TopicConnection connection = null;
 	protected TopicSession session = null;
 
 	/**
-	 * Initialize context, create connection factory, create top connection,
+	 * Load JMS configuration, initialize context, create connection factory, create top connection,
 	 * create session, create publisher or subscriber (as a message listener),
 	 * and finally start the connection.
 	 * 
@@ -47,6 +51,8 @@ public abstract class AbstractJMSParticipant
 	{
 		try
 		{
+			this.loadJMSConfig();
+			
 			Context ctx = new InitialContext();
 			TopicConnectionFactory cf = (TopicConnectionFactory) ctx.lookup(AbstractJMSParticipant.CONNECTION_FACTORY);
 
@@ -60,14 +66,19 @@ public abstract class AbstractJMSParticipant
 			this.connection.start();
 		} catch (NamingException ne)
 		{
-			System.out.format("The JNDI naming service for JMS fails: %s", ne.getMessage());
+			System.out.format("The JNDI naming service for JMS fails: %s.", ne.getMessage());
 			ne.printStackTrace();
 			System.exit(1);
 			
 		} catch (JMSException jmse)
 		{
-			System.out.format("Fails to participate in JMS: %s", jmse.getMessage());
+			System.out.format("Fails to participate in JMS: %s.", jmse.getMessage());
 			jmse.printStackTrace();
+			System.exit(1);
+		} catch (IOException ioe)
+		{
+			System.out.format("Fails to load JMS configurations: %s.", ioe.getMessage());
+			ioe.printStackTrace();
 			System.exit(1);
 		}
 	}
@@ -90,4 +101,15 @@ public abstract class AbstractJMSParticipant
 		this.connection.close();
 	}
 
+	private void loadJMSConfig() throws IOException 
+	{
+		Properties prop = new Properties();
+		
+		InputStream is = AbstractJMSParticipant.class.getResourceAsStream(AbstractJMSParticipant.JMS_CONFIG_PROPERTIES_FILE);
+		prop.load(is);
+		is.close();
+		
+		AbstractJMSParticipant.CONNECTION_FACTORY = prop.getProperty("cf");
+		AbstractJMSParticipant.TOPIC = prop.getProperty("topic");
+	}
 }
