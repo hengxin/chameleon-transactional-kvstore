@@ -7,7 +7,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TopicSubscriber;
-import javax.naming.NamingException;
 
 import jms.AbstractJMSParticipant;
 
@@ -21,26 +20,20 @@ public class JMSCommitLogSubscriber extends AbstractJMSParticipant implements Me
 {
 	private TopicSubscriber subscriber = null;
 	
-	/**
-	 * Initialize the {@value #subscriber} (an {@link TopicSubscriber}).
-	 * @throws NamingException May be thrown by super constructor.
-	 * @throws JMSException Thrown when it fails to create an {@link TopicSubscriber}, or
-	 *  thrown by super constructor.
-	 */
-	public JMSCommitLogSubscriber() throws JMSException, NamingException
-	{
-		super();
-		this.subscriber = super.session.createSubscriber(super.cl_topic);
-		this.subscriber.setMessageListener(this);
-	}
-
-	/* 
-	 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
-	 */
 	@Override
 	public void onMessage(Message msg)
 	{
 		
+	}
+
+	/**
+	 * Participate as a subscriber.
+	 */
+	@Override
+	public void participate() throws JMSException
+	{
+		this.subscriber = super.session.createSubscriber(super.cl_topic);
+		this.subscriber.setMessageListener(this);
 	}
 
 }
