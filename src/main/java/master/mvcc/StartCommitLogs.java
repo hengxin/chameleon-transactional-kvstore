@@ -3,6 +3,7 @@ package master.mvcc;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -29,21 +30,22 @@ public class StartCommitLogs
 {
 	private IntervalTree<Timestamp, BufferedUpdates> start_commit_logs = new IntervalTree<>();
 	
-	private final ReadWriteLock monitor = new ReentrantReadWriteLock();
-	private final Lock read_lock = this.monitor.readLock();
-	public final Lock write_lock = this.monitor.writeLock();
+	private final ReadWriteLock lock = new ReentrantReadWriteLock();
+	private final Lock read_lock = this.lock.readLock();
+	public final Lock write_lock = this.lock.writeLock();
 	
 	/**
-	 * adding a new start-commit-log of a transaction
+	 * Adding a new start-commit-log of a transaction
 	 * @param sts start-timestamp 
 	 * @param cts commit-timestamp
 	 * @param updates buffered updates
+	 * @throws InterruptedException if lock synchronization fails.
 	 */
-	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates)
+	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) throws InterruptedException
 	{
-		this.write_lock.lock();
 		try
 		{
+			this.write_lock.tryLock(500, TimeUnit.MILLISECONDS);
 			this.start_commit_logs.put(sts, cts, updates);
 		} finally
 		{
@@ -61,7 +63,14 @@ public class StartCommitLogs
 	 */
 	public boolean wcf(ToCommitTransaction tx)
 	{
-		Collection<BufferedUpdates> overlapping_tx_updates = this.containersOf(tx.getSts()); 
+		Collection<BufferedUpdates> overlapping_tx_updates;
+		try
+		{
+			overlapping_tx_updates = this.containersOf(tx.getSts());
+		} catch (InterruptedException ie)
+		{
+			return false;
+		} 
 		
 		// collect all updated keys
 		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.stream()
@@ -78,16 +87,17 @@ public class StartCommitLogs
 	/**
 	 * @param sts start-timestamp of a transaction
 	 * @return a collection of {@link BufferedUpdates} that contain @param sts
+	 * @throws InterruptedException if lock synchronization fails.
 	 */
-	protected Collection<BufferedUpdates> containersOf(Timestamp sts)
+	protected Collection<BufferedUpdates> containersOf(Timestamp sts) throws InterruptedException
 	{
-		this.read_lock.lock();
 		try
 		{
+			this.read_lock.tryLock(500, TimeUnit.MILLISECONDS);
 			return this.start_commit_logs.searchContaining(sts, sts);
 		} finally
 		{
-			this.write_lock.unlock();
+			this.read_lock.unlock();
 		}
 	}
 }

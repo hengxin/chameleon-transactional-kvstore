@@ -6,6 +6,9 @@ package kvs.table;
 import java.util.Map;
 import java.util.Optional;
 import java.util.SortedMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.junit.Assert;
 
@@ -23,11 +26,16 @@ import kvs.compound.TimestampedCell;
  * @author hengxin
  * @date Created: 10-24-2015
  * 
- * <p>TODO Making it thread-safe while keeping it efficient. 
+ * <p> In this implementation, the synchronization is achieved by {@link ReentrantReadWriteLock}.
+ * <p> TODO using the built-in synchronization mechanism of {@link TreeBasedTable}.
  */
 public abstract class AbstractTable
 {
 	private TreeBasedTable<Row, Column, ITimestampedCellStore> table = TreeBasedTable.create();
+	
+	private final ReadWriteLock lock = new ReentrantReadWriteLock();
+	private final Lock read_lock = this.lock.readLock();
+	private final Lock write_lock = this.lock.writeLock();
 	
 	/**
 	 * get a row with a specific row key
@@ -89,7 +97,14 @@ public abstract class AbstractTable
 	 */
 	protected Optional<ITimestampedCellStore> getTimestampedCellStore(Row row, Column col)
 	{
-		return Optional.ofNullable(table.get(row, col));
+		this.read_lock.lock();
+		try
+		{
+			return Optional.ofNullable(table.get(row, col));
+		} finally
+		{
+			this.read_lock.unlock();
+		}
 	}
 	
 	public void put(Row row, Map<Column, ITimestampedCell> col_data_map)
@@ -100,8 +115,6 @@ public abstract class AbstractTable
 	/**
 	 * Apply all the {@link BufferedUpdates} with timestamp @param cts to this {@link #table}.
 	 * @param buffered_updates {@link BufferedUpdates}
-	 * 
-	 * <p>FIXME synchronization???
 	 */
 	public void apply(Timestamp cts, BufferedUpdates buffered_updates)
 	{
@@ -121,20 +134,32 @@ public abstract class AbstractTable
 	
 	/**
 	 * Putting data (row, column, timestamped-cell) into this {@link #table}.
+	 * <p> If the {@link ITimestampedCellStore} corresponding to (row, column) does not
+	 * exist, then initialize one and put the timestamped-cell into it.
+	 * The synchronization mechanism should prevent an {@link ITimestampedCellStore} 
+	 * corresponding to the same (row, column) from being initialized twice.
+	 * 
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
-	 * @param tc {@link ITimestampedCell}
+	 * @param tc the {@link ITimestampedCell} to store
 	 * 
 	 * Template design pattern 
 	 */
 	public void put(Row row, Column col, ITimestampedCell tc)
 	{
-		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
+		this.write_lock.lock();
+		try
+		{
+			Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
 		
-		if(ts_cell_store.isPresent()) 
-			ts_cell_store.get().put(tc);
-		else 
-			this.put(row, col, this.initStore(tc));
+			if(ts_cell_store.isPresent()) 
+				ts_cell_store.get().put(tc);
+			else 
+				this.put(row, col, this.initStore(tc)); 
+		} finally
+		{
+			this.write_lock.unlock();
+		}
 	}
 	
 	public abstract ITimestampedCellStore initStore(ITimestampedCell tc);
@@ -148,6 +173,13 @@ public abstract class AbstractTable
 	protected void put(Row row, Column col, ITimestampedCellStore ts_cell_store)
 	{
 		Assert.assertNotNull("The parameter ITimestampedCellStore cannot be null.", ts_cell_store);
-		this.table.put(row, col, ts_cell_store);
+		this.write_lock.lock();
+		try
+		{
+			this.table.put(row, col, ts_cell_store);
+		} finally
+		{
+			this.write_lock.unlock();
+		}
 	}
 }
