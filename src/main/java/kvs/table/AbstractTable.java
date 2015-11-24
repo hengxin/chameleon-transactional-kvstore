@@ -11,9 +11,11 @@ import org.junit.Assert;
 
 import com.google.common.collect.TreeBasedTable;
 
+import client.clientlibrary.transaction.BufferedUpdates;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
+import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
 
@@ -21,7 +23,7 @@ import kvs.compound.TimestampedCell;
  * @author hengxin
  * @date Created: 10-24-2015
  * 
- * <b>WARNING:</b> Making it thread-safe while keeping it efficient. 
+ * <p>TODO Making it thread-safe while keeping it efficient. 
  */
 public abstract class AbstractTable
 {
@@ -95,9 +97,30 @@ public abstract class AbstractTable
 		//TODO: 
 	}
 	
+	/**
+	 * Apply all the {@link BufferedUpdates} with timestamp @param cts to this {@link #table}.
+	 * @param buffered_updates {@link BufferedUpdates}
+	 * 
+	 * <p>FIXME synchronization???
+	 */
+	public void apply(Timestamp cts, BufferedUpdates buffered_updates)
+	{
+		buffered_updates.getBufferedUpdateMap().entrySet()
+			.forEach(
+					update_entry -> { this.put(update_entry.getKey(), new TimestampedCell(cts, update_entry.getValue())); }
+					);
+	}
 	
 	/**
-	 * adding data (row, column, timestamped-cell)
+	 * Put data ({@link CompoundKey}, {@link ITimestampedCell}) into this {@link #table}.
+	 */
+	public void put(CompoundKey ck, ITimestampedCell tc)
+	{
+		this.put(ck.getRow(), ck.getCol(), tc);
+	}
+	
+	/**
+	 * Putting data (row, column, timestamped-cell) into this {@link #table}.
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
 	 * @param tc {@link ITimestampedCell}

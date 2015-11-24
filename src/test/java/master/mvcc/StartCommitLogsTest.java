@@ -86,12 +86,12 @@ public class StartCommitLogsTest
 	}
 
 	@Test
-	public void testConflictCheck()
+	public void testWCF()
 	{
 		ToCommitTransaction tx_to_commit_wc = new ToCommitTransaction(sts_7_to_commit, updates_to_commit_wc);
-		assertTrue("Write-Conflict.", this.logs.conflictCheck(tx_to_commit_wc));
+		assertTrue("Write-Conflict.", ! this.logs.wcf(tx_to_commit_wc));
 		
 		ToCommitTransaction tx_to_commit_wcf = new ToCommitTransaction(sts_7_to_commit, updates_to_commit_wcf);
-		assertTrue("Write-Conflict-Free.", ! this.logs.conflictCheck(tx_to_commit_wcf));
+		assertTrue("Write-Conflict-Free.", this.logs.wcf(tx_to_commit_wcf));
 	}
 }

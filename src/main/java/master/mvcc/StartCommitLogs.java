@@ -3,6 +3,9 @@ package master.mvcc;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
@@ -26,6 +29,10 @@ public class StartCommitLogs
 {
 	private IntervalTree<Timestamp, BufferedUpdates> start_commit_logs = new IntervalTree<>();
 	
+	private final ReadWriteLock monitor = new ReentrantReadWriteLock();
+	private final Lock read_lock = this.monitor.readLock();
+	public final Lock write_lock = this.monitor.writeLock();
+	
 	/**
 	 * adding a new start-commit-log of a transaction
 	 * @param sts start-timestamp 
@@ -34,15 +41,25 @@ public class StartCommitLogs
 	 */
 	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates)
 	{
-		this.start_commit_logs.put(sts, cts, updates);
+		this.write_lock.lock();
+		try
+		{
+			this.start_commit_logs.put(sts, cts, updates);
+		} finally
+		{
+			this.write_lock.unlock();
+		}
 	}
 	
 	/**
-	 * Check whether the {@link ToCommitTransaction} write-conflicts with other already committed transactions.
+	 * Check whether the {@link ToCommitTransaction} is write-conflict-free w.r.t already committed transactions.
 	 * @param tx the transaction to commit
-	 * @return <code>true</code>, if write-conflict happens; <code>false</code>, otherwise.
+	 * @return <code>true</code>, if tx is write-conflict-free w.r.t committed transactions. <code>false</code>, otherwise.
+	 * 
+	 * <p>
+	 * <b>TODO</b> check the side-effects on the original underlying collections. 
 	 */
-	public boolean conflictCheck(ToCommitTransaction tx)
+	public boolean wcf(ToCommitTransaction tx)
 	{
 		Collection<BufferedUpdates> overlapping_tx_updates = this.containersOf(tx.getSts()); 
 		
@@ -53,9 +70,9 @@ public class StartCommitLogs
 						(acc_cks_1, acc_cks_2) -> { acc_cks_1.addAll(acc_cks_2); return acc_cks_1; }
 						);
 				
-		overlapping_updated_cks.retainAll(tx.getBuffered_updates().getUpdatedCKeys());
+		overlapping_updated_cks.retainAll(tx.getBuffered_Updates().getUpdatedCKeys());
 		
-		return (! overlapping_updated_cks.isEmpty());
+		return overlapping_updated_cks.isEmpty();
 	}
 
 	/**
@@ -64,6 +81,13 @@ public class StartCommitLogs
 	 */
 	protected Collection<BufferedUpdates> containersOf(Timestamp sts)
 	{
-		return this.start_commit_logs.searchContaining(sts, sts);
+		this.read_lock.lock();
+		try
+		{
+			return this.start_commit_logs.searchContaining(sts, sts);
+		} finally
+		{
+			this.write_lock.unlock();
+		}
 	}
 }

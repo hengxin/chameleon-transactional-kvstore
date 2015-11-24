@@ -16,6 +16,8 @@ import kvs.component.Timestamp;
  * 
  * <p> <b>Note:</b> A {@link TimestampedCell} is uniquely identified by its {@value #ts} ({@link Timestamp}) field.
  * See its {@link #compareTo(ITimestampedCell)}, {@link #hashCode()}, and {@link #equals(Object)}.
+ * 
+ * <p> FIXME How to update {@link #ord}???
  */
 public class TimestampedCell implements ITimestampedCell
 {

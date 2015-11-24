@@ -12,12 +12,12 @@ import kvs.component.Timestamp;
 public class ToCommitTransaction
 {
 	private final Timestamp sts;
-	private final BufferedUpdates buffered_updates;
+	private final BufferedUpdates buffered_Updates;
 	
 	public ToCommitTransaction(Timestamp sts, BufferedUpdates updates)
 	{
 		this.sts = sts;
-		this.buffered_updates = updates;
+		this.buffered_Updates = updates;
 	}
 
 	public Timestamp getSts()
@@ -25,8 +25,8 @@ public class ToCommitTransaction
 		return sts;
 	}
 
-	public BufferedUpdates getBuffered_updates()
+	public BufferedUpdates getBuffered_Updates()
 	{
-		return buffered_updates;
+		return buffered_Updates;
 	}
 }
