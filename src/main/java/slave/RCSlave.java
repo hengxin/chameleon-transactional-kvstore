@@ -2,6 +2,7 @@ package slave;
 
 import kvs.table.AbstractTableHolder;
 import kvs.table.SlaveTable;
+import messages.AbstractMessage;
 
 /**
  * @author hengxin
@@ -14,5 +15,11 @@ public class RCSlave extends AbstractTableHolder implements ISlave
 	public RCSlave()
 	{
 		super.table = new SlaveTable();
+	}
+
+	@Override
+	public void onMessage(AbstractMessage message)
+	{
+		
 	}
 }

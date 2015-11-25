@@ -24,7 +24,7 @@ public class JMSCommitLogPublisher extends AbstractJMSParticipant
 	{
 		/**
 		 * FIXME using #createByteMessage() instead of #createObjectMessage() 
-		 * for good performance and portability.
+		 * for better performance and portability.
 		 * 
 		 * <p> not necessary??? {@link AbstractMessage} implements {@link Serializable}
 		 */

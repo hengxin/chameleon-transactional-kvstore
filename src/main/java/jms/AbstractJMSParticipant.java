@@ -93,7 +93,6 @@ public abstract class AbstractJMSParticipant
 
 	/**
 	 * Close the JMS connection.
-	 * 
 	 * @throws JMSException
 	 */
 	public void close() throws JMSException

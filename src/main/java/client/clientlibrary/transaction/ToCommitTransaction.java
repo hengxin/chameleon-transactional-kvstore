@@ -1,6 +1,7 @@
 package client.clientlibrary.transaction;
 
 import kvs.component.Timestamp;
+import messages.AbstractMessage;
 
 /**
  * @author hengxin
@@ -9,8 +10,10 @@ import kvs.component.Timestamp;
  * <p> To represent the transaction which is about to commit;
  * It consists of a transaction's start-timestamp and buffered updates.
  */
-public class ToCommitTransaction
+public class ToCommitTransaction extends AbstractMessage
 {
+	private static final long serialVersionUID = -137070517043340731L;
+
 	private final Timestamp sts;
 	private final BufferedUpdates buffered_Updates;
 	
