@@ -2,18 +2,21 @@ package jms;
 
 import static org.junit.Assert.*;
 
-import org.codehaus.groovy.control.messages.SimpleMessage;
 import org.junit.Before;
 import org.junit.Test;
 
 import jms.master.JMSCommitLogPublisher;
 import jms.slave.JMSCommitLogSubscriber;
+import kvs.table.AbstractTable;
+import kvs.table.SlaveTable;
 import messages.AbstractMessage;
 
 public class JMSCommitLogSubscriberTest
 {
 	private final AbstractJMSParticipant publisher = new JMSCommitLogPublisher();
 	private final AbstractJMSParticipant subscriber = new JMSCommitLogSubscriber();
+	
+	private AbstractTable table = new SlaveTable();
 	
 	@Before
 	public void setUp() throws Exception

@@ -31,7 +31,7 @@ public class MasterLauncher
 		IMaster master_stub = null;
 		try
 		{
-			master_stub = (IMaster) UnicastRemoteObject.exportObject(SIMaster.INSTANCE, 0);	// port 0: chosen at runtime
+			master_stub = (IMaster) UnicastRemoteObject.exportObject(new SIMaster(), 0);	// port 0: chosen at runtime
 			LocateRegistry.createRegistry(MasterLauncher.REGISTRY_PORT).rebind(SIMASTER_REGISTRY_NAME, master_stub);
 		} catch(RemoteException re)
 		{
