@@ -13,10 +13,15 @@ import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
 import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
+import javax.jms.TopicSubscriber;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import jms.master.JMSCommitLogPublisher;
+import jms.slave.JMSCommitLogSubscriber;
 
 /**
  * @author hengxin
@@ -36,6 +41,9 @@ public abstract class AbstractJMSParticipant
 	private TopicConnection connection = null;
 	protected TopicSession session = null;
 
+	protected TopicPublisher publisher = null;
+	protected TopicSubscriber subscriber = null;
+	
 	/**
 	 * Load JMS configuration, initialize context, create connection factory, create top connection,
 	 * create session, create publisher or subscriber (as a message listener),

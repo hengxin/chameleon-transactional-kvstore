@@ -35,8 +35,8 @@ public class AbstractVersionConstraintTest
 	private CompoundKey ck_r2_c1 = new CompoundKey("R2", "C1");
 	private CompoundKey ck_r2_c2 = new CompoundKey("R2", "C2");
 	
-	private TimestampedCell tc1 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, Ordinal.ORDINAL_INIT, new Cell("R1C1"));
-	private TimestampedCell tc2 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, Ordinal.ORDINAL_INIT, new Cell("R2C2"));
+	private TimestampedCell tc1 = new TimestampedCell(Timestamp.TIMESTAMP_INIT_ZERO, Ordinal.ORDINAL_INIT, new Cell("R1C1"));
+	private TimestampedCell tc2 = new TimestampedCell(Timestamp.TIMESTAMP_INIT_ZERO, Ordinal.ORDINAL_INIT, new Cell("R2C2"));
 	
 	@Before
 	public void setUp() throws Exception

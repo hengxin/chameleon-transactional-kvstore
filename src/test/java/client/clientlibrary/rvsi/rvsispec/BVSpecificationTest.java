@@ -29,8 +29,8 @@ public class BVSpecificationTest
 	private CompoundKey ck_r2_c1 = new CompoundKey("R2", "C1");
 	private CompoundKey ck_r2_c2 = new CompoundKey("R2", "C2");
 
-	private TimestampedCell tc1 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, new Ordinal(1L), new Cell("R1C1"));
-	private TimestampedCell tc2 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, new Ordinal(2L), new Cell("R2C2"));
+	private TimestampedCell tc1 = new TimestampedCell(Timestamp.TIMESTAMP_INIT_ZERO, new Ordinal(1L), new Cell("R1C1"));
+	private TimestampedCell tc2 = new TimestampedCell(Timestamp.TIMESTAMP_INIT_ZERO, new Ordinal(2L), new Cell("R2C2"));
 	
 	private Timestamp sts = new Timestamp(5L);
 	

@@ -26,8 +26,8 @@ import kvs.component.Timestamp;
  */
 public class RVSITransaction implements ITransaction
 {
-	private Timestamp sts = Timestamp.TIMESTAMP_INIT;	// start-timestamp
-	private Timestamp cts = Timestamp.TIMESTAMP_INIT;	// commit-timestamp
+	private Timestamp sts = Timestamp.TIMESTAMP_INIT_ZERO;	// start-timestamp
+	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
 
 	private BufferedUpdates buffered_updates = new BufferedUpdates();	// to buffer write operations
 	private QueryResults query_results = new QueryResults();			// to store query results

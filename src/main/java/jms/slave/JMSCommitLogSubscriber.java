@@ -6,7 +6,6 @@ package jms.slave;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.TopicSubscriber;
 
 import jms.AbstractJMSParticipant;
 
@@ -18,8 +17,6 @@ import jms.AbstractJMSParticipant;
  */
 public class JMSCommitLogSubscriber extends AbstractJMSParticipant implements MessageListener
 {
-	private TopicSubscriber subscriber = null;
-	
 	@Override
 	public void onMessage(Message msg)
 	{
@@ -32,8 +29,8 @@ public class JMSCommitLogSubscriber extends AbstractJMSParticipant implements Me
 	@Override
 	public void participate() throws JMSException
 	{
-		this.subscriber = super.session.createSubscriber(super.cl_topic);
-		this.subscriber.setMessageListener(this);
+		super.subscriber = super.session.createSubscriber(super.cl_topic);
+		super.subscriber.setMessageListener(this);
 	}
 
 }

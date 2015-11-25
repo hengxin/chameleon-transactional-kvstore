@@ -1,11 +1,12 @@
 package jms;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +18,7 @@ import kvs.component.Cell;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
+import kvs.compound.TimestampedCell;
 import kvs.table.AbstractTable;
 import kvs.table.SlaveTable;
 import messages.AbstractMessage;
@@ -36,6 +38,7 @@ public class JMSCommitLogSubscriberTest
 	private AbstractMessage commit_log_message = null;
 	
 	private AbstractTable table = new SlaveTable();
+	@SuppressWarnings("unused")
 	private AbstractJMSParticipant subscriber = null;
 
 	@Before
@@ -48,19 +51,25 @@ public class JMSCommitLogSubscriberTest
 		this.buffered_updates.intoBuffer(this.ck_ry_cy, this.cell_ry_cy);
 		this.commit_log_message = new ToCommitTransaction(this.sts, this.buffered_updates);
 
+		Assert.assertNotNull("The message to be published cannot be null.", this.commit_log_message);
+
 		((JMSCommitLogPublisher) this.publisher).publish(this.commit_log_message);
 	}
 
 	@Test
-	public void testParticipate()
+	public void testOnMessage() throws InterruptedException
 	{
-		fail("Not yet implemented"); // TODO
-	}
+		// wait a moment for the subscriber to receive the {@link ToCommitTransaction} log and update the {@link #table}
+		Thread.sleep(2000);
 
-	@Test
-	public void testOnMessage()
-	{
-		ITimestampedCell ts_cell = this.table.getTimestampedCell(this.ck_rx_cx.getRow(), this.ck_ry_cy.getCol());
+		ITimestampedCell ts_cell_rx_cx = this.table.getTimestampedCell(this.ck_rx_cx.getRow(), this.ck_rx_cx.getCol());
+		assertEquals("Should get the updated cell: RxCx.", this.cell_rx_cx, ts_cell_rx_cx.getCell());
+		
+		ITimestampedCell ts_cell_ry_cy = this.table.getTimestampedCell(this.ck_ry_cy.getRow(), this.ck_ry_cy.getCol());
+		assertEquals("Should get the updated cell: RyCy.", this.cell_ry_cy, ts_cell_ry_cy.getCell());
+		
+		ITimestampedCell ts_cell_no_such_data = this.table.getTimestampedCell(this.ck_rx_cx.getRow(), this.ck_ry_cy.getCol());
+		assertEquals("Should get the initial cell.", TimestampedCell.TIMESTAMPED_CELL_INIT, ts_cell_no_such_data);
 	}
 	
 	/**

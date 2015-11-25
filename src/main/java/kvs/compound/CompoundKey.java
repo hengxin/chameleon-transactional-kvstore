@@ -3,6 +3,8 @@
  */
 package kvs.compound;
 
+import java.io.Serializable;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
@@ -16,8 +18,10 @@ import kvs.table.ITimestampedCellStore;
  * 
  * Compound key = {@link Row} key + {@link Column} key, to uniquely identify an {@link ITimestampedCellStore} 
  */
-public class CompoundKey
+public class CompoundKey implements Serializable
 {
+	private static final long serialVersionUID = -4184998600697675989L;
+
 	private final Row row;
 	private final Column col;
 

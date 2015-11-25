@@ -21,17 +21,17 @@ import kvs.component.Timestamp;
  */
 public class TimestampedCell implements ITimestampedCell
 {
-	private Timestamp ts = Timestamp.TIMESTAMP_INIT;
+	private Timestamp ts = Timestamp.TIMESTAMP_INIT_ZERO;
 	private Ordinal ord = Ordinal.ORDINAL_INIT;
 	private Cell cell = Cell.CELL_INIT;
 	
 	/**
-	 * initial value: {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
+	 * initial value: {@value Timestamp#TIMESTAMP_INIT_ZERO}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
 	 */
 	public static TimestampedCell TIMESTAMPED_CELL_INIT = new TimestampedCell();
 	
 	/**
-	 * default constructor: with {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
+	 * default constructor: with {@value Timestamp#TIMESTAMP_INIT_ZERO}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
 	 */
 	public TimestampedCell() {}
 	

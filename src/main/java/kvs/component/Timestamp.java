@@ -1,5 +1,7 @@
 package kvs.component;
 
+import java.io.Serializable;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
@@ -8,12 +10,11 @@ import com.google.common.collect.ComparisonChain;
  * @author hengxin
  * @date Created on 11-10-2015
  */
-public class Timestamp implements Comparable<Timestamp>
+public class Timestamp implements Comparable<Timestamp>, Serializable
 {
-	/**
-	 * Initial value: 0
-	 */
-	public static Timestamp TIMESTAMP_INIT = new Timestamp();
+	private static final long serialVersionUID = -4196523878242377170L;
+
+	public static Timestamp TIMESTAMP_INIT_ZERO = new Timestamp();
 	
 	private long ts = 0L;
 	
