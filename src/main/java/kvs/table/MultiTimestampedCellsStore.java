@@ -53,7 +53,7 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 	@Override
 	public void put(ITimestampedCell ts_cell)
 	{
-		Assert.assertTrue("It is not intended to replace an existing data.", this.ts_cells.contains(ts_cell));
+		Assert.assertTrue("It is not intended to replace an existing data.", ! this.ts_cells.contains(ts_cell));
 		this.ts_cells.add(ts_cell);
 	}
 
