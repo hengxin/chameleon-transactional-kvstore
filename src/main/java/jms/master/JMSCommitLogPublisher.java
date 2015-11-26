@@ -3,19 +3,20 @@ package jms.master;
 import javax.jms.JMSException;
 
 import jms.AbstractJMSParticipant;
+import kvs.table.AbstractSite;
 import messages.AbstractMessage;
 
 /**
+ * <p> The publisher of the commit logs. It is the master.
+ * 
  * @author hengxin
  * @date Created on 11-12-2015
- * 
- * <p> The publisher of the commit logs. It is the master.
  */
 public class JMSCommitLogPublisher extends AbstractJMSParticipant
 {
 	/**
 	 * @param msg An {@link AbstractMessage} to publish
-     * @throws JMSException  if the JMS provider fails to publish the message due to some internal error
+     * @throws JMSException  if the JMS provider fails to publish the message due to some internal error.
 	 */
 	public void publish(AbstractMessage msg) throws JMSException
 	{
@@ -34,5 +35,10 @@ public class JMSCommitLogPublisher extends AbstractJMSParticipant
 	public void participate() throws JMSException
 	{
 		super.publisher = super.session.createPublisher(super.cl_topic);
+	}
+
+	@Override
+	public void bindto(AbstractSite site)
+	{
 	}
 }

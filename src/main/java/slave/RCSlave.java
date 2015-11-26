@@ -1,16 +1,18 @@
 package slave;
 
-import kvs.table.AbstractTableHolder;
+import jms.AbstractJMSParticipant;
+import kvs.table.AbstractSite;
 import kvs.table.SlaveTable;
 import messages.AbstractMessage;
+import messages.IMessageConsumer;
 
 /**
+ * A slave only need to enforce the "Read Committed" isolation on {@link SlaveTable}.
+ * 
  * @author hengxin
  * @date Created on 11-25-2015
- * 
- * A slave only need to enforce "Read Committed" isolation on {@link SlaveTable}.
  */
-public class RCSlave extends AbstractTableHolder implements ISlave
+public class RCSlave extends AbstractSite implements ISlave, IMessageConsumer
 {
 	public RCSlave()
 	{
@@ -21,5 +23,12 @@ public class RCSlave extends AbstractTableHolder implements ISlave
 	public void onMessage(AbstractMessage message)
 	{
 		
+	}
+	
+	@Override
+	public void registerAsJMSParticipant(AbstractJMSParticipant jmser)
+	{
+		super.registerAsJMSParticipant(jmser);
+		jmser.bindto(this);
 	}
 }

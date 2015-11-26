@@ -3,12 +3,12 @@ package slave;
 import messages.AbstractMessage;
 
 /**
+ * Interface for the slave sites.
+ * For now, it is an <em>empty</em> interface.
+ * 
  * @author hengxin
  * @date Created 10-28-2015
- * 
- * Interface for the slave sites
  */
 public interface ISlave
 {
-	public abstract void onMessage(AbstractMessage message);
 }

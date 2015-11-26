@@ -22,6 +22,7 @@ import javax.naming.NamingException;
 
 import jms.master.JMSCommitLogPublisher;
 import jms.slave.JMSCommitLogSubscriber;
+import kvs.table.AbstractSite;
 
 /**
  * @author hengxin
@@ -43,6 +44,8 @@ public abstract class AbstractJMSParticipant
 
 	protected TopicPublisher publisher = null;
 	protected TopicSubscriber subscriber = null;
+	
+	protected AbstractSite site = null;	// bind to a site
 	
 	/**
 	 * Load JMS configuration, initialize context, create connection factory, create top connection,
@@ -119,4 +122,14 @@ public abstract class AbstractJMSParticipant
 		AbstractJMSParticipant.CONNECTION_FACTORY = prop.getProperty("cf");
 		AbstractJMSParticipant.TOPIC = prop.getProperty("topic");
 	}
+
+	/**
+	 * Bind this {@link AbstractJMSParticipant} to an {@link AbstractSite}.
+	 * 
+	 * <p> For now, only the {@link JMSCommitLogSubscriber} needs to implement it 
+	 * and binds itself to an {@link ISlave}.
+	 *  
+	 * @param site an {@link AbstractSite} to be bound to.
+	 */
+	public abstract void bindto(AbstractSite site);
 }

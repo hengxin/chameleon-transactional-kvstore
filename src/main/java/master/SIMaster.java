@@ -6,27 +6,34 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.jms.JMSException;
+
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
+import jms.AbstractJMSParticipant;
+import jms.master.JMSCommitLogPublisher;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
-import kvs.table.AbstractTableHolder;
+import kvs.table.AbstractSite;
 import kvs.table.MasterTable;
 import master.mvcc.StartCommitLogs;
+import messages.AbstractMessage;
+import messages.IMessageProducer;
 
 /**
+ * Master employs an MVCC protocol to locally implement snapshot isolation (SI, for short).
+ * 
  * @author hengxin
  * @date Created on 10-27-2015
- * 
- * <p>Master employs an MVCC protocol to locally implement SI isolation level.
  */
-public class SIMaster extends AbstractTableHolder implements IMaster
+public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
 	private final ExecutorService exec = Executors.newCachedThreadPool();
@@ -35,7 +42,7 @@ public class SIMaster extends AbstractTableHolder implements IMaster
 	private StartCommitLogs logs = new StartCommitLogs();	// commit log: each entry is composed of start-timestamp, commit-timestamp, and buffered updates of a transaction
 
 	/**
-	 * Constructor: attach a {@link MasterTable} to it.
+	 * Constructor: hold a {@link MasterTable}. 
 	 */
 	public SIMaster()
 	{
@@ -78,6 +85,7 @@ public class SIMaster extends AbstractTableHolder implements IMaster
 	 * </ol><p>
 	 * <b>Note:</b> (3) and (4) cannot be re-ordered!
 	 *  
+	 * <p> TODO Start a new thread? 
 	 */
 	@Override
 	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager)
@@ -120,6 +128,21 @@ public class SIMaster extends AbstractTableHolder implements IMaster
 		}
 		
 		return can_committed;
+	}
+
+	@Override
+	public void send(AbstractMessage msg)
+	{
+		Assert.assertNotNull("Please call registerASJMSParticipant() first.", super.jmser); 
+
+		try
+		{
+			((JMSCommitLogPublisher) super.jmser).publish(msg);
+		} catch (JMSException jmse)
+		{
+			System.out.format("Fail to publish the message [%s], due to %s.", msg.toString(), jmse.getMessage());
+			jmse.printStackTrace();
+		}
 	}
 
 }
