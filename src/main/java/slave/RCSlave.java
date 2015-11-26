@@ -2,6 +2,9 @@ package slave;
 
 import client.clientlibrary.transaction.ToCommitTransaction;
 import jms.AbstractJMSParticipant;
+import kvs.component.Column;
+import kvs.component.Row;
+import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractSite;
 import kvs.table.SlaveTable;
 import messages.AbstractMessage;
@@ -23,8 +26,7 @@ public class RCSlave extends AbstractSite implements ISlave, IMessageConsumer
 	@Override
 	public void onMessage(AbstractMessage a_msg)
 	{
-		ToCommitTransaction commit_log_msg = (ToCommitTransaction) a_msg;
-		super.table.apply(commit_log_msg.getSts(), commit_log_msg.getBuffered_Updates());
+		super.table.apply((ToCommitTransaction) a_msg);
 	}
 	
 	@Override
@@ -32,5 +34,17 @@ public class RCSlave extends AbstractSite implements ISlave, IMessageConsumer
 	{
 		super.registerAsJMSParticipant(jmser);
 		jmser.bindto(this);
+	}
+
+	@Override
+	public ITimestampedCell read(Row row, Column col)
+	{
+		return super.table.getTimestampedCell(row, col);
+	}
+
+	@Override
+	public void apply(ToCommitTransaction tx)
+	{
+		super.table.apply(tx);
 	}
 }

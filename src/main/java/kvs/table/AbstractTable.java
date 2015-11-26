@@ -15,6 +15,7 @@ import org.junit.Assert;
 import com.google.common.collect.TreeBasedTable;
 
 import client.clientlibrary.transaction.BufferedUpdates;
+import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
@@ -110,6 +111,15 @@ public abstract class AbstractTable
 	public void put(Row row, Map<Column, ITimestampedCell> col_data_map)
 	{
 		//TODO: 
+	}
+	
+	/**
+	 * Apply the {@link ToCommitTransaction} to this {@link #table}
+	 * @param tx transaction commit log of type {@link ToCommitTransaction}
+	 */
+	public void apply(ToCommitTransaction tx)
+	{
+		this.apply(tx.getSts(), tx.getBuffered_Updates());
 	}
 	
 	/**
