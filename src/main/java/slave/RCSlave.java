@@ -1,5 +1,6 @@
 package slave;
 
+import client.clientlibrary.transaction.ToCommitTransaction;
 import jms.AbstractJMSParticipant;
 import kvs.table.AbstractSite;
 import kvs.table.SlaveTable;
@@ -20,9 +21,10 @@ public class RCSlave extends AbstractSite implements ISlave, IMessageConsumer
 	}
 
 	@Override
-	public void onMessage(AbstractMessage message)
+	public void onMessage(AbstractMessage a_msg)
 	{
-		
+		ToCommitTransaction commit_log_msg = (ToCommitTransaction) a_msg;
+		super.table.apply(commit_log_msg.getSts(), commit_log_msg.getBuffered_Updates());
 	}
 	
 	@Override
