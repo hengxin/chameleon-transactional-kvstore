@@ -13,10 +13,10 @@ import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Timestamp;
 
 /**
- * @author hengxin
- * @date 10-27-2015
+ * k1-BV (Backward View) specification.
  * 
- * k1-bv (backward view) specification
+ * @author hengxin
+ * @date Created on 10-27-2015
  */
 public class BVSpecification extends AbstractRVSISpecification
 {

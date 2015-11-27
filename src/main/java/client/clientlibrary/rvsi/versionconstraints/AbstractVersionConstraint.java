@@ -35,7 +35,7 @@ public abstract class AbstractVersionConstraint
 	public abstract boolean check();
 	
 	/**
-	 * Extract elements from {@link AbstractRVSISpecification} and {@link QueryResults} 
+	 * Extract {@link VersionConstraintElement} from {@link AbstractRVSISpecification} and {@link QueryResults} 
 	 * for generating {@link AbstractVersionConstraint}.
 	 * 
 	 * <p> This method will be used by {@link BVSpecification} and {@link FVSpecification}
@@ -43,9 +43,9 @@ public abstract class AbstractVersionConstraint
 	 * 
 	 * <p>Basically, it <b>joins</b> the two maps {@link AbstractRVSISpecification} and {@link QueryResults}
 	 * by their common keys. 
-	 * 
-	 * <p>For example:
-	 * suppose that the rvsi_spec_map has been flatten as { x->2, y->2, z->3, u->4, v->4, w->4 }
+	 * <p>
+	 * @example
+	 * Suppose that the rvsi_spec map has been flatten as { x->2, y->2, z->3, u->4, v->4, w->4 }
 	 * (see AbstractRVSISpecification#flattenRVSISpecMap()) and that the query_result_map is 
 	 * { x->TC1, u->TC2}, then the result will be a list { <x,TC1,2>, <u,TC2,4> }. 
 	 * 
@@ -54,15 +54,15 @@ public abstract class AbstractVersionConstraint
 	 * 
 	 * @return a list of triple of ({@link CompoundKey}, {@link TimestampedCell}, {@link Long})
 	 */
-	public static List<Triple<CompoundKey, TimestampedCell, Long>> extractVersionConstraintElements(AbstractRVSISpecification rvsi_spec, QueryResults query_results)
+	public static List<VersionConstraintElement> extractVersionConstraintElements(AbstractRVSISpecification rvsi_spec, QueryResults query_results)
 	{
 		return rvsi_spec.flattenRVSISpecMap().entrySet().stream()
-			.<Triple<CompoundKey, TimestampedCell, Long>>map(flatten_rvsi_spec_entry ->
+			.<VersionConstraintElement>map(flatten_rvsi_spec_entry ->
 				{
 					CompoundKey ck = flatten_rvsi_spec_entry.getKey();
-					return Triple.of(ck, query_results.getQueryResults().get(ck), flatten_rvsi_spec_entry.getValue());
+					return new VersionConstraintElement(ck, query_results.getQueryResults().get(ck), flatten_rvsi_spec_entry.getValue());
 				})
-			.filter(triple -> triple.getMiddle() != null)
+			.filter(vc_ele -> vc_ele.getVceTsCell() != null)
 			.collect(Collectors.toList());
 	}
 	

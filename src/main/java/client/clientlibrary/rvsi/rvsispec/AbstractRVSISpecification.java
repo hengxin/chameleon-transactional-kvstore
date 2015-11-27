@@ -16,13 +16,13 @@ import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 
 /**
- * @author hengxin
- * @date Created on 10-27-2015
- * 
  * <p> RVSI specifications, including k1-bv (backward view; see {@link BVSpecification}), 
  * k2-fv (forward view; see {@link FVSpecification}), and k3-sv (snapshot view; see {@link SVSpecification}).
  * Each specification is like: { {x} -> 1, {y,z} -> 2, {u,v,w} -> 4}, which is a map of 
  * a set of keys {@link CompoundKey} to an Integer staleness bound.
+ * 
+ * @author hengxin
+ * @date Created on 10-27-2015
  */
 public abstract class AbstractRVSISpecification
 {
@@ -42,7 +42,7 @@ public abstract class AbstractRVSISpecification
 	 * 
 	 * <p> This utility method is <em>only</em> for {@link BVSpecification} and {@link FVSpecification}
 	 * to generate their respective {@link AbstractVersionConstraint}.
-	 * {@SVSpecification} does not use it.
+	 * {@link SVSpecification} does not use it.
 	 * 
 	 * <p> <b>Note:</b> The implementation using Java 8 Stream APIs is due to Tagir Valeev from StackOverflow.
 	 * See <a href="http://stackoverflow.com/a/33748545/1833118">Flatten the map and associate values using Java 8 Stream APIs</a>
