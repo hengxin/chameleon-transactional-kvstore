@@ -9,9 +9,11 @@ import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
 
 /**
+ * The query results are a map of {@link CompoundKey} to {@link TimestampedCell}.
+ * <p>
  * The client stores the query results and uses them, along with {@link AbstractRVSISpecification}, 
- * to compute the version constraints when the transaction is about to commit.
- * 
+ * to generate version constraints when a transaction is about to commit.
+ * <p>
  * WARNING: Although in the normal case only the single client thread manipulates the {@link QueryResults}, 
  *   we have implemented it as thread-safe. 
  *   Thus, it can be safely used in some cases where multiple threads are allowed to 

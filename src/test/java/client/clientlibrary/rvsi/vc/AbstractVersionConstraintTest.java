@@ -1,4 +1,4 @@
-package client.clientlibrary.rvsi.versionconstraints;
+package client.clientlibrary.rvsi.vc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

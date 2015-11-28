@@ -100,7 +100,7 @@ public abstract class AbstractRVSISpecification
 					CompoundKey ck = flatten_rvsi_spec_entry.getKey();
 					return new VCEntryRawInfo(ck, query_results.getTsCell(ck), flatten_rvsi_spec_entry.getValue());
 				})
-			.filter(vc_ele -> vc_ele.getVceInfoTsCell() != null)
+			.filter(vc_ele -> vc_ele.getVceInfoTscell() != null)
 			.collect(Collectors.toList());
 	}
 
@@ -126,7 +126,7 @@ public abstract class AbstractRVSISpecification
 	protected static List<VCEntry> transform(List<VCEntryRawInfo> vce_info_list, Timestamp ts)
 	{
 		return vce_info_list.stream()
-				.<VCEntry>map(vce_info -> new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoTsCell().getOrdinal(), ts, vce_info.getVceInfoBound()))
+				.<VCEntry>map(vce_info -> new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoTsCellOrd(), ts, vce_info.getVceInfoBound()))
 				.collect(Collectors.toList());
 	}
 	
