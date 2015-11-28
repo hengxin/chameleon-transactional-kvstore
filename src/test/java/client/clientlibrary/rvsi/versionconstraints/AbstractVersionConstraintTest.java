@@ -15,6 +15,10 @@ import org.junit.Test;
 
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
+import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
+import client.clientlibrary.rvsi.vc.BVVersionConstraint;
+import client.clientlibrary.rvsi.vc.FVVersionConstraint;
+import client.clientlibrary.rvsi.vc.VCEntry;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Cell;
 import kvs.component.Ordinal;

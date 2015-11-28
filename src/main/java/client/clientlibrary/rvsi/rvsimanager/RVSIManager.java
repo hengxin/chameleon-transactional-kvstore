@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
-import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
+import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.transaction.RVSITransaction;
 
 /**

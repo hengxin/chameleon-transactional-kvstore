@@ -19,7 +19,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import client.clientlibrary.rvsi.versionconstraints.VCEntryRawInfo;
+import client.clientlibrary.rvsi.vc.VCEntryRawInfo;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Cell;
 import kvs.component.Ordinal;

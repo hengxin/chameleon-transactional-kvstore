@@ -3,7 +3,7 @@ package client.clientlibrary.rvsi.rvsimanager;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
+import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 
 /**
  * @author hengxin

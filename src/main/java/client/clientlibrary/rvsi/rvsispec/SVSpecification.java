@@ -3,7 +3,7 @@
  */
 package client.clientlibrary.rvsi.rvsispec;
 
-import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
+import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Timestamp;
 

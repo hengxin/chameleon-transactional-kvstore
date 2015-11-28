@@ -3,8 +3,8 @@
  */
 package client.clientlibrary.rvsi.rvsispec;
 
-import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
-import client.clientlibrary.rvsi.versionconstraints.BVVersionConstraint;
+import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
+import client.clientlibrary.rvsi.vc.BVVersionConstraint;
 import kvs.component.Timestamp;
 
 /**

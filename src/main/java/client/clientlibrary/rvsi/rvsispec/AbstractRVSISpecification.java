@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
-import client.clientlibrary.rvsi.versionconstraints.VCEntry;
-import client.clientlibrary.rvsi.versionconstraints.VCEntryRawInfo;
+import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
+import client.clientlibrary.rvsi.vc.VCEntry;
+import client.clientlibrary.rvsi.vc.VCEntryRawInfo;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
