@@ -1,6 +1,6 @@
 package client.clientlibrary.rvsi.rvsispec;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.versionconstraints.BVVersionConstraint;
-import client.clientlibrary.rvsi.versionconstraints.VersionConstraintElement;
+import client.clientlibrary.rvsi.versionconstraints.VCEntry;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Cell;
 import kvs.component.Ordinal;
@@ -55,18 +55,16 @@ public class BVSpecificationTest
 	@Test
 	public void testGenerateVersionConstraint()
 	{
-		AbstractVersionConstraint bv_vc = this.rvsi_spec.generateVersionConstraint(this.sts, this.query_results);
+		AbstractVersionConstraint bv_vc = this.rvsi_spec.generateVersionConstraint(this.query_results, this.sts);
 		
-		// 2L = 1L (ordinal of #tc1) + 1L (bv-bound of ck_grp_r1 in #rvsi_spec)
-		VersionConstraintElement vc_element_r1_c1 = new VersionConstraintElement(this.ck_r1_c1, this.sts, 2L);
-		// 4L = 2L (ordinal of #tc2) + 2L (bv-bound of ck_grp_r2 in #rvsi_spec)
-		VersionConstraintElement vc_element_r2_c2 = new VersionConstraintElement(this.ck_r2_c2, this.sts, 4L);
+		VCEntry vce_r1_c1 = new VCEntry(this.ck_r1_c1, new Ordinal(1), this.sts, 1L);
+		VCEntry vce_r2_c2 = new VCEntry(this.ck_r2_c2, new Ordinal(2), this.sts, 2L);
 		
-		List<VersionConstraintElement> expected_vc_element_list = new ArrayList<>();
-		expected_vc_element_list.add(vc_element_r1_c1);
-		expected_vc_element_list.add(vc_element_r2_c2);
+		List<VCEntry> expected_vc_entry_list = new ArrayList<>();
+		expected_vc_entry_list.add(vce_r1_c1);
+		expected_vc_entry_list.add(vce_r2_c2);
 
-		AbstractVersionConstraint expected_bv_vc = new BVVersionConstraint(expected_vc_element_list);
+		AbstractVersionConstraint expected_bv_vc = new BVVersionConstraint(expected_vc_entry_list);
 		
 		assertEquals("These two BV-VC should be equal.", bv_vc, expected_bv_vc);
 	}

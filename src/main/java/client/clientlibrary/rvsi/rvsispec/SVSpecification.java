@@ -15,9 +15,13 @@ public class SVSpecification extends AbstractRVSISpecification
 {
 
 	@Override
-	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts, QueryResults query_results)
+	public void extractVCEntryRawInfo(QueryResults query_results)
 	{
-		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts)
+	{
 		return null;
 	}
 

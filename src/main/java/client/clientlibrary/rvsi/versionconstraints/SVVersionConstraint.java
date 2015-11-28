@@ -3,20 +3,20 @@ package client.clientlibrary.rvsi.versionconstraints;
 import java.util.List;
 
 /**
- * @author hengxin
- * @date Created on 11-16-2015
- * 
- * <p> Snapshot-view version constraint generated according to {@link FVSpecification}
+ * Snapshot-view version constraint generated according to {@link FVSpecification}
  * and {@link QueryResults}.
  * 
  * @see {@link FVSpecification}
+ * 
+ * @author hengxin
+ * @date Created on 11-16-2015
  */
 public class SVVersionConstraint extends AbstractVersionConstraint
 {
 
-	public SVVersionConstraint(List<VersionConstraintElement> vc_element_list)
+	public SVVersionConstraint(List<VCEntry> vc_entry_list)
 	{
-		super(vc_element_list);
+		super(vc_entry_list);
 	}
 
 	@Override

@@ -1,9 +1,7 @@
 package client.clientlibrary.rvsi.versionconstraints;
 
-import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -12,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,40 +59,24 @@ public class AbstractVersionConstraintTest
 		fail("Not yet implemented"); // TODO
 	}
 
-	@Test
-	public void testExtractVersionConstraintElements()
-	{
-		List<Triple<CompoundKey, TimestampedCell, Long>> triples = AbstractVersionConstraint.extractVersionConstraintElements(this.rvsi_spec, this.query_results);
-		
-		@SuppressWarnings("serial")
-		List<Triple<CompoundKey, TimestampedCell, Long>> expected_triples = new ArrayList<Triple<CompoundKey, TimestampedCell, Long>>()
-			{
-				{
-					add(Triple.of(ck_r1_c1, tc1, 1L));
-					add(Triple.of(ck_r2_c2, tc2, 2L));
-				}
-			};
-			
-		assertThat(triples, containsInAnyOrder(expected_triples.toArray()));
-	}
 
 	@Test
 	public void testEquals()
 	{
 		Timestamp ts = new Timestamp(1L);
 		
-		VersionConstraintElement vc_element_r1_c1 = new VersionConstraintElement(this.ck_r1_c1, ts, 2L);
-		VersionConstraintElement vc_element_r2_c2 = new VersionConstraintElement(this.ck_r2_c2, ts, 4L);
-		List<VersionConstraintElement> vc_element_list = new ArrayList<>();
-		vc_element_list.add(vc_element_r1_c1);
-		vc_element_list.add(vc_element_r2_c2);
-		AbstractVersionConstraint bv_vc = new BVVersionConstraint(vc_element_list);
-		AbstractVersionConstraint fv_vc = new FVVersionConstraint(vc_element_list);
+		VCEntry vc_entry_r1_c1 = new VCEntry(this.ck_r1_c1, this.tc1.getOrdinal(), ts, 2L);
+		VCEntry vc_entry_r2_c2 = new VCEntry(this.ck_r2_c2, this.tc2.getOrdinal(), ts, 4L);
+		List<VCEntry> vc_entry_list = new ArrayList<>();
+		vc_entry_list.add(vc_entry_r1_c1);
+		vc_entry_list.add(vc_entry_r2_c2);
+		AbstractVersionConstraint bv_vc = new BVVersionConstraint(vc_entry_list);
+		AbstractVersionConstraint fv_vc = new FVVersionConstraint(vc_entry_list);
 		
-		List<VersionConstraintElement> vc_element_list_ignore_order = new ArrayList<>();
-		vc_element_list_ignore_order.add(vc_element_r2_c2);
-		vc_element_list_ignore_order.add(vc_element_r1_c1);
-		AbstractVersionConstraint bv_vc_ignore_order = new BVVersionConstraint(vc_element_list_ignore_order);
+		List<VCEntry> vc_entry_list_ignore_order = new ArrayList<>();
+		vc_entry_list_ignore_order.add(vc_entry_r2_c2);
+		vc_entry_list_ignore_order.add(vc_entry_r1_c1);
+		AbstractVersionConstraint bv_vc_ignore_order = new BVVersionConstraint(vc_entry_list_ignore_order);
 		
 		assertNotEquals("Null is not equal to this.", bv_vc, null);
 		assertEquals("Element orders should not be important.", bv_vc, bv_vc_ignore_order);

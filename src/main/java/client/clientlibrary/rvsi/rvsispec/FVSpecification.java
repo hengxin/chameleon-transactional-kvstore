@@ -3,13 +3,8 @@
  */
 package client.clientlibrary.rvsi.rvsispec;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import client.clientlibrary.rvsi.versionconstraints.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.versionconstraints.FVVersionConstraint;
-import client.clientlibrary.rvsi.versionconstraints.VersionConstraintElement;
-import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Timestamp;
 
 /**
@@ -22,14 +17,9 @@ public class FVSpecification extends AbstractRVSISpecification
 {
 
 	@Override
-	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts, QueryResults query_results)
+	public AbstractVersionConstraint generateVersionConstraint(Timestamp ts)
 	{
-		List<VersionConstraintElement> vc_element_list = 
-				AbstractVersionConstraint.extractVersionConstraintElements(this, query_results).stream()
-				.<VersionConstraintElement>map(vc_triple -> new VersionConstraintElement(vc_triple.getLeft(), sts, vc_triple.getMiddle().getOrdinal().getOrd() + vc_triple.getRight()))
-				.collect(Collectors.toList());
-
-		return new FVVersionConstraint(vc_element_list);
+		return new FVVersionConstraint(AbstractRVSISpecification.transform(super.vce_info_list, ts));
 	}
 
 }
