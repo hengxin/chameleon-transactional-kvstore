@@ -91,8 +91,9 @@ public abstract class AbstractRVSISpecification
 	 * { x->TC1, u->TC2}, then the result will be a list { <x,TC1,2>, <u,TC2,4> }. 
 	 * 
 	 * @param query_result {@link QueryResults}
+	 * @return 
 	 */
-	public void extractVCEntryRawInfo(QueryResults query_results)
+	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results)
 	{
 		this.vce_info_list = this.flattenRVSISpecMap().entrySet().stream()
 			.<VCEntryRawInfo>map(flatten_rvsi_spec_entry ->
@@ -102,6 +103,8 @@ public abstract class AbstractRVSISpecification
 				})
 			.filter(vc_ele -> vc_ele.getVceInfoTscell() != null)
 			.collect(Collectors.toList());
+		
+		return this.vce_info_list;
 	}
 
 	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results, Timestamp ts)

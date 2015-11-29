@@ -25,11 +25,11 @@ import kvs.compound.TimestampedCell;
 public class QueryResults
 {
 	// TODO WARNING: using multi-hashmap if multiple reads on a data item are allowed in a transaction.
-	private final Map<CompoundKey, TimestampedCell> query_results = new ConcurrentHashMap<>();
+	private final Map<CompoundKey, ITimestampedCell> query_results = new ConcurrentHashMap<>();
 	
-	public void put(CompoundKey ck, TimestampedCell tc)
+	public void put(CompoundKey ck, ITimestampedCell ts_cell_t)
 	{
-		this.query_results.put(ck, tc);
+		this.query_results.put(ck, ts_cell_t);
 	}
 	
 	public ITimestampedCell getTsCell(CompoundKey ck)

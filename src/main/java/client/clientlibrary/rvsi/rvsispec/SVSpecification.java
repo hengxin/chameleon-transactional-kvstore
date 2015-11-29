@@ -3,14 +3,13 @@
  */
 package client.clientlibrary.rvsi.rvsispec;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.ObjectUtils.Null;
 
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.vc.SVVersionConstraint;
@@ -38,39 +37,40 @@ public class SVSpecification extends AbstractRVSISpecification
 	 * @example Suppose that the {@link SVSpecification} (inherited from
 	 *          {@link AbstractRVSISpecification}) is:
 	 *          <p>
-	 *          { {t, s} -> 1, {x, y, z} -> 2, {u, v} -> 3 }
+	 *          { {t, s} -> 1, {w, x, y, z} -> 2, {u, v} -> 3 }
 	 *          <p>
 	 *          and the {@link QueryResults} is:
 	 *          <p>
-	 *          { t -> Cell_t, x -> Cell_x, y -> Cell_y, u -> Cell_u, v -> Cell_v },
+	 *          { t -> Cell_t, x -> Cell_x, y -> Cell_y, z -> Cell_z, u -> Cell_u, v -> Cell_v },
 	 *          <p>
 	 *          then the {@link VCEntryRawInfo} extracted should be as follows:
 	 *          <p>
 	 *          <ol>
-	 *          <li>[ vce_info_kv = {x, Cell_x}, vce_info_kv_optional = {y, Cell_y}, vce_info_bound = 2]
+	 *          <li>[ vce_info_kv = {x, Cell_x}, vce_info_kv_optional = {z, Cell_z}, vce_info_bound = 2]
+	 *          <li>[ vce_info_kv = {y, Cell_y}, vce_info_kv_optional = {z, Cell_z}, vce_info_bound = 2] 
 	 *          <li>[ vce_info_kv = {u, Cell_u}, vce_info_kv_optional = {v, Cell_v}, vce_info_bound = 3]
 	 *          </ol>
 	 *          <p>
 	 *          Note that [vce_info_kv = {t, Cell_t}, 3] is illegal to be an {@link SVVersionConstraint}.
+	 *          We also assume that "Cell_x < Cell_y < Cell_z" when sorted by their {@link Timestamp}s.
 	 * 
 	 */
 	@Override
-	public void extractVCEntryRawInfo(QueryResults query_results)
+	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results)
 	{
 		super.vce_info_list = this.rvsi_spec_map.entrySet().stream()
-				.<VCEntryRawInfo> map(rvsi_spec_entry ->
-					{
-						// TODO
-						return null;
-					})
+				.<VCEntryRawInfo>flatMap(rvsi_spec_entry ->
+						this.expand(this.join(rvsi_spec_entry.getKey(), query_results), rvsi_spec_entry.getValue()).stream()
+					)
 				.collect(Collectors.toList());
+		return super.vce_info_list;
 	}
 
 	/**
 	 * "Join" a set of {@link CompoundKey}s and a {@link QueryResults} which is a map of 
 	 * {@link CompoundKey} to {@link ITimestampedCell}, by their common {@link CompoundKey}.
 	 * 
-	 * @param ck_set a set of {@link CompoundKey}s
+	 * @param ck_set_w_x_y_z a set of {@link CompoundKey}s
 	 * @param query_results {@link QueryResults} which is a map of 
 	 *   {@link CompoundKey} to {@link ITimestampedCell}.
 	 * @return a </em>sorted</em> set of {@link KVItem}s, 
@@ -79,20 +79,20 @@ public class SVSpecification extends AbstractRVSISpecification
 	 * @example
 	 * Suppose that the set of {@link CompoundKey}s are:
 	 * <p>
-	 *   { x, y, z },
+	 *   { w, x, y, z },
 	 * <p>
 	 * and the {@link QueryResults} is:
 	 * <p>
-	 *   { t -> Cell_t, x -> Cell_x, y -> Cell_y, u -> Cell_u, v -> Cell_v },
+	 *   { t -> Cell_t, x -> Cell_x, y -> Cell_y, z -> Cell_z, u -> Cell_u, v -> Cell_v },
 	 * <p>
 	 * then the result is a <em>sorted</em> set of {@link KVItem}s (sorted by their {@link ITimestampedCell}s):
 	 * <p>
-	 *   { [x, Cell_x], [y, Cell_y] }.
+	 *   { [x, Cell_x], [y, Cell_y], [z, Cell_z] }.
 	 * <p>
 	 */
-	private SortedSet<KVItem> join(HashSet<CompoundKey> ck_set, QueryResults query_results)
+	protected SortedSet<KVItem> join(Set<CompoundKey> ck_set_w_x_y_z, QueryResults query_results)
 	{
-		return ck_set.stream()
+		return ck_set_w_x_y_z.stream()
 			.<KVItem>map(ck ->
 			{
 				ITimestampedCell ts_cell = query_results.getTsCell(ck);
@@ -103,15 +103,38 @@ public class SVSpecification extends AbstractRVSISpecification
 	}
 
 	/**
-	 * Expand 
-	 * @param kv_set
-	 * @param bound
-	 * @return
+	 * Expand a sorted sort of {@link KVItem}s into a list of {@link VCEntryRawInfo} structures.
+	 * <p>
+	 * An {@link SVSpecification} involves a set of {@link KVItem}s and a staleness bound.
+	 * It implicitly indicates that <em>every two</em> of them are bounded.
+	 * This method aims to explicitly enumerate them, in the form of {@link VCEntryRawInfo} structures.
+	 * See the example below. 
+	 * 
+	 * @param kv_set a sorted set of {@link KVItem}s
+	 * @param bound staleness bound allowed
+	 * @return a list of {@link VCEntryRawInfo}, used for generating {@link SVVersionConstraint}
+	 * 
+	 * @example
+	 * Suppose the sorted set of {@link KVItem}s is:
+	 * <p>
+	 *   { [x, Cell_x], [y, Cell_y], [z, Cell_z] }, 
+	 *   (Note that we have assumed that "Cell_x < Cell_y < Cell_z" when sorted by their {@link Timestamp}s).
+	 * <p>
+	 * and the staleness bound is 2,
+	 * then we obtain a list of two {@link VCEntryRawInfo}:
+	 * <p>
+	 * <ul>
+	 * <li>[ vce_info_kv = {x, Cell_x}, vce_info_kv_optional = {z, Cell_z}, vce_info_bound = 2]
+	 * <li>[ vce_info_kv = {y, Cell_y}, vce_info_kv_optional = {z, Cell_z}, vce_info_bound = 2] 
+	 * <p>
 	 */
-	private List<VCEntryRawInfo> expand(SortedSet<KVItem> kv_set, final long bound)
+	protected List<VCEntryRawInfo> expand(SortedSet<KVItem> kv_set, final long bound)
 	{
+		if (kv_set.size() < 2)
+			return new ArrayList<VCEntryRawInfo>();
+
 		KVItem kv_optional = kv_set.last();
-		
+		kv_set.remove(kv_optional);
 		return kv_set.stream()
 				.<VCEntryRawInfo>map(kv -> new VCEntryRawInfo(kv, kv_optional, bound))
 				.collect(Collectors.toList());
