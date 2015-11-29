@@ -29,6 +29,13 @@ public class VCEntryRawInfo
 	private final KVItem vce_info_kv_optional;
 	private final long vce_info_bound;
 	
+	public VCEntryRawInfo(final KVItem kv, final KVItem kv_optional, final long bound)
+	{
+		this.vce_info_kv = kv;
+		this.vce_info_kv_optional = kv_optional;
+		this.vce_info_bound = bound;
+	}
+
 	/**
 	 * Constructor without {@link #vce_info_kv_optional}.
 	 * Prepared for constructing {@link VCEntry} for {@link BVVersionConstraint} or {@link FVVersionConstraint}.
