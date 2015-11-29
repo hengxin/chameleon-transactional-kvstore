@@ -13,10 +13,11 @@ import kvs.component.Row;
 import kvs.table.ITimestampedCellStore;
 
 /**
+ * {@link CompoundKey} = {@link Row} key + {@link Column} key, 
+ * to uniquely identify an {@link ITimestampedCellStore}. 
+ * 
  * @author hengxin
  * @date Created: 10-27-2015
- * 
- * Compound key = {@link Row} key + {@link Column} key, to uniquely identify an {@link ITimestampedCellStore} 
  */
 public class CompoundKey implements Serializable
 {
@@ -60,7 +61,7 @@ public class CompoundKey implements Serializable
 			return true;
 		if(o == null)
 			return false;
-		if(! (o instanceof CompoundKey))
+		if(! (this.getClass() == o.getClass()))
 			return false;
 		
 		CompoundKey that = (CompoundKey) o;
@@ -73,12 +74,5 @@ public class CompoundKey implements Serializable
 		return MoreObjects.toStringHelper(this)
 				.addValue(this.row).addValue(this.col)
 				.toString();
-	}
-	
-	public static void main(String[] args)
-	{
-		CompoundKey ck = new CompoundKey(new Row("Row"), new Column("Col"));
-		// Output: CompoundKey{Row{row_key=Row}, Column{col_key=Col}}
-		System.out.println(ck);
 	}
 }

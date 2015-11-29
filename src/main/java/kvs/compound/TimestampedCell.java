@@ -79,18 +79,29 @@ public class TimestampedCell implements ITimestampedCell
 		return this.cell;
 	}
 	
+	/**
+	 * Compared by their {@link #ts} (of class {@link Timestamp}).
+	 */
 	@Override
 	public int compareTo(ITimestampedCell that)
 	{
 		return ComparisonChain.start().compare(this.ts, ((TimestampedCell) that).ts).result();
 	}
 
+	/**
+	 * Only hashCode the {@link #ts} field. 
+	 * Consistent with {@link #compareTo(ITimestampedCell)}.
+	 */
 	@Override
 	public int hashCode()
 	{
 		return Objects.hashCode(this.ts); // , this.cell);
 	}
 	
+	/**
+	 * Only check the {@link #ts} field.
+	 * Consistent with {@link #compareTo(ITimestampedCell)}.
+	 */
 	@Override
 	public boolean equals(Object o)
 	{

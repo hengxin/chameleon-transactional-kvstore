@@ -23,17 +23,34 @@ public class SVSpecification extends AbstractRVSISpecification
 {
 
 	/**
+	 * Extract {@link VCEntryRawInfo} for {@link SVVersionConstraint}.
+	 * Each one consists of two {@link KVItem}s and a staleness bound.
 	 * 
-	 * @param query_results
+	 * @param query_results {@link QueryResults}
 	 * 
 	 * @example
-	 * Suppose that the {@link SVSpecification} (inherited from {@link AbstractRVSISpecification})
-	 * is as follows:
-	 * <p>{
-	 * <p>  {t, s} -> 1,
+	 * Suppose that the {@link SVSpecification} (inherited from {@link AbstractRVSISpecification}) is:
+	 * <p>
+	 * {
+	 *   {t, s} -> 1,
 	 *   {x, y, z} -> 2,
 	 *   {u, v} -> 3
 	 * }
+	 * <p>
+	 * and the {@link QueryResults} is:
+	 * <p>
+	 * {
+	 *   x -> Cell_x,
+	 *   y -> Cell_y,
+	 *   u -> Cell_u  
+	 * },
+	 * <p>
+	 * then the {@link VCEntryRawInfo} extracted should be as follows:
+	 * <p><ol>
+	 * <li> [ vce_info_kv = {x, Cell_x}, vce_info_kv_optional = {y, Cell_y}, vce_info_bound = 2] 
+	 * </ol><p>
+	 * Note that [vce_info_kv = {u, Cell_u}, 3] is illegal to be a {@link SVVersionConstraint}.
+	 * 
 	 */
 	@Override
 	public void extractVCEntryRawInfo(QueryResults query_results)
