@@ -1,11 +1,12 @@
 package client.clientlibrary.rvsi.rvsispec;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -28,18 +29,20 @@ public class SVSpecificationTest
 	
 	private final CompoundKey ck_rt_ct = new CompoundKey("Rt", "Ct");
 	private final CompoundKey ck_rs_cs = new CompoundKey("Rs", "Cs");
-	private long bound_t_s = 1;
+	private final HashSet<CompoundKey> ck_set_ts = new HashSet<>();
+	private long bound_ts = 1;
 
 	private final CompoundKey ck_rw_cw = new CompoundKey("Rw", "Cw");
 	private final CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
 	private final CompoundKey ck_ry_cy = new CompoundKey("Ry", "Cy");
 	private final CompoundKey ck_rz_cz = new CompoundKey("Rz", "Cz");
-	private final Set<CompoundKey> ck_set_wxyz = new HashSet<>();
-	private long bound_w_x_y_z = 2;
+	private final HashSet<CompoundKey> ck_set_wxyz = new HashSet<>();
+	private long bound_wxyz = 2;
 
 	private final CompoundKey ck_ru_cu = new CompoundKey("Ru", "Cu");
 	private final CompoundKey ck_rv_cv = new CompoundKey("Rv", "Cv");
-	private long bound_u_v = 3;
+	private final HashSet<CompoundKey> ck_set_uv = new HashSet<>(); 
+	private long bound_uv = 3;
 	
 	private ITimestampedCell ts_cell_t = new TimestampedCell(new Timestamp(1), new Cell("Cell_t"));
 
@@ -58,11 +61,16 @@ public class SVSpecificationTest
 	@Before
 	public void setUp() throws Exception
 	{
+		this.ck_set_ts.add(ck_rt_ct);
+		this.ck_set_ts.add(ck_rs_cs);
+		
 		this.ck_set_wxyz.add(ck_rw_cw);
 		this.ck_set_wxyz.add(ck_rx_cx);
 		this.ck_set_wxyz.add(ck_ry_cy);
 		this.ck_set_wxyz.add(ck_rz_cz);
 		
+		this.ck_set_uv.add(ck_ru_cu);
+		this.ck_set_uv.add(ck_rv_cv);
 		
 		this.query_results.put(ck_rt_ct, ts_cell_t);
 		
@@ -83,9 +91,18 @@ public class SVSpecificationTest
 		this.vce_info_xyz_list.add(vce_info_y_z_2);
 		
 		VCEntryRawInfo vce_info_u_v_3 = new VCEntryRawInfo(new KVItem(ck_ru_cu, ts_cell_u), new KVItem(ck_rv_cv, ts_cell_v), 3);
+
 		this.vce_info_xyzuv_list.add(vce_info_x_z_2);
 		this.vce_info_xyzuv_list.add(vce_info_y_z_2);
 		this.vce_info_xyzuv_list.add(vce_info_u_v_3);
+		
+		/**
+		 * Initialize #sv_rvsi_spec as:
+	     * { {t, s} -> 1, {w, x, y, z} -> 2, {u, v} -> 3 }
+		 */
+		this.sv_rvsi_spec.addSpec(this.ck_set_ts, this.bound_ts);
+		this.sv_rvsi_spec.addSpec(this.ck_set_wxyz, this.bound_wxyz);
+		this.sv_rvsi_spec.addSpec(this.ck_set_uv, this.bound_uv);
 	}
 
 	@Test
@@ -93,9 +110,6 @@ public class SVSpecificationTest
 	{
 		List<VCEntryRawInfo> expected_vce_info_list = this.vce_info_xyzuv_list;
 		List<VCEntryRawInfo> actual_vce_info_list = this.sv_rvsi_spec.extractVCEntryRawInfo(query_results);
-		
-		System.out.println(expected_vce_info_list);
-		System.out.println(actual_vce_info_list);
 		
 		assertTrue("Fails to extract three VCEntryRawInfo.", CollectionUtils.isEqualCollection(expected_vce_info_list, actual_vce_info_list));
 	}

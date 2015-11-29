@@ -31,6 +31,7 @@ import kvs.compound.CompoundKey;
  */
 public abstract class AbstractRVSISpecification
 {
+	// FIXME replace HashSet by Set???
 	protected Map<HashSet<CompoundKey>, Long> rvsi_spec_map = new HashMap<>();
 	protected List<VCEntryRawInfo> vce_info_list = new ArrayList<>();
 	
