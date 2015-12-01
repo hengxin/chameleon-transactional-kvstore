@@ -6,21 +6,16 @@ import java.util.List;
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 
 /**
+ * This {@link VersionConstraintManager} maintains 
+ * a list of {@link AbstractVersionConstraint}, and
+ * wraps their individual check() procedures in a single method. 
+ *  
  * @author hengxin
  * @date Created on 11-17-2015
- * 
- * <p> Manager of version constraints related tasks:
- * maintaining a list of {@link AbstractVersionConstraint}
- * and triggering their checking procedures.
  */
-public class VersionConstraintManager
+public final class VersionConstraintManager
 {
 	private List<AbstractVersionConstraint> vc_list = new ArrayList<>();
-	
-	public VersionConstraintManager()
-	{
-		
-	}
 	
 	public VersionConstraintManager(List<AbstractVersionConstraint> vc_list)
 	{
@@ -33,7 +28,6 @@ public class VersionConstraintManager
 	 */
 	public boolean check()
 	{
-		return this.vc_list.stream().map(AbstractVersionConstraint::check)
-				.allMatch(check_result -> check_result == true);
+		return this.vc_list.stream().allMatch(vc -> vc.check());
 	}
 }

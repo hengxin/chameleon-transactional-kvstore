@@ -6,7 +6,7 @@ package client.clientlibrary.transaction;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutionException;
 
-import client.clientlibrary.rvsi.rvsimanager.RVSIManager;
+import client.clientlibrary.rvsi.rvsimanager.RVSISpecificationManager;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
@@ -32,7 +32,7 @@ public class RVSITransaction implements ITransaction
 	private BufferedUpdates buffered_updates = new BufferedUpdates();	// to buffer write operations
 	private QueryResults query_results = new QueryResults();			// to store query results
 	
-	private RVSIManager rvsi_manager = new RVSIManager();				// to deal with {@link AbstractRVSISpecification}-related things
+	private RVSISpecificationManager rvsi_manager = new RVSISpecificationManager();				// to deal with {@link AbstractRVSISpecification}-related things
 
 	/* 
 	 * @see client.clientlibrary.Transaction#begin()

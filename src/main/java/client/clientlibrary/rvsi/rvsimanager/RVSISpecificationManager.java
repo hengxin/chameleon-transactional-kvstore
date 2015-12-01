@@ -9,17 +9,16 @@ import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.transaction.RVSITransaction;
 
 /**
- * Manage the rvsi specifications (of {@link AbstractRVSISpecification}) related
- * tasks, including collecting rvsi specifications and generating version
- * constraints (of {@link AbstractVersionConstraint}).
+ * This {@link RVSISpecificationManager} maintains a list of {@link AbstractRVSISpecification},
+ * and is mainly responsible for generating a {@link VersionConstraintManager}.
  * 
  * @author hengxin
  * @date Created on 11-16-2015
  */
-public class RVSIManager
+public final class RVSISpecificationManager
 {
 	// FIXME try {@link Stream} in Java 8 directly.
-	private List<AbstractRVSISpecification> rvsi_spec_list = new ArrayList<>();
+	private final List<AbstractRVSISpecification> rvsi_spec_list = new ArrayList<>();
 
 	public void collectRVSISpecification(AbstractRVSISpecification rvsi_spec)
 	{
