@@ -97,13 +97,13 @@ public class AbstractRVSISpecificationTest
 	@Test
 	public void testExtractVCEntryRawInfo()
 	{
-		this.rvsi_spec.extractVCEntryRawInfo(this.query_results);
+		List<VCEntryRawInfo> actual_vce_info_list = this.rvsi_spec.extractVCEntryRawInfo(this.query_results);
 		
-		List<VCEntryRawInfo> expected_triples = new ArrayList<>();
-		expected_triples.add(new VCEntryRawInfo(ck_r1_c1, tc1, 1));
-		expected_triples.add(new VCEntryRawInfo(ck_r2_c2, tc2, 2));
+		List<VCEntryRawInfo> expected_vce_info_list = new ArrayList<>();
+		expected_vce_info_list.add(new VCEntryRawInfo(ck_r1_c1, tc1, 1));
+		expected_vce_info_list.add(new VCEntryRawInfo(ck_r2_c2, tc2, 2));
 			
-		assertThat("Test the extractVCEntryRawInfo() method", this.rvsi_spec.getVCEntryInfoList(), containsInAnyOrder(expected_triples.toArray()));
+		assertThat("Test the extractVCEntryRawInfo() method", actual_vce_info_list, containsInAnyOrder(expected_vce_info_list.toArray()));
 	}
 
 	/**

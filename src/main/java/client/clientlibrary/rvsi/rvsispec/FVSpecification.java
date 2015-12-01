@@ -15,7 +15,9 @@ import kvs.component.Timestamp;
  */
 public class FVSpecification extends AbstractRVSISpecification
 {
-
+	/**
+	 * Generate {@link FVVersionConstraint}.
+	 */
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp ts)
 	{

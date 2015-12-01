@@ -4,20 +4,23 @@
 package client.clientlibrary.rvsi.rvsispec;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
+import client.clientlibrary.rvsi.vc.BVVersionConstraint;
+import client.clientlibrary.rvsi.vc.FVVersionConstraint;
 import client.clientlibrary.rvsi.vc.VCEntry;
 import client.clientlibrary.rvsi.vc.VCEntryRawInfo;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
+import kvs.compound.ITimestampedCell;
 
 /**
  * RVSI specifications, including k1-bv (backward view; see {@link BVSpecification}), 
@@ -33,7 +36,7 @@ public abstract class AbstractRVSISpecification
 {
 	// FIXME replace HashSet by Set???
 	protected Map<HashSet<CompoundKey>, Long> rvsi_spec_map = new HashMap<>();
-	protected List<VCEntryRawInfo> vce_info_list = new ArrayList<>();
+	protected List<VCEntryRawInfo> vce_info_list = null;
 	
 	public void addSpec(HashSet<CompoundKey> ckey_set_r1, long bound)
 	{
@@ -100,9 +103,10 @@ public abstract class AbstractRVSISpecification
 			.<VCEntryRawInfo>map(flatten_rvsi_spec_entry ->
 				{
 					CompoundKey ck = flatten_rvsi_spec_entry.getKey();
-					return new VCEntryRawInfo(ck, query_results.getTsCell(ck), flatten_rvsi_spec_entry.getValue());
+					ITimestampedCell ts_cell = query_results.getTsCell(ck);
+					return (ts_cell == null) ? null : new VCEntryRawInfo(ck, ts_cell, flatten_rvsi_spec_entry.getValue());
 				})
-			.filter(vc_ele -> vc_ele.getVceInfoTscell() != null)
+			.filter(Objects::nonNull)
 			.collect(Collectors.toList());
 		
 		return this.vce_info_list;
@@ -130,12 +134,12 @@ public abstract class AbstractRVSISpecification
 	protected static List<VCEntry> transform(List<VCEntryRawInfo> vce_info_list, Timestamp ts)
 	{
 		return vce_info_list.stream()
-				.<VCEntry>map(vce_info -> new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoTsCellOrd(), ts, vce_info.getVceInfoBound()))
+				.<VCEntry>map(vce_info -> new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoOrd(), ts, vce_info.getVceInfoBound()))
 				.collect(Collectors.toList());
 	}
 	
-	protected List<VCEntryRawInfo> getVCEntryInfoList()
+	protected void setVceInfoList(List<VCEntryRawInfo> vce_info_list)
 	{
-		return this.vce_info_list;
+		this.vce_info_list = vce_info_list;
 	}
 }

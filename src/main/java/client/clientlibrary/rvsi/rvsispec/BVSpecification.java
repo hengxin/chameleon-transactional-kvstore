@@ -15,7 +15,9 @@ import kvs.component.Timestamp;
  */
 public class BVSpecification extends AbstractRVSISpecification
 {
-
+	/**
+	 * Generate {@link BVVersionConstraint}.
+	 */
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp ts)
 	{

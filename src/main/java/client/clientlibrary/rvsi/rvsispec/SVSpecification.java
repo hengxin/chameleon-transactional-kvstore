@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.vc.SVVersionConstraint;
+import client.clientlibrary.rvsi.vc.VCEntry;
 import client.clientlibrary.rvsi.vc.VCEntryRawInfo;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Timestamp;
@@ -140,10 +141,21 @@ public class SVSpecification extends AbstractRVSISpecification
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Generate {@link SVVersionConstraint}.
+	 * The {@link Timestamp} necessary for {@link SVVersionConstraint} is extracted from 
+	 * {@link VCEntryRawInfo}.
+	 * 
+	 * @param sts This parameter is not used.
+	 */
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts)
 	{
-		return null;
+		List<VCEntry> vce_list =  super.vce_info_list.stream()
+				.<VCEntry>map(vce_info -> 
+					new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoOrd(), vce_info.getVceInfoTsOptional(), vce_info.getVceInfoBound()))
+				.collect(Collectors.toList());
+		return new SVVersionConstraint(vce_list);
 	}
 
 }

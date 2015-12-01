@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import kvs.component.Ordinal;
+import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.KVItem;
@@ -59,55 +60,24 @@ public class VCEntryRawInfo
 		this.vce_info_bound = bound;
 	}
 	
-//	/**
-//	 * This constructor is used as a temporary holder; 
-//	 * prepared for constructing the ultimate {@link VCEntryRawInfo} for {@link SVVersionConstraint}. 
-//	 * 
-//	 * <p>
-//	 * This constructor is called at {@link SVSpecification#extractVCEntryRawInfo(QueryResults)}
-//	 * 
-//	 * @param ck_tscell_map a map of {@link CompoundKey} to {@link ITimestampedCell}
-//	 * @param bound staleness bound allowed
-//	 */
-//	public VCEntryRawInfo(final Map<CompoundKey, ITimestampedCell> ck_tscell_map, final long bound)
-//	{
-//		this.tmp_ck_tscell_map = ck_tscell_map;
-//		this.vce_info_bound = bound;
-//		
-//		this.vce_info_ck = null;
-//		this.vce_info_tscell = null;
-//		this.vce_info_ck_optional = null;
-//		this.vce_info_tscell_optional = null;
-//	}
-	
 	public CompoundKey getVceInfoCk()
 	{
 		return this.vce_info_kv.getCk();
 	}
 
-	public ITimestampedCell getVceInfoTscell()
+	public Ordinal getVceInfoOrd()
 	{
-		return this.vce_info_kv.getTscell();
-	}
-
-	public Ordinal getVceInfoTsCellOrd()
-	{
-		return this.getVceInfoTscell().getOrdinal();
-	}
-	
-	public CompoundKey getVceInfoCkOptional()
-	{
-		return this.vce_info_kv_optional.getCk();
-	}
-	
-	public ITimestampedCell getVceInfoTscellOptional()
-	{
-		return this.vce_info_kv_optional.getTscell();
+		return this.vce_info_kv.getTscell().getOrdinal();
 	}
 	
 	public long getVceInfoBound()
 	{
 		return vce_info_bound;
+	}
+	
+	public Timestamp getVceInfoTsOptional()
+	{
+		return this.vce_info_kv_optional.getTscell().getTS();
 	}
 
 	@Override
