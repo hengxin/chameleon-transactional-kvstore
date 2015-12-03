@@ -1,5 +1,8 @@
 package master;
 
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import jms.AbstractJMSParticipant;
 import jms.master.JMSCommitLogPublisher;
 import kvs.component.Cell;
 import kvs.component.Column;
@@ -36,6 +38,10 @@ import messages.IMessageProducer;
 public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
+
+	public static final String SIMASTER_REGISTRY_NAME = "SIMaster";
+	private static final int REGISTRY_PORT = 1099;
+
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
@@ -145,4 +151,23 @@ public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 		}
 	}
 
+	/**
+	 * Export this object for remote accesses.
+	 */
+	@Override
+	public boolean export()
+	{
+		try
+		{
+			IMaster master_stub = (IMaster) UnicastRemoteObject.exportObject(this, 0);	// port 0: chosen at runtime
+			LocateRegistry.createRegistry(SIMaster.REGISTRY_PORT).rebind(SIMaster.SIMASTER_REGISTRY_NAME, master_stub);
+			
+			return true;
+		} catch(RemoteException re)
+		{
+			LOGGER.debug("Failed to export the master: {}", re.getMessage());
+			re.printStackTrace();
+			return false;
+		}
+	}
 }

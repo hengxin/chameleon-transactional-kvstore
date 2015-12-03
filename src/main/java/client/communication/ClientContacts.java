@@ -14,10 +14,11 @@ import network.membership.StaticMembership;
 import slave.ISlave;
 
 /**
- * @author hengxin
- * @date 10-28-2015
+ * Maintain a contact list for the client of the server nodes 
+ * (including the master and the slaves) via RMI.
  * 
- * Establish a contact list for the client to the server nodes (including the master and the slaves) via RMI.
+ * @author hengxin
+ * @date Created on 10-28-2015
  */
 public enum ClientContacts
 {
@@ -25,24 +26,26 @@ public enum ClientContacts
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(ClientContacts.class);
 	
-	private IMaster remote_master;
+	private IMaster master;
 	private List<ISlave> remote_slaves;
 	
 	private ClientContacts()
 	{
 		try
 		{
-			this.remote_master = (IMaster) LocateRegistry.getRegistry(StaticMembership.INSTANCE.getMasterAddr()).lookup(MasterLauncher.SIMASTER_REGISTRY_NAME);
-			LOGGER.debug("Client has contacted the master: {}.", this.remote_master.toString());
-		} catch (RemoteException | NotBoundException re)
+			this.master = (IMaster) LocateRegistry.getRegistry(StaticMembership.INSTANCE.getMasterAddr()).lookup(MasterLauncher.SIMASTER_REGISTRY_NAME);
+			LOGGER.debug("Client has contacted the master: {}.", this.master.toString());
+		} catch (RemoteException | NotBoundException e)
 		{
-			re.printStackTrace();
+			LOGGER.debug("It fails for the client to contact the master: {}.", e.getMessage());
+			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 
-	public IMaster getRemote_master()
+	public IMaster getMaster()
 	{
-		return this.remote_master;
+		return this.master;
 	}
 	
 }

@@ -10,14 +10,13 @@ import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
+import rmi.IRMI;
 
 /**
  * @author hengxin
- * @date 10-27-2015
- * 
- * Executing transactions at master using a local SI protocol
+ * @date Created on 10-27-2015
  */
-public interface IMaster extends Remote
+public interface IMaster extends Remote, IRMI
 {
 	public Timestamp start() throws RemoteException, InterruptedException, ExecutionException;
 	public Cell read(Row row, Column col) throws RemoteException;

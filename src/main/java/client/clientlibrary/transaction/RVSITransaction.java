@@ -1,10 +1,10 @@
-/**
- * 
- */
 package client.clientlibrary.transaction;
 
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutionException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.RVSISpecificationManager;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
@@ -19,33 +19,35 @@ import kvs.component.Row;
 import kvs.component.Timestamp;
 
 /**
- * @author hengxin
- * @date 10-27-2015
+ * Implement our RVSI transactions which are allowed to specify {@link AbstractRVSISpecification}.
  * 
- * Implement our RVSI transaction which is enhanced by rvsi specification.
+ * @author hengxin
+ * @date Created on 10-27-2015
  */
 public class RVSITransaction implements ITransaction
 {
+	private final static Logger LOGGER = LoggerFactory.getLogger(RVSITransaction.class);
+	
 	private Timestamp sts = Timestamp.TIMESTAMP_INIT_ZERO;	// start-timestamp
 	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
 
-	private BufferedUpdates buffered_updates = new BufferedUpdates();	// to buffer write operations
-	private QueryResults query_results = new QueryResults();			// to store query results
+	private final BufferedUpdates buffered_updates = new BufferedUpdates();	
+	private final QueryResults query_results = new QueryResults();
 	
-	private RVSISpecificationManager rvsi_manager = new RVSISpecificationManager();				// to deal with {@link AbstractRVSISpecification}-related things
+	private final RVSISpecificationManager rvsi_manager = new RVSISpecificationManager();
 
 	/* 
-	 * @see client.clientlibrary.Transaction#begin()
+	 * To begin a transaction, the client contacts <i>the</i> master to 
+	 * acquire a globally unique start timestamp.
 	 */
 	@Override
 	public boolean begin()
 	{
 		try
 		{
-			this.sts = ClientContacts.INSTANCE.getRemote_master().start();
+			this.sts = ClientContacts.INSTANCE.getMaster().start();
 		} catch (InterruptedException | ExecutionException | RemoteException e)
 		{
-			// TODO: to remove
 			e.printStackTrace();
 			return false;
 		}
@@ -53,8 +55,9 @@ public class RVSITransaction implements ITransaction
 		return true;
 	}
 
-	/* 
-	 * @see client.clientlibrary.Transaction#read(kvs.table.Row, kvs.table.Column)
+	/**
+	 * In principle, the client is free to contact <i>any</i> site to read.
+	 * In this particular implementation, it prefers a nearby slave. 
 	 */
 	@Override
 	public boolean read(Row r, Column c)
@@ -63,8 +66,8 @@ public class RVSITransaction implements ITransaction
 		return false;
 	}
 
-	/* 
-	 * @see client.clientlibrary.Transaction#write(kvs.table.Row, kvs.table.Column, kvs.table.Cell)
+	/**
+	 * 
 	 */
 	@Override
 	public boolean write(Row r, Column c, Cell data)
@@ -84,7 +87,7 @@ public class RVSITransaction implements ITransaction
 		
 		try
 		{
-			boolean success = ClientContacts.INSTANCE.getRemote_master().commit(tx, vc_manager);
+			boolean success = ClientContacts.INSTANCE.getMaster().commit(tx, vc_manager);
 			if(! success)
 			{
 				// TODO restart the transaction???
