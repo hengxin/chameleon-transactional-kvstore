@@ -2,11 +2,15 @@ package network.membership;
 
 /**
  * A slave needs to know itself and <i>its</i> master (not all the masters). 
+ * 
  * @author hengxin
  * @date Created on 12-03-2015
  */
-public class SlaveMembership extends AbstractStaticMembership
+public final class SlaveMembership extends AbstractStaticMembership
 {
+	private final static String SELF = "self";
+	private final static String MASTER = "master";
+	
 	private final Member self;
 	private final Member master;
 	
@@ -14,8 +18,17 @@ public class SlaveMembership extends AbstractStaticMembership
 	{
 		super(file);
 		
-		this.self = super.parse(super.prop.getProperty("self"));
-		this.master = super.parse(super.prop.getProperty("master"));
+		this.self = super.parseMember(super.prop.getProperty(SlaveMembership.SELF));
+		this.master = super.parseMember(super.prop.getProperty(SlaveMembership.MASTER));
 	}
 
+	public Member getSelf()
+	{
+		return self;
+	}
+
+	public Member getMaster()
+	{
+		return master;
+	}
 }

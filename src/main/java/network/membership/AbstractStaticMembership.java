@@ -50,7 +50,7 @@ public abstract class AbstractStaticMembership
 		}
 	}
 	
-	protected final Member parse(String member)
+	protected final Member parseMember(String member)
 	{
 		String[] parts = member.split(":|;");
 		
