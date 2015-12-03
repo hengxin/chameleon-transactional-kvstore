@@ -1,13 +1,10 @@
-/**
- * 
- */
 package network.membership;
 
 /**
- * @author hengxin
- * @date Created on 02-11-2015
- * 
  * Group membership service
+ * 
+ * @author hengxin
+ * @date Created on 11-02-2015
  */
 public interface IMembership
 {

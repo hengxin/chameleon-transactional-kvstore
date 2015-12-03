@@ -21,7 +21,7 @@ public enum StaticMembership implements IMembership
 	INSTANCE;
 	
 	private static final String MEMBERSHIP_PROPERTIES_FILE = "membership.properties";
-	private Properties properties = new Properties();
+	private final Properties properties = new Properties();
 	
 	private String[] addrs = null;
 

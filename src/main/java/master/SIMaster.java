@@ -45,7 +45,7 @@ public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
-	private StartCommitLogs logs = new StartCommitLogs();	// commit log: each entry is composed of start-timestamp, commit-timestamp, and buffered updates of a transaction
+	private final StartCommitLogs logs = new StartCommitLogs();	// commit log: each entry is composed of start-timestamp, commit-timestamp, and buffered updates of a transaction
 
 	/**
 	 * Constructor: hold a {@link MasterTable}. 
