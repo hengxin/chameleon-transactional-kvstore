@@ -12,7 +12,7 @@ import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
-import client.communication.ClientContacts;
+import client.communication.ClientContactSingleMaster;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
@@ -45,7 +45,7 @@ public class RVSITransaction implements ITransaction
 	{
 		try
 		{
-			this.sts = ClientContacts.INSTANCE.getMaster().start();
+			this.sts = ClientContactSingleMaster.getInstance().getMaster().start();
 		} catch (InterruptedException | ExecutionException | RemoteException e)
 		{
 			e.printStackTrace();
@@ -87,7 +87,7 @@ public class RVSITransaction implements ITransaction
 		
 		try
 		{
-			boolean success = ClientContacts.INSTANCE.getMaster().commit(tx, vc_manager);
+			boolean success = ClientContactSingleMaster.getInstance().getMaster().commit(tx, vc_manager);
 			if(! success)
 			{
 				// TODO restart the transaction???

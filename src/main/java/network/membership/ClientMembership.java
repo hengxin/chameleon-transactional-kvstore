@@ -6,9 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A client needs to know all the masters and their individual slaves.
  * In this implementation, all of these membership information is loaded from this .properties file.
@@ -23,9 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class ClientMembership extends AbstractStaticMembership
 {
-	private final static Logger LOGGER = LoggerFactory.getLogger(ClientMembership.class);
-
-	private Map<Member, List<Member>> master_slaves;
+	private Map<Member, List<Member>> master_slaves_map;
 	
 	public ClientMembership(String file)
 	{
@@ -35,7 +30,7 @@ public final class ClientMembership extends AbstractStaticMembership
 	@Override
 	public void loadMembershipFromProp()
 	{
-		this.master_slaves = this.fillMasterSlaves();
+		this.master_slaves_map = this.fillMasterSlaves();
 	}
 
 	/**
@@ -62,4 +57,8 @@ public final class ClientMembership extends AbstractStaticMembership
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
 	
+	public Map<Member, List<Member>> getMasterSlavesMap()
+	{
+		return this.master_slaves_map;
+	}
 }

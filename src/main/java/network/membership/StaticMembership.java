@@ -16,6 +16,7 @@ import java.util.Properties;
  * Parse the membership.properties file to obtain the member list 
  * (including the master and the slaves)
  */
+@Deprecated
 public enum StaticMembership implements IMembership
 {
 	INSTANCE;
