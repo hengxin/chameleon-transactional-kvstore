@@ -1,7 +1,7 @@
 package network.membership;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,24 +18,23 @@ public final class MasterMembership extends AbstractStaticMembership
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterMembership.class);
 	
-	private final static String SELF = "self";
-	
-	private final Member self;
-	private final List<Member> slaves;
+	private Member self;
+	private List<Member> slaves;
 
 	public MasterMembership(String file)
 	{
 		super(file);
-		
-		this.self = super.parseMember(MasterMembership.SELF);
-		this.slaves = this.parseSlaves();
 	}
 
-	private List<Member> parseSlaves()
+	/**
+	 * Only one line in the .properties file: master = slave, slave, ... 
+	 */
+	@Override
+	public void loadMembershipFromProp()
 	{
-		return super.prop.keySet().stream()
-			.filter(key -> ! (MasterMembership.SELF.equals((String) key)))
-			.map(slave_key -> super.parseMember(prop.getProperty((String) slave_key)))
-			.collect(Collectors.toList());
+		Entry<Object, Object> master_slaves_entry = super.prop.entrySet().iterator().next();
+
+		this.self = Member.parseMember((String) master_slaves_entry.getKey());
+		this.slaves = Member.parseMembers((String) master_slaves_entry.getValue());
 	}
 }

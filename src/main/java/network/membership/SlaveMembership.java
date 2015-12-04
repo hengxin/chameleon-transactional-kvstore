@@ -11,15 +11,19 @@ public final class SlaveMembership extends AbstractStaticMembership
 	private final static String SELF = "self";
 	private final static String MASTER = "master";
 	
-	private final Member self;
-	private final Member master;
+	private Member self;
+	private Member master;
 	
 	public SlaveMembership(String file)
 	{
 		super(file);
-		
-		this.self = super.parseMember(super.prop.getProperty(SlaveMembership.SELF));
-		this.master = super.parseMember(super.prop.getProperty(SlaveMembership.MASTER));
+	}
+
+	@Override
+	public void loadMembershipFromProp()
+	{
+		this.self = Member.parseMember(super.prop.getProperty(SlaveMembership.SELF));
+		this.master = Member.parseMember(super.prop.getProperty(SlaveMembership.MASTER));
 	}
 
 	public Member getSelf()
@@ -31,4 +35,5 @@ public final class SlaveMembership extends AbstractStaticMembership
 	{
 		return master;
 	}
+
 }

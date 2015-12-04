@@ -1,6 +1,5 @@
 package network.membership;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,23 +19,31 @@ public abstract class AbstractStaticMembership
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractStaticMembership.class);
 	
+	private final String file;
 	protected final Properties prop = new Properties();
 	
 	public AbstractStaticMembership(String file)
 	{
-		this.load(file);
+		this.file = file;
 	}
 
+	public void loadMembership()
+	{
+		this.loadProp();
+		this.loadMembershipFromProp();
+	}
+	
+	public abstract void loadMembershipFromProp();
+	
 	/**
-	 * Load the properties file
-	 * @param file properties file path
+	 * Load the .properties file.
 	 */
-	private void load(String file)
+	protected void loadProp()
 	{
 		try
 		{
-			InputStream is = new FileInputStream(file);
-//			InputStream is = ClassLoader.getSystemResourceAsStream(file); 
+//			InputStream is = new FileInputStream(this.file);
+			InputStream is = ClassLoader.getSystemResourceAsStream(this.file); 
 			this.prop.load(is);
 			is.close();
 		} catch (FileNotFoundException fnfe)
@@ -47,34 +54,6 @@ public abstract class AbstractStaticMembership
 		{
 			LOGGER.error("Fails to load the {} file. The details are: {}", file, ioe);
 			System.exit(1);
-		}
-	}
-	
-	protected final Member parseMember(String member)
-	{
-		String[] parts = member.split(":|;");
-		
-		String addr_ip;
-		int addr_port;
-		String rmi_registry_name;
-		int rmi_registry_port;
-
-		try
-		{
-			addr_ip = parts[0];
-			addr_port = Integer.parseInt(parts[1]);
-			rmi_registry_name = parts[2];
-			rmi_registry_port = Integer.parseInt(parts[3]);
-
-			return new Member(addr_ip, addr_port, rmi_registry_name, rmi_registry_port);
-		} catch (NullPointerException npe)
-		{
-			LOGGER.error("This value ({}) in properties file is ill-formated. The details are: {}.", member, npe);
-			return null;
-		} catch (NumberFormatException nfe)
-		{
-			LOGGER.error("This value ({}) in properties file is ill-formated. The details are: {}.", member, nfe);
-			return null;
 		}
 	}
 }
