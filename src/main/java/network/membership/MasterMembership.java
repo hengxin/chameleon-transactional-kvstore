@@ -34,7 +34,22 @@ public final class MasterMembership extends AbstractStaticMembership
 	{
 		Entry<Object, Object> master_slaves_entry = super.prop.entrySet().iterator().next();
 
-		this.self = Member.parseMember((String) master_slaves_entry.getKey());
-		this.slaves = Member.parseMembers((String) master_slaves_entry.getValue());
+		String master = (String) master_slaves_entry.getKey();
+		String slaves = (String) master_slaves_entry.getValue();
+		
+		LOGGER.info("The master is {}. Its slaves are {}.", master, slaves);
+
+		this.self = Member.parseMember(master);
+		this.slaves = Member.parseMembers(slaves);
+	}
+
+	public Member getSelf()
+	{
+		return self;
+	}
+
+	public List<Member> getSlaves()
+	{
+		return slaves;
 	}
 }

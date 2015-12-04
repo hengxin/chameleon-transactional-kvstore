@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import network.membership.AbstractStaticMembershipTest;
+import network.membership.MasterMembershipTest;
 import network.membership.MemberTest;
 import network.membership.StaticMembershipTest;
 
@@ -12,7 +13,8 @@ import network.membership.StaticMembershipTest;
 @SuiteClasses({
 	StaticMembershipTest.class,
 	MemberTest.class,
-	AbstractStaticMembershipTest.class
+	AbstractStaticMembershipTest.class,
+	MasterMembershipTest.class
 	})
 public class NetworkTestSuite
 {

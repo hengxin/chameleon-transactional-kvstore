@@ -41,7 +41,7 @@ public final class Member
 	}
 
 	/**
-	 * Parse a string of the format of "addr_ip:addr_port;rmi_registry_name:rmi_registry_port"
+	 * Parse a string of the format of "addr_ip@addr_port;rmi_registry_name@rmi_registry_port"
 	 * into a {@link Member} instance.
 	 * 
 	 * @param member String format of {@link Member}
@@ -49,7 +49,7 @@ public final class Member
 	 */
 	public static final Member parseMember(String member)
 	{
-		String[] parts = member.split(":|;");
+		String[] parts = member.replaceAll("\\s", "").split("@|;");
 		
 		String addr_ip;
 		int addr_port;
@@ -83,7 +83,7 @@ public final class Member
 	 */
 	public static final List<Member> parseMembers(String members)
 	{
-		String[] slave_array = members.split(",");
+		String[] slave_array = members.replaceAll("\\s", "").split(",");
 		return Arrays.stream(slave_array).map(slave -> Member.parseMember(slave)).collect(Collectors.toList());
 	}
 

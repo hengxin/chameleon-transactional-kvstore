@@ -1,7 +1,6 @@
 package network.membership;
 
 import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,12 +38,27 @@ public final class ClientMembership extends AbstractStaticMembership
 		this.master_slaves = this.fillMasterSlaves();
 	}
 
+	/**
+	 * The .properties file consists of:
+	 * <blockquote>  
+	 * master = slave, slave, ...
+	 * <p>
+	 * master = slave, slave, ...
+	 * <p>
+	 * ...
+	 * </blockquote>
+	 * 
+	 * @return
+	 */
 	private Map<Member, List<Member>> fillMasterSlaves()
 	{
 		return super.prop.entrySet().stream()
 			.<Entry<Member, List<Member>>>map(master_slaves_entry -> 
-				new AbstractMap.SimpleImmutableEntry<>(Member.parseMember((String) master_slaves_entry.getKey()), 
-						Member.parseMembers((String) master_slaves_entry.getValue())))
+			{
+				String master = (String) master_slaves_entry.getKey();
+				String slaves = (String) master_slaves_entry.getValue();
+				return new AbstractMap.SimpleImmutableEntry<>(Member.parseMember(master), Member.parseMembers(slaves));
+			})
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
 	
