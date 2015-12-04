@@ -25,9 +25,11 @@ import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.table.AbstractSite;
 import kvs.table.MasterTable;
+import master.communication.MasterContact;
 import master.mvcc.StartCommitLogs;
 import messages.AbstractMessage;
 import messages.IMessageProducer;
+import rmi.IRMI;
 
 /**
  * Master employs an MVCC protocol to locally implement snapshot isolation (SI, for short).
@@ -35,12 +37,9 @@ import messages.IMessageProducer;
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
+public class SIMaster extends AbstractSite implements IMaster, IRMI, IMessageProducer
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
-
-	public static final String SIMASTER_REGISTRY_NAME = "SIMaster";
-	private static final int REGISTRY_PORT = 1099;
 
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
@@ -160,7 +159,7 @@ public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 		try
 		{
 			IMaster master_stub = (IMaster) UnicastRemoteObject.exportObject(this, 0);	// port 0: chosen at runtime
-			LocateRegistry.createRegistry(SIMaster.REGISTRY_PORT).rebind(SIMaster.SIMASTER_REGISTRY_NAME, master_stub);
+			LocateRegistry.createRegistry(MasterContact.INSTANCE.getMasterRMIRegistryPort()).rebind(MasterContact.INSTANCE.getMasterRMIRegistryName(), master_stub);
 			
 			return true;
 		} catch(RemoteException re)

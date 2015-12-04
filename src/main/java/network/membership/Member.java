@@ -1,5 +1,7 @@
 package network.membership;
 
+import java.rmi.Remote;
+import java.rmi.registry.LocateRegistry;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.MoreObjects;
+
+import slave.ISlave;
 
 /**
  * A member (i.e., site), as a communication entity,
@@ -87,6 +91,48 @@ public final class Member
 		return Arrays.stream(slave_array).map(slave -> Member.parseMember(slave)).collect(Collectors.toList());
 	}
 
+	/**
+	 * Locate the stub for the {@link Member}; Used later for RMI.
+	 * @param member 
+	 * @return A stub for a remote object; may be {@code null}.
+	 */
+	public static Remote parseStub(Member member)
+	{
+		try
+		{
+			return LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName());
+		} catch (Exception e)
+		{
+			LOGGER.warn("Fail to locate the remote stub for {}. Please check the details: {}", member, e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
+	 * Locate the stubs for a list of {@link Member}s, which represent {@link ISlave}s.
+	 * The remote stubs which cannot be located are ignored.
+	 * 
+	 * @param members A list of {@link Member}s
+	 * @return A list of {@link ISlave} stubs.
+	 */
+	public static List<ISlave> parseStubs(List<Member> members)
+	{
+		return members.stream()
+				.<ISlave>map(member -> 
+					{
+						try
+						{
+							return ((ISlave) Member.parseStub(member));
+						} catch (Exception e)
+						{
+							LOGGER.warn("Fail to locate the remote stub for the slave: {}. Please check the details: {}", member, e.getMessage());
+							return null;
+						}
+					})
+				.filter(Objects::nonNull)
+				.collect(Collectors.toList());
+	}
+	
 	public String getAddrIp()
 	{
 		return addr_ip;
@@ -106,6 +152,7 @@ public final class Member
 	{
 		return rmi_registry_port;
 	}
+
 
 	@Override
 	public int hashCode()

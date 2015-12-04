@@ -22,8 +22,8 @@ public class AbstractStaticMembershipTest
 	public void testLoadProp()
 	{
 		Properties expected_prop = new Properties();
-		expected_prop.setProperty("master", "192.168.107.128@8000; master@1099");
-		expected_prop.setProperty("slave", "192.168.107.128@5000; slave@1099");
+		expected_prop.setProperty("master", "192.168.107.128@8000;master@1099");
+		expected_prop.setProperty("slave", "192.168.107.128@5000;slave@1099");
 		
 		membership.loadProp();
 		Properties actual_prop = membership.prop;

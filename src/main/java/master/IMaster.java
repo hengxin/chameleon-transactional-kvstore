@@ -16,7 +16,7 @@ import rmi.IRMI;
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public interface IMaster extends Remote, IRMI
+public interface IMaster extends Remote
 {
 	public Timestamp start() throws RemoteException, InterruptedException, ExecutionException;
 	public Cell read(Row row, Column col) throws RemoteException;

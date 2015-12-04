@@ -1,10 +1,6 @@
 package client.communication;
 
-import java.rmi.AccessException;
-import java.rmi.NotBoundException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
@@ -58,51 +54,22 @@ public class ClientContact
 				Member master = master_slaves_entry.getKey();
 				List<Member> slaves = master_slaves_entry.getValue();
 
-				IMaster master_stub = null;
-				try
-				{
-					master_stub = (IMaster) this.getStubFor(master);
-				} catch (Exception e)
-				{
-					LOGGER.warn("Client fails to contact the remote master: {}. \\ Client will ignore the master and all of its slaves: {}. \\ Please check the details: {}", master, slaves, e.getMessage());
-					e.printStackTrace();
-				}
-				
-				List<ISlave> slaves_stub = null;
-				if(master_stub != null)
-				{
-				  slaves_stub = slaves.stream()
-					.<ISlave>map(slave -> 
-						{ 
-							try
-							{
-								return (ISlave) this.getStubFor(slave);
-							} catch (Exception e)
-							{
-								LOGGER.warn("Client fails to contact the slave: {}. Client will ignore it. \\ Please check the details: {}", slave, e.getMessage());
-								e.printStackTrace();
-								return null;
-							} 
-						})
-					.collect(Collectors.toList());
-				}
+				Remote master_stub = Member.parseStub(master);
 				
 				if(master_stub != null)
+				{
+					List<ISlave> slaves_stub = Member.parseStubs(slaves);
 					LOGGER.debug("Client has contacted the master {} and its slaves {}.", master_stub, slaves_stub);
-
-				return master_stub == null? null : new AbstractMap.SimpleImmutableEntry<>(master_stub, slaves_stub);
+					return new AbstractMap.SimpleImmutableEntry<>((IMaster) master_stub, slaves_stub);
+				}
+				else 
+				{
+					LOGGER.warn("Fails to locate the master: {}. I will ignore it and all its slaves: {}.", master, slaves);
+					return null;
+				}
 			})
 			.filter(Objects::nonNull)
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 		
-	}
-	public IMaster getMaster()
-	{
-		return null;
-	}
-	
-	private Remote getStubFor(Member member) throws AccessException, RemoteException, NotBoundException
-	{
-		return LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName());
 	}
 }
