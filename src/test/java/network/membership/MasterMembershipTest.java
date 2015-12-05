@@ -23,7 +23,6 @@ public class MasterMembershipTest
 	@Before
 	public void setUp() throws Exception
 	{
-		this.master_membership.loadMembership();
 	}
 
 	@Test

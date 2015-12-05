@@ -1,7 +1,10 @@
 package master;
 
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -25,7 +28,7 @@ import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.table.AbstractSite;
 import kvs.table.MasterTable;
-import master.communication.MasterContact;
+import master.communication.MasterContext;
 import master.mvcc.StartCommitLogs;
 import messages.AbstractMessage;
 import messages.IMessageProducer;
@@ -41,16 +44,19 @@ public class SIMaster extends AbstractSite implements IMaster, IRMI, IMessagePro
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
 
+	private final MasterContext context;
+	
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
 	private final StartCommitLogs logs = new StartCommitLogs();	// commit log: each entry is composed of start-timestamp, commit-timestamp, and buffered updates of a transaction
 
 	/**
-	 * Constructor: hold a {@link MasterTable}. 
+	 * Constructor with {@link MasterContext}.
 	 */
-	public SIMaster()
+	public SIMaster(MasterContext context)
 	{
+		this.context = context;
 		super.table = new MasterTable();	// the underlying database in the "table" form
 	}
 	
@@ -156,17 +162,52 @@ public class SIMaster extends AbstractSite implements IMaster, IRMI, IMessagePro
 	@Override
 	public boolean export()
 	{
+		System.setProperty("java.rmi.server.hostname", this.context.getAddrIp());
+
 		try
 		{
 			IMaster master_stub = (IMaster) UnicastRemoteObject.exportObject(this, 0);	// port 0: chosen at runtime
-			LocateRegistry.createRegistry(MasterContact.INSTANCE.getMasterRMIRegistryPort()).rebind(MasterContact.INSTANCE.getMasterRMIRegistryName(), master_stub);
+			LocateRegistry.createRegistry(this.context.getRMIRegistryPort()).rebind(this.context.getRMIRegistryName(), master_stub);
 			
+			return true;
+		} catch(ExportException ee)
+		{
+			LOGGER.warn("There is already an SIMaster in RMI registry. I will just reuse it.");
 			return true;
 		} catch(RemoteException re)
 		{
-			LOGGER.debug("Failed to export the master: {}", re.getMessage());
+			LOGGER.debug("Failed to export the master: {}.", re.getMessage());
 			re.printStackTrace();
 			return false;
+		}
+	}
+	
+	/**
+	 * Reclaim itself from remote accesses. 
+	 * FIXME RemoteException (nested exception: Connection Refused.)
+	 */
+	@Override
+	public boolean reclaim()
+	{
+		String name = this.context.getRMIRegistryName();
+		try
+		{
+			LocateRegistry.getRegistry(this.context.getRMIRegistryPort()).unbind(name);
+			return true;
+		} catch (AccessException ae)
+		{
+			LOGGER.warn("No permission for reclaiming the binding associated with {}.", name);
+			ae.printStackTrace();
+			return false;
+		} catch (RemoteException re)
+		{
+			LOGGER.error("Failed to reclaim the binding associated with {}.", name);
+			re.printStackTrace();
+			return false;
+		} catch (NotBoundException nbe)
+		{
+			LOGGER.info("No such binding associated with {}.", name);
+			return true;
 		}
 	}
 }

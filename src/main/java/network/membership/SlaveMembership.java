@@ -1,5 +1,10 @@
 package network.membership;
 
+import java.util.Map.Entry;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A slave needs to know itself and <i>its</i> master (not all the masters). 
  * 
@@ -8,10 +13,8 @@ package network.membership;
  */
 public final class SlaveMembership extends AbstractStaticMembership
 {
-	private final static String SELF = "self";
-	private final static String MASTER = "master";
+	private final static Logger LOGGER = LoggerFactory.getLogger(SlaveMembership.class);
 	
-	private Member self;
 	private Member master;
 	
 	public SlaveMembership(String file)
@@ -22,13 +25,15 @@ public final class SlaveMembership extends AbstractStaticMembership
 	@Override
 	public void loadMembershipFromProp()
 	{
-		this.self = Member.parseMember(super.prop.getProperty(SlaveMembership.SELF));
-		this.master = Member.parseMember(super.prop.getProperty(SlaveMembership.MASTER));
-	}
+		Entry<Object, Object> self_master_entry = super.prop.entrySet().iterator().next();
 
-	public Member getSelf()
-	{
-		return self;
+		String self = (String) self_master_entry.getKey();
+		String master = (String) self_master_entry.getValue();
+		
+		super.self = Member.parseMember(self);
+		this.master = Member.parseMember(master);
+
+		LOGGER.info("I am a slave: {}. My master is: {}.", self, master);
 	}
 
 	public Member getMaster()

@@ -14,4 +14,11 @@ public interface IRMI
 	 * @return {@code true} if no errors occur in the export; {@code false}, otherwise.
 	 */
 	public boolean export();
+	
+	/**
+	 * A remote object reclaims itself from remote accesses.
+	 * @return
+	 * 		{@code true} if it is reclaimed successfully; {@code false}, otherwise.
+	 */
+	public boolean reclaim();
 }

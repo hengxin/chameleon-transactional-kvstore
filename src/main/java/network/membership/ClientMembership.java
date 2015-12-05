@@ -30,7 +30,7 @@ public final class ClientMembership extends AbstractStaticMembership
 	@Override
 	public void loadMembershipFromProp()
 	{
-		this.master_slaves_map = this.fillMasterSlaves();
+		this.master_slaves_map = this.loadMasterSlavesMap();
 	}
 
 	/**
@@ -45,7 +45,7 @@ public final class ClientMembership extends AbstractStaticMembership
 	 * 
 	 * @return
 	 */
-	private Map<Member, List<Member>> fillMasterSlaves()
+	private Map<Member, List<Member>> loadMasterSlavesMap()
 	{
 		return super.prop.entrySet().stream()
 			.<Entry<Member, List<Member>>>map(master_slaves_entry -> 
@@ -55,6 +55,12 @@ public final class ClientMembership extends AbstractStaticMembership
 				return new AbstractMap.SimpleImmutableEntry<>(Member.parseMember(master), Member.parseMembers(slaves));
 			})
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+	}
+	
+	public Member getSelf()
+	{
+		// TODO identity of a client
+		return null;
 	}
 	
 	public Map<Member, List<Member>> getMasterSlavesMap()

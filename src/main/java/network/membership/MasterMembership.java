@@ -18,7 +18,6 @@ public final class MasterMembership extends AbstractStaticMembership
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterMembership.class);
 	
-	private Member self;
 	private List<Member> slaves;
 
 	public MasterMembership(String file)
@@ -36,16 +35,11 @@ public final class MasterMembership extends AbstractStaticMembership
 
 		String master = (String) master_slaves_entry.getKey();
 		String slaves = (String) master_slaves_entry.getValue();
-		
-		LOGGER.info("The master is {}. Its slaves are {}.", master, slaves);
 
-		this.self = Member.parseMember(master);
+		super.self = Member.parseMember(master);
 		this.slaves = Member.parseMembers(slaves);
-	}
 
-	public Member getSelf()
-	{
-		return self;
+		LOGGER.info("I am a master: {}. My slaves are: {}.", master, slaves);
 	}
 
 	public List<Member> getSlaves()

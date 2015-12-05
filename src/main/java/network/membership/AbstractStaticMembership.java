@@ -21,24 +21,26 @@ public abstract class AbstractStaticMembership
 	
 	private final String file;
 	protected final Properties prop = new Properties();
+	protected Member self;
 	
 	public AbstractStaticMembership(String file)
 	{
 		this.file = file;
-	}
-
-	public void loadMembership()
-	{
 		this.loadProp();
 		this.loadMembershipFromProp();
 	}
 	
 	public abstract void loadMembershipFromProp();
 	
+	public Member getSelf()
+	{
+		return this.self;
+	}
+	
 	/**
 	 * Load the .properties file.
 	 */
-	protected void loadProp()
+	protected Properties loadProp()
 	{
 		try
 		{
@@ -52,8 +54,10 @@ public abstract class AbstractStaticMembership
 			System.exit(1);
 		} catch (IOException ioe)
 		{
-			LOGGER.error("Fails to load the {} file. The details are: {}", file, ioe);
+			LOGGER.error("Fails to load the {} file. \\ The details are: {}", file, ioe);
 			System.exit(1);
 		}
+		
+		return this.prop;
 	}
 }

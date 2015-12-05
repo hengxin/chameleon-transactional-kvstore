@@ -7,12 +7,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import client.clientlibrary.transaction.ITransaction;
-import client.clientlibrary.transaction.RVSITransaction;
+import client.communication.ClientContext;
+import client.communication.ClientContextSingleMaster;
 import kvs.component.Timestamp;
+import master.communication.MasterLauncher;
 
 /**
  * @author hengxin
@@ -22,13 +24,17 @@ import kvs.component.Timestamp;
  */
 public class RVSITransactionTest
 {
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception
+	private MasterLauncher master_launcher;
+	private ClientContext context;
+	private ITransaction tx;
+	
+	@Before
+	public void setUp()
 	{
+		this.master_launcher = new MasterLauncher();
+
+		this.context = new ClientContextSingleMaster();
+		this.tx = new RVSITransaction(context);
 	}
 
 	/**
@@ -41,7 +47,6 @@ public class RVSITransactionTest
 	@Test
 	public void testBegin() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
 	{
-		ITransaction tx = new RVSITransaction();
 		assertTrue("Transaction does not begin successfully.", tx.begin());
 		
 		assertEquals("Start-timestamp has not been assigned correctly.", new Timestamp(1L), ((RVSITransaction) tx).getSts());
@@ -72,5 +77,11 @@ public class RVSITransactionTest
 	public void testEnd()
 	{
 		fail("Not yet implemented"); // TODO
+	}
+	
+	@After
+	public void tearDown()
+	{
+		this.master_launcher.reclaim();
 	}
 }

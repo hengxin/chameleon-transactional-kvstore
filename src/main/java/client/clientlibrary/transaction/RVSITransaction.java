@@ -12,7 +12,8 @@ import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
-import client.communication.ClientContactSingleMaster;
+import client.communication.ClientContext;
+import client.communication.ClientContextSingleMaster;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
@@ -28,6 +29,8 @@ public class RVSITransaction implements ITransaction
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(RVSITransaction.class);
 	
+	private final ClientContext context;
+	
 	private Timestamp sts = Timestamp.TIMESTAMP_INIT_ZERO;	// start-timestamp
 	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
 
@@ -36,6 +39,11 @@ public class RVSITransaction implements ITransaction
 	
 	private final RVSISpecificationManager rvsi_manager = new RVSISpecificationManager();
 
+	public RVSITransaction(ClientContext context)
+	{
+		this.context = context;
+	}
+	
 	/* 
 	 * To begin a transaction, the client contacts <i>the</i> master to 
 	 * acquire a globally unique start timestamp.
@@ -45,7 +53,7 @@ public class RVSITransaction implements ITransaction
 	{
 		try
 		{
-			this.sts = ClientContactSingleMaster.getInstance().getMaster().start();
+			this.sts = ((ClientContextSingleMaster) context).getMaster().start();
 		} catch (InterruptedException | ExecutionException | RemoteException e)
 		{
 			e.printStackTrace();
@@ -87,7 +95,7 @@ public class RVSITransaction implements ITransaction
 		
 		try
 		{
-			boolean success = ClientContactSingleMaster.getInstance().getMaster().commit(tx, vc_manager);
+			boolean success = ((ClientContextSingleMaster) context).getMaster().commit(tx, vc_manager);
 			if(! success)
 			{
 				// TODO restart the transaction???
