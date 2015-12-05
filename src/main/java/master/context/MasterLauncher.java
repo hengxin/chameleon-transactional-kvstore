@@ -1,4 +1,4 @@
-package master.communication;
+package master.context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,5 +58,6 @@ public class MasterLauncher
 	
 	public static void main(String[] args)
 	{
+		new MasterLauncher().launch();
 	}
 }

@@ -1,6 +1,9 @@
-package master.communication;
+package master.context;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import network.membership.AbstractStaticMembership;
 import network.membership.MasterMembership;
@@ -19,6 +22,8 @@ import slave.ISlave;
  */
 public class MasterContext
 {
+	private final static Logger LOGGER = LoggerFactory.getLogger(MasterContext.class);
+	
 	private final AbstractStaticMembership master_membership;
 	private final List<ISlave> slave_stubs;
 	
@@ -29,6 +34,7 @@ public class MasterContext
 	 */
 	public MasterContext(String file)
 	{
+		LOGGER.info("Using the properties file ({}) for MasterContext.", file);
 		this.master_membership = new MasterMembership(file);
 		this.slave_stubs = Member.parseStubs(((MasterMembership) this.master_membership).getSlaves());
 	}

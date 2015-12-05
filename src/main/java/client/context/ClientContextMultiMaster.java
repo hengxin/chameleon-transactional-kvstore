@@ -1,4 +1,4 @@
-package client.communication;
+package client.context;
 
 import kvs.compound.CompoundKey;
 import master.IMaster;

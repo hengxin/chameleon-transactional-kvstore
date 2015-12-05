@@ -28,7 +28,7 @@ import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.table.AbstractSite;
 import kvs.table.MasterTable;
-import master.communication.MasterContext;
+import master.context.MasterContext;
 import master.mvcc.StartCommitLogs;
 import messages.AbstractMessage;
 import messages.IMessageProducer;

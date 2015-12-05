@@ -11,10 +11,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import client.communication.ClientContext;
-import client.communication.ClientContextSingleMaster;
+import client.context.ClientContext;
+import client.context.ClientContextSingleMaster;
 import kvs.component.Timestamp;
-import master.communication.MasterLauncher;
+import master.context.MasterLauncher;
 
 /**
  * @author hengxin

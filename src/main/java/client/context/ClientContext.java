@@ -1,4 +1,4 @@
-package client.communication;
+package client.context;
 
 import java.rmi.Remote;
 import java.util.AbstractMap;
