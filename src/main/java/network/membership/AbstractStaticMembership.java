@@ -1,6 +1,5 @@
 package network.membership;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -42,20 +41,43 @@ public abstract class AbstractStaticMembership
 	 */
 	protected Properties loadProp()
 	{
+		InputStream is = null;
 		try
 		{
 //			InputStream is = new FileInputStream(this.file);
-			InputStream is = ClassLoader.getSystemResourceAsStream(this.file); 
+//			ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
+//			is = class_loader.getResourceAsStream(this.file); 
+//			is = ClassLoader.getSystemResourceAsStream(this.file);
+			is = AbstractStaticMembership.class.getResourceAsStream(this.file);
 			this.prop.load(is);
-			is.close();
-		} catch (FileNotFoundException fnfe)
+		} catch (NullPointerException npe)
 		{
-			LOGGER.error("File {} not found.", file);
+			LOGGER.error("The properties file ({}) cannot be found and loaded. \n {}", file, npe);
 			System.exit(1);
+//		} catch (FileNotFoundException fnfe)
+//		{
+//			LOGGER.error("File {} not found.", file);
+//			System.exit(1);
 		} catch (IOException ioe)
 		{
-			LOGGER.error("Fails to load the {} file. \\ The details are: {}", file, ioe);
+			LOGGER.error("An error occurred when reading from the properties {} file. \n {}", file, ioe);
 			System.exit(1);
+		} catch (IllegalArgumentException iae)
+		{
+			LOGGER.error("The input stream obtained from the properties {} file contains a malformed Unicode escape sequence. \n {}", file, iae);
+			System.exit(1);
+		} finally 
+		{
+			if(is != null)
+			{
+				try
+				{
+					is.close();
+				} catch (IOException ioe)
+				{
+					LOGGER.warn("Failed to close the input stream obtained from the properties {} file. \n {}", file, ioe);
+				}
+			}
 		}
 		
 		return this.prop;

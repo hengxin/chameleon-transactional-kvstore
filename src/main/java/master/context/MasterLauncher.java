@@ -17,7 +17,7 @@ public class MasterLauncher
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterLauncher.class);
 	
-	private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "./master/membership-master.properties";
+	private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "/master/membership-master.properties";
 
 	private IMaster master;
 	private final MasterContext context;
