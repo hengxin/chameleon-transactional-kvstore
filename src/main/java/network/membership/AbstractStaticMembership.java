@@ -18,7 +18,7 @@ public abstract class AbstractStaticMembership
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractStaticMembership.class);
 	
-	private final String file;
+	protected final String file;
 	protected final Properties prop = new Properties();
 	protected Member self;
 	
@@ -38,26 +38,23 @@ public abstract class AbstractStaticMembership
 	
 	/**
 	 * Load the .properties file.
+	 * <p>
+	 * See <a href = "http://stackoverflow.com/a/2523252/1833118">Post: getSystemResourceAsStream() returns null @ StackOverflow</a> 
+	 * for the use of {@code getResourceAsStream()}.
 	 */
 	protected Properties loadProp()
 	{
 		InputStream is = null;
 		try
 		{
-//			InputStream is = new FileInputStream(this.file);
-//			ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
-//			is = class_loader.getResourceAsStream(this.file); 
-//			is = ClassLoader.getSystemResourceAsStream(this.file);
-			is = AbstractStaticMembership.class.getResourceAsStream(this.file);
+			ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
+			is = class_loader.getResourceAsStream(this.file); 
 			this.prop.load(is);
+			LOGGER.info("Load the properties file ({}) successfully.", file);
 		} catch (NullPointerException npe)
 		{
 			LOGGER.error("The properties file ({}) cannot be found and loaded. \n {}", file, npe);
 			System.exit(1);
-//		} catch (FileNotFoundException fnfe)
-//		{
-//			LOGGER.error("File {} not found.", file);
-//			System.exit(1);
 		} catch (IOException ioe)
 		{
 			LOGGER.error("An error occurred when reading from the properties {} file. \n {}", file, ioe);

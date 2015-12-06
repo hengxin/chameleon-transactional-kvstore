@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.transaction.RVSITransaction;
 import master.IMaster;
+import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
 import network.membership.Member;
 import slave.ISlave;
@@ -35,25 +36,12 @@ public abstract class ClientContext
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ClientContext.class);
 	
-	private final static String DEFAULT_CLIENT_PROPERTIES_FILE = "./client/membership-client.properties";
-	private final ClientMembership client_membership; 
+	private final AbstractStaticMembership client_membership; 
 	
 	protected final Map<IMaster, List<ISlave>> master_slaves_stub_map;
 	
 //	private RVSITransaction tx = null;
 	
-	/**
-	 * Default constructor.
-	 * <p>
-	 * Load the static membership from the default properties file,
-	 * which is {@value #DEFAULT_CLIENT_PROPERTIES_FILE} = "./client/membership-client.properties".
-	 */
-	public ClientContext()
-	{
-		this.client_membership = new ClientMembership(DEFAULT_CLIENT_PROPERTIES_FILE);
-		this.master_slaves_stub_map = this.loadRemoteStubs();
-	}
-
 	/**
 	 * Constructor with user-specified properties file.
 	 * @param file 
@@ -61,6 +49,8 @@ public abstract class ClientContext
 	 */
 	public ClientContext(String file)
 	{
+		LOGGER.info("Using the properties file ({}) for {}.", file, this.getClass().getSimpleName());
+
 		this.client_membership = new ClientMembership(file);
 		this.master_slaves_stub_map = this.loadRemoteStubs();
 	}
@@ -78,7 +68,7 @@ public abstract class ClientContext
 	 */
 	protected Map<IMaster, List<ISlave>> loadRemoteStubs()
 	{
-		return this.client_membership.getMasterSlavesMap().entrySet().stream()
+		return ((ClientMembership) this.client_membership).getMasterSlavesMap().entrySet().stream()
 			.<Entry<IMaster, List<ISlave>>>map(master_slaves_entry ->
 			{
 				Member master = master_slaves_entry.getKey();
@@ -94,7 +84,7 @@ public abstract class ClientContext
 				}
 				else 
 				{
-					LOGGER.warn("Fails to locate the master: {}. I will ignore it and all its slaves: {}.", master, slaves);
+					LOGGER.warn("Failed to locate the master: {}. I will ignore it and all its slaves: {}.", master, slaves);
 					return null;
 				}
 			})

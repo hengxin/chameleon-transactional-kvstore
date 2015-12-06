@@ -1,5 +1,6 @@
 package network.membership;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -31,7 +32,14 @@ public final class MasterMembership extends AbstractStaticMembership
 	@Override
 	public void loadMembershipFromProp()
 	{
-		Entry<Object, Object> master_slaves_entry = super.prop.entrySet().iterator().next();
+		Iterator<Entry<Object, Object>> master_slaves_iter = super.prop.entrySet().iterator();
+		if(! master_slaves_iter.hasNext())
+		{
+			LOGGER.error("Failed to load membership from the properties file ({}). Is it a blank file? It should be in the (master = slave, slave, ...) format.", super.file);
+			System.exit(1);
+		}
+		
+		Entry<Object, Object> master_slaves_entry = master_slaves_iter.next();
 
 		String master = (String) master_slaves_entry.getKey();
 		String slaves = (String) master_slaves_entry.getValue();

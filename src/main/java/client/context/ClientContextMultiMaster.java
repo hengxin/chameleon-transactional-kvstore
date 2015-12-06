@@ -14,6 +14,12 @@ import slave.ISlave;
  */
 public class ClientContextMultiMaster extends ClientContext
 {
+	public ClientContextMultiMaster(String file)
+	{
+		super(file);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Return the {@link IMaster} which is responsible for the queried {@link CompoundKey}.
 	 * @param ck

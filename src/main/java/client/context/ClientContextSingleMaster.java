@@ -3,7 +3,6 @@ package client.context;
 import java.util.List;
 import java.util.Map.Entry;
 
-import kvs.compound.CompoundKey;
 import master.IMaster;
 import slave.ISlave;
 
@@ -21,16 +20,18 @@ import slave.ISlave;
  */
 public class ClientContextSingleMaster extends ClientContext
 {
+	private final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
+
 	private final IMaster master;
 	private final List<ISlave> remote_slaves;
 	
 	/**
 	 * Constructor using the default properties file:
-	 * {@value ClientContext#DEFAULT_CLIENT_PROPERTIES_FILE} = "./client/membership-client.properties".
+	 * {@value #DEFAULT_CLIENT_PROPERTIES_FILE}.
 	 */
 	public ClientContextSingleMaster()
 	{
-		super();
+		super(DEFAULT_CLIENT_PROPERTIES_FILE);
 		
 		Entry<IMaster, List<ISlave>> master_slaves_entry = super.master_slaves_stub_map.entrySet().iterator().next();
 		this.master = master_slaves_entry.getKey();

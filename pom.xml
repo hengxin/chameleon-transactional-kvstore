@@ -7,6 +7,10 @@
 	<name>chameleon-transactional-kvstore-maven</name>
 	<description>A distributed, partitioned, replicated, transactional key-value store.</description>
 
+	<properties>
+		<skipTests>true</skipTests>		<!-- skipping tests by default -->
+	</properties>
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -36,6 +40,14 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19</version>
+				<configuration>
+					<skipTests>${skipTests}</skipTests>
+				</configuration>
 			</plugin>
 		</plugins>
 		<resources>
