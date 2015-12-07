@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import client.clientlibrary.transaction.txexception.TransactionException;
+import exception.TransactionException;
 import jms.master.JMSCommitLogPublisher;
 import kvs.component.Cell;
 import kvs.component.Column;

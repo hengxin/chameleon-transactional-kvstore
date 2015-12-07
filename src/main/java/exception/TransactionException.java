@@ -1,4 +1,4 @@
-package client.clientlibrary.transaction.txexception;
+package exception;
 
 /**
  * Custom exception for transaction execution.

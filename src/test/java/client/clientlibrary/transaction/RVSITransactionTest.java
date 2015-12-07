@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import client.context.ClientContext;
 import client.context.ClientContextSingleMaster;
+import exception.ContextException;
 import kvs.component.Timestamp;
 import master.context.MasterLauncher;
 
@@ -29,7 +30,7 @@ public class RVSITransactionTest
 	private ITransaction tx;
 	
 	@Before
-	public void setUp()
+	public void setUp() throws ContextException
 	{
 		this.master_launcher = new MasterLauncher();
 

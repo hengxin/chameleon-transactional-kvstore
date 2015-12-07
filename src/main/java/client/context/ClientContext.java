@@ -84,7 +84,7 @@ public abstract class ClientContext
 				}
 				else 
 				{
-					LOGGER.warn("Failed to locate the master: {}. I will ignore it and all its slaves: {}.", master, slaves);
+					LOGGER.warn("Failed to locate the master: {}. For now I will ignore it and all its slaves: {}. Note that this may cause serious problems later.", master, slaves);
 					return null;
 				}
 			})

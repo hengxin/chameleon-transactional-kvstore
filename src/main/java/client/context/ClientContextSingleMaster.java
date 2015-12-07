@@ -1,8 +1,15 @@
 package client.context;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.core.net.server.Client;
+import exception.ContextException;
 import master.IMaster;
 import slave.ISlave;
 
@@ -20,36 +27,57 @@ import slave.ISlave;
  */
 public class ClientContextSingleMaster extends ClientContext
 {
+	private final static Logger LOGGER = LoggerFactory.getLogger(ClientContextSingleMaster.class);
+	
 	private final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
 
-	private final IMaster master;
-	private final List<ISlave> remote_slaves;
+	private IMaster master;
+	private List<ISlave> remote_slaves;
 	
 	/**
 	 * Constructor using the default properties file:
 	 * {@value #DEFAULT_CLIENT_PROPERTIES_FILE}.
+	 * 
+	 * @throws ContextException 
+	 * 		Failed to create this context because no master is available.
 	 */
-	public ClientContextSingleMaster()
+	public ClientContextSingleMaster() throws ContextException
 	{
-		super(DEFAULT_CLIENT_PROPERTIES_FILE);
-		
-		Entry<IMaster, List<ISlave>> master_slaves_entry = super.master_slaves_stub_map.entrySet().iterator().next();
-		this.master = master_slaves_entry.getKey();
-		this.remote_slaves = master_slaves_entry.getValue();
+		this(DEFAULT_CLIENT_PROPERTIES_FILE);
 	}
 	
 	/**
 	 * Constructor using user-specified properties file.
+	 * 
 	 * @param file
 	 * 		Path of the properties file.
+	 * @throws ContextException 
+	 * 		Failed to create this context because no master is available.
 	 */
-	public ClientContextSingleMaster(String file)
+	public ClientContextSingleMaster(String file) throws ContextException
 	{
 		super(file);
-
-		Entry<IMaster, List<ISlave>> master_slaves_entry = super.master_slaves_stub_map.entrySet().iterator().next();
-		this.master = master_slaves_entry.getKey();
-		this.remote_slaves = master_slaves_entry.getValue();
+		this.setMasterSlaves();
+	}
+	
+	/**
+	 * Set {@link #master} and {@link #remote_slaves} for RMI accesses.
+	 * 
+	 * @throws ContextException 
+	 * 		Failed to create this context because no master is available.
+	 */
+	private void setMasterSlaves() throws ContextException
+	{
+		try
+		{
+			Entry<IMaster, List<ISlave>> master_slaves_entry = super.master_slaves_stub_map.entrySet().iterator().next();
+			this.master = master_slaves_entry.getKey();
+			this.remote_slaves = master_slaves_entry.getValue();
+		} catch (NoSuchElementException nsee)
+		{
+			LOGGER.error("No master available. \n {}", nsee.getMessage());
+			throw new ContextException("No master available.", nsee.getCause());
+		}
 	}
 	
 	public IMaster getMaster()

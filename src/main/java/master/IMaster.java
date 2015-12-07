@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import client.clientlibrary.transaction.txexception.TransactionException;
+import exception.TransactionException;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
