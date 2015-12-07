@@ -154,7 +154,7 @@ public class SVSpecificationTest
 	public void testGenerateVersionConstraintTimestamp()
 	{
 		this.sv_rvsi_spec.setVceInfoList(vce_info_xyzuv_list);
-		AbstractVersionConstraint actual_sv_vc = this.sv_rvsi_spec.generateVersionConstraint(new Timestamp());	// the parameter #sts for generating {@link SVSpecification} is not used.
+		AbstractVersionConstraint actual_sv_vc = this.sv_rvsi_spec.generateVersionConstraint(Timestamp.TIMESTAMP_INIT_ZERO);	// the parameter #sts for generating {@link SVSpecification} is not used.
 		
 		assertEquals("Fails to generate SV version constraint.", this.sv_vc, actual_sv_vc);
 	}
@@ -165,7 +165,7 @@ public class SVSpecificationTest
 	@Test
 	public void testSuperGenerateVersionConstraintQueryResultsTimestamp()
 	{
-		AbstractVersionConstraint actual_sv_vc = this.sv_rvsi_spec.generateVersionConstraint(this.query_results, new Timestamp());	// the parameter #sts for generating {@link SVSpecification} is not used.
+		AbstractVersionConstraint actual_sv_vc = this.sv_rvsi_spec.generateVersionConstraint(this.query_results, Timestamp.TIMESTAMP_INIT_ZERO);	// the parameter #sts for generating {@link SVSpecification} is not used.
 
 		assertEquals("Fails to generate SV version constraint.", this.sv_vc, actual_sv_vc);
 	}

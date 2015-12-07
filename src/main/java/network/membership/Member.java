@@ -93,8 +93,9 @@ public final class Member
 
 	/**
 	 * Locate the stub for the {@link Member}; Used later for RMI.
+	 * 
 	 * @param member 
-	 * @return A stub for a remote object; may be {@code null}.
+	 * @return A stub for a remote object; may be {@code null} if an error occurs.
 	 */
 	public static Remote parseStub(Member member)
 	{
@@ -103,7 +104,7 @@ public final class Member
 			return LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName());
 		} catch (Exception e)
 		{
-			LOGGER.warn("Fail to locate the remote stub for {}. Please check the details: {}", member, e.getMessage());
+			LOGGER.warn("Failed to locate the remote stub for {}. I will ignore it for now. \n {}", member, e.getMessage());
 			return null;
 		}
 	}
@@ -118,17 +119,7 @@ public final class Member
 	public static List<ISlave> parseStubs(List<Member> members)
 	{
 		return members.stream()
-				.<ISlave>map(member -> 
-					{
-						try
-						{
-							return ((ISlave) Member.parseStub(member));
-						} catch (Exception e)
-						{
-							LOGGER.warn("Fail to locate the remote stub for the slave: {}. Please check the details: {}", member, e.getMessage());
-							return null;
-						}
-					})
+				.<ISlave>map(member -> ((ISlave) Member.parseStub(member)))
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 	}

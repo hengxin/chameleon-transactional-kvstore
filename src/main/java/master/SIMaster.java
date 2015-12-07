@@ -1,6 +1,8 @@
 package master;
 
+import java.net.NoRouteToHostException;
 import java.rmi.AccessException;
+import java.rmi.ConnectIOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
+import client.clientlibrary.transaction.txexception.TransactionException;
 import jms.master.JMSCommitLogPublisher;
 import kvs.component.Cell;
 import kvs.component.Column;
@@ -62,20 +65,32 @@ public class SIMaster extends AbstractSite implements IMaster, IRMI, IMessagePro
 	
 	/**
 	 * Start a transaction: generate and assign a new start-timestamp.
-	 * @return a start-timestamp
-	 * @throws InterruptedException if it fails to generate a new {@link Timestamp}, maybe due to asynchronous task failure.
-	 * @throws ExecutionException if it fails to generate a new {@link Timestamp}, maybe due to asynchronous task failure.
+	 * 
+	 * @return 
+	 * 		A start-timestamp 
+	 * @throws NoRouteToHostException
+	 * @throws ConnectIOException
+	 * @throws TransactionException 
 	 */
 	@Override
-	public Timestamp start() throws InterruptedException, ExecutionException
+	public Timestamp start() throws NoRouteToHostException, ConnectIOException, TransactionException
 	{
         // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
-		long sts = exec.submit( () -> 
+		try
 		{
-			return this.ts.incrementAndGet();
-		}).get();
-		
-		return new Timestamp(sts);
+			return new Timestamp(exec.submit( () -> 
+			{
+				return this.ts.incrementAndGet();
+			}).get());
+		} catch (InterruptedException ie)
+		{
+			LOGGER.error("Failed to start a transaction due to unexpected thread interruption. \n {}", ie.getMessage());
+			throw new TransactionException("Failed to start a transaction due to unexpected thread interruption.", ie);
+		} catch (ExecutionException ee)
+		{
+			LOGGER.error("Failed to generate a new start-timestamp for a transaction to start. \n {}", ee.getMessage());
+			throw new TransactionException("Failed to generate a new start-timestamp for a transaction to start.", ee);
+		}
 	}
 
 	@Override

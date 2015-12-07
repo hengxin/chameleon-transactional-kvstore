@@ -14,11 +14,12 @@ public class Timestamp implements Comparable<Timestamp>, Serializable
 {
 	private static final long serialVersionUID = -4196523878242377170L;
 
-	public static Timestamp TIMESTAMP_INIT_ZERO = new Timestamp();
+	public final static Timestamp TIMESTAMP_INIT_ZERO = new Timestamp(0);
+	public final static Timestamp TIMESTAMP_ERROR = new Timestamp(-1);
 	
 	private long ts = 0L;
 	
-	public Timestamp() {}
+//	public Timestamp() {}
 	
 	public Timestamp(long ts)
 	{

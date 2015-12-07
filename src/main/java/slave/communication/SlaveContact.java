@@ -8,10 +8,8 @@ import network.membership.SlaveMembership;
  * @author hengxin
  * @date Created on 12-04-2015
  */
-public enum SlaveContact
+public class SlaveContact
 {
-	INSTANCE;
-	
 	private final static String SLAVE_MEMBERSHIP_PROPERTIES_FILE = "./slave/membership-slave.properties";
 	private final SlaveMembership slave_membership = new SlaveMembership(SLAVE_MEMBERSHIP_PROPERTIES_FILE);
 	
@@ -19,6 +17,6 @@ public enum SlaveContact
 	
 	private SlaveContact()
 	{
-		this.master_stub = (IMaster) Member.parseStub(this.slave_membership.getMaster());
+		this.master_stub = (IMaster) Member.parseStub(this.slave_membership.getMaster());	// handle {@code null}
 	}
 }
