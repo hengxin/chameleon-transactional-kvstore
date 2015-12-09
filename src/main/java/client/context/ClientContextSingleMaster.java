@@ -1,9 +1,11 @@
 package client.context;
 
+import java.rmi.Remote;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,20 +21,22 @@ import slave.ISlave;
  * <p>
  * <ul>
  * <li> {@link #master}: the single {@link IMaster}
- * <li> {@link #remote_slaves}: a list of {@link ISlave}s
+ * <li> {@link #slaves}: a list of {@link ISlave}s
  * </ul>
  * 
  * @author hengxin
  * @date Created on 12-04-2015
  */
-public class ClientContextSingleMaster extends ClientContext
+public class ClientContextSingleMaster extends AbstractClientContext
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ClientContextSingleMaster.class);
 	
 	private final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
 
 	private IMaster master;
-	private List<ISlave> remote_slaves;
+	private List<ISlave> slaves;
+	
+	private Optional<Remote> cached_read_server;	
 	
 	/**
 	 * Constructor using the default properties file:
@@ -61,7 +65,7 @@ public class ClientContextSingleMaster extends ClientContext
 	}
 	
 	/**
-	 * Set {@link #master} and {@link #remote_slaves} for RMI accesses.
+	 * Set {@link #master} and {@link #slaves} for RMI accesses.
 	 * 
 	 * @throws ContextException 
 	 * 		Failed to create this context because no master is available.
@@ -72,10 +76,9 @@ public class ClientContextSingleMaster extends ClientContext
 		{
 			Entry<IMaster, List<ISlave>> master_slaves_entry = super.master_slaves_stub_map.entrySet().iterator().next();
 			this.master = master_slaves_entry.getKey();
-			this.remote_slaves = master_slaves_entry.getValue();
+			this.slaves = master_slaves_entry.getValue();
 		} catch (NoSuchElementException nsee)
 		{
-			LOGGER.error("No master available. \n {}", nsee.getMessage());
 			throw new ContextException("No master available.", nsee.getCause());
 		}
 	}
@@ -83,5 +86,16 @@ public class ClientContextSingleMaster extends ClientContext
 	public IMaster getMaster()
 	{
 		return this.master;
+	}
+
+	/**
+	 * In principle, the client is free to contact <i>any</i> site to read.
+	 * In this particular implementation, it prefers a nearby slave. 
+	 */
+	@Override
+	public Remote getReadServer()
+	{
+		// TODO
+		return this.cached_read_server.orElseGet(null);
 	}
 }

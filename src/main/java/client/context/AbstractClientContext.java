@@ -33,9 +33,9 @@ import slave.ISlave;
  * @author hengxin
  * @date Created on 10-28-2015
  */
-public abstract class ClientContext
+public abstract class AbstractClientContext
 {
-	private final static Logger LOGGER = LoggerFactory.getLogger(ClientContext.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractClientContext.class);
 	
 	private final AbstractStaticMembership client_membership; 
 	
@@ -48,7 +48,7 @@ public abstract class ClientContext
 	 * @param file 
 	 * 		Path of the properties file.
 	 */
-	public ClientContext(String file)
+	public AbstractClientContext(String file)
 	{
 		LOGGER.info("Using the properties file ({}) for {}.", file, this.getClass().getSimpleName());
 
@@ -92,4 +92,6 @@ public abstract class ClientContext
 			.filter(Objects::nonNull)
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
+	
+	public abstract Remote getReadServer();
 }

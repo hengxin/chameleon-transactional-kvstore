@@ -14,7 +14,7 @@ import kvs.component.Row;
 public interface ITransaction
 {
 	public boolean begin();
-	public boolean read(Row r, Column c);
+	public Cell read(Row r, Column c);
 	public boolean write(Row r, Column c, Cell data);
 	public boolean end();
 }

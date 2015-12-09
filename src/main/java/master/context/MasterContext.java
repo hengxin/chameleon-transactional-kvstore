@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import context.IContext;
 import network.membership.AbstractStaticMembership;
 import network.membership.MasterMembership;
 import network.membership.Member;
@@ -20,7 +21,7 @@ import slave.ISlave;
  * @author hengxin
  * @date Created on 12-04-2015
  */
-public class MasterContext
+public class MasterContext implements IContext
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterContext.class);
 	
@@ -39,18 +40,9 @@ public class MasterContext
 		this.slave_stubs = Member.parseStubs(((MasterMembership) this.master_membership).getSlaves());
 	}
 	
-	public String getAddrIp()
+	@Override
+	public Member self()
 	{
-		return this.master_membership.getSelf().getAddrIp();
-	}
-	
-	public int getRMIRegistryPort()
-	{
-		return this.master_membership.getSelf().getRmiRegistryPort();
-	}
-	
-	public String getRMIRegistryName()
-	{
-		return this.master_membership.getSelf().getRmiRegistryName();
+		return this.master_membership.getSelf();
 	}
 }

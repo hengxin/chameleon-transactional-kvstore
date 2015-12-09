@@ -11,11 +11,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import client.context.ClientContext;
+import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.ContextException;
+import exception.SiteException;
 import kvs.component.Timestamp;
-import master.context.MasterLauncher;
+import master.MasterLauncher;
 
 /**
  * @author hengxin
@@ -25,14 +26,13 @@ import master.context.MasterLauncher;
  */
 public class RVSITransactionTest
 {
-	private MasterLauncher master_launcher;
-	private ClientContext context;
+	private AbstractClientContext context;
 	private ITransaction tx;
 	
 	@Before
-	public void setUp() throws ContextException
+	public void setUp() throws ContextException, SiteException
 	{
-		this.master_launcher = new MasterLauncher();
+		new MasterLauncher();
 
 		this.context = new ClientContextSingleMaster();
 		this.tx = new RVSITransaction(context);
@@ -83,6 +83,5 @@ public class RVSITransactionTest
 	@After
 	public void tearDown()
 	{
-		this.master_launcher.reclaim();
 	}
 }

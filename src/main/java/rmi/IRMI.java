@@ -1,5 +1,7 @@
 package rmi;
 
+import exception.SiteException;
+
 /**
  * Using Java-RMI as the mechanism of synchronous communication
  * between clients and the remote sites.
@@ -10,15 +12,18 @@ package rmi;
 public interface IRMI
 {
 	/** 
-	 * A remote object should export itself for remote accesses.
-	 * @return {@code true} if no errors occur in the export; {@code false}, otherwise.
+	 * A remote object (is able to and) exports itself for remote accesses.
+	 * 
+	 * @throws SiteException 
+	 * 		An error occurs during export.
 	 */
-	public boolean export();
+	public void export() throws SiteException;
 	
 	/**
 	 * A remote object reclaims itself from remote accesses.
-	 * @return
-	 * 		{@code true} if it is reclaimed successfully; {@code false}, otherwise.
+	 * 
+	 * @throws SiteException 
+	 * 		An error occurs during reclaim.
 	 */
-	public boolean reclaim();
+	public void reclaim() throws SiteException;
 }

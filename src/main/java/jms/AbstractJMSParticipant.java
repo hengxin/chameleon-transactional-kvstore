@@ -22,7 +22,7 @@ import javax.naming.NamingException;
 
 import jms.master.JMSCommitLogPublisher;
 import jms.slave.JMSCommitLogSubscriber;
-import kvs.table.AbstractSite;
+import site.AbstractSite;
 
 /**
  * @author hengxin

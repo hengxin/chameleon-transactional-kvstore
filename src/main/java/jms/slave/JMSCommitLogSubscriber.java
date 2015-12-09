@@ -10,8 +10,8 @@ import javax.jms.ObjectMessage;
 
 import jms.AbstractJMSParticipant;
 import jms.master.JMSCommitLogPublisher;
-import kvs.table.AbstractSite;
 import messages.AbstractMessage;
+import site.AbstractSite;
 import slave.RCSlave;
 
 /**

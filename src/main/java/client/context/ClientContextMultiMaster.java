@@ -1,5 +1,7 @@
 package client.context;
 
+import java.rmi.Remote;
+
 import kvs.compound.CompoundKey;
 import master.IMaster;
 import slave.ISlave;
@@ -12,7 +14,7 @@ import slave.ISlave;
  * @author hengxin
  * @date Created on 12-04-2015
  */
-public class ClientContextMultiMaster extends ClientContext
+public class ClientContextMultiMaster extends AbstractClientContext
 {
 	public ClientContextMultiMaster(String file)
 	{
@@ -29,6 +31,13 @@ public class ClientContextMultiMaster extends ClientContext
 	 */
 	public IMaster getMaster(CompoundKey ck)
 	{
+		return null;
+	}
+
+	@Override
+	public Remote getReadServer()
+	{
+		// TODO Auto-generated method stub
 		return null;
 	}
 

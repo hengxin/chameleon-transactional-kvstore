@@ -3,8 +3,8 @@ package jms.master;
 import javax.jms.JMSException;
 
 import jms.AbstractJMSParticipant;
-import kvs.table.AbstractSite;
 import messages.AbstractMessage;
+import site.AbstractSite;
 
 /**
  * <p> The publisher of the commit logs. It is the master.

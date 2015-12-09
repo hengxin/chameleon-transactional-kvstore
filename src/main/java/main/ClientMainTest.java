@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.transaction.ITransaction;
 import client.clientlibrary.transaction.RVSITransaction;
-import client.context.ClientContext;
+import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.ContextException;
 import kvs.component.Timestamp;
 
 /**
  * Main class at the client side. 
- * It mainly tests {@link ClientContext} and {@link RVSITransaction}
+ * It mainly tests {@link AbstractClientContext} and {@link RVSITransaction}
  * in the <i>single-master-multiple-slaves</i> setting.
  * 
  * @author hengxin
@@ -27,7 +27,7 @@ public class ClientMainTest
 	
 	public static void main(String[] args)
 	{
-		ClientContext context = null;
+		AbstractClientContext context = null;
 		try
 		{
 			context = new ClientContextSingleMaster();

@@ -53,6 +53,8 @@ public final class Member
 	 * 
 	 * @param member String format of {@link Member}
 	 * @return A {@link Member} instance; possibly {@code null} if {#param member} is ill-formated.
+	 * 
+	 * FIXME Using Optional to avoid null checking.
 	 */
 	public static final Member parseMember(String member)
 	{
@@ -109,7 +111,9 @@ public final class Member
 				return Optional.of(LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName()));
 			} catch (RemoteException | NotBoundException e)
 			{
-				LOGGER.warn("Failed to locate the remote stub for {}. I will ignore it for now. \n {}", member, e.getMessage());
+				Throwable cause = e.getCause();
+				LOGGER.warn("Failed to locate the remote stub for {}. I will ignore it for now. \n {}", member, 
+						Objects.isNull(cause) ? "Causes Unknown." : cause.toString());
 				return Optional.empty();
 			}
 	}
@@ -124,13 +128,16 @@ public final class Member
 	 * 		A list of {@link ISlave} stubs; 
 	 * 		the list may be empty if none of the {@link Member}s is parsed successfully.
 	 * 
-	 * FIXME Using {@link Optional} more elegantly.
+	 * @implNote
+	 * 		This code using {@link Optional} to avoid null-check is due to
+	 * 		<a href = "http://stackoverflow.com/a/34170759/1833118">Brian Goetz @ Stackoverflow</a>.
 	 */
 	public static List<ISlave> parseStubs(List<Member> members)
 	{
 		return members.stream()
-				.<ISlave>map(member -> ((ISlave) Member.parseStub(member).orElse(null)))
-				.filter(Objects::nonNull)
+				.map(Member::parseStub)
+				.filter(Optional::isPresent)
+				.map(remote -> (ISlave) remote.get())
 				.collect(Collectors.toList());
 	}
 	

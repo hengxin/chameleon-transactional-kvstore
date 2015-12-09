@@ -1,13 +1,7 @@
 package master;
 
 import java.net.NoRouteToHostException;
-import java.rmi.AccessException;
 import java.rmi.ConnectIOException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.server.ExportException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,17 +19,13 @@ import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import exception.TransactionException;
 import jms.master.JMSCommitLogPublisher;
-import kvs.component.Cell;
-import kvs.component.Column;
-import kvs.component.Row;
 import kvs.component.Timestamp;
-import kvs.table.AbstractSite;
 import kvs.table.MasterTable;
 import master.context.MasterContext;
 import master.mvcc.StartCommitLogs;
 import messages.AbstractMessage;
 import messages.IMessageProducer;
-import rmi.IRMI;
+import site.AbstractSite;
 
 /**
  * Master employs an MVCC protocol to locally implement snapshot isolation (SI, for short).
@@ -43,12 +33,10 @@ import rmi.IRMI;
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public class SIMaster extends AbstractSite implements IMaster, IRMI, IMessageProducer
+public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
 
-	private final MasterContext context;
-	
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
@@ -59,7 +47,7 @@ public class SIMaster extends AbstractSite implements IMaster, IRMI, IMessagePro
 	 */
 	public SIMaster(MasterContext context)
 	{
-		this.context = context;
+		super.context = context;
 		super.table = new MasterTable();	// the underlying database in the "table" form
 	}
 	
@@ -84,20 +72,11 @@ public class SIMaster extends AbstractSite implements IMaster, IRMI, IMessagePro
 			}).get());
 		} catch (InterruptedException ie)
 		{
-			LOGGER.error("Failed to start a transaction due to unexpected thread interruption. \n {}", ie.getMessage());
 			throw new TransactionException("Failed to start a transaction due to unexpected thread interruption.", ie);
 		} catch (ExecutionException ee)
 		{
-			LOGGER.error("Failed to generate a new start-timestamp for a transaction to start. \n {}", ee.getMessage());
 			throw new TransactionException("Failed to generate a new start-timestamp for a transaction to start.", ee);
 		}
-	}
-
-	@Override
-	public Cell read(Row row, Column col)
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -171,58 +150,5 @@ public class SIMaster extends AbstractSite implements IMaster, IRMI, IMessagePro
 		}
 	}
 
-	/**
-	 * Export this object for remote accesses.
-	 */
-	@Override
-	public boolean export()
-	{
-		System.setProperty("java.rmi.server.hostname", this.context.getAddrIp());
-
-		try
-		{
-			IMaster master_stub = (IMaster) UnicastRemoteObject.exportObject(this, 0);	// port 0: chosen at runtime
-			LocateRegistry.createRegistry(this.context.getRMIRegistryPort()).rebind(this.context.getRMIRegistryName(), master_stub);
-			
-			return true;
-		} catch(ExportException ee)
-		{
-			LOGGER.warn("There is already an SIMaster in RMI registry. I will just reuse it.");
-			return true;
-		} catch(RemoteException re)
-		{
-			LOGGER.debug("Failed to export the master: {}.", re.getMessage());
-			re.printStackTrace();
-			return false;
-		}
-	}
 	
-	/**
-	 * Reclaim itself from remote accesses. 
-	 * FIXME RemoteException (nested exception: Connection Refused.)
-	 */
-	@Override
-	public boolean reclaim()
-	{
-		String name = this.context.getRMIRegistryName();
-		try
-		{
-			LocateRegistry.getRegistry(this.context.getRMIRegistryPort()).unbind(name);
-			return true;
-		} catch (AccessException ae)
-		{
-			LOGGER.warn("No permission for reclaiming the binding associated with {}.", name);
-			ae.printStackTrace();
-			return false;
-		} catch (RemoteException re)
-		{
-			LOGGER.error("Failed to reclaim the binding associated with {}.", name);
-			re.printStackTrace();
-			return false;
-		} catch (NotBoundException nbe)
-		{
-			LOGGER.info("No such binding associated with {}.", name);
-			return true;
-		}
-	}
 }

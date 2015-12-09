@@ -2,13 +2,10 @@ package slave;
 
 import client.clientlibrary.transaction.ToCommitTransaction;
 import jms.AbstractJMSParticipant;
-import kvs.component.Column;
-import kvs.component.Row;
-import kvs.compound.ITimestampedCell;
-import kvs.table.AbstractSite;
 import kvs.table.SlaveTable;
 import messages.AbstractMessage;
 import messages.IMessageConsumer;
+import site.AbstractSite;
 
 /**
  * A slave only need to enforce the "Read Committed" isolation on {@link SlaveTable}.
@@ -34,12 +31,6 @@ public class RCSlave extends AbstractSite implements ISlave, IMessageConsumer
 	{
 		super.registerAsJMSParticipant(jmser);
 		jmser.bindto(this);
-	}
-
-	@Override
-	public ITimestampedCell read(Row row, Column col)
-	{
-		return super.table.getTimestampedCell(row, col);
 	}
 
 	@Override

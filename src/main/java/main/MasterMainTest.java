@@ -1,6 +1,7 @@
 package main;
 
-import master.context.MasterLauncher;
+import exception.SiteException;
+import master.MasterLauncher;
 
 /**
  * Main class at the master side, 
@@ -14,6 +15,13 @@ public class MasterMainTest
 {
 	public static void main(String[] args)
 	{
-		new MasterLauncher();
+		try
+		{
+			new MasterLauncher();
+		} catch (SiteException re)
+		{
+			re.printStackTrace();
+			System.exit(1);
+		}
 	}
 }

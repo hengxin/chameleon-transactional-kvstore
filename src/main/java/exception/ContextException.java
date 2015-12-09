@@ -1,7 +1,7 @@
 package exception;
 
 /**
- * Context ({@link MasterContext}, {@link SlaveContext}, {@link ClientContext}) related exceptions.
+ * Context ({@link MasterContext}, {@link SlaveContext}, {@link AbstractClientContext}) related exceptions.
  * 
  * @author hengxin
  * @date Created on 12-07-2015

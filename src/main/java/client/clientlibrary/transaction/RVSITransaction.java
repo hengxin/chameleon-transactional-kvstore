@@ -13,7 +13,7 @@ import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
-import client.context.ClientContext;
+import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.TransactionException;
 import kvs.component.Cell;
@@ -32,7 +32,7 @@ public class RVSITransaction implements ITransaction
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(RVSITransaction.class);
 	
-	private final ClientContext context;
+	private final AbstractClientContext context;
 	
 	private Timestamp sts = Timestamp.TIMESTAMP_INIT_ZERO;	// start-timestamp
 	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
@@ -42,7 +42,7 @@ public class RVSITransaction implements ITransaction
 	
 	private final RVSISpecificationManager rvsi_manager = new RVSISpecificationManager();
 
-	public RVSITransaction(ClientContext context)
+	public RVSITransaction(AbstractClientContext context)
 	{
 		this.context = context;
 	}
@@ -83,25 +83,13 @@ public class RVSITransaction implements ITransaction
 		}
 	}
 
-	/**
-	 * In principle, the client is free to contact <i>any</i> site to read.
-	 * In this particular implementation, it prefers a nearby slave. 
-	 * 
-	 * @param r
-	 * 		{@link Row} key
-	 * @param c
-	 * 		{@link Column} key
-	 */
 	@Override
-	public boolean read(Row r, Column c)
+	public Cell read(Row r, Column c)
 	{
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public boolean write(Row r, Column c, Cell data)
 	{
@@ -109,9 +97,6 @@ public class RVSITransaction implements ITransaction
 		return true;
 	}
 
-	/* 
-	 * @see client.clientlibrary.Transaction#end()
-	 */
 	@Override
 	public boolean end()
 	{
