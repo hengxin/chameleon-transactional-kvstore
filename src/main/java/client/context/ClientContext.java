@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -74,18 +75,18 @@ public abstract class ClientContext
 				Member master = master_slaves_entry.getKey();
 				List<Member> slaves = master_slaves_entry.getValue();
 
-				Remote master_stub = Member.parseStub(master);
+				Optional<Remote> master_stub = Member.parseStub(master);
 				
-				if(master_stub != null)
+				if(master_stub.isPresent())
 				{
 					List<ISlave> slaves_stub = Member.parseStubs(slaves);
 					LOGGER.info("Client has contacted the master {} and its slaves {}.", master_stub, slaves_stub);
-					return new AbstractMap.SimpleImmutableEntry<>((IMaster) master_stub, slaves_stub);
+					return new AbstractMap.SimpleImmutableEntry<>((IMaster) master_stub.get(), slaves_stub);
 				}
 				else 
 				{
 					LOGGER.warn("Failed to locate the master: {}. For now I will ignore it and all its slaves: {}. Note that this may cause serious problems later.", master, slaves);
-					return null;
+					return null;	// FIXME Using Optional more elegantly.
 				}
 			})
 			.filter(Objects::nonNull)

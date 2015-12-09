@@ -1,10 +1,13 @@
 package network.membership;
 
+import java.rmi.NotBoundException;
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -94,32 +97,39 @@ public final class Member
 	/**
 	 * Locate the stub for the {@link Member}; Used later for RMI.
 	 * 
-	 * @param member 
-	 * @return A stub for a remote object; may be {@code null} if an error occurs.
+	 * @param member An {@link Member} representing a site
+	 * @return 
+	 * 		A stub for a remote object, wrapped by {@link Optional}; 
+	 * 		may be {@code Optional.empty()} if it fails to parse a stub from @param member.
 	 */
-	public static Remote parseStub(Member member)
+	public static Optional<Remote> parseStub(Member member)
 	{
-		try
-		{
-			return LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName());
-		} catch (Exception e)
-		{
-			LOGGER.warn("Failed to locate the remote stub for {}. I will ignore it for now. \n {}", member, e.getMessage());
-			return null;
-		}
+			try
+			{
+				return Optional.of(LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName()));
+			} catch (RemoteException | NotBoundException e)
+			{
+				LOGGER.warn("Failed to locate the remote stub for {}. I will ignore it for now. \n {}", member, e.getMessage());
+				return Optional.empty();
+			}
 	}
 	
 	/**
 	 * Locate the stubs for a list of {@link Member}s, which represent {@link ISlave}s.
 	 * The remote stubs which cannot be located are ignored.
 	 * 
-	 * @param members A list of {@link Member}s
-	 * @return A list of {@link ISlave} stubs.
+	 * @param members 
+	 * 		A list of {@link Member}s to be parsed.
+	 * @return 
+	 * 		A list of {@link ISlave} stubs; 
+	 * 		the list may be empty if none of the {@link Member}s is parsed successfully.
+	 * 
+	 * FIXME Using {@link Optional} more elegantly.
 	 */
 	public static List<ISlave> parseStubs(List<Member> members)
 	{
 		return members.stream()
-				.<ISlave>map(member -> ((ISlave) Member.parseStub(member)))
+				.<ISlave>map(member -> ((ISlave) Member.parseStub(member).orElse(null)))
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 	}

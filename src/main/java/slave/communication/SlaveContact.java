@@ -17,6 +17,8 @@ public class SlaveContact
 	
 	private SlaveContact()
 	{
-		this.master_stub = (IMaster) Member.parseStub(this.slave_membership.getMaster());	// handle {@code null}
+		// TODO
+		this.master_stub = null;
+//		this.master_stub = (IMaster) Member.parseStub(this.slave_membership.getMaster());	// handle {@code null}
 	}
 }
