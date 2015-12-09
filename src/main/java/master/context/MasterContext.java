@@ -9,6 +9,7 @@ import context.IContext;
 import network.membership.AbstractStaticMembership;
 import network.membership.MasterMembership;
 import network.membership.Member;
+import site.ISite;
 import slave.ISlave;
 
 /**
@@ -26,7 +27,7 @@ public class MasterContext implements IContext
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterContext.class);
 	
 	private final AbstractStaticMembership master_membership;
-	private final List<ISlave> slave_stubs;
+	private final List<ISite> slave_stubs;
 	
 	/**
 	 * Constructor using user-specified properties file.

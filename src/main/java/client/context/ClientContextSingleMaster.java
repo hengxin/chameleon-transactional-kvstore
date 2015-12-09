@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.core.net.server.Client;
 import exception.ContextException;
 import master.IMaster;
+import site.ISite;
 import slave.ISlave;
 
 /**
@@ -33,10 +35,13 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	
 	private final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
 
-	private IMaster master;
-	private List<ISlave> slaves;
+//	private IMaster master;
+//	private List<ISlave> slaves;
 	
-	private Optional<Remote> cached_read_server;	
+	private ISite master;
+	private List<ISite> slaves;
+	
+	private Optional<ISite> cached_read_site;	
 	
 	/**
 	 * Constructor using the default properties file:
@@ -74,7 +79,7 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	{
 		try
 		{
-			Entry<IMaster, List<ISlave>> master_slaves_entry = super.master_slaves_stub_map.entrySet().iterator().next();
+			Entry<ISite, List<ISite>> master_slaves_entry = super.master_slaves_stub_map.entrySet().iterator().next();
 			this.master = master_slaves_entry.getKey();
 			this.slaves = master_slaves_entry.getValue();
 		} catch (NoSuchElementException nsee)
@@ -83,7 +88,7 @@ public class ClientContextSingleMaster extends AbstractClientContext
 		}
 	}
 	
-	public IMaster getMaster()
+	public ISite getMaster()
 	{
 		return this.master;
 	}
@@ -93,9 +98,11 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	 * In this particular implementation, it prefers a nearby slave. 
 	 */
 	@Override
-	public Remote getReadServer()
+	public ISite getReadSite()
 	{
-		// TODO
-		return this.cached_read_server.orElseGet(null);
+		return this.cached_read_site.orElseGet(() ->
+			{
+				return this.slaves.isEmpty() ? this.master : this.slaves.get(new Random().nextInt(this.slaves.size())); 
+			});
 	}
 }

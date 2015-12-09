@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.MoreObjects;
 
+import site.ISite;
 import slave.ISlave;
 
 /**
@@ -104,11 +105,11 @@ public final class Member
 	 * 		A stub for a remote object, wrapped by {@link Optional}; 
 	 * 		may be {@code Optional.empty()} if it fails to parse a stub from @param member.
 	 */
-	public static Optional<Remote> parseStub(Member member)
+	public static Optional<ISite> parseStub(Member member)
 	{
 			try
 			{
-				return Optional.of(LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName()));
+				return Optional.of((ISite) LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName()));
 			} catch (RemoteException | NotBoundException e)
 			{
 				Throwable cause = e.getCause();
@@ -132,12 +133,12 @@ public final class Member
 	 * 		This code using {@link Optional} to avoid null-check is due to
 	 * 		<a href = "http://stackoverflow.com/a/34170759/1833118">Brian Goetz @ Stackoverflow</a>.
 	 */
-	public static List<ISlave> parseStubs(List<Member> members)
+	public static List<ISite> parseStubs(List<Member> members)
 	{
 		return members.stream()
 				.map(Member::parseStub)
 				.filter(Optional::isPresent)
-				.map(remote -> (ISlave) remote.get())
+				.map(Optional::get)
 				.collect(Collectors.toList());
 	}
 	

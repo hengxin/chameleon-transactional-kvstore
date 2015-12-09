@@ -17,6 +17,7 @@ import master.IMaster;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
 import network.membership.Member;
+import site.ISite;
 import slave.ISlave;
 
 /**
@@ -39,7 +40,7 @@ public abstract class AbstractClientContext
 	
 	private final AbstractStaticMembership client_membership; 
 	
-	protected final Map<IMaster, List<ISlave>> master_slaves_stub_map;
+	protected final Map<ISite, List<ISite>> master_slaves_stub_map;
 	
 //	private RVSITransaction tx = null;
 	
@@ -67,21 +68,21 @@ public abstract class AbstractClientContext
 	 * 		If a master is available, then some of its slaves may be ignored if unavailable.
 	 * 		Please check the log for details.
 	 */
-	protected Map<IMaster, List<ISlave>> loadRemoteStubs()
+	protected Map<ISite, List<ISite>> loadRemoteStubs()
 	{
 		return ((ClientMembership) this.client_membership).getMasterSlavesMap().entrySet().stream()
-			.<Entry<IMaster, List<ISlave>>>map(master_slaves_entry ->
+			.<Entry<ISite, List<ISite>>>map(master_slaves_entry ->
 			{
 				Member master = master_slaves_entry.getKey();
 				List<Member> slaves = master_slaves_entry.getValue();
 
-				Optional<Remote> master_stub = Member.parseStub(master);
+				Optional<ISite> master_stub = Member.parseStub(master);
 				
 				if(master_stub.isPresent())
 				{
-					List<ISlave> slaves_stub = Member.parseStubs(slaves);
+					List<ISite> slaves_stub = Member.parseStubs(slaves);
 					LOGGER.info("Client has contacted the master {} and its slaves {}.", master_stub, slaves_stub);
-					return new AbstractMap.SimpleImmutableEntry<>((IMaster) master_stub.get(), slaves_stub);
+					return new AbstractMap.SimpleImmutableEntry<>(master_stub.get(), slaves_stub);
 				}
 				else 
 				{
@@ -93,5 +94,5 @@ public abstract class AbstractClientContext
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
 	
-	public abstract Remote getReadServer();
+	public abstract Remote getReadSite();
 }

@@ -13,6 +13,7 @@ import kvs.component.Timestamp;
  * @author hengxin
  * @date Created on 10-27-2015
  */
+@Deprecated
 public interface IMaster extends Remote
 {
 	public Timestamp start() throws RemoteException, NoRouteToHostException, TransactionException;

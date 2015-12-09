@@ -31,11 +31,12 @@ public class ClientContextMultiMaster extends AbstractClientContext
 	 */
 	public IMaster getMaster(CompoundKey ck)
 	{
+		// TODO
 		return null;
 	}
 
 	@Override
-	public Remote getReadServer()
+	public Remote getReadSite()
 	{
 		// TODO Auto-generated method stub
 		return null;

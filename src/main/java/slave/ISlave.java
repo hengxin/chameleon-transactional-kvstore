@@ -8,11 +8,12 @@ import client.clientlibrary.transaction.ToCommitTransaction;
  * @author hengxin
  * @date Created 10-28-2015
  * 
- * @note
+ * @implNote
  * 		The {@link #apply(ToCommitTransaction)} method will not be remotely invoked.
  * 		Thus {@link ISlave} does not extend {@link Remote}.
  */
+@Deprecated
 public interface ISlave
 {
-	public abstract void apply(ToCommitTransaction tx);
+	public void apply(ToCommitTransaction tx);
 }

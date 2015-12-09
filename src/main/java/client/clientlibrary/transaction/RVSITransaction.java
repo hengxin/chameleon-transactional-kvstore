@@ -20,7 +20,9 @@ import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
+import kvs.compound.ITimestampedCell;
 import master.IMaster;
+import site.ISite;
 
 /**
  * Implement our RVSI transactions which are allowed to specify {@link AbstractRVSISpecification}.
@@ -57,7 +59,7 @@ public class RVSITransaction implements ITransaction
 	@Override
 	public boolean begin()
 	{
-		IMaster master = ((ClientContextSingleMaster) context).getMaster();
+		ISite master = ((ClientContextSingleMaster) context).getMaster();
 		try
 		{
 			this.sts = master.start();
@@ -84,7 +86,7 @@ public class RVSITransaction implements ITransaction
 	}
 
 	@Override
-	public Cell read(Row r, Column c)
+	public ITimestampedCell read(Row r, Column c)
 	{
 		// TODO Auto-generated method stub
 		return null;
