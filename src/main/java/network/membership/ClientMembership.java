@@ -4,6 +4,7 @@ import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -45,21 +46,19 @@ public final class ClientMembership extends AbstractStaticMembership
 	 * <p>
 	 * ...
 	 * </blockquote>
-	 * 
-	 * @implNote
-	 * 		FIXME The code is ugly. 
 	 */
 	private Map<Member, List<Member>> loadMasterSlavesMap()
 	{
 		return super.prop.entrySet().stream()
-			.<Entry<Optional<Member>, List<Member>>>map(master_slaves_entry -> 
+			.<Entry<Member, List<Member>>>map(master_slaves_entry -> 
 			{
 				String master = (String) master_slaves_entry.getKey();
 				String slaves = (String) master_slaves_entry.getValue();
-				return new AbstractMap.SimpleImmutableEntry<>(Member.parseMember(master), Member.parseMembers(slaves));
+				
+				Optional<Member> master_member = Member.parseMember(master);
+				return master_member.isPresent() ? new AbstractMap.SimpleImmutableEntry<>(master_member.get(), Member.parseMembers(slaves)) : null;
 			})
-			.filter(entry -> entry.getKey().isPresent())
-			.map(entry -> new AbstractMap.SimpleImmutableEntry<>(entry.getKey().get(), entry.getValue()))
+			.filter(Objects::nonNull)
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
 	

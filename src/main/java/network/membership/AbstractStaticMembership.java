@@ -51,37 +51,19 @@ public abstract class AbstractStaticMembership
 	 */
 	protected Properties loadProp()
 	{
-		InputStream is = null;
-		try
+		ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
+		try (InputStream is = class_loader.getResourceAsStream(this.file)) 
 		{
-			ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
-			is = class_loader.getResourceAsStream(this.file); 
 			this.prop.load(is);
 			LOGGER.info("Load the properties file ({}) successfully.", file);
 		} catch (NullPointerException npe)
 		{
 			LOGGER.error("The properties file ({}) cannot be found and loaded. \n {}", file, npe);
 			System.exit(1);
-		} catch (IOException ioe)
+		} catch (IllegalArgumentException | IOException ie)
 		{
-			LOGGER.error("An error occurred when reading from the properties {} file. \n {}", file, ioe);
+			LOGGER.error("An error occurred when reading from the properties {} file. \n {}", file, ie);
 			System.exit(1);
-		} catch (IllegalArgumentException iae)
-		{
-			LOGGER.error("The input stream obtained from the properties {} file contains a malformed Unicode escape sequence. \n {}", file, iae);
-			System.exit(1);
-		} finally 
-		{
-			if(is != null)
-			{
-				try
-				{
-					is.close();
-				} catch (IOException ioe)
-				{
-					LOGGER.warn("Failed to close the input stream obtained from the properties {} file. \n {}", file, ioe);
-				}
-			}
 		}
 		
 		return this.prop;
