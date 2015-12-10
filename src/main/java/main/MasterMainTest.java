@@ -1,5 +1,6 @@
 package main;
 
+import exception.MemberParseException;
 import exception.SiteException;
 import master.MasterLauncher;
 
@@ -18,7 +19,7 @@ public class MasterMainTest
 		try
 		{
 			new MasterLauncher();
-		} catch (SiteException re)
+		} catch (SiteException | MemberParseException re)
 		{
 			re.printStackTrace();
 			System.exit(1);

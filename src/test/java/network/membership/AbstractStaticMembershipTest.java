@@ -7,15 +7,18 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 
+import exception.MemberParseException;
+
 public class AbstractStaticMembershipTest
 {
 	private final static String FILE = "membership-abstract-test.properties";
 
-	AbstractStaticMembership membership = new BasicMembership(FILE);
+	AbstractStaticMembership membership; 
 	
 	@Before
 	public void setUp() throws Exception
 	{
+		this.membership = new BasicMembership(FILE);
 	}
 
 	@Test
@@ -33,7 +36,7 @@ public class AbstractStaticMembershipTest
 	private class BasicMembership extends AbstractStaticMembership
 	{
 
-		public BasicMembership(String file)
+		public BasicMembership(String file) throws MemberParseException
 		{
 			super(file);
 		}

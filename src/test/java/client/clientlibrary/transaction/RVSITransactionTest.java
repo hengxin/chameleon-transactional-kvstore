@@ -14,6 +14,7 @@ import org.junit.Test;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.ContextException;
+import exception.MemberParseException;
 import exception.SiteException;
 import kvs.component.Timestamp;
 import master.MasterLauncher;
@@ -30,7 +31,7 @@ public class RVSITransactionTest
 	private ITransaction tx;
 	
 	@Before
-	public void setUp() throws ContextException, SiteException
+	public void setUp() throws ContextException, SiteException, MemberParseException
 	{
 		new MasterLauncher();
 

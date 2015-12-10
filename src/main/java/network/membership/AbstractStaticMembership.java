@@ -7,6 +7,9 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import exception.MemberParseException;
+import exception.MembershipConfigException;
+
 /**
  * In this implementation, we load the membership information
  * from pre-defined properties files.
@@ -22,16 +25,20 @@ public abstract class AbstractStaticMembership
 	protected final Properties prop = new Properties();
 	protected Member self;
 	
-	public AbstractStaticMembership(String file)
+	public AbstractStaticMembership(String file) throws MemberParseException
 	{
 		this.file = file;
 		this.loadProp();
 		this.loadMembershipFromProp();
 	}
 	
-	public abstract void loadMembershipFromProp();
+	/**
+	 * @throws MemberParseException
+	 * 		Thrown if an error occurs during parsing {@link Member}.
+	 */
+	public abstract void loadMembershipFromProp() throws MemberParseException;
 	
-	public Member getSelf()
+	public Member self()
 	{
 		return this.self;
 	}

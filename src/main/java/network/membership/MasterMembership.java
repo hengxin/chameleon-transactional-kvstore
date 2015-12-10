@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import exception.MemberParseException;
+
 /**
  * A master needs to know itself and all of <i>its</i> slaves.
  * In this implementation, a master does not necessarily know other masters
@@ -21,7 +23,7 @@ public final class MasterMembership extends AbstractStaticMembership
 	
 	private List<Member> slaves;
 
-	public MasterMembership(String file)
+	public MasterMembership(String file) throws MemberParseException
 	{
 		super(file);
 	}
@@ -30,21 +32,18 @@ public final class MasterMembership extends AbstractStaticMembership
 	 * Only one line in the .properties file: master = slave, slave, ... 
 	 */
 	@Override
-	public void loadMembershipFromProp()
+	public void loadMembershipFromProp() throws MemberParseException
 	{
 		Iterator<Entry<Object, Object>> master_slaves_iter = super.prop.entrySet().iterator();
 		if(! master_slaves_iter.hasNext())
-		{
-			LOGGER.error("Failed to load membership from the properties file ({}). Is it a blank file? It should be in the (master = slave, slave, ...) format.", super.file);
-			System.exit(1);
-		}
+			throw new MemberParseException(String.format("Failed to load membership from (%s). Is it blank? It should be of the (master = slave, slave, ...) format.", super.file));
 		
 		Entry<Object, Object> master_slaves_entry = master_slaves_iter.next();
 
 		String master = (String) master_slaves_entry.getKey();
 		String slaves = (String) master_slaves_entry.getValue();
 
-		super.self = Member.parseMember(master);
+		super.self = Member.parseMember(master).orElseThrow(() -> new MemberParseException(String.format("Failed to parse (%s) as self.", self)));
 		this.slaves = Member.parseMembers(slaves);
 
 		LOGGER.info("I am a master: {}. My slaves are: {}.", master, slaves);

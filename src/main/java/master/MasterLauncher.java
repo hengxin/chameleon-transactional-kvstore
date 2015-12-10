@@ -3,6 +3,7 @@ package master;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import exception.MemberParseException;
 import exception.SiteException;
 import master.context.MasterContext;
 import rmi.IRMI;
@@ -23,8 +24,9 @@ public class MasterLauncher
 	 * Launch with default properties file, which is
 	 * {@value #MASTER_MEMBERSHIP_PROPERTIES_FILE}.
 	 * @throws SiteException 
+	 * @throws MemberParseException 
 	 */
-	public MasterLauncher() throws SiteException
+	public MasterLauncher() throws SiteException, MemberParseException
 	{
 		this(MASTER_MEMBERSHIP_PROPERTIES_FILE);
 	}
@@ -34,8 +36,9 @@ public class MasterLauncher
 	 * @param file
 	 * 		Path of the properties file.
 	 * @throws SiteException 
+	 * @throws MemberParseException 
 	 */
-	public MasterLauncher(String file) throws SiteException
+	public MasterLauncher(String file) throws SiteException, MemberParseException
 	{
 		MasterContext context = new MasterContext(file);
 		IRMI master = new SIMaster(context);

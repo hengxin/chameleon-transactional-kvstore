@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.transaction.RVSITransaction;
+import exception.MemberParseException;
 import master.IMaster;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
@@ -48,8 +49,9 @@ public abstract class AbstractClientContext
 	 * Constructor with user-specified properties file.
 	 * @param file 
 	 * 		Path of the properties file.
+	 * @throws MemberParseException 
 	 */
-	public AbstractClientContext(String file)
+	public AbstractClientContext(String file) throws MemberParseException
 	{
 		LOGGER.info("Using the properties file ({}) for {}.", file, this.getClass().getSimpleName());
 

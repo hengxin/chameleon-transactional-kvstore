@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.core.net.server.Client;
 import exception.ContextException;
+import exception.MemberParseException;
 import master.IMaster;
 import site.ISite;
 import slave.ISlave;
@@ -49,8 +50,9 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	 * 
 	 * @throws ContextException 
 	 * 		Failed to create this context because no master is available.
+	 * @throws MemberParseException 
 	 */
-	public ClientContextSingleMaster() throws ContextException
+	public ClientContextSingleMaster() throws ContextException, MemberParseException
 	{
 		this(DEFAULT_CLIENT_PROPERTIES_FILE);
 	}
@@ -62,8 +64,9 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	 * 		Path of the properties file.
 	 * @throws ContextException 
 	 * 		Failed to create this context because no master is available.
+	 * @throws MemberParseException 
 	 */
-	public ClientContextSingleMaster(String file) throws ContextException
+	public ClientContextSingleMaster(String file) throws ContextException, MemberParseException
 	{
 		super(file);
 		this.setMasterSlaves();

@@ -11,6 +11,7 @@ import client.clientlibrary.transaction.RVSITransaction;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.ContextException;
+import exception.MemberParseException;
 import kvs.component.Timestamp;
 
 /**
@@ -31,7 +32,7 @@ public class ClientMainTest
 		try
 		{
 			context = new ClientContextSingleMaster();
-		} catch (ContextException ce)
+		} catch (ContextException | MemberParseException ce)
 		{
 			LOGGER.error(ce.getMessage());
 			System.exit(1);

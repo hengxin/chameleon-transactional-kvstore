@@ -20,7 +20,7 @@ public class MemberTest
 	public void testParseMember()
 	{
 		Member expected_member = new Member("127.0.0.1", 8000, "rmi-master", 1099);
-		Member actual_member = Member.parseMember("127.0.0.1@8000;rmi-master@1099");
+		Member actual_member = Member.parseMember("127.0.0.1@8000;rmi-master@1099").get();
 		
 		assertEquals("Fails to parse membership.", expected_member, actual_member);
 	}

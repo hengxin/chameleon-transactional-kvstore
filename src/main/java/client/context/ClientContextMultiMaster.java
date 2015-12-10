@@ -2,6 +2,7 @@ package client.context;
 
 import java.rmi.Remote;
 
+import exception.MemberParseException;
 import kvs.compound.CompoundKey;
 import master.IMaster;
 import slave.ISlave;
@@ -16,7 +17,7 @@ import slave.ISlave;
  */
 public class ClientContextMultiMaster extends AbstractClientContext
 {
-	public ClientContextMultiMaster(String file)
+	public ClientContextMultiMaster(String file) throws MemberParseException
 	{
 		super(file);
 		// TODO Auto-generated constructor stub

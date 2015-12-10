@@ -4,7 +4,10 @@ import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import exception.MemberParseException;
 
 /**
  * A client needs to know all the masters and their individual slaves.
@@ -22,7 +25,7 @@ public final class ClientMembership extends AbstractStaticMembership
 {
 	private Map<Member, List<Member>> master_slaves_map;
 	
-	public ClientMembership(String file)
+	public ClientMembership(String file) throws MemberParseException
 	{
 		super(file);
 	}
@@ -43,21 +46,24 @@ public final class ClientMembership extends AbstractStaticMembership
 	 * ...
 	 * </blockquote>
 	 * 
-	 * @return
+	 * @implNote
+	 * 		FIXME The code is ugly. 
 	 */
 	private Map<Member, List<Member>> loadMasterSlavesMap()
 	{
 		return super.prop.entrySet().stream()
-			.<Entry<Member, List<Member>>>map(master_slaves_entry -> 
+			.<Entry<Optional<Member>, List<Member>>>map(master_slaves_entry -> 
 			{
 				String master = (String) master_slaves_entry.getKey();
 				String slaves = (String) master_slaves_entry.getValue();
 				return new AbstractMap.SimpleImmutableEntry<>(Member.parseMember(master), Member.parseMembers(slaves));
 			})
+			.filter(entry -> entry.getKey().isPresent())
+			.map(entry -> new AbstractMap.SimpleImmutableEntry<>(entry.getKey().get(), entry.getValue()))
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
 	
-	public Member getSelf()
+	public Member self()
 	{
 		// TODO identity of a client
 		return null;

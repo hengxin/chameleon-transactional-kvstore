@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import context.IContext;
+import exception.MemberParseException;
 import network.membership.AbstractStaticMembership;
 import network.membership.MasterMembership;
 import network.membership.Member;
@@ -33,8 +34,9 @@ public class MasterContext implements IContext
 	 * Constructor using user-specified properties file.
 	 * @param file
 	 * 		Path of the properties file.
+	 * @throws MemberParseException 
 	 */
-	public MasterContext(String file)
+	public MasterContext(String file) throws MemberParseException
 	{
 		LOGGER.info("Using the properties file ({}) for MasterContext.", file);
 		this.master_membership = new MasterMembership(file);
@@ -44,6 +46,6 @@ public class MasterContext implements IContext
 	@Override
 	public Member self()
 	{
-		return this.master_membership.getSelf();
+		return this.master_membership.self();
 	}
 }
