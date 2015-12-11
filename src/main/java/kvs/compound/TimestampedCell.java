@@ -7,33 +7,43 @@ import com.google.common.collect.ComparisonChain;
 import kvs.component.Cell;
 import kvs.component.Ordinal;
 import kvs.component.Timestamp;
+import net.jcip.annotations.Immutable;
+import net.jcip.annotations.ThreadSafe;
 
 /**
+ * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp} (beside its {@link Ordinal}).
+ * 
  * @author hengxin
  * @date Created on 11-10-2015
  * 
- * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp} (beside its {@link Ordinal}).
- * 
- * <p> <b>Note:</b> A {@link TimestampedCell} is uniquely identified by its {@value #ts} ({@link Timestamp}) field.
- * See its {@link #compareTo(ITimestampedCell)}, {@link #hashCode()}, and {@link #equals(Object)}.
+ * @implNote
+ * 	A {@link TimestampedCell} is uniquely identified by its {@value #ts} ({@link Timestamp}) field.
+ *  See its {@link #compareTo(ITimestampedCell)}, {@link #hashCode()}, and {@link #equals(Object)}.
  * 
  * <p> FIXME How to update {@link #ord}???
  */
+@Immutable
+@ThreadSafe
 public class TimestampedCell implements ITimestampedCell
 {
-	private Timestamp ts = Timestamp.TIMESTAMP_INIT_ZERO;
-	private Ordinal ord = Ordinal.ORDINAL_INIT;
-	private Cell cell = Cell.CELL_INIT;
+	private final Timestamp ts; 
+	private final Ordinal ord; 
+	private final Cell cell; 
 	
 	/**
-	 * initial value: {@value Timestamp#TIMESTAMP_INIT_ZERO}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
+	 * Initial value: {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
 	 */
-	public static TimestampedCell TIMESTAMPED_CELL_INIT = new TimestampedCell();
+	public final static TimestampedCell TIMESTAMPED_CELL_INIT = new TimestampedCell();
 	
 	/**
-	 * default constructor: with {@value Timestamp#TIMESTAMP_INIT_ZERO}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
+	 * Default constructor with {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
 	 */
-	public TimestampedCell() {}
+	public TimestampedCell() 
+	{
+		this.ts = Timestamp.TIMESTAMP_INIT;
+		this.ord = Ordinal.ORDINAL_INIT;
+		this.cell = Cell.CELL_INIT;
+	}
 	
 	public TimestampedCell(Timestamp ts, Ordinal ord, Cell c)
 	{
@@ -43,16 +53,7 @@ public class TimestampedCell implements ITimestampedCell
 	}
 
 	/**
-	 * Constructor only with the {@link #ts} field, if {@link #ord} and {@link #cell} are not relevant.
-	 * @param ts {@link Timestamp}
-	 */
-	public TimestampedCell(Timestamp ts)
-	{
-		this.ts = ts;
-	}
-
-	/**
-	 * Constructor with the {@link #ts} and {@link #cell}, if {@link #ord}.
+	 * Constructor with the {@link #ts} and {@link #cell}, if {@link #ord} is not relevant.
 	 * @param ts {@link Timestamp}
 	 * @param c {@link Cell}
 	 */
@@ -60,8 +61,20 @@ public class TimestampedCell implements ITimestampedCell
 	{
 		this.ts = ts;
 		this.cell = c;
+		this.ord = Ordinal.ORDINAL_INIT;
 	}
 	
+	/**
+	 * Constructor with only {@link #cell}, if {@link #ts} and {@link #ord} are not relevant. 
+	 * @param cell
+	 */
+	public TimestampedCell(Cell cell)
+	{
+		this.cell = cell;
+		this.ts = Timestamp.TIMESTAMP_INIT;
+		this.ord = Ordinal.ORDINAL_INIT;
+	}
+
 	@Override
 	public Timestamp getTS()
 	{
@@ -95,7 +108,7 @@ public class TimestampedCell implements ITimestampedCell
 	@Override
 	public int hashCode()
 	{
-		return Objects.hashCode(this.ts); // , this.cell);
+		return Objects.hashCode(this.ts); 
 	}
 	
 	/**
@@ -113,7 +126,7 @@ public class TimestampedCell implements ITimestampedCell
 			return false;
 		
 		TimestampedCell that = (TimestampedCell) o;
-		return Objects.equal(this.ts, that.ts); // && Objects.equal(this.cell, that.cell); // uniquely identified by its {@link Timestamp}
+		return Objects.equal(this.ts, that.ts);
 	}
 
 	@Override

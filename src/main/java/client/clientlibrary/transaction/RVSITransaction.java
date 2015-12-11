@@ -35,7 +35,7 @@ public class RVSITransaction implements ITransaction
 	
 	private final AbstractClientContext context;
 	
-	private Timestamp sts = Timestamp.TIMESTAMP_INIT_ZERO;	// start-timestamp
+	private Timestamp sts = Timestamp.TIMESTAMP_INIT;	// start-timestamp
 //	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
 
 	private final BufferedUpdates buffered_updates = new BufferedUpdates();	

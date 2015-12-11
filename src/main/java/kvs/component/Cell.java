@@ -6,13 +6,14 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import kvs.table.AbstractTable;
+import net.jcip.annotations.Immutable;
 
 /**
+ * The actual values stored in the {@link AbstractTable}. 
  * @author hengxin
  * @date 10-27-2015
- * 
- * The actual values stored in the {@link AbstractTable}. 
  */
+@Immutable
 public class Cell implements Serializable
 {
 	private static final long serialVersionUID = 4358362337464864235L;
@@ -20,9 +21,9 @@ public class Cell implements Serializable
 	/**
 	 * Initial value: "NULL"
 	 */
-	public static Cell CELL_INIT = new Cell("NULL");
+	public final static Cell CELL_INIT = new Cell("NULL");
 	
-	public String data;
+	public final String data;
 	
 	public Cell(String data)
 	{
@@ -32,11 +33,6 @@ public class Cell implements Serializable
 	public String getData()
 	{
 		return this.data;
-	}
-
-	public void setData(String data)
-	{
-		this.data = data;
 	}
 	
 	@Override
@@ -52,7 +48,7 @@ public class Cell implements Serializable
 			return true;
 		if(o == null)
 			return false;
-		if(! (o instanceof Cell))
+		if(! (o.getClass() == this.getClass()))
 			return false;
 		
 		Cell that = (Cell) o;

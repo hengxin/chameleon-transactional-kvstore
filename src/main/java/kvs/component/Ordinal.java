@@ -1,7 +1,11 @@
 package kvs.component;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * @author hengxin
@@ -10,26 +14,26 @@ import com.google.common.base.Objects;
  * <p> We denote the position of some version of a data item <code>x</code> in its 
  * total version order by <code>x.ord</code>, called its ordinal number.
  */
+@ThreadSafe
 public final class Ordinal
 {
-	public static Ordinal ORDINAL_INIT = new Ordinal();
+	public final static Ordinal ORDINAL_INIT = new Ordinal(0L);
 	
-	private long ord = 0L;	// TODO Or AtomicLong???
+	private final AtomicLong ord;	
 	
-	public Ordinal() {}
 	public Ordinal(long ord)
 	{
-		this.ord = ord;
+		this.ord = new AtomicLong(ord);
 	}
 	
-	public void increment()
+	/**
+	 * Atomically increments by one the current ordinal.
+	 * @return
+	 * 	the updated ordinal.
+	 */
+	public Ordinal incrementAndGet()
 	{
-		this.ord++;
-	}
-	
-	public long getOrd()
-	{
-		return ord;
+		return new Ordinal(this.ord.incrementAndGet());
 	}
 	
 	@Override

@@ -4,6 +4,7 @@
 package kvs.table;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.SortedMap;
 import java.util.concurrent.locks.Lock;
@@ -128,14 +129,20 @@ public abstract class AbstractTable
 	 */
 	public void apply(Timestamp cts, BufferedUpdates buffered_updates)
 	{
-		buffered_updates.getBufferedUpdateMap().entrySet()
-			.forEach(
-					update_entry -> { this.put(update_entry.getKey(), new TimestampedCell(cts, update_entry.getValue())); }
-					);
+		buffered_updates.getBufferedUpdateMap().entrySet().forEach(this::put);
 	}
 	
 	/**
-	 * Put data ({@link CompoundKey}, {@link ITimestampedCell}) into this {@link #table}.
+	 * Put data entry of ({@link CompoundKey}, {@link ITimestampedCell}) into {@link #table}.
+	 * @param ck_tscell_entry
+	 */
+	public void put(Entry<CompoundKey, ITimestampedCell> ck_tscell_entry)
+	{
+		this.put(ck_tscell_entry.getKey(), ck_tscell_entry.getValue());
+	}
+	
+	/**
+	 * Put data ({@link CompoundKey}, {@link ITimestampedCell}) into {@link #table}.
 	 */
 	public void put(CompoundKey ck, ITimestampedCell tc)
 	{

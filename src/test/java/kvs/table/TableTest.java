@@ -27,7 +27,7 @@ public class TableTest
 		Row row = new Row("R1");
 		Column col = new Column("C1");
 
-		ts_cell_0L = new TimestampedCell(Timestamp.TIMESTAMP_INIT_ZERO, Cell.CELL_INIT);
+		ts_cell_0L = new TimestampedCell(Timestamp.TIMESTAMP_INIT, Cell.CELL_INIT);
 		ts_cell_2L = new TimestampedCell(new Timestamp(2L), new Cell("TS_CELL_2L"));
 		ts_cell_4L = new TimestampedCell(new Timestamp(4L), new Cell("TS_CELL_4L"));
 

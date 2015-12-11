@@ -18,7 +18,7 @@ public class TimestampedCellTest
 
 	ITimestampedCell ts_cell_smaller = new TimestampedCell();
 	ITimestampedCell ts_cell_equal = new TimestampedCell(new Timestamp(1L), new Ordinal(2L), new Cell("TS_Cell_Equal"));
-	ITimestampedCell ts_cell_larger = new TimestampedCell(new Timestamp(2L), new Ordinal(), Cell.CELL_INIT);
+	ITimestampedCell ts_cell_larger = new TimestampedCell(new Timestamp(2L), new Ordinal(0L), Cell.CELL_INIT);
 
 	@Before
 	public void setUp() throws Exception

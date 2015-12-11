@@ -11,6 +11,7 @@ import com.google.common.base.Objects;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.table.ITimestampedCellStore;
+import net.jcip.annotations.Immutable;
 
 /**
  * {@link CompoundKey} = {@link Row} key + {@link Column} key, 
@@ -19,6 +20,7 @@ import kvs.table.ITimestampedCellStore;
  * @author hengxin
  * @date Created: 10-27-2015
  */
+@Immutable
 public class CompoundKey implements Serializable
 {
 	private static final long serialVersionUID = -4184998600697675989L;

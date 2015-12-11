@@ -20,6 +20,7 @@ import exception.TransactionCommunicationException;
 import exception.TransactionExecutionException;
 import jms.master.JMSCommitLogPublisher;
 import kvs.component.Timestamp;
+import kvs.compound.CKeyToOrdinalIndex;
 import kvs.table.MasterTable;
 import master.context.MasterContext;
 import master.mvcc.StartCommitLogs;
@@ -52,6 +53,7 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	
 	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
 	private final StartCommitLogs logs = new StartCommitLogs();	// commit log: each entry is composed of start-timestamp, commit-timestamp, and buffered updates of a transaction
+	private final CKeyToOrdinalIndex ck_ord_index = new CKeyToOrdinalIndex();
 
 	/**
 	 * Constructor with {@link MasterContext}.
@@ -67,7 +69,6 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	 * 
 	 * @return 
 	 * 		A start-timestamp 
-	 * @throws NoRouteToHostException
 	 * @throws ConnectIOException
 	 * @throws TransactionExecutionException 
 	 */
@@ -143,7 +144,7 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 				if (can_committed)	// (1) check
 				{
 					cts = new Timestamp(this.ts.incrementAndGet());	// (2) commit-timestamp
-					this.logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates());	// (3) update start-commit-log
+					this.logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, this.ck_ord_index));	// (3) update start-commit-log
 				}
 			}
 		} catch (InterruptedException ie)
