@@ -119,7 +119,7 @@ public abstract class AbstractTable
 	 */
 	public void apply(ToCommitTransaction tx)
 	{
-		this.apply(tx.getSts(), tx.getBuffered_Updates());
+		this.apply(tx.getSts(), tx.getBufferedUpdates());
 	}
 	
 	/**

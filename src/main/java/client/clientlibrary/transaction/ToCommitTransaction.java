@@ -1,5 +1,10 @@
 package client.clientlibrary.transaction;
 
+import java.util.Objects;
+
+import com.google.common.base.MoreObjects;
+
+import ch.qos.logback.core.helpers.ThrowableToStringArray;
 import kvs.component.Timestamp;
 import messages.AbstractMessage;
 
@@ -15,12 +20,12 @@ public class ToCommitTransaction extends AbstractMessage
 	private static final long serialVersionUID = -137070517043340731L;
 
 	private final Timestamp sts;
-	private final BufferedUpdates buffered_Updates;
+	private final BufferedUpdates bufferedUpdates;
 	
 	public ToCommitTransaction(Timestamp sts, BufferedUpdates updates)
 	{
 		this.sts = sts;
-		this.buffered_Updates = updates;
+		this.bufferedUpdates = updates;
 	}
 
 	public Timestamp getSts()
@@ -28,8 +33,23 @@ public class ToCommitTransaction extends AbstractMessage
 		return sts;
 	}
 
-	public BufferedUpdates getBuffered_Updates()
+	public BufferedUpdates getBufferedUpdates()
 	{
-		return buffered_Updates;
+		return bufferedUpdates;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(this.sts, this.bufferedUpdates);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return MoreObjects.toStringHelper(this)
+				.addValue(this.sts)
+				.addValue(this.bufferedUpdates)
+				.toString();
 	}
 }

@@ -1,5 +1,7 @@
 package messages;
 
+import exception.TransactionCommunicationException;
+
 /**
  * Role of a message producer, such as an {@link IMaster}.
  * 
@@ -8,5 +10,5 @@ package messages;
  */
 public interface IMessageProducer
 {
-	public abstract void send(AbstractMessage message);
+	public abstract void send(AbstractMessage message) throws TransactionCommunicationException;
 }

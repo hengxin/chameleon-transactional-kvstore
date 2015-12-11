@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import exception.TransactionException;
+import exception.TransactionExecutionException;
 import kvs.component.Timestamp;
 
 /**
@@ -16,6 +16,6 @@ import kvs.component.Timestamp;
 @Deprecated
 public interface IMaster extends Remote
 {
-	public Timestamp start() throws RemoteException, NoRouteToHostException, TransactionException;
+	public Timestamp start() throws RemoteException, NoRouteToHostException, TransactionExecutionException;
 	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws RemoteException;
 }

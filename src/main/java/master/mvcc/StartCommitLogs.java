@@ -13,6 +13,8 @@ import client.clientlibrary.transaction.ToCommitTransaction;
 import intervaltree.IntervalTree;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * @author hengxin
@@ -23,15 +25,18 @@ import kvs.compound.CompoundKey;
  * 
  * <p> {@link StartCommitLogs} will be used to check write-conflicts among transactions.
  * 
- * <b>Important note:</b> The {@link IntervalTree} implementation used here is credited to gds12/IntervalTree
- * (see <a href="https://github.com/gds12/IntervalTree">gds12/IntervalTree AT GitHub</a>).
+ * @licenceNote 
+ * 	The {@link IntervalTree} implementation used here is credited to gds12/IntervalTree
+ *  (see <a href="https://github.com/gds12/IntervalTree">gds12/IntervalTree AT GitHub</a>).
  */
+@ThreadSafe
 public class StartCommitLogs
 {
+	@GuardedBy("read_lock, write_lock")
 	private IntervalTree<Timestamp, BufferedUpdates> start_commit_logs = new IntervalTree<>();
-	
+
 	private final ReadWriteLock lock = new ReentrantReadWriteLock();
-	private final Lock read_lock = this.lock.readLock();
+	public final Lock read_lock = this.lock.readLock();
 	public final Lock write_lock = this.lock.writeLock();
 	
 	/**
@@ -56,7 +61,7 @@ public class StartCommitLogs
 	/**
 	 * Check whether the {@link ToCommitTransaction} is write-conflict-free w.r.t already committed transactions.
 	 * @param tx the transaction to commit
-	 * @return <code>true</code>, if tx is write-conflict-free w.r.t committed transactions. <code>false</code>, otherwise.
+	 * @return {@code true} if tx is write-conflict-free w.r.t committed transactions. {@code false}, otherwise.
 	 * 
 	 * <p>
 	 * <b>TODO</b> check the side-effects on the original underlying collections. 
@@ -69,7 +74,7 @@ public class StartCommitLogs
 			overlapping_tx_updates = this.containersOf(tx.getSts());
 		} catch (InterruptedException ie)
 		{
-			return false;
+			return false;	// TODO: retry???
 		} 
 		
 		// collect all updated keys
@@ -79,7 +84,7 @@ public class StartCommitLogs
 						(acc_cks_1, acc_cks_2) -> { acc_cks_1.addAll(acc_cks_2); return acc_cks_1; }
 						);
 				
-		overlapping_updated_cks.retainAll(tx.getBuffered_Updates().getUpdatedCKeys());
+		overlapping_updated_cks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());
 		
 		return overlapping_updated_cks.isEmpty();
 	}

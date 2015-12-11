@@ -101,7 +101,7 @@ public class JMSCommitLogSubscriberStubTest
 			try
 			{
 				ToCommitTransaction commit_log_msg = (ToCommitTransaction) obj_msg.getObject();
-				this.table.apply(commit_log_msg.getSts(), commit_log_msg.getBuffered_Updates());
+				this.table.apply(commit_log_msg.getSts(), commit_log_msg.getBufferedUpdates());
 			} catch (JMSException jmse)
 			{
 				System.out.format("Fail to receive the message: %s.", jmse.getMessage());

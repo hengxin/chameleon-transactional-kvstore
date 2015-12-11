@@ -15,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
-import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import exception.TransactionException;
+import exception.TransactionCommunicationException;
+import exception.TransactionExecutionException;
 import jms.master.JMSCommitLogPublisher;
 import kvs.component.Timestamp;
 import kvs.table.MasterTable;
@@ -28,12 +28,23 @@ import messages.IMessageProducer;
 import site.AbstractSite;
 
 /**
- * Master employs an MVCC protocol to locally implement snapshot isolation (SI, for short).
+ * Master employs an MVCC protocol to locally implement (<i>nearly but not really</i>) 
+ * snapshot isolation (SI, for short).
+ * @description
+ * 	<i>Nearly but not really SI:</i> because Chameleon tends to tolerate weak 
+ * 	transactional consistency, it does not require the read operations of a 
+ *  transaction with start-timestamp <i>sts</i> to obtain the <i>latest</i> preceding 
+ *  version committed before <i>sts</i>. 
+ *  <p>
+ *  This design choice has an effect on the implementation of both 
+ *  {@link #read(kvs.component.Row, kvs.component.Column)} and 
+ *  {@link #commit(ToCommitTransaction, VersionConstraintManager)}, especially on
+ *  their synchronization and locking strategies.
  * 
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
+public class SIMaster extends AbstractSite implements IMessageProducer
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
 
@@ -58,10 +69,10 @@ public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 	 * 		A start-timestamp 
 	 * @throws NoRouteToHostException
 	 * @throws ConnectIOException
-	 * @throws TransactionException 
+	 * @throws TransactionExecutionException 
 	 */
 	@Override
-	public Timestamp start() throws NoRouteToHostException, ConnectIOException, TransactionException
+	public Timestamp start() throws TransactionExecutionException
 	{
         // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
 		try
@@ -72,10 +83,14 @@ public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 			}).get());
 		} catch (InterruptedException ie)
 		{
-			throw new TransactionException("Failed to start a transaction due to unexpected thread interruption.", ie);
+			String msg = "Failed to start a transaction due to unexpected thread interruption.";
+			LOGGER.warn(msg, ie.getCause());	// log at the master site side
+			throw new TransactionExecutionException(msg, ie);	// thrown to the client side
 		} catch (ExecutionException ee)
 		{
-			throw new TransactionException("Failed to generate a new start-timestamp for a transaction to start.", ee);
+			String msg = "Failed to generate a new start-timestamp for a transaction to start.";
+			LOGGER.warn(msg, ee.getCause());	// log at the master site side
+			throw new TransactionExecutionException(msg, ee);	// thrown to the client side
 		}
 	}
 
@@ -89,15 +104,31 @@ public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 	 * <li> propagate the updates
 	 * </ol><p>
 	 * <b>Note:</b> (3) and (4) cannot be re-ordered!
+	 * @throws TransactionExecutionException 
+	 * 	Thrown if an error occurs during commit (i.e., the transaction is not normally aborted
+	 *  according to the commit protocol).
 	 *  
+	 * @implNote
+	 * 	Key points about synchronization issues and locking strategies: 
+	 *  <p>
+	 *  <ul>
+	 *  <li> The wcf check, cts generation, and commit-log update should be protected by
+	 *  	the same write-lock of {@link #logs}.
+	 *  <li> No need to synchronize {@link #read(kvs.component.Row, kvs.component.Column)}
+	 *    	with the update of the underlying table under the read/write-lock of {@link #logs}.
+	 *  </ul>
+	 * 
 	 * <p> TODO Start a new thread? 
 	 */
 	@Override
-	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager)
+	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws TransactionExecutionException
 	{
 		Timestamp cts = null;
-		BufferedUpdates buffered_updates = null;
 		
+		/**
+		 * {@link VersionConstraintManager} is local to this method.
+		 * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free). 
+		 */
 		boolean vc_checked = vc_manager.check();
 		boolean wcf_checked = false;
 		boolean can_committed = false;
@@ -112,31 +143,42 @@ public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 				if (can_committed)	// (1) check
 				{
 					cts = new Timestamp(this.ts.incrementAndGet());	// (2) commit-timestamp
-					buffered_updates = tx.getBuffered_Updates();	
-					this.logs.addStartCommitLog(tx.getSts(), cts, buffered_updates);	// (3) update start-commit-log
+					this.logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates());	// (3) update start-commit-log
 				}
 			}
 		} catch (InterruptedException ie)
 		{
-			ie.printStackTrace();
-			can_committed = false;
+			String log = String.format("Failed to commit transaction (%s) due to unexpected thread interruption.", tx);
+			LOGGER.error(log, ie.getCause());	// log at the master site side
+			throw new TransactionExecutionException(String.format(log), ie.getCause());	// thrown to the client side
 		} finally
 		{
 			this.logs.write_lock.unlock();
 		}
 		
-
 		if(can_committed)
 		{
-			this.table.apply(cts, buffered_updates);	// (4) apply buffered-updates to the in-memory table
-			// TODO (5) propagate
+			/**
+			 * Chameleon does not require read operations of a transaction to get the <i>latest</i> version 
+			 * before the sts of that transaction. Thus it is not necessary for the master 
+			 * to synchronize the updates to the underlying table with read operations, both guarded by the lock on
+			 * #logs. 
+			 */
+			this.table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
+			try
+			{
+				this.send(tx); // (5) propagate
+			} catch (TransactionCommunicationException tae)
+			{
+				LOGGER.warn(tae.getMessage(), tae.getCause());
+			}		
 		}
 		
 		return can_committed;
 	}
 
 	@Override
-	public void send(AbstractMessage msg)
+	public void send(AbstractMessage msg) throws TransactionCommunicationException
 	{
 		Assert.assertNotNull("Please call registerASJMSParticipant() first.", super.jmser); 
 
@@ -145,10 +187,7 @@ public class SIMaster extends AbstractSite implements IMaster, IMessageProducer
 			((JMSCommitLogPublisher) super.jmser).publish(msg);
 		} catch (JMSException jmse)
 		{
-			System.out.format("Fail to publish the message [%s], due to %s.", msg.toString(), jmse.getMessage());
-			jmse.printStackTrace();
+			throw new TransactionCommunicationException(String.format("I [{}] Failded to publish the commit log [{}]. \n {}", super.context.self(), msg), jmse.getCause());
 		}
 	}
-
-	
 }

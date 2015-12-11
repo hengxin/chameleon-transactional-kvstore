@@ -20,10 +20,8 @@ import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
 import kvs.table.MasterTable;
 import kvs.table.SlaveTable;
-import master.IMaster;
 import network.membership.Member;
 import rmi.IRMI;
-import slave.ISlave;
 
 /**
  * An {@link AbstractSite} holds an {@link AbstractTable} 

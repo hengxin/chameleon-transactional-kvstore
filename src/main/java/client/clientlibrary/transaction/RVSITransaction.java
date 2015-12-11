@@ -15,13 +15,12 @@ import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
-import exception.TransactionException;
+import exception.TransactionExecutionException;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;
-import master.IMaster;
 import site.ISite;
 
 /**
@@ -37,7 +36,7 @@ public class RVSITransaction implements ITransaction
 	private final AbstractClientContext context;
 	
 	private Timestamp sts = Timestamp.TIMESTAMP_INIT_ZERO;	// start-timestamp
-	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
+//	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
 
 	private final BufferedUpdates buffered_updates = new BufferedUpdates();	
 	private final QueryResults query_results = new QueryResults();
@@ -65,22 +64,17 @@ public class RVSITransaction implements ITransaction
 			this.sts = master.start();
 			LOGGER.info("The transaction (ID TBD) has successfully obtained a start-timestamp ({}).", sts);
 			return true;
-		} catch (NoRouteToHostException nr2he)
-		{
-			LOGGER.error("Failed to connect a socket to a remote address and port. "
-					+ "Check your network configuration at both the client and the server side. {}", nr2he.getMessage());
-			return false;
 		} catch (ConnectIOException cioe)
 		{
 			LOGGER.error("An IOException occurs while making a connection to the remote host for a remote method call. \\n {}", cioe.getMessage());
 			return false;
 		} catch (RemoteException re)
 		{
-			LOGGER.error("An error occurs while contacting the remote master {}. \\n {}", master, re.getMessage());
+			LOGGER.error("An error occurs while contacting the remote master {}. \n {}", master, re.getMessage());
 			return false;
-		} catch (TransactionException te)
+		} catch (TransactionExecutionException te)
 		{
-			LOGGER.error(te.getMessage() + "\\n" + te.getCause());
+			LOGGER.error(te.getMessage() + "\n" + te.getCause());
 			return false;
 		}
 	}
@@ -117,6 +111,10 @@ public class RVSITransaction implements ITransaction
 			// TODO: to remove
 			re.printStackTrace();
 			return false;
+		} catch (TransactionExecutionException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		return true;

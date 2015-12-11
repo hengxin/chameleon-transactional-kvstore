@@ -1,12 +1,11 @@
 package site;
 
-import java.net.NoRouteToHostException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import exception.TransactionException;
+import exception.TransactionExecutionException;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
@@ -23,8 +22,6 @@ public interface ISite extends Remote
 {
 	public ITimestampedCell read(Row r, Column c) throws RemoteException;
 
-	public Timestamp start() throws RemoteException, NoRouteToHostException, TransactionException;
-	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws RemoteException;
-	
-//	public void apply(ToCommitTransaction tx);	// this method is not for remote access.
+	public Timestamp start() throws RemoteException, TransactionExecutionException;
+	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws RemoteException, TransactionExecutionException;
 }

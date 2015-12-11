@@ -1,11 +1,10 @@
 package slave;
 
-import java.net.NoRouteToHostException;
 import java.rmi.RemoteException;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import exception.TransactionException;
+import exception.TransactionExecutionException;
 import jms.AbstractJMSParticipant;
 import kvs.component.Timestamp;
 import kvs.table.SlaveTable;
@@ -43,14 +42,14 @@ public class RCSlave extends AbstractSite implements IMessageConsumer
 	}
 
 	@Override
-	public Timestamp start() throws RemoteException, NoRouteToHostException, TransactionException
+	public Timestamp start() throws RemoteException, TransactionExecutionException
 	{
-		throw new UnsupportedOperationException("Slaves does not support transaction start.");
+		throw new UnsupportedOperationException("Slaves do not support transaction start.");
 	}
 
 	@Override
 	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws RemoteException
 	{
-		throw new UnsupportedOperationException("Slaves does not support transaction commit.");
+		throw new UnsupportedOperationException("Slaves do not support transaction commit.");
 	}
 }
