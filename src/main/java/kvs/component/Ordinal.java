@@ -8,11 +8,14 @@ import com.google.common.base.Objects;
 import net.jcip.annotations.ThreadSafe;
 
 /**
+ * We denote the position of some version of a data item <code>x</code> in its 
+ * total version order by <code>x.ord</code>, called its ordinal number.
+ * 
  * @author hengxin
  * @date Created on 11-16-2015
  * 
- * <p> We denote the position of some version of a data item <code>x</code> in its 
- * total version order by <code>x.ord</code>, called its ordinal number.
+ * @implNote
+ * 	{@link Ordinal} has been implemented as a wrapper of an {@link AtomicLong}.
  */
 @ThreadSafe
 public final class Ordinal
@@ -29,11 +32,20 @@ public final class Ordinal
 	/**
 	 * Atomically increments by one the current ordinal.
 	 * @return
-	 * 	the updated ordinal.
+	 * 	the <i>new</i> updated ordinal.
 	 */
 	public Ordinal incrementAndGet()
 	{
 		return new Ordinal(this.ord.incrementAndGet());
+	}
+	
+	/**
+	 * @return
+	 * 	the {@link #ord} value
+	 */
+	public long getOrd()
+	{
+		return this.ord.get();
 	}
 	
 	@Override

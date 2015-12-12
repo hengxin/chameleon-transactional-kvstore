@@ -77,7 +77,6 @@ public final class BufferedUpdates implements Serializable
 				
 				Ordinal current_ord = ck_ord_index.get(ck);
 				Ordinal next_ord = current_ord.incrementAndGet();
-				ck_ord_index.put(ck, current_ord);
 				
 				this.buffered_update_map.put(ck, new TimestampedCell(cts, next_ord, ts_cell.getCell()));
 			});
