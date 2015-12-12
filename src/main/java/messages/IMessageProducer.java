@@ -1,6 +1,6 @@
 package messages;
 
-import exception.TransactionCommunicationException;
+import exception.transaction.TransactionCommunicationException;
 
 /**
  * Role of a message producer, such as an {@link IMaster}.

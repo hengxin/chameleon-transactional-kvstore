@@ -1,9 +1,9 @@
 package kvs.component;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 
 import net.jcip.annotations.ThreadSafe;
 
@@ -16,10 +16,16 @@ import net.jcip.annotations.ThreadSafe;
  * 
  * @implNote
  * 	{@link Ordinal} has been implemented as a wrapper of an {@link AtomicLong}.
+ *  Note that it does not implement its own {@link #hashCode()} and {@link #equals(Object)}
+ *  methods either.
+ *  See <a href = "http://stackoverflow.com/a/7568493/1833118">
+ *  	Why are two AtomicIntegers never equal? @ StackOverflow</a>
  */
 @ThreadSafe
-public final class Ordinal
+public final class Ordinal implements Serializable
 {
+	private static final long serialVersionUID = -8037347322531588752L;
+
 	public final static Ordinal ORDINAL_INIT = new Ordinal(0L);
 	
 	private final AtomicLong ord;	
@@ -46,26 +52,6 @@ public final class Ordinal
 	public long getOrd()
 	{
 		return this.ord.get();
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		return Objects.hashCode(this.ord);
-	}
-	
-	@Override
-	public boolean equals(Object o)
-	{
-		if(o == this)
-			return true;
-		if(o == null)
-			return false;
-		if(! (o instanceof Ordinal))
-			return false;
-		
-		Ordinal that = (Ordinal) o;
-		return Objects.equal(this.ord, that.ord);
 	}
 	
 	@Override

@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import exception.TransactionCommunicationException;
-import exception.TransactionExecutionException;
+import exception.transaction.TransactionCommunicationException;
+import exception.transaction.TransactionExecutionException;
 import jms.master.JMSCommitLogPublisher;
 import kvs.component.Timestamp;
 import kvs.compound.CKeyToOrdinalIndex;

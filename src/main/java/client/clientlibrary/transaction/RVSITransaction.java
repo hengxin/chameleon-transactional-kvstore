@@ -15,12 +15,16 @@ import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
-import exception.TransactionExecutionException;
+import exception.transaction.TransactionExecutionException;
+import exception.transaction.TransactionReadException;
+import groovy.time.BaseDuration.From;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
+import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
+import kvs.compound.TimestampedCell;
 import site.ISite;
 
 /**
@@ -59,6 +63,7 @@ public class RVSITransaction implements ITransaction
 	public boolean begin()
 	{
 		ISite master = ((ClientContextSingleMaster) context).getMaster();
+		
 		try
 		{
 			this.sts = master.start();
@@ -67,23 +72,34 @@ public class RVSITransaction implements ITransaction
 		} catch (ConnectIOException cioe)
 		{
 			LOGGER.error("An IOException occurs while making a connection to the remote host for a remote method call. \\n {}", cioe.getMessage());
-			return false;
 		} catch (RemoteException re)
 		{
 			LOGGER.error("An error occurs while contacting the remote master {}. \n {}", master, re.getMessage());
-			return false;
 		} catch (TransactionExecutionException te)
 		{
 			LOGGER.error(te.getMessage() + "\n" + te.getCause());
-			return false;
 		}
+		
+		return false;
 	}
 
 	@Override
-	public ITimestampedCell read(Row r, Column c)
+	public ITimestampedCell read(Row r, Column c) throws TransactionReadException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		ISite site = context.getReadSite();
+		
+		ITimestampedCell ts_cell = TimestampedCell.TIMESTAMPED_CELL_INIT;
+		try
+		{
+			ts_cell = site.read(r, c);
+			this.query_results.put(new CompoundKey(r, c), ts_cell);
+			LOGGER.info("Transaction [{}] read {} from [{}+{}] at site {}", this, ts_cell, r, c, site);
+		} catch (RemoteException re)
+		{
+			throw new TransactionReadException(String.format("The transaction [%s] failed to read [%s+%s] at site [%s].", this, r, c, site), re.getCause());
+		}
+
+		return ts_cell;
 	}
 
 	@Override

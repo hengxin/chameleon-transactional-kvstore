@@ -7,8 +7,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import client.context.AbstractClientContext;
@@ -27,16 +27,16 @@ import master.MasterLauncher;
  */
 public class RVSITransactionTest
 {
-	private AbstractClientContext context;
-	private ITransaction tx;
+	private static AbstractClientContext context;
+	private static ITransaction tx;
 	
-	@Before
-	public void setUp() throws ContextException, SiteException, MemberParseException
+	@BeforeClass
+	public static void setUpBeforeClass() throws ContextException, SiteException, MemberParseException
 	{
 		new MasterLauncher();
 
-		this.context = new ClientContextSingleMaster();
-		this.tx = new RVSITransaction(context);
+		context = new ClientContextSingleMaster();
+		tx = new RVSITransaction(context);
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class RVSITransactionTest
 		fail("Not yet implemented"); // TODO
 	}
 	
-	@After
-	public void tearDown()
+	@AfterClass
+	public static void tearDownAfterClass()
 	{
 	}
 }

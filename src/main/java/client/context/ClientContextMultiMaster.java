@@ -1,11 +1,8 @@
 package client.context;
 
-import java.rmi.Remote;
-
 import exception.MemberParseException;
 import kvs.compound.CompoundKey;
-import master.IMaster;
-import slave.ISlave;
+import site.ISite;
 
 /**
  * Provides context for transaction processing at the client side
@@ -30,14 +27,14 @@ public class ClientContextMultiMaster extends AbstractClientContext
 	 * @return
 	 * 		the {@link IMaster} responsible for the queried {@link CompoundKey}.
 	 */
-	public IMaster getMaster(CompoundKey ck)
+	public ISite getMaster(CompoundKey ck)
 	{
 		// TODO
 		return null;
 	}
 
 	@Override
-	public Remote getReadSite()
+	public ISite getReadSite()
 	{
 		// TODO Auto-generated method stub
 		return null;

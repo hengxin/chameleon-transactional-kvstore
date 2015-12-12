@@ -1,7 +1,7 @@
-package exception;
+package exception.transaction;
 
 /**
- * Exception indicating errors occurred during normal transaction execution, 
+ * Exception indicating failures occurred during normal transaction execution, 
  * including read, start, and commit.
  * 
  * @author hengxin
@@ -13,8 +13,8 @@ public class TransactionExecutionException extends Exception
 {
 	private static final long serialVersionUID = 9065339122312266555L;
 
-	public TransactionExecutionException(String message, Throwable cause)
+	public TransactionExecutionException(String msg, Throwable cause)
 	{
-		super(message, cause);
+		super(msg, cause);
 	}
 }

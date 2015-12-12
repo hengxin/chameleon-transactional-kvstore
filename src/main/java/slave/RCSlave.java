@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import exception.TransactionExecutionException;
+import exception.transaction.TransactionExecutionException;
 import jms.AbstractJMSParticipant;
 import kvs.component.Timestamp;
 import kvs.table.SlaveTable;

@@ -1,5 +1,7 @@
 package kvs.compound;
 
+import java.io.Serializable;
+
 import kvs.component.Cell;
 import kvs.component.Ordinal;
 import kvs.component.Timestamp;
@@ -10,7 +12,7 @@ import kvs.component.Timestamp;
  * 
  * <p> Interface for timestamped-cells, {@link Cell}s associated with {@link Timestamp}s.
  */
-public interface ITimestampedCell extends Comparable<ITimestampedCell>
+public interface ITimestampedCell extends Comparable<ITimestampedCell>, Serializable
 {
 	public Timestamp getTS();
 	public Ordinal getOrdinal();

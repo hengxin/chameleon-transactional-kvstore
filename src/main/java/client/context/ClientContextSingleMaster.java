@@ -1,7 +1,5 @@
 package client.context;
 
-import java.rmi.Remote;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -11,20 +9,17 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.core.net.server.Client;
 import exception.ContextException;
 import exception.MemberParseException;
-import master.IMaster;
 import site.ISite;
-import slave.ISlave;
 
 /**
  * Provides context for transaction processing at the client side
  * and in the <i>single-master-multiple-slaves</i> setting, including:
  * <p>
  * <ul>
- * <li> {@link #master}: the single {@link IMaster}
- * <li> {@link #slaves}: a list of {@link ISlave}s
+ * <li> {@link #master}: the single master
+ * <li> {@link #slaves}: a list of slaves
  * </ul>
  * 
  * @author hengxin
@@ -36,13 +31,10 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	
 	private final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
 
-//	private IMaster master;
-//	private List<ISlave> slaves;
-	
 	private ISite master;
 	private List<ISite> slaves;
 	
-	private Optional<ISite> cached_read_site;	
+	private Optional<ISite> cached_read_site = Optional.empty();	
 	
 	/**
 	 * Constructor using the default properties file:
@@ -105,7 +97,9 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	{
 		return this.cached_read_site.orElseGet(() ->
 			{
-				return this.slaves.isEmpty() ? this.master : this.slaves.get(new Random().nextInt(this.slaves.size())); 
+				ISite site = this.slaves.isEmpty() ? this.master : this.slaves.get(new Random().nextInt(this.slaves.size()));
+				this.cached_read_site = Optional.of(site);
+				return site;
 			});
 	}
 }

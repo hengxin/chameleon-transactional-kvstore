@@ -1,7 +1,9 @@
 package exception;
 
 /**
- * Site-related exception class.
+ * Site-related exception class, for instance,
+ * thrown if a site fails to export itself for remote accesses
+ * or to reclaim itself from remote accesses.
  * 
  * @author hengxin
  * @date Created on 12-09-2015

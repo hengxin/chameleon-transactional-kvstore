@@ -1,4 +1,4 @@
-package exception;
+package exception.transaction;
 
 /**
  * Exception indicating errors occurred during communications, including both 

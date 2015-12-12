@@ -1,6 +1,5 @@
 package client.context;
 
-import java.rmi.Remote;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
@@ -96,5 +95,5 @@ public abstract class AbstractClientContext
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
 	
-	public abstract Remote getReadSite();
+	public abstract ISite getReadSite();
 }

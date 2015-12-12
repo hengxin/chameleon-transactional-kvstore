@@ -27,9 +27,9 @@ public class QueryResults
 	// TODO WARNING: using multi-hashmap if multiple reads on a data item are allowed in a transaction.
 	private final Map<CompoundKey, ITimestampedCell> query_results = new ConcurrentHashMap<>();
 	
-	public void put(CompoundKey ck, ITimestampedCell ts_cell_t)
+	public void put(CompoundKey ck, ITimestampedCell ts_cell)
 	{
-		this.query_results.put(ck, ts_cell_t);
+		this.query_results.put(ck, ts_cell);
 	}
 	
 	public ITimestampedCell getTsCell(CompoundKey ck)

@@ -26,6 +26,8 @@ import net.jcip.annotations.ThreadSafe;
 @ThreadSafe
 public class TimestampedCell implements ITimestampedCell
 {
+	private static final long serialVersionUID = -764314996680845231L;
+
 	private final Timestamp ts; 
 	private final Ordinal ord; 
 	private final Cell cell; 
