@@ -12,6 +12,7 @@ import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.ContextException;
 import exception.MemberParseException;
+import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
 import kvs.component.Column;
@@ -67,8 +68,18 @@ public class ClientMainTest
 
 		// write
 		tx.write(r, c, new Cell("RC11"));
+		LOGGER.info("Write {} to {} + {}.", "RC11", r, c);
 
 		// end
+		try
+		{
+			tx.end();
+			LOGGER.info("Committed.");
+		} catch (TransactionEndException tee)
+		{
+			LOGGER.error(tee.getMessage(), tee.getCause());
+			System.exit(1);
+		}
 	}
 
 }

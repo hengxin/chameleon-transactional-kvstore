@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
+import context.IContext;
 import exception.transaction.TransactionExecutionException;
 import jms.AbstractJMSParticipant;
 import kvs.component.Timestamp;
@@ -20,8 +21,9 @@ import site.AbstractSite;
  */
 public class RCSlave extends AbstractSite implements IMessageConsumer
 {
-	public RCSlave()
+	public RCSlave(IContext context)
 	{
+		super.context = context;
 		super.table = new SlaveTable();
 	}
 

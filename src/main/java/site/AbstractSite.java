@@ -5,6 +5,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +27,9 @@ import rmi.IRMI;
 /**
  * An {@link AbstractSite} holds an {@link AbstractTable} 
  * and acts as an {@link AbstractJMSParticipant}.
- * 
- * <p> Specifically, an {@link IMaster} holds a {@link MasterTable}
- * and acts as an {@link JMSCommitLogPublisher}, while an {@link ISlave}
+ * <p> 
+ * Specifically, a master site holds a {@link MasterTable}
+ * and acts as an {@link JMSCommitLogPublisher}, while a slave site
  * holds a {@link SlaveTable} and acts as an {@link JMSCommitLogSubscriber}.
  *  
  * @author hengxin
@@ -39,12 +40,12 @@ public abstract class AbstractSite implements ISite, IRMI
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSite.class);
 	
 	protected AbstractTable table;
-	protected AbstractJMSParticipant jmser;
+	protected Optional<AbstractJMSParticipant> jmser = Optional.empty();
 	protected IContext context;
 	
 	public void registerAsJMSParticipant(AbstractJMSParticipant jmser)
 	{
-		this.jmser = jmser;
+		this.jmser = Optional.of(jmser);
 	}
 	
 	@Override
@@ -89,5 +90,11 @@ public abstract class AbstractSite implements ISite, IRMI
 		{
 			throw new SiteException(String.format("Failed to reclaim self (%s) from remote access.", self), e.getCause());
 		}
+	}
+	
+	@Override
+	public String toString()
+	{
+		return this.context.self().toString();
 	}
 }

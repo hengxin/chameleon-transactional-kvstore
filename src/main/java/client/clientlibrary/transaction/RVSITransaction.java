@@ -15,9 +15,9 @@ import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
+import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionExecutionException;
 import exception.transaction.TransactionReadException;
-import groovy.time.BaseDuration.From;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
@@ -109,47 +109,46 @@ public class RVSITransaction implements ITransaction
 		return true;
 	}
 
+	/**
+	 * Issued by a client to try to commit this transaction.
+	 * @return
+	 * 	{@code true} if transaction has been committed; {@code false}, otherwise.
+	 * @throws TransactionEndException 
+	 * 
+	 * @implNote
+	 * 	This implementation leaves the issues of how to handle with aborted transactions
+	 *  to the application.
+	 */
 	@Override
-	public boolean end()
+	public boolean end() throws TransactionEndException
 	{
-		VersionConstraintManager vc_manager = this.generateVersionConstraintManager();
+		VersionConstraintManager vc_manager = this.generateVCManager();
 		ToCommitTransaction tx = new ToCommitTransaction(this.sts, this.buffered_updates);
 		
 		try
 		{
-			boolean success = ((ClientContextSingleMaster) context).getMaster().commit(tx, vc_manager);
-			if(! success)
-			{
-				// TODO restart the transaction???
-			}
-		} catch (RemoteException re)
+			return ((ClientContextSingleMaster) context).getMaster().commit(tx, vc_manager);
+		} catch (RemoteException | TransactionExecutionException re_tee)
 		{
-			// TODO: to remove
-			re.printStackTrace();
-			return false;
-		} catch (TransactionExecutionException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new TransactionEndException(String.format("Transaction [%s] failed to commit.", this), re_tee.getCause());
 		}
-
-		return true;
 	}
 
 	/**
 	 * Collect {@link AbstractRVSISpecification} whose type could be {@link BVSpecification}, 
 	 * {@link FVSpecification}, or {@link SVSpecification}.
 	 * 
-	 * @param rvsi_spec an {@link AbstractRVSISpecification}
+	 * @param rvsi_spec 
+	 * 	an {@link AbstractRVSISpecification}
 	 */
 	public void collectRVSISpecification(AbstractRVSISpecification rvsi_spec)
 	{
 		this.rvsi_manager.collectRVSISpecification(rvsi_spec);
 	}
 	
-	public VersionConstraintManager generateVersionConstraintManager()
+	public VersionConstraintManager generateVCManager()
 	{
-		return this.rvsi_manager.generateVersionConstraintManager(this);
+		return this.rvsi_manager.generateVCManager(this);
 	}
 	
 	public Timestamp getSts()

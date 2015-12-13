@@ -20,9 +20,13 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jms.master.JMSCommitLogPublisher;
 import jms.slave.JMSCommitLogSubscriber;
 import site.AbstractSite;
+import slave.ISlave;
 
 /**
  * @author hengxin
@@ -34,7 +38,9 @@ import site.AbstractSite;
  */
 public abstract class AbstractJMSParticipant
 {
-	private static final String JMS_CONFIG_PROPERTIES_FILE = "jms-config.properties";
+	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractJMSParticipant.class);
+	
+	private static final String JMS_CONFIG_PROPERTIES_FILE = "jms/jms-config.properties";
 	private static String TOPIC;
 	private static String CONNECTION_FACTORY;
 
@@ -77,7 +83,7 @@ public abstract class AbstractJMSParticipant
 			this.connection.start();
 		} catch (NamingException ne)
 		{
-			System.out.format("The JNDI naming service for JMS fails: %s.", ne.getMessage());
+			LOGGER.error("The JNDI naming service for JMS fails.", ne.getCause());
 			ne.printStackTrace();
 			System.exit(1);
 			
@@ -85,11 +91,6 @@ public abstract class AbstractJMSParticipant
 		{
 			System.out.format("Fails to participate in JMS: %s.", jmse.getMessage());
 			jmse.printStackTrace();
-			System.exit(1);
-		} catch (IOException ioe)
-		{
-			System.out.format("Fails to load JMS configurations: %s.", ioe.getMessage());
-			ioe.printStackTrace();
 			System.exit(1);
 		}
 	}
@@ -111,16 +112,22 @@ public abstract class AbstractJMSParticipant
 		this.connection.close();
 	}
 
-	private void loadJMSConfig() throws IOException 
+	private void loadJMSConfig() 
 	{
 		Properties prop = new Properties();
 		
-		InputStream is = AbstractJMSParticipant.class.getResourceAsStream(AbstractJMSParticipant.JMS_CONFIG_PROPERTIES_FILE);
-		prop.load(is);
-		is.close();
+		ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
+
+		try (InputStream is = class_loader.getResourceAsStream(AbstractJMSParticipant.JMS_CONFIG_PROPERTIES_FILE);)
+		{
+			prop.load(is);
 		
-		AbstractJMSParticipant.CONNECTION_FACTORY = prop.getProperty("cf");
-		AbstractJMSParticipant.TOPIC = prop.getProperty("topic");
+			AbstractJMSParticipant.CONNECTION_FACTORY = prop.getProperty("cf");
+			AbstractJMSParticipant.TOPIC = prop.getProperty("topic");
+		} catch (IOException ioe) 
+		{
+			LOGGER.error("Failed to load the JMS configuration file [{}]. \n", AbstractJMSParticipant.JMS_CONFIG_PROPERTIES_FILE, ioe.getCause());
+		}
 	}
 
 	/**

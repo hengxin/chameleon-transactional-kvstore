@@ -1,6 +1,5 @@
 package master;
 
-import java.net.NoRouteToHostException;
 import java.rmi.ConnectIOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -10,7 +9,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.jms.JMSException;
 
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,14 +179,20 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	@Override
 	public void send(AbstractMessage msg) throws TransactionCommunicationException
 	{
-		Assert.assertNotNull("Please call registerASJMSParticipant() first.", super.jmser); 
-
-		try
+		if(super.jmser.isPresent())
 		{
-			((JMSCommitLogPublisher) super.jmser).publish(msg);
-		} catch (JMSException jmse)
+			try
+			{
+				((JMSCommitLogPublisher) super.jmser.get()).publish(msg);
+				LOGGER.info("The master [{}] has published the commit log [{}] to its slaves.", this, msg);
+			} catch (JMSException jmse)
+			{
+				throw new TransactionCommunicationException(String.format("I [{}] Failded to publish the commit log [{}]. \n {}", super.context.self(), msg), jmse.getCause());
+			}
+		}
+		else 
 		{
-			throw new TransactionCommunicationException(String.format("I [{}] Failded to publish the commit log [{}]. \n {}", super.context.self(), msg), jmse.getCause());
+			LOGGER.warn("The master [{}] has not been registered as a JMS publisher. Please call registerAsJMSParticipant() first to make it able to publish messages.", this);
 		}
 	}
 }

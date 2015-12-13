@@ -3,6 +3,7 @@
  */
 package client.clientlibrary.transaction;
 
+import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
 import kvs.component.Column;
@@ -21,5 +22,5 @@ public interface ITransaction
 	public boolean begin();
 	public ITimestampedCell read(Row r, Column c) throws TransactionReadException;
 	public boolean write(Row r, Column c, Cell data);
-	public boolean end();
+	public boolean end() throws TransactionEndException;
 }

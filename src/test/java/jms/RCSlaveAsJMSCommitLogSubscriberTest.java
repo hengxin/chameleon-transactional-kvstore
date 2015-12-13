@@ -36,7 +36,7 @@ public class RCSlaveAsJMSCommitLogSubscriberTest
 	@Before
 	public void setUp() throws Exception
 	{
-		this.slave = new RCSlave();
+		this.slave = new RCSlave(null);	// no {@link IContext} needed for testing JMS
 		this.subscriber = new JMSCommitLogSubscriber();
 		this.slave.registerAsJMSParticipant(this.subscriber);
 		

@@ -30,7 +30,7 @@ public final class RVSISpecificationManager
 	 * according to the rvsi specifications (of
 	 * {@link AbstractRVSISpecification}) collected in {@value #rvsi_spec_list}.
 	 */
-	public VersionConstraintManager generateVersionConstraintManager(RVSITransaction tx)
+	public VersionConstraintManager generateVCManager(RVSITransaction tx)
 	{
 		List<AbstractVersionConstraint> vc_list = this.rvsi_spec_list.stream()
 				.map(rvsi_spec -> rvsi_spec.generateVersionConstraint(tx.getQueryResults(), tx.getSts())) 

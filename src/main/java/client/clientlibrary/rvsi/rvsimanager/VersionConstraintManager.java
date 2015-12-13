@@ -1,5 +1,6 @@
 package client.clientlibrary.rvsi.rvsimanager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,10 @@ import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
  * @author hengxin
  * @date Created on 11-17-2015
  */
-public final class VersionConstraintManager
+public final class VersionConstraintManager implements Serializable
 {
+	private static final long serialVersionUID = -4878469768601673830L;
+
 	private List<AbstractVersionConstraint> vc_list = new ArrayList<>();
 	
 	public VersionConstraintManager(List<AbstractVersionConstraint> vc_list)

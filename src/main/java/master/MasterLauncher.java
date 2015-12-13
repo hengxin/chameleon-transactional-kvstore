@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import exception.MemberParseException;
 import exception.SiteException;
+import jms.AbstractJMSParticipant;
+import jms.master.JMSCommitLogPublisher;
 import master.context.MasterContext;
-import rmi.IRMI;
+import site.AbstractSite;
 
 /**
  * Launch the master site by registering an object of {@link SIMaster} in the RMI registry.
@@ -41,9 +43,13 @@ public class MasterLauncher
 	public MasterLauncher(String file) throws SiteException, MemberParseException
 	{
 		MasterContext context = new MasterContext(file);
-		IRMI master = new SIMaster(context);
+		AbstractSite master = new SIMaster(context);
+		
+		AbstractJMSParticipant publisher = new JMSCommitLogPublisher();
+		master.registerAsJMSParticipant(publisher);
+		
 		master.export();
 		
-		LOGGER.info("Master has been successfully launched. The master stub is: {}", master);
+		LOGGER.info("Master [{}] has been successfully launched.", master);
 	}
 }
