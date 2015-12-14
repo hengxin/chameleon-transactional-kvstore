@@ -2,6 +2,9 @@ package slave;
 
 import java.rmi.RemoteException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.IContext;
@@ -21,9 +24,11 @@ import site.AbstractSite;
  */
 public class RCSlave extends AbstractSite implements IMessageConsumer
 {
+	private final static Logger LOGGER = LoggerFactory.getLogger(RCSlave.class);
+	
 	public RCSlave(IContext context)
 	{
-		super.context = context;
+		super(context);
 		super.table = new SlaveTable();
 	}
 
@@ -31,9 +36,10 @@ public class RCSlave extends AbstractSite implements IMessageConsumer
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onMessage(AbstractMessage a_msg)
+	public void onMessage(AbstractMessage msg)
 	{
-		super.table.apply((ToCommitTransaction) a_msg);
+		LOGGER.info("Receiving commit log [{}].", msg);
+		super.table.apply((ToCommitTransaction) msg);
 	}
 	
 	@Override

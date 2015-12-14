@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
+import context.IContext;
 import exception.transaction.TransactionCommunicationException;
 import exception.transaction.TransactionExecutionException;
 import jms.master.JMSCommitLogPublisher;
@@ -56,9 +57,9 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	/**
 	 * Constructor with {@link MasterContext}.
 	 */
-	public SIMaster(MasterContext context)
+	public SIMaster(IContext context)
 	{
-		super.context = context;
+		super(context);
 		super.table = new MasterTable();	// the underlying database in the "table" form
 	}
 	

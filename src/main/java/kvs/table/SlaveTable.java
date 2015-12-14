@@ -10,7 +10,6 @@ import kvs.compound.ITimestampedCell;
  */
 public class SlaveTable extends AbstractTable
 {
-
 	@Override
 	public ITimestampedCellStore initStore(ITimestampedCell ts_cell)
 	{

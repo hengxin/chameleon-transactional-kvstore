@@ -10,11 +10,11 @@ import exception.MemberParseException;
 import network.membership.AbstractStaticMembership;
 import network.membership.MasterMembership;
 import network.membership.Member;
+import site.AbstractSite;
 import site.ISite;
-import slave.ISlave;
 
 /**
- * Provides context for master sites, including
+ * Providing context for master sites, including
  * <p>
  * <ul>
  * <li> {@link #slave_stubs}: a list of its slaves
@@ -40,7 +40,8 @@ public class MasterContext implements IContext
 	{
 		LOGGER.info("Using the properties file ({}) for MasterContext.", file);
 		this.master_membership = new MasterMembership(file);
-		this.slave_stubs = Member.parseStubs(((MasterMembership) this.master_membership).getSlaves());
+		this.slave_stubs = AbstractSite.parseStubs(((MasterMembership) this.master_membership).getSlaves());
+		LOGGER.info("Successfully parse stubs of my slaves [{}]", this.slave_stubs);
 	}
 	
 	@Override

@@ -5,10 +5,15 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.MoreObjects;
 
 import context.IContext;
 import exception.SiteException;
@@ -39,13 +44,15 @@ public abstract class AbstractSite implements ISite, IRMI
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSite.class);
 	
+	private final Member self;
 	protected AbstractTable table;
 	protected Optional<AbstractJMSParticipant> jmser = Optional.empty();
-	protected IContext context;
+	protected final IContext context;
 	
-	public void registerAsJMSParticipant(AbstractJMSParticipant jmser)
+	public AbstractSite(IContext context)
 	{
-		this.jmser = Optional.of(jmser);
+		this.context = context;
+		this.self = context.self();
 	}
 	
 	@Override
@@ -54,21 +61,22 @@ public abstract class AbstractSite implements ISite, IRMI
 		return this.table.getTimestampedCell(r, c);
 	}
 	
+	/**
+	 * Export self for remote accesses via RMI.
+	 */
 	@Override
 	public void export() throws SiteException
 	{
-		Member self = this.context.self();
-		
-		System.setProperty("java.rmi.server.hostname", self.getAddrIp());
+		System.setProperty("java.rmi.server.hostname", this.self.getAddrIp());
 
 		try
 		{
 			Remote remote = UnicastRemoteObject.exportObject(this, 0);	// port 0: chosen at runtime
-			LocateRegistry.createRegistry(self.getRmiRegistryPort()).rebind(self.getRmiRegistryName(), remote);
-			LOGGER.info("The site ({}) has exported itself as ({}) for remote accesses successfully.", self, remote);
+			LocateRegistry.createRegistry(this.self.getRmiRegistryPort()).rebind(this.self.getRmiRegistryName(), remote);
+			LOGGER.info("The site [{}] has successfully exported itself as [{}] for remote accesses.", this.self, remote);
 		} catch (RemoteException re)
 		{
-			throw new SiteException(String.format("Failed to export self (%s) for remote accesses.", self), re.getCause());
+			throw new SiteException(String.format("Failed to export self [%s] for remote accesses.", self), re.getCause());
 		}
 	}
 	
@@ -81,20 +89,70 @@ public abstract class AbstractSite implements ISite, IRMI
 	@Override
 	public void reclaim() throws SiteException
 	{
-		Member self = this.context.self();
-		
 		try
 		{
-			LocateRegistry.getRegistry(self.getRmiRegistryPort()).unbind(self.getRmiRegistryName());
+			LocateRegistry.getRegistry(this.self.getAddrIp(), this.self.getRmiRegistryPort()).unbind(this.self.getRmiRegistryName());
 		} catch (RemoteException | NotBoundException e)
 		{
-			throw new SiteException(String.format("Failed to reclaim self (%s) from remote access.", self), e.getCause());
+			throw new SiteException(String.format("Failed to reclaim self (%s) from remote access.", this.self), e.getCause());
 		}
 	}
 	
+	/**
+	 * Locate the stub for the {@link Member}; Used later for RMI.
+	 * 
+	 * @param member An {@link Member} representing a site
+	 * @return 
+	 * 		A stub for a remote object, wrapped by {@link Optional}; 
+	 * 		may be {@code Optional.empty()} if it fails to parse a stub from @param member.
+	 */
+	public static Optional<ISite> parseStub(Member member)
+	{
+			try
+			{
+				return Optional.of((ISite) LocateRegistry.getRegistry(member.getAddrIp(), member.getRmiRegistryPort()).lookup(member.getRmiRegistryName()));
+			} catch (RemoteException | NotBoundException e)
+			{
+				Throwable cause = e.getCause();
+				LOGGER.warn("Failed to locate the remote stub for {}. I will ignore it for now. \n {}", member, 
+						Objects.isNull(cause) ? "Causes Unknown." : cause.toString());
+				return Optional.empty();
+			}
+	}
+	
+	/**
+	 * Locate the stubs for a list of {@link Member}s.
+	 * The remote stubs which cannot be located are ignored.
+	 * 
+	 * @param members 
+	 * 		A list of {@link Member}s to be parsed.
+	 * @return 
+	 * 		A list of {@link ISite} stubs; 
+	 * 		the list may be empty if none of the {@link Member}s is parsed successfully.
+	 * 
+	 * @implNote
+	 * 		This code using {@link Optional} to avoid null-check is due to
+	 * 		<a href = "http://stackoverflow.com/a/34170759/1833118">Brian Goetz @ Stackoverflow</a>.
+	 */
+	public static List<ISite> parseStubs(List<Member> members)
+	{
+		return members.stream()
+				.map(AbstractSite::parseStub)
+				.filter(Optional::isPresent)
+				.map(Optional::get)
+				.collect(Collectors.toList());
+	}
+	
+	public void registerAsJMSParticipant(AbstractJMSParticipant jmser)
+	{
+		this.jmser = Optional.of(jmser);
+	}
+
 	@Override
 	public String toString()
 	{
-		return this.context.self().toString();
+		return MoreObjects.toStringHelper(this)
+				.addValue(this.self)
+				.toString();
 	}
 }

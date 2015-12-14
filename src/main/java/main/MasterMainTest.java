@@ -19,9 +19,9 @@ public class MasterMainTest
 		try
 		{
 			new MasterLauncher();
-		} catch (SiteException | MemberParseException re)
+		} catch (SiteException | MemberParseException e)
 		{
-			re.printStackTrace();
+			e.printStackTrace();
 			System.exit(1);
 		}
 	}

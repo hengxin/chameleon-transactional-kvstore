@@ -12,6 +12,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.TreeBasedTable;
 
@@ -23,6 +25,7 @@ import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * @author hengxin
@@ -31,9 +34,12 @@ import kvs.compound.TimestampedCell;
  * <p> In this implementation, the synchronization is achieved by {@link ReentrantReadWriteLock}.
  * <p> TODO using the built-in synchronization mechanism of {@link TreeBasedTable}.
  */
+@ThreadSafe
 public abstract class AbstractTable
 {
-	private TreeBasedTable<Row, Column, ITimestampedCellStore> table = TreeBasedTable.create();
+	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractTable.class);
+	
+	private final TreeBasedTable<Row, Column, ITimestampedCellStore> table = TreeBasedTable.create();
 	
 	private final ReadWriteLock lock = new ReentrantReadWriteLock();
 	private final Lock read_lock = this.lock.readLock();
@@ -109,9 +115,15 @@ public abstract class AbstractTable
 		}
 	}
 	
+	/**
+	 * Put a row of data.
+	 * @param row {@link Row} key
+	 * @param col_data_map	data map for each {@link Column}
+	 * 
+	 * FIXME Not implemented yet!
+	 */
 	public void put(Row row, Map<Column, ITimestampedCell> col_data_map)
 	{
-		//TODO: 
 	}
 	
 	/**
@@ -160,10 +172,15 @@ public abstract class AbstractTable
 	 * @param col {@link Column} key
 	 * @param tc the {@link ITimestampedCell} to store
 	 * 
-	 * Template design pattern 
+	 * @implNote
+	 * 	Template design pattern. 
+	 * 
+	 * FIXME Using computeIfAbsent() to avoid initStore()???
 	 */
 	public void put(Row row, Column col, ITimestampedCell tc)
 	{
+		LOGGER.info("Put data [{}, {}, {}] into table.", row, col, tc);
+		
 		this.write_lock.lock();
 		try
 		{

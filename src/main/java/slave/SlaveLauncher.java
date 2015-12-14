@@ -6,12 +6,9 @@ import org.slf4j.LoggerFactory;
 import exception.MemberParseException;
 import exception.SiteException;
 import jms.AbstractJMSParticipant;
-import jms.master.JMSCommitLogPublisher;
 import jms.slave.JMSCommitLogSubscriber;
-import master.MasterLauncher;
-import master.SIMaster;
-import master.context.MasterContext;
 import site.AbstractSite;
+import slave.context.SlaveContext;
 
 public class SlaveLauncher
 {
@@ -39,7 +36,7 @@ public class SlaveLauncher
 	 */
 	public SlaveLauncher(String file) throws SiteException, MemberParseException
 	{
-		MasterContext context = new MasterContext(file);
+		SlaveContext context = new SlaveContext(file);
 		AbstractSite slave = new RCSlave(context);
 		
 		AbstractJMSParticipant subscriber = new JMSCommitLogSubscriber();

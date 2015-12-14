@@ -1,8 +1,5 @@
 package network.membership;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -14,15 +11,14 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.MoreObjects;
 
-import site.ISite;
-
 /**
  * A member (i.e., site), as a communication entity,
  * holds four (self-descriptive) attributes:
  * <p>
  * <ul>
  * <li> {@link #addr_ip}
- * <li> {@link #addr_port}
+ * <li> {@link #addr_port} 
+ * 	(reserved; not used because RMI and JMS will choose their own ports.)
  * <li> {@link #rmi_registry_name}
  * <li> {@link #rmi_registry_port}
  * </ul>
@@ -97,51 +93,6 @@ public final class Member
 				.collect(Collectors.toList());
 	}
 
-	/**
-	 * Locate the stub for the {@link Member}; Used later for RMI.
-	 * 
-	 * @param member An {@link Member} representing a site
-	 * @return 
-	 * 		A stub for a remote object, wrapped by {@link Optional}; 
-	 * 		may be {@code Optional.empty()} if it fails to parse a stub from @param member.
-	 */
-	public static Optional<ISite> parseStub(Member member)
-	{
-			try
-			{
-				return Optional.of((ISite) LocateRegistry.getRegistry(member.getAddrIp()).lookup(member.getRmiRegistryName()));
-			} catch (RemoteException | NotBoundException e)
-			{
-				Throwable cause = e.getCause();
-				LOGGER.warn("Failed to locate the remote stub for {}. I will ignore it for now. \n {}", member, 
-						Objects.isNull(cause) ? "Causes Unknown." : cause.toString());
-				return Optional.empty();
-			}
-	}
-	
-	/**
-	 * Locate the stubs for a list of {@link Member}s.
-	 * The remote stubs which cannot be located are ignored.
-	 * 
-	 * @param members 
-	 * 		A list of {@link Member}s to be parsed.
-	 * @return 
-	 * 		A list of {@link ISite} stubs; 
-	 * 		the list may be empty if none of the {@link Member}s is parsed successfully.
-	 * 
-	 * @implNote
-	 * 		This code using {@link Optional} to avoid null-check is due to
-	 * 		<a href = "http://stackoverflow.com/a/34170759/1833118">Brian Goetz @ Stackoverflow</a>.
-	 */
-	public static List<ISite> parseStubs(List<Member> members)
-	{
-		return members.stream()
-				.map(Member::parseStub)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
-				.collect(Collectors.toList());
-	}
-	
 	public String getAddrIp()
 	{
 		return addr_ip;

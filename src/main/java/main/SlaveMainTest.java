@@ -1,9 +1,8 @@
 package main;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
+import exception.MemberParseException;
+import exception.SiteException;
+import slave.SlaveLauncher;
 
 /**
  * Main class at the slave side in the <i>single-master-multiple-slaves</i> setting.
@@ -13,16 +12,15 @@ import org.junit.Test;
  */
 public class SlaveMainTest
 {
-
-	@Before
-	public void setUp() throws Exception
+	public static void main(String[] args)
 	{
+		try
+		{
+			new SlaveLauncher();
+		} catch (SiteException | MemberParseException e)
+		{
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
-
-	@Test
-	public void test()
-	{
-		fail("Not yet implemented"); // TODO
-	}
-
 }

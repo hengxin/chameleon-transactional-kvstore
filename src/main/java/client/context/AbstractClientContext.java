@@ -13,12 +13,11 @@ import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.transaction.RVSITransaction;
 import exception.MemberParseException;
-import master.IMaster;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
 import network.membership.Member;
+import site.AbstractSite;
 import site.ISite;
-import slave.ISlave;
 
 /**
  * Provides context for transaction processing at the client side, including
@@ -77,11 +76,11 @@ public abstract class AbstractClientContext
 				Member master = master_slaves_entry.getKey();
 				List<Member> slaves = master_slaves_entry.getValue();
 
-				Optional<ISite> master_stub = Member.parseStub(master);
+				Optional<ISite> master_stub = AbstractSite.parseStub(master);
 				
 				if(master_stub.isPresent())
 				{
-					List<ISite> slaves_stub = Member.parseStubs(slaves);
+					List<ISite> slaves_stub = AbstractSite.parseStubs(slaves);
 					LOGGER.info("Client has contacted the master {} and its slaves {}.", master_stub, slaves_stub);
 					return new AbstractMap.SimpleImmutableEntry<>(master_stub.get(), slaves_stub);
 				}
