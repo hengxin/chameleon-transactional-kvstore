@@ -63,7 +63,7 @@ public final class Member
 			final int rmi_registry_port = Integer.parseInt(parts[3]);
 
 			return Optional.of(new Member(addr_ip, addr_port, rmi_registry_name, rmi_registry_port));
-		} catch (NullPointerException | NumberFormatException e)
+		} catch (NullPointerException | NumberFormatException e)	// FIXME catch NullPointerException or not?
 		{
 			Throwable cause = e.getCause();
 			LOGGER.warn("Failed to parse {} because it is ill-formated. I will ignore it for now. \n {}", member, 

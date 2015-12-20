@@ -11,7 +11,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,32 +180,39 @@ public abstract class AbstractTable
 	{
 		LOGGER.info("Put data [{}, {}, {}] into table.", row, col, tc);
 		
-		this.write_lock.lock();
-		try
+		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
+	
+		if(ts_cell_store.isPresent()) 	// fast path
+			ts_cell_store.get().put(tc);
+		else 
 		{
-			Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
-		
-			if(ts_cell_store.isPresent()) 
-				ts_cell_store.get().put(tc);
-			else 
-				this.put(row, col, this.initStore(tc)); 
-		} finally
-		{
-			this.write_lock.unlock();
+			this.write_lock.lock();
+			try
+			{
+				Optional<ITimestampedCellStore> second_ts_cell_store = this.getTimestampedCellStore(row, col);	
+				if (second_ts_cell_store.isPresent())	// double check
+					second_ts_cell_store.get().put(tc);	// slow path
+				else
+					this.put(row, col, this.initStore(tc)); 	// initialize store for this row&col 
+			} finally
+			{
+				this.write_lock.unlock();
+			}
 		}
 	}
 	
 	public abstract ITimestampedCellStore initStore(ITimestampedCell tc);
 	
 	/**
-	 * adding data (row, column, timestamped-cell-store)
+	 * Put data (row, column, timestamped-cell-store).
+	 * 
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
 	 * @param ts_cell_store {@link ITimestampedCellStore}; this parameter cannot be null.
 	 */
 	protected void put(Row row, Column col, ITimestampedCellStore ts_cell_store)
 	{
-		Assert.assertNotNull("The parameter ITimestampedCellStore cannot be null.", ts_cell_store);
+//		Assert.assertNotNull("The parameter ITimestampedCellStore cannot be null.", ts_cell_store);
 		this.write_lock.lock();
 		try
 		{
