@@ -178,7 +178,7 @@ public abstract class AbstractTable
 	 */
 	public void put(Row row, Column col, ITimestampedCell tc)
 	{
-		LOGGER.info("Put data [{}, {}, {}] into table.", row, col, tc);
+//		LOGGER.info("Put data [{}, {}, {}] into table.", row, col, tc);
 		
 		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
 	
