@@ -3,10 +3,12 @@ package master.mvcc;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
@@ -32,6 +34,8 @@ import net.jcip.annotations.ThreadSafe;
 @ThreadSafe
 public class StartCommitLogs
 {
+	private final static Logger LOGGER = LoggerFactory.getLogger(StartCommitLogs.class);
+	
 	@GuardedBy("read_lock, write_lock")
 	private IntervalTree<Timestamp, BufferedUpdates> start_commit_logs = new IntervalTree<>();
 
@@ -44,13 +48,12 @@ public class StartCommitLogs
 	 * @param sts start-timestamp 
 	 * @param cts commit-timestamp
 	 * @param updates buffered updates
-	 * @throws InterruptedException if lock synchronization fails.
 	 */
-	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) throws InterruptedException
+	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) 
 	{
+		this.write_lock.lock();
 		try
 		{
-			this.write_lock.tryLock(500, TimeUnit.MILLISECONDS);
 			this.start_commit_logs.put(sts, cts, updates);
 		} finally
 		{
@@ -69,13 +72,7 @@ public class StartCommitLogs
 	public boolean wcf(ToCommitTransaction tx)
 	{
 		Collection<BufferedUpdates> overlapping_tx_updates;
-		try
-		{
-			overlapping_tx_updates = this.containersOf(tx.getSts());
-		} catch (InterruptedException ie)
-		{
-			return false;	// TODO: retry???
-		} 
+		overlapping_tx_updates = this.containersOf(tx.getSts()); 
 		
 		// collect all updated keys
 		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.stream()
@@ -92,13 +89,12 @@ public class StartCommitLogs
 	/**
 	 * @param sts start-timestamp of a transaction
 	 * @return a collection of {@link BufferedUpdates} that contain @param sts
-	 * @throws InterruptedException if lock synchronization fails.
 	 */
-	protected Collection<BufferedUpdates> containersOf(Timestamp sts) throws InterruptedException
+	protected Collection<BufferedUpdates> containersOf(Timestamp sts) 
 	{
+		this.read_lock.lock();
 		try
 		{
-			this.read_lock.tryLock(500, TimeUnit.MILLISECONDS);
 			return this.start_commit_logs.searchContaining(sts, sts);
 		} finally
 		{

@@ -1,13 +1,12 @@
 package master;
 
-import java.rmi.ConnectIOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
-import javax.jms.JMSException;
+import javax.jms.IllegalStateException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +67,6 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	 * 
 	 * @return 
 	 * 		A start-timestamp 
-	 * @throws ConnectIOException
 	 * @throws TransactionExecutionException 
 	 */
 	@Override
@@ -117,83 +115,90 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	 *  <li> No need to synchronize {@link #read(kvs.component.Row, kvs.component.Column)}
 	 *    	with the update of the underlying table under the read/write-lock of {@link #logs}.
 	 *  </ul>
-	 * 
-	 * <p> TODO Start a new thread? 
 	 */
 	@Override
 	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws TransactionExecutionException
 	{
-		Timestamp cts = null;
-		
-		/**
-		 * {@link VersionConstraintManager} is local to this method.
-		 * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free). 
-		 */
-		boolean vc_checked = vc_manager.check();
-		boolean wcf_checked = false;
-		boolean can_committed = false;
-		
-		try
+		Future<Boolean> future_committed = exec.submit(() ->
 		{
-			if(this.logs.write_lock.tryLock(1, TimeUnit.SECONDS))
+			Timestamp cts = null;
+
+			/**
+			 * {@link VersionConstraintManager} is local to this method.
+			 * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free). 
+			 */
+			boolean vc_checked = vc_manager.check();
+			boolean wcf_checked = false;
+			boolean can_committed = false;
+
+			this.logs.write_lock.lock();
+			try
 			{
 				wcf_checked = this.logs.wcf(tx);
 				can_committed = vc_checked && wcf_checked;
-				
+
 				if (can_committed)	// (1) check
 				{
-					cts = new Timestamp(this.ts.incrementAndGet());	// (2) commit-timestamp
+					cts = new Timestamp(this.ts.incrementAndGet());	// (2) commit-timestamp; commit in "commit order"
 					this.logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, this.ck_ord_index));	// (3) update start-commit-log
 				}
+			} finally
+			{
+				this.logs.write_lock.unlock();
 			}
-		} catch (InterruptedException ie)
-		{
-			String log = String.format("Failed to commit transaction (%s) due to unexpected thread interruption.", tx);
-			LOGGER.error(log, ie.getCause());	// log at the master site side
-			throw new TransactionExecutionException(String.format(log), ie.getCause());	// thrown to the client side
-		} finally
-		{
-			this.logs.write_lock.unlock();
-		}
-		
-		if(can_committed)
-		{
-			/**
-			 * Chameleon does not require read operations of a transaction to get the <i>latest</i> version 
-			 * before the sts of that transaction. Thus it is not necessary for the master 
-			 * to synchronize the updates to the underlying table with read operations, both guarded by the lock on
-			 * #logs. 
-			 */
-			this.table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
-			try
+
+			if(can_committed)
 			{
-				this.send(tx); // (5) propagate
-			} catch (TransactionCommunicationException tae)
-			{
-				LOGGER.warn(tae.getMessage(), tae.getCause());
-			}		
-		}
+				/**
+				 * Chameleon does not require read operations of a transaction to get the <i>latest</i> version 
+				 * before the sts of that transaction. Thus it is not necessary for the master to synchronize the 
+				 * updates to the underlying table with read operations, both guarded by the lock on #logs. 
+				 */
+				this.table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
+				try
+				{
+					this.send(tx); // (5) propagate
+				} catch (TransactionCommunicationException tae)
+				{
+					LOGGER.warn(tae.getMessage(), tae.getCause());
+				}		
+			}
+
+			return can_committed;
+		});
 		
-		return can_committed;
+		try
+		{
+			return future_committed.get();
+		} catch (InterruptedException | ExecutionException e)
+		{
+			String msg = String.format("Transaction aborted due to unexpected causes: %s.", e.getMessage());
+			LOGGER.error(msg, e.getCause());	// log at the master side
+			throw new TransactionExecutionException(msg, e.getCause());		// thrown to the client side
+		}
 	}
 
 	@Override
 	public void send(AbstractMessage msg) throws TransactionCommunicationException
 	{
-		if(super.jmser.isPresent())
+		Future<Void> dummy_future = this.exec.submit(() ->
 		{
-			try
-			{
-				((JMSCommitLogPublisher) super.jmser.get()).publish(msg);
-				LOGGER.info("The master [{}] has published the commit log [{}] to its slaves.", this, msg);
-			} catch (JMSException jmse)
-			{
-				throw new TransactionCommunicationException(String.format("I [{}] Failded to publish the commit log [{}]. \n {}", super.context.self(), msg), jmse.getCause());
-			}
-		}
-		else 
+			((JMSCommitLogPublisher) super.jmser.orElseThrow(() -> 
+				new IllegalStateException(String.format("The master [%s] has not been registered as a JMS publisher. Please call registerAsJMSParticipant() first.", this))))
+				.publish(msg);
+
+			LOGGER.info("The master [{}] has published the commit log [{}] to its slaves.", this, msg);
+			return null;
+		});
+		
+		try
 		{
-			LOGGER.warn("The master [{}] has not been registered as a JMS publisher. Please call registerAsJMSParticipant() first to make it able to publish messages.", this);
+			dummy_future.get();
+		} catch (InterruptedException | ExecutionException e)
+		{
+			String log = String.format("I [{}] Failded to publish the commit log [{}]. \n {}", super.context.self(), msg);
+			LOGGER.error(log);	// log at the master side
+			throw new TransactionCommunicationException(log, e.getCause());	// thrown to the client side
 		}
 	}
 }

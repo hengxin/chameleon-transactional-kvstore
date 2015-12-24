@@ -2,7 +2,6 @@ package master.mvcc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -75,14 +74,7 @@ public class StartCommitLogsTest
 	public void testContainersOf()
 	{
 		Collection<BufferedUpdates> container_updates;
-		try
-		{
-			container_updates = this.logs.containersOf(sts_7_to_commit);
-		} catch (InterruptedException e)
-		{
-			fail("Lock synchronization fails.");
-			return;
-		}
+		container_updates = this.logs.containersOf(sts_7_to_commit);
 		
 		assertEquals("There should be 3 containers for this start-timestamp.", 3, container_updates.size());
 
