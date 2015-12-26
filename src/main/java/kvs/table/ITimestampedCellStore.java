@@ -29,4 +29,9 @@ public interface ITimestampedCellStore
 	 * @return a {@link ITimestampedCell}
 	 */
 	public ITimestampedCell get();
+	
+	/**
+	 * Start the garbage collector daemon thread.
+	 */
+	public void startGCDaemon();
 }

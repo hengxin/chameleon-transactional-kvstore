@@ -84,4 +84,10 @@ public class SingleTimestampedCellStore implements ITimestampedCellStore
 				.addValue(this.single_ts_cell)
 				.toString();
 	}
+
+	@Override
+	public void startGCDaemon()
+	{
+		throw new UnsupportedOperationException("GC is not supported for SingleTimestampedStore.");
+	}
 }

@@ -20,7 +20,7 @@ import kvs.compound.TimestampedCell;
  */
 public class TablePerformanceTest
 {
-	private final static int DURATION = 5 * 60 * 1000;	// in ms; 30 minutes
+	private final static int DURATION = 10 * 60 * 1000;	// in ms; 30 minutes
 	private final static int RANGE = 100;	// key&col range 
 	private final static int PUTS = 5;
 	private final static int GETS = 2; 
@@ -61,8 +61,8 @@ public class TablePerformanceTest
 	@Test
 	public void testMasterTable()
 	{
-//		this.table = new MasterTable();
-		this.table = new SlaveTable();
+		this.table = new MasterTable();
+//		this.table = new SlaveTable();
 		
 		timer.start();
 		

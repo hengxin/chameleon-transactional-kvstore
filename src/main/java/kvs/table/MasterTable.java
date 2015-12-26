@@ -11,6 +11,8 @@ public class MasterTable extends AbstractTable
 	@Override
 	public ITimestampedCellStore create()
 	{
-		return new MultiTimestampedCellsStore();
+		ITimestampedCellStore cell_store = new MultiTimestampedCellsStore();
+		cell_store.startGCDaemon();
+		return cell_store;
 	}
 }
