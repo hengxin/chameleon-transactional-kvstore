@@ -193,7 +193,11 @@ public abstract class AbstractTable
 				if (second_ts_cell_store.isPresent())	// double check
 					second_ts_cell_store.get().put(tc);	// slow path
 				else
-					this.put(row, col, this.initStore(tc)); 	// initialize store for this row&col 
+				{
+					ITimestampedCellStore cell_store = this.create();	// create an {@link ITimestampedCellStore}
+					cell_store.put(tc);
+					this.put(row, col, cell_store); 	
+				}
 			} finally
 			{
 				this.write_lock.unlock();
@@ -201,7 +205,7 @@ public abstract class AbstractTable
 		}
 	}
 	
-	public abstract ITimestampedCellStore initStore(ITimestampedCell tc);
+	public abstract ITimestampedCellStore create();
 	
 	/**
 	 * Put data (row, column, timestamped-cell-store).

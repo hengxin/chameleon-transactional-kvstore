@@ -1,7 +1,5 @@
 package kvs.table;
 
-import kvs.compound.ITimestampedCell;
-
 /**
  * @author hengxin
  * @date Created on 11-11-2015
@@ -11,9 +9,9 @@ import kvs.compound.ITimestampedCell;
 public class SlaveTable extends AbstractTable
 {
 	@Override
-	public ITimestampedCellStore initStore(ITimestampedCell ts_cell)
+	public ITimestampedCellStore create()
 	{
-		return new SingleTimestampedCellStore(ts_cell);
+		return new SingleTimestampedCellStore();
 	}
 
 }

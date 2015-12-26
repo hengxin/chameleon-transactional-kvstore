@@ -3,11 +3,11 @@
  */
 package kvs.table;
 
-import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.junit.Assert;
 
+import com.beust.jcommander.Parameter;
 import com.google.common.base.MoreObjects;
 
 import kvs.component.Cell;
@@ -24,28 +24,18 @@ import kvs.compound.TimestampedCell;
  */
 public class MultiTimestampedCellsStore implements ITimestampedCellStore
 {
-	// TODO consider other data structures (how do real databases implement this?)
-	private SortedSet<ITimestampedCell> ts_cells = new ConcurrentSkipListSet<>();
+	// TODO to implement "fixed-capacity"
+	@Parameter(names = "-capacity", description = "Number of Versions to Keep")
+	private int capacity = 100;
 	
-	/**
-	 * Default constructor: an empty store
-	 */
+	// TODO consider other data structures (how do real databases implement this?)
+	private ConcurrentSkipListSet<ITimestampedCell> ts_cells = new ConcurrentSkipListSet<>();
+	
 	public MultiTimestampedCellsStore() {}
 	
 	/**
-	 * Initialize the store with an {@link ITimestampedCell}
-	 * @param ts_cell an {@link ITimestampedCell}
-	 */
-	public MultiTimestampedCellsStore(ITimestampedCell ts_cell)
-	{
-		this.put(ts_cell);
-	}
-
-	/* 
-	 * @see kvs.table.ITimestampedCell#update(kvs.table.ITimestampedCell)
-	 * 
-	 * <p> <b>Note:</b> The <code>put</code> semantics is to add the element <em>if</em> 
-	 * it is not already present.
+	 * @implNote
+	 * The <code>put</code> semantics is to add the element <i>if</i> it is not already present.
 	 * This works as expected because {@link MultiTimestampedCellsStore} maintains
 	 * multi-timestamped data and is not intended to replace some existing data. 
 	 */
@@ -56,23 +46,17 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 		this.ts_cells.add(ts_cell);
 	}
 
-	/* 
-	 * @see kvs.table.ITimestampedCell#getLatest(kvs.table.Timestamp)
-	 */
 	@Override
 	public ITimestampedCell get(Timestamp ts)
 	{
 		// TODO floor (<=) or lower (<)?
-		return ((ConcurrentSkipListSet<ITimestampedCell>) this.ts_cells).floor(new TimestampedCell(ts, Cell.CELL_INIT));
+		return this.ts_cells.floor(new TimestampedCell(ts, Cell.CELL_INIT));
 	}
 
-	/**
-	 * @see kvs.table.ITimestampedCellStore#get()
-	 */
 	@Override
 	public ITimestampedCell get()
 	{
-		return ((ConcurrentSkipListSet<ITimestampedCell>) this.ts_cells).last();
+		return this.ts_cells.last();
 	}
 
 	@Override
