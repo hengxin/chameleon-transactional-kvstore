@@ -4,7 +4,6 @@
 package kvs.table;
 
 import java.util.SortedSet;
-import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.junit.Assert;
@@ -20,8 +19,8 @@ import kvs.compound.TimestampedCell;
  * @author hengxin
  * @date Created on 11-10-2015
  * 
- * Implements the interface {@link ITimestampedCellStore} using {@link ConcurrentSkipListMap}.
- * It maintains multiple {@link ITimestampedCell}s.
+ * Implements the interface {@link ITimestampedCellStore} using {@link ConcurrentSkipListSet}.
+ * It maintains {@link ITimestampedCell}s in their timestamp-order.
  */
 public class MultiTimestampedCellsStore implements ITimestampedCellStore
 {
