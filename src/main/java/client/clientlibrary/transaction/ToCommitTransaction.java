@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
 
-import ch.qos.logback.core.helpers.ThrowableToStringArray;
 import kvs.component.Timestamp;
 import messages.AbstractMessage;
 

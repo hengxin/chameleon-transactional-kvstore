@@ -1,8 +1,10 @@
 package twopc.coordinator;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import twopc.timing.ITimestampOracle;
 
 /**
  * Coordinator of 2PC protocol.
@@ -14,24 +16,12 @@ import twopc.timing.ITimestampOracle;
  */
 public final class Coordinator implements ICoordinator
 {
-	private final ITimestampOracle ts_oracle;
+	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
-	public Coordinator(ITimestampOracle ts_oracle)
-	{
-		this.ts_oracle = ts_oracle;
-	}
-
 	@Override
-	public int cstart()
-	{
-		return ts_oracle.get();
-	}
-
-	@Override
-	public boolean ccommit(ToCommitTransaction tx, VersionConstraintManager vcm)
+	public boolean coorCommit2PC(ToCommitTransaction tx, VersionConstraintManager vcm)
 	{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
 }
