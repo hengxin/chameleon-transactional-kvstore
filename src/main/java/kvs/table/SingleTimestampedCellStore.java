@@ -1,10 +1,13 @@
 package kvs.table;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import com.google.common.base.MoreObjects;
 
 import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * @author hengxin
@@ -13,16 +16,17 @@ import kvs.compound.TimestampedCell;
  * Implements the interface {@link ITimestampedCellStore}.
  * It maintains only a single {@link ITimestampedCell}.
  */
+@ThreadSafe
 public class SingleTimestampedCellStore implements ITimestampedCellStore
 {
-	private volatile ITimestampedCell single_ts_cell;
+	private AtomicReference<ITimestampedCell> single_ts_cell;
 	
 	/**
 	 * Default constructor: initialize this store with {@value TimestampedCell#TIMESTAMPED_CELL_INIT}
 	 */
 	public SingleTimestampedCellStore() 
 	{
-		this.single_ts_cell = TimestampedCell.TIMESTAMPED_CELL_INIT;
+		this.single_ts_cell = new AtomicReference<ITimestampedCell>(TimestampedCell.TIMESTAMPED_CELL_INIT);
 	}
 
 	/**
@@ -31,13 +35,22 @@ public class SingleTimestampedCellStore implements ITimestampedCellStore
 	 */
 	public SingleTimestampedCellStore(ITimestampedCell ts_cell)
 	{
-		this.single_ts_cell = ts_cell;
+		this.single_ts_cell = new AtomicReference<ITimestampedCell>(ts_cell);
 	}
 
+	/**
+	 * Replace the current value if @param ts_cell is newer than 
+	 * the value of {@link #single_ts_cell}.
+	 * 
+	 * @implNote
+	 * This "if-greater-then-swap" semantics is implemented using 
+	 * {@link AtomicReference#getAndUpdate(java.util.function.UnaryOperator)}.
+	 * See <a href = "http://stackoverflow.com/a/27347133/1833118">Greater-than compare-and-swap</a>
+	 */
 	@Override
 	public void put(ITimestampedCell ts_cell)
 	{
-		this.single_ts_cell = ts_cell;
+		this.single_ts_cell.getAndUpdate(x -> x.compareTo(ts_cell) < 0 ? ts_cell : x);
 	}
 
 	/**
@@ -53,14 +66,14 @@ public class SingleTimestampedCellStore implements ITimestampedCellStore
 	@Override
 	public ITimestampedCell get()
 	{
-		return this.single_ts_cell;
+		return this.single_ts_cell.get();
 	}
 
 	@Override
 	public String toString()
 	{
 		return MoreObjects.toStringHelper(this)
-				.addValue(this.single_ts_cell)
+				.addValue(this.single_ts_cell.get())
 				.toString();
 	}
 
