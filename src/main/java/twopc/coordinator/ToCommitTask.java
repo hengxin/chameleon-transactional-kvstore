@@ -47,12 +47,12 @@ public class ToCommitTask implements Callable<Boolean>
 	{
 		LOGGER.info("Begin the [{}] phase with participant [{}].", Phase.PREPARE, this.participant);
 		// call prepare() at this participant
-		this.coordinator.decisions[this.id].set(false);	// TODO to assign the actual value
+		this.coordinator.prepared_decisions[this.id].set(false);	// TODO to assign the actual value
 		phaser.arriveAndAwaitAdvance();
 		
 		LOGGER.info("Begin the [{}] phase with participant [{}].", Phase.COMMIT, this.participant);
 		// call commit() at this participant
-		this.coordinator.decisions[this.id].set(false);	// TODO to assign the actual value
+		this.coordinator.prepared_decisions[this.id].set(false);	// TODO to assign the actual value
 		phaser.arriveAndAwaitAdvance();
 
 		return null;

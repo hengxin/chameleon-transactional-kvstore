@@ -13,7 +13,7 @@ import kvs.component.Timestamp;
  * @author hengxin
  * @date Created on 11-29-2015
  */
-public class KVItem implements Comparable<KVItem>
+public final class KVItem implements Comparable<KVItem>
 {
 	private final CompoundKey ck;
 	private final ITimestampedCell ts_cell;

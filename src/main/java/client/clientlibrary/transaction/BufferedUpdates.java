@@ -29,6 +29,8 @@ import net.jcip.annotations.NotThreadSafe;
  *  At the <i>client</i> side, it is only accessed by the single client thread.
  *  At the <i>master</i> side, it is also only accessed by a single thread, when 
  *  its transaction is to commit.
+ *  
+ * FIXME using {@link KVItem}???
  */
 @NotThreadSafe
 public final class BufferedUpdates implements Serializable

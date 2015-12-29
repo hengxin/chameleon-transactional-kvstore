@@ -23,39 +23,46 @@ public class CommitPhaser extends Phaser
 	
 	public enum Phase { PREPARE, COMMIT, ABORT }
 	
-	private final Coordinator coordinator;
+	private final ICoordinator coordinator;
 	
-	public CommitPhaser(Coordinator coordinator)
+	public CommitPhaser(ICoordinator coordinator)
 	{
 		this.coordinator = coordinator;
 	}
 
 	/**
-	 * Logging for each phase.
+	 * Coordinate the two phases on behalf of {@link #coordinator}, including
+	 * <ul>
+	 * <li> Collecting results from each phase and computing for the next one
+	 * <li> Logging for each phase
+	 * <ul>
 	 */
 	@Override
 	protected boolean onAdvance(int phase, int registeredParties)
 	{
+		Coordinator coord = (Coordinator) this.coordinator;
+		
 		switch (phase)
 		{
 		case 0:
 			LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.PREPARE);
 			
 			// check the decisions of all participants during the PREPARE phase and determine whether to commit or abort the transaction
-			coordinator.committed = Arrays.stream(coordinator.decisions).parallel().allMatch(decision -> decision.get());
+			coord.committed = Arrays.stream(coord.prepared_decisions).parallel().allMatch(decision -> decision.get());
 
-			// reset the decisions for reuse in the later COMMIT phase
-			Arrays.stream(coordinator.decisions).parallel().forEach(decision -> decision.set(false));
-			
-			LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, coordinator.committed);
-			return false;
+			LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, coord.committed);
+			return false;	// not yet finished
 
 		case 1:
 			LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.COMMIT); 
-			return true;
+
+			// FIXME compute the return value
+			// check the decisions of all participants during the COMMIT phase and compute the return value
+			coord.committed = Arrays.stream(coord.prepared_decisions).parallel().allMatch(decision -> decision.get());
+			return true;	// phaser has finished its job.
 			
 		default:
-			return true;	// TODO what is the meaning of the boolean return value???
+			return true;	
 		}
 	}
 }
