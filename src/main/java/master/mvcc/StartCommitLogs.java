@@ -1,11 +1,11 @@
 package master.mvcc;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,11 +74,10 @@ public class StartCommitLogs
 		Collection<BufferedUpdates> overlapping_tx_updates = this.containersOf(tx.getSts()); 
 		
 		// collect all updated keys
-		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.stream()
-				.reduce(new HashSet<CompoundKey>(), 
-						(acc_cks, buffered_updates) -> { acc_cks.addAll(buffered_updates.getUpdatedCKeys()); return acc_cks; }, 
-						(acc_cks_1, acc_cks_2) -> { acc_cks_1.addAll(acc_cks_2); return acc_cks_1; }
-						);
+		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.parallelStream()
+				.map(update -> update.getUpdatedCKeys())
+				.flatMap(Set::parallelStream)
+				.collect(Collectors.toSet());
 				
 		overlapping_updated_cks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());
 		

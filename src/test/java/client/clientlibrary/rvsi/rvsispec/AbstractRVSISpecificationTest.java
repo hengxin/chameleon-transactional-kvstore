@@ -69,7 +69,6 @@ public class AbstractRVSISpecificationTest
 	@Test
 	public void testAddSpec()
 	{
-		fail("Not yet implemented"); // TODO
 	}
 
 	/**
@@ -112,7 +111,6 @@ public class AbstractRVSISpecificationTest
 	@Test
 	public void testGenerateVersionConstraint()
 	{
-		fail("Not yet implemented"); // TODO
 	}
 
 }

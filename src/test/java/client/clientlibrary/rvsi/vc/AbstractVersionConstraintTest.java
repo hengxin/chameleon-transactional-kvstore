@@ -60,7 +60,6 @@ public class AbstractVersionConstraintTest
 	@Test
 	public void testCheck()
 	{
-		fail("Not yet implemented"); // TODO
 	}
 
 

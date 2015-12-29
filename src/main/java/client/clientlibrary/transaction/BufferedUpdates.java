@@ -2,7 +2,6 @@ package client.clientlibrary.transaction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,12 +23,13 @@ import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Update records for write operations in a transaction.
+ * <b>WARN:</b> don't support "repeated write (on the same key)"
  * 
  * @author hengxin
  * @date Created on 10-27-2015
  * 
  * @implNote
- * 	It uses {@link LinkedHashMap}, which is not thread-safe.
+ * 	It uses {@link ArrayList}, which is not thread-safe.
  *  At the <i>client</i> side, it is only accessed by the single client thread.
  *  At the <i>master</i> side, it is also only accessed by a single thread, when 
  *  its transaction is to commit.
@@ -104,10 +104,10 @@ public final class BufferedUpdates implements Serializable
 		
 		return new BufferedUpdates( 
 			this.buffered_update_list.parallelStream()
-				.map(update -> 
+				.map(kv_item -> 
 					{
-						CompoundKey ck = update.getCK();
-						ITimestampedCell ts_cell = update.getTsCell();
+						CompoundKey ck = kv_item.getCK();
+						ITimestampedCell ts_cell = kv_item.getTsCell();
 						
 						Ordinal current_ord = ck_ord_index.get(ck);
 						Ordinal next_ord = current_ord.incrementAndGet();
@@ -132,7 +132,7 @@ public final class BufferedUpdates implements Serializable
 //		return this.buffered_update_map.keySet();
 		
 		return this.buffered_update_list.parallelStream()
-				.map(update -> update.getCK())
+				.map(kv_item -> kv_item.getCK())
 				.collect(Collectors.toSet());
 	}
 	
