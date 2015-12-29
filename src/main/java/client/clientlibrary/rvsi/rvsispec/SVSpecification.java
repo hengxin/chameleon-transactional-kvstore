@@ -71,7 +71,7 @@ public class SVSpecification extends AbstractRVSISpecification
 	 * "Join" a set of {@link CompoundKey}s and a {@link QueryResults} which is a map of 
 	 * {@link CompoundKey} to {@link ITimestampedCell}, by their common {@link CompoundKey}.
 	 * 
-	 * @param ck_set_w_x_y_z a set of {@link CompoundKey}s
+	 * @param ck_set a set of {@link CompoundKey}s
 	 * @param query_results {@link QueryResults} which is a map of 
 	 *   {@link CompoundKey} to {@link ITimestampedCell}.
 	 * @return a </em>sorted</em> set of {@link KVItem}s, 
@@ -91,9 +91,9 @@ public class SVSpecification extends AbstractRVSISpecification
 	 *   { [x, Cell_x], [y, Cell_y], [z, Cell_z] }.
 	 * <p>
 	 */
-	protected SortedSet<KVItem> join(Set<CompoundKey> ck_set_w_x_y_z, QueryResults query_results)
+	protected SortedSet<KVItem> join(Set<CompoundKey> ck_set, QueryResults query_results)
 	{
-		return ck_set_w_x_y_z.stream()
+		return ck_set.stream()
 			.<KVItem>map(ck ->
 			{
 				ITimestampedCell ts_cell = query_results.getTsCell(ck);

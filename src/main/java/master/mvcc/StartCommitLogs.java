@@ -71,8 +71,7 @@ public class StartCommitLogs
 	 */
 	public boolean wcf(ToCommitTransaction tx)
 	{
-		Collection<BufferedUpdates> overlapping_tx_updates;
-		overlapping_tx_updates = this.containersOf(tx.getSts()); 
+		Collection<BufferedUpdates> overlapping_tx_updates = this.containersOf(tx.getSts()); 
 		
 		// collect all updated keys
 		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.stream()

@@ -1,9 +1,12 @@
 package client.clientlibrary.transaction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.base.MoreObjects;
 
@@ -15,6 +18,7 @@ import kvs.component.Timestamp;
 import kvs.compound.CKeyToOrdinalIndex;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
+import kvs.compound.KVItem;
 import kvs.compound.TimestampedCell;
 import net.jcip.annotations.NotThreadSafe;
 
@@ -29,41 +33,54 @@ import net.jcip.annotations.NotThreadSafe;
  *  At the <i>client</i> side, it is only accessed by the single client thread.
  *  At the <i>master</i> side, it is also only accessed by a single thread, when 
  *  its transaction is to commit.
- *  
- * FIXME using {@link KVItem}???
  */
 @NotThreadSafe
 public final class BufferedUpdates implements Serializable
 {
 	private static final long serialVersionUID = 8322087463777227998L;
 
+	private final List<KVItem> buffered_update_list;
+	
+	public BufferedUpdates()
+	{
+		this.buffered_update_list = new ArrayList<>();
+	}
+
+	private BufferedUpdates(List<KVItem> kv_item_list)
+	{
+		this.buffered_update_list = kv_item_list;
+	}
+	
 	// TODO Do you really need the insertion-order of {@link LinkedHashMap}; or try {@link HashMap}
-	private final Map<CompoundKey, ITimestampedCell> buffered_update_map = new LinkedHashMap<>();
+//	private final Map<CompoundKey, ITimestampedCell> buffered_update_map = new LinkedHashMap<>();
 	
 	/**
-	 * Buffer the update of (row-col-key, data)
+	 * Buffer the update of (row&col-key, cell)
 	 * @param ck {@link CompoundKey}
-	 * @param data {@link Cell}
+	 * @param cell {@link Cell}
 	 */
-	public void intoBuffer(CompoundKey ck, Cell data)
+	public void intoBuffer(CompoundKey ck, Cell cell)
 	{
-		this.buffered_update_map.put(ck, new TimestampedCell(data));
+		this.buffered_update_list.add(new KVItem(ck, cell));
+//		this.buffered_update_map.put(ck, new TimestampedCell(cell));
 	}
 	
 	/**
-	 * Buffer the update of (row, col, data)
+	 * Buffer the update of (row, col, cell)
 	 * @param r {@link Row}
 	 * @param c {@link Column}
-	 * @param data {@link Cell}
+	 * @param cell {@link Cell}
 	 */
-	public void intoBuffer(Row r, Column c, Cell data)
+	public void intoBuffer(Row r, Column c, Cell cell)
 	{
-		this.intoBuffer(new CompoundKey(r, c), data);
+//		this.intoBuffer(new CompoundKey(r, c), cell);
+		this.buffered_update_list.add(new KVItem(r, c, cell));
 	}
 	
 	/**
-	 * Fill the buffered updates ({@link #buffered_update_map}) 
+	 * Return a new {@link BufferedUpdates} which fills {@link #buffered_update_list} 
 	 * by assigning {@link Timestamp} and {@link Ordinal} to the {@link Cells}. 
+	 * 
 	 * @param cts 
 	 * 	{@link Timestamp} (commit-timestamp of the transaction of the buffered updates) to assign 
 	 * @param ck_ord_index 
@@ -71,36 +88,59 @@ public final class BufferedUpdates implements Serializable
 	 */
 	public BufferedUpdates fillTsAndOrd(Timestamp cts, CKeyToOrdinalIndex ck_ord_index)
 	{
-		this.buffered_update_map.entrySet()
-			.forEach(ck_tscell_entry -> 
-			{
-				CompoundKey ck = ck_tscell_entry.getKey();
-				ITimestampedCell ts_cell = ck_tscell_entry.getValue();
-				
-				Ordinal current_ord = ck_ord_index.get(ck);
-				Ordinal next_ord = current_ord.incrementAndGet();
-				
-				this.buffered_update_map.put(ck, new TimestampedCell(cts, next_ord, ts_cell.getCell()));
-			});
+//		this.buffered_update_map.entrySet()
+//			.forEach(ck_tscell_entry -> 
+//			{
+//				CompoundKey ck = ck_tscell_entry.getKey();
+//				ITimestampedCell ts_cell = ck_tscell_entry.getValue();
+//				
+//				Ordinal current_ord = ck_ord_index.get(ck);
+//				Ordinal next_ord = current_ord.incrementAndGet();
+//				
+//				this.buffered_update_map.put(ck, new TimestampedCell(cts, next_ord, ts_cell.getCell()));
+//			});
+//
+//		return this;
 		
-		return this;
+		return new BufferedUpdates( 
+			this.buffered_update_list.parallelStream()
+				.map(update -> 
+					{
+						CompoundKey ck = update.getCK();
+						ITimestampedCell ts_cell = update.getTsCell();
+						
+						Ordinal current_ord = ck_ord_index.get(ck);
+						Ordinal next_ord = current_ord.incrementAndGet();
+						
+						return new KVItem(ck, new TimestampedCell(cts, next_ord, ts_cell.getCell()));
+					})
+				.collect(Collectors.toList()));
 	}
 	
-	public Map<CompoundKey, ITimestampedCell> getBufferedUpdateMap()
+//	public Map<CompoundKey, ITimestampedCell> getBufferedUpdateMap()
+//	{
+//		return this.buffered_update_map;
+//	}
+	
+	public Stream<KVItem> parallelStream()
 	{
-		return this.buffered_update_map;
+		return this.buffered_update_list.parallelStream();
 	}
 	
 	public Set<CompoundKey> getUpdatedCKeys()
 	{
-		return this.buffered_update_map.keySet();
+//		return this.buffered_update_map.keySet();
+		
+		return this.buffered_update_list.parallelStream()
+				.map(update -> update.getCK())
+				.collect(Collectors.toSet());
 	}
 	
 	@Override
 	public String toString()
 	{
 		return MoreObjects.toStringHelper(this)
-				.add("BufferedUpdates", this.buffered_update_map)
+				.add("BufferedUpdates", this.buffered_update_list)
 				.toString();
 	}
 }

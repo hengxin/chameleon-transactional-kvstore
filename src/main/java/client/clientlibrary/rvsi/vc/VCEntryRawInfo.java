@@ -62,12 +62,12 @@ public class VCEntryRawInfo
 	
 	public CompoundKey getVceInfoCk()
 	{
-		return this.vce_info_kv.getCk();
+		return this.vce_info_kv.getCK();
 	}
 
 	public Ordinal getVceInfoOrd()
 	{
-		return this.vce_info_kv.getTscell().getOrdinal();
+		return this.vce_info_kv.getTsCell().getOrdinal();
 	}
 	
 	public long getVceInfoBound()
@@ -77,7 +77,7 @@ public class VCEntryRawInfo
 	
 	public Timestamp getVceInfoTsOptional()
 	{
-		return this.vce_info_kv_optional.getTscell().getTS();
+		return this.vce_info_kv_optional.getTsCell().getTS();
 	}
 
 	@Override

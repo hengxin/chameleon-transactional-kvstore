@@ -4,6 +4,9 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
+import kvs.component.Cell;
+import kvs.component.Column;
+import kvs.component.Row;
 import kvs.component.Timestamp;
 
 /**
@@ -12,11 +15,25 @@ import kvs.component.Timestamp;
  * 
  * @author hengxin
  * @date Created on 11-29-2015
+ * 
+ * FIXME using separate Comparator
  */
 public final class KVItem implements Comparable<KVItem>
 {
 	private final CompoundKey ck;
 	private final ITimestampedCell ts_cell;
+	
+	public KVItem(final Row r, final Column c, final Cell cell)
+	{
+		this.ck = new CompoundKey(r, c);
+		this.ts_cell = new TimestampedCell(cell);
+	}
+	
+	public KVItem(final CompoundKey ck, final Cell cell)
+	{
+		this.ck = ck;
+		this.ts_cell = new TimestampedCell(cell);
+	}
 	
 	public KVItem(final CompoundKey ck, ITimestampedCell ts_cell)
 	{
@@ -24,12 +41,12 @@ public final class KVItem implements Comparable<KVItem>
 		this.ts_cell = ts_cell;
 	}
 	
-	public CompoundKey getCk()
+	public CompoundKey getCK()
 	{
 		return ck;
 	}
 	
-	public ITimestampedCell getTscell()
+	public ITimestampedCell getTsCell()
 	{
 		return ts_cell;
 	}
