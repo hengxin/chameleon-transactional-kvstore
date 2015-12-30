@@ -15,7 +15,7 @@ import com.google.common.base.Objects;
  */
 public abstract class AbstractVersionConstraint
 {
-	private List<VCEntry> vc_entry_list;
+	private final List<VCEntry> vc_entry_list;
 	
 	public AbstractVersionConstraint(List<VCEntry> vc_element_list)
 	{
@@ -40,7 +40,9 @@ public abstract class AbstractVersionConstraint
 		if(! (o.getClass() == this.getClass()))
 			return false;
 		
-		return CollectionUtils.isEqualCollection(this.vc_entry_list, ((AbstractVersionConstraint) o).vc_entry_list);
+		AbstractVersionConstraint that = (AbstractVersionConstraint) o;
+		// isEqualCollection() (on List) requires its element class override hashCode() and equals().
+		return CollectionUtils.isEqualCollection(this.vc_entry_list, that.vc_entry_list);
 	}
 	
 	@Override

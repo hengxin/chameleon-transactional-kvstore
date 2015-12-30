@@ -35,5 +35,13 @@ public class OrdinalTest
 		assertEquals("The original ord2 also increments to 2", 2, original_ord2.getOrd());
 		assertEquals("The increased ord is 2.", 2, ord2_inc.getOrd());	
 	}
+	
+	@Test
+	public void testEquals()
+	{
+		assertEquals("original_ord0 and original_ord1 are equal.", original_ord0, original_ord1);
+
+		assertEquals("original_ord0 and original_ord2 are equal.", original_ord0, original_ord2);
+	}
 
 }

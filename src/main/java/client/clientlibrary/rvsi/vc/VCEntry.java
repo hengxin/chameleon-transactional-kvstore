@@ -21,7 +21,7 @@ import kvs.compound.CompoundKey;
  * @author hengxin
  * @date Created on 11-28-2015
  */
-public class VCEntry
+public final class VCEntry
 {
 	private final CompoundKey vce_ck;
 	private final Ordinal vce_ord;
