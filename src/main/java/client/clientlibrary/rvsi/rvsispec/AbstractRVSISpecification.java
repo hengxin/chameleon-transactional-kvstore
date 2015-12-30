@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
@@ -20,7 +20,6 @@ import client.clientlibrary.rvsi.vc.VCEntryRawInfo;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
-import kvs.compound.ITimestampedCell;
 
 /**
  * RVSI specifications, including k1-bv (backward view; see {@link BVSpecification}), 
@@ -100,13 +99,14 @@ public abstract class AbstractRVSISpecification
 	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results)
 	{
 		this.vce_info_list = this.flattenRVSISpecMap().entrySet().stream()
-			.<VCEntryRawInfo>map(flatten_rvsi_spec_entry ->
+			.<Optional<VCEntryRawInfo>> map(flatten_rvsi_spec_entry ->
 				{
 					CompoundKey ck = flatten_rvsi_spec_entry.getKey();
-					ITimestampedCell ts_cell = query_results.getTsCell(ck);
-					return (ts_cell == null) ? null : new VCEntryRawInfo(ck, ts_cell, flatten_rvsi_spec_entry.getValue());
+					long bound = flatten_rvsi_spec_entry.getValue();
+					return query_results.getTsCell(ck).map(ts_cell -> new VCEntryRawInfo(ck, ts_cell, bound));
 				})
-			.filter(Objects::nonNull)
+			.filter(Optional::isPresent)
+			.map(Optional::get)
 			.collect(Collectors.toList());
 		
 		return this.vce_info_list;

@@ -5,7 +5,7 @@ package client.clientlibrary.rvsi.rvsispec;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -94,12 +94,10 @@ public class SVSpecification extends AbstractRVSISpecification
 	protected SortedSet<KVItem> join(Set<CompoundKey> ck_set, QueryResults query_results)
 	{
 		return ck_set.stream()
-			.<KVItem>map(ck ->
-			{
-				ITimestampedCell ts_cell = query_results.getTsCell(ck);
-				return (ts_cell == null) ? null : new KVItem(ck, ts_cell);
-			})
-			.filter(Objects::nonNull)
+			.<Optional<KVItem>>map(ck -> 
+				query_results.getTsCell(ck).map(ts_cell -> new KVItem(ck, ts_cell)))
+			.filter(Optional::isPresent)
+			.map(Optional::get)
 			.collect(Collectors.toCollection(() -> new TreeSet<KVItem>(KVItem.TIMESTAMP_COMPARATOR)));
 	}
 

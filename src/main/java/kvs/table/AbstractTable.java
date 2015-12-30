@@ -140,7 +140,6 @@ public abstract class AbstractTable
 	 */
 	public void apply(Timestamp cts, BufferedUpdates buffered_updates)
 	{
-//		buffered_updates.getBufferedUpdateMap().entrySet().forEach(this::put);
 		buffered_updates.parallelStream().forEach(this::put);
 	}
 	

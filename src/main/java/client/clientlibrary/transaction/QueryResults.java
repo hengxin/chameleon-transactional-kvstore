@@ -1,6 +1,7 @@
 package client.clientlibrary.transaction;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
@@ -32,8 +33,8 @@ public class QueryResults
 		this.query_results.put(ck, ts_cell);
 	}
 	
-	public ITimestampedCell getTsCell(CompoundKey ck)
+	public Optional<ITimestampedCell> getTsCell(CompoundKey ck)
 	{
-		return this.query_results.get(ck);
+		return Optional.ofNullable(this.query_results.get(ck));
 	}
 }
