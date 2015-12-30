@@ -1,5 +1,7 @@
 package kvs.compound;
 
+import java.util.Comparator;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
@@ -15,11 +17,11 @@ import kvs.component.Timestamp;
  * 
  * @author hengxin
  * @date Created on 11-29-2015
- * 
- * FIXME using separate Comparator
  */
-public final class KVItem implements Comparable<KVItem>
+public final class KVItem
 {
+	public final static Comparator<KVItem> TIMESTAMP_COMPARATOR = new TimestampComparator();
+	
 	private final CompoundKey ck;
 	private final ITimestampedCell ts_cell;
 	
@@ -50,30 +52,37 @@ public final class KVItem implements Comparable<KVItem>
 	{
 		return ts_cell;
 	}
-
+	
 	/**
-	 * Compared by {@link #ts_cell}, which is (see {@link TimestampedCell}) 
-	 * in turn sorted by {@link Timestamp}.
+	 * Compare {@link KVItem} by their #ts_cell fields, which is in turn 
+	 * compared by {@link Timestamp}.
+	 * <p>
+	 * <b>Note:</b> This ordering is not consistent with {@link #hashCode()}
+	 * and {@link #equals(Object)}.
+	 * 
+	 * @author hengxin
+	 * @date Created on Dec 30, 2015
 	 */
-	@Override
-	public int compareTo(KVItem that)
+	private static class TimestampComparator implements Comparator<KVItem>
 	{
-		return ComparisonChain.start().compare(this.ts_cell, that.ts_cell).result();
+		@Override
+		public int compare(KVItem left, KVItem right)
+		{
+			return ComparisonChain.start().compare(left.ts_cell, right.ts_cell).result();
+		}
 	}
 	
 	/**
-	 * Only hashCode {@link #ts_cell}.
-	 * Consistent with {@link #compareTo(KVItem)}.
+	 * Only hashCode {@link #ck}.
 	 */
 	@Override
 	public int hashCode()
 	{
-		return Objects.hashCode(this.ts_cell);
+		return Objects.hashCode(this.ck);
 	}
 	
 	/**
-	 * Only check {@link #ts_cell}.
-	 * Consistent with {@link #compareTo(KVItem)}.
+	 * Only check {@link #ck}.
 	 */
 	@Override
 	public boolean equals(Object o)
@@ -86,7 +95,7 @@ public final class KVItem implements Comparable<KVItem>
 			return false;
 		
 		KVItem that = (KVItem) o;
-		return Objects.equal(this.ts_cell, that.ts_cell);
+		return Objects.equal(this.ck, that.ck);
 	}
 	
 	@Override

@@ -100,7 +100,7 @@ public class SVSpecification extends AbstractRVSISpecification
 				return (ts_cell == null) ? null : new KVItem(ck, ts_cell);
 			})
 			.filter(Objects::nonNull)
-			.collect(Collectors.toCollection(() -> new TreeSet<KVItem>()));
+			.collect(Collectors.toCollection(() -> new TreeSet<KVItem>(KVItem.TIMESTAMP_COMPARATOR)));
 	}
 
 	/**
