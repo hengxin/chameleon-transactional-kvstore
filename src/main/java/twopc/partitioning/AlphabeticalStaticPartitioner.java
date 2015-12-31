@@ -24,13 +24,13 @@ public final class AlphabeticalStaticPartitioner implements IPartitioner
 	}
 
 	@Override
-	public int locateSiteFor(Row row, Column col, int buckets)
+	public int locateSiteIndexFor(Row row, Column col, int buckets)
 	{
 		return -1;
 	}
 
 	@Override
-	public Map<Integer, List<KVItem>> locateSitesFor(BufferedUpdates updates, int buckets)
+	public Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets)
 	{
 		// TODO Auto-generated method stub
 		return null;

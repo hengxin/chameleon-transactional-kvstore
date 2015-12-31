@@ -3,6 +3,7 @@ package twopc.partitioning;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
@@ -10,6 +11,7 @@ import com.google.common.hash.Hashing;
 import client.clientlibrary.transaction.BufferedUpdates;
 import kvs.component.Column;
 import kvs.component.Row;
+import kvs.compound.CompoundKey;
 import kvs.compound.KVItem;
 
 /**
@@ -34,7 +36,7 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner
 	 *   at StackOverflow.
 	 */
 	@Override
-	public int locateSiteFor(Row r, Column c, int buckets)
+	public int locateSiteIndexFor(Row r, Column c, int buckets)
 	{
 		HashCode hash_code = Hashing.murmur3_32().newHasher()
 				.putString(r.getRowKey(), StandardCharsets.UTF_8)
@@ -44,10 +46,15 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner
 		return Hashing.consistentHash(hash_code, buckets);
 	}
 
-	@Override
-	public Map<Integer, List<KVItem>> locateSitesFor(BufferedUpdates updates, int buckets)
+	private int locateSiteIndexFor(CompoundKey ck, int buckets)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.locateSiteIndexFor(ck.getRow(), ck.getCol(), buckets);
+	}
+	
+	@Override
+	public Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets)
+	{
+		return updates.parallelStream()
+				.collect(Collectors.groupingBy(item -> locateSiteIndexFor(item.getCK(), buckets)));
 	}
 }

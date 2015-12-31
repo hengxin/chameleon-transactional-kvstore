@@ -25,7 +25,7 @@ public interface IPartitioner
 	 * @param buckets number of buckets (i.e., storage nodes)
 	 * @return the index of an {@link ISite} who is responsible for the given key
 	 */
-	public abstract int locateSiteFor(Row r, Column c, int buckets);
+	public abstract int locateSiteIndexFor(Row r, Column c, int buckets);
 	
 	/**
 	 * Given {@link BufferedUpdates} (which contains a collection of {@link KVItem}s), the partitioner
@@ -34,5 +34,5 @@ public interface IPartitioner
 	 * @param buckets	number of buckets (i.e., storage nodes)
 	 * @return a map from an index of an {@link ISite} to the {@link KVItem}s (in @param updates) it is responsible for.
 	 */
-	public abstract Map<Integer, List<KVItem>> locateSitesFor(BufferedUpdates updates, int buckets);
+	public abstract Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets);
 }
