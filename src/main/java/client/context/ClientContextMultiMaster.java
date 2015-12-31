@@ -17,7 +17,6 @@ public class ClientContextMultiMaster extends AbstractClientContext
 	public ClientContextMultiMaster(String file) throws MemberParseException
 	{
 		super(file);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

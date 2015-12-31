@@ -19,18 +19,20 @@ public interface IPartitioner
 {
 	/**
 	 * Given a key ({@link Row} key + {@link Column} key), the partitioner
-	 * returns the {@link ISite} which is responsible for it.
-	 * @param row {@link Row} key
-	 * @param col {@link Column} key
-	 * @return the {@link ISite} responsible for the given key
+	 * returns the index of an {@link ISite} who is responsible for the key.
+	 * @param r {@link Row} key
+	 * @param c {@link Column} key
+	 * @param buckets number of buckets (i.e., storage nodes)
+	 * @return the index of an {@link ISite} who is responsible for the given key
 	 */
-	public abstract ISite locateSiteFor(Row row, Column col);
+	public abstract int locateSiteFor(Row r, Column c, int buckets);
 	
 	/**
-	 * Given {@link BufferedUpdates} (which contains a collection of {@link KVItem}), the partitioner
-	 * returns for each item an {@link ISite} which is responsible for it.
+	 * Given {@link BufferedUpdates} (which contains a collection of {@link KVItem}s), the partitioner
+	 * returns for each item the index of the {@link ISite} who is responsible for storing it.
 	 * @param updates {@link BufferedUpdates}
-	 * @return a map from an {@link ISite} to the {@link KVItem}s (in @param updates) it is responsible for.
+	 * @param buckets	number of buckets (i.e., storage nodes)
+	 * @return a map from an index of an {@link ISite} to the {@link KVItem}s (in @param updates) it is responsible for.
 	 */
-	public abstract Map<ISite, List<KVItem>> locateSitesFor(BufferedUpdates updates);
+	public abstract Map<Integer, List<KVItem>> locateSitesFor(BufferedUpdates updates, int buckets);
 }

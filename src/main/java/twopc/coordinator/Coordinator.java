@@ -14,7 +14,7 @@ import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.compound.KVItem;
 import site.ISite;
-import twopc.partitioning.AlphabeticalStaticPartitioner;
+import twopc.partitioning.IPartitioner;
 
 /**
  * Coordinator of 2PC protocol.
@@ -62,19 +62,24 @@ public final class Coordinator implements ICoordinator
 	private final ToCommitTransaction tx;
 	private final VersionConstraintManager vcm;
 
-	private final Map<ISite, List<KVItem>> site_items_map;
-	private final int count;
+//	private final IPartitioner partitioner;
 	
-	public Coordinator(final ToCommitTransaction tx, final VersionConstraintManager vcm)
+	// final
+	private Map<ISite, List<KVItem>> site_items_map;
+	private int count;
+	
+	public Coordinator(final ToCommitTransaction tx, final VersionConstraintManager vcm /** , final IPartitioner partitioner **/)
 	{
 		this.phaser = new CommitPhaser(this);
 		
 		this.tx = tx;
 		this.vcm = vcm;
 
-		this.site_items_map = AlphabeticalStaticPartitioner.INSTANCE.locateSitesFor(tx.getBufferedUpdates());
+//		this.partitioner = partitioner;
 		
-		this.count = site_items_map.size();
+//		this.site_items_map = this.partitioner.locateSitesFor(tx.getBufferedUpdates());
+		
+//		this.count = site_items_map.size();
 		this.prepared_decisions = new AtomicBoolean[count];	
 		this.committed_decisions = new AtomicBoolean[count];
 	}

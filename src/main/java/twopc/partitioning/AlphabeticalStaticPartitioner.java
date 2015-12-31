@@ -7,7 +7,6 @@ import client.clientlibrary.transaction.BufferedUpdates;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.compound.KVItem;
-import site.ISite;
 
 /**
  * A simple static partitioner which partitions 
@@ -15,18 +14,23 @@ import site.ISite;
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
-public enum AlphabeticalStaticPartitioner implements IPartitioner
+public final class AlphabeticalStaticPartitioner implements IPartitioner
 {
-	INSTANCE;
+	private final int buckets;
 	
-	@Override
-	public ISite locateSiteFor(Row row, Column col)
+	public AlphabeticalStaticPartitioner(int buckets)
 	{
-		return null;
+		this.buckets = buckets;
 	}
 
 	@Override
-	public Map<ISite, List<KVItem>> locateSitesFor(BufferedUpdates updates)
+	public int locateSiteFor(Row row, Column col, int buckets)
+	{
+		return -1;
+	}
+
+	@Override
+	public Map<Integer, List<KVItem>> locateSitesFor(BufferedUpdates updates, int buckets)
 	{
 		// TODO Auto-generated method stub
 		return null;
