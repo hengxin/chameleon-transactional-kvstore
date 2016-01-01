@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import context.ClusterInHibernate;
 import exception.network.membership.MasterMemberParseException;
 import exception.network.membership.MemberParseException;
 import exception.network.membership.SlaveMemberParseException;
@@ -22,7 +23,7 @@ import exception.network.membership.SlaveMemberParseException;
  */
 public final class ClientMembership extends AbstractStaticMembership
 {
-	private List<MemberCluster> member_cluster_list;
+	private List<ClusterInHibernate> member_cluster_list;
 	
 	public ClientMembership(String file) throws MemberParseException
 	{
@@ -36,14 +37,14 @@ public final class ClientMembership extends AbstractStaticMembership
 	}
 
 	/**
-	 * Load and parse {@link MemberCluster}s from .properties file which consists of 
+	 * Load and parse {@link ClusterInHibernate}s from .properties file which consists of 
 	 * <p> cno = master, slave, slave, ...
 	 * <p> cno = master, slave, slave, ...
 	 * <p> ...
 	 * @throws MasterMemberParseException
 	 * @throws SlaveMemberParseException
 	 */
-	private List<MemberCluster> loadMemberClusters() throws MasterMemberParseException, SlaveMemberParseException
+	private List<ClusterInHibernate> loadMemberClusters() throws MasterMemberParseException, SlaveMemberParseException
 	{
 		return super.prop.stringPropertyNames().parallelStream()
 			.map( cluster_no_str -> {
@@ -73,7 +74,7 @@ public final class ClientMembership extends AbstractStaticMembership
 					throw new SlaveMemberParseException(mpe);
 				}
 
-				return new MemberCluster(cno, master, slaves);
+				return new ClusterInHibernate(cno, master, slaves);
 			}).collect(Collectors.toList());
 	}
 	
@@ -83,7 +84,7 @@ public final class ClientMembership extends AbstractStaticMembership
 		return null;
 	}
 	
-	public Stream<MemberCluster> parallelStream()
+	public Stream<ClusterInHibernate> parallelStream()
 	{
 		return this.member_cluster_list.parallelStream();
 	}

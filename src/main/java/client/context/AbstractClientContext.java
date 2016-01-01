@@ -7,13 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.transaction.RVSITransaction;
-import context.Cluster;
+import context.ClusterActive;
+import context.ClusterInHibernate;
 import exception.network.membership.MasterMemberParseException;
 import exception.rmi.SiteStubParseException;
 import master.IMaster;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
-import network.membership.MemberCluster;
 import site.ISite;
 import slave.ISlave;
 
@@ -37,7 +37,7 @@ public abstract class AbstractClientContext
 	
 	private AbstractStaticMembership client_membership; 
 	
-	protected final List<Cluster> clusters;
+	protected final List<ClusterActive> clusters;
 	
 //	private RVSITransaction tx = null;
 	
@@ -62,17 +62,17 @@ public abstract class AbstractClientContext
 	}
 
 	/**
-	 * @return 	a list of {@link Cluster}s, <i>sorted</i> by their cluster no.
+	 * @return 	a list of {@link ClusterActive}s, <i>sorted</i> by their cluster no.
 	 * @throws SiteStubParseException  if an error occurs during parsing site stub
 	 * <p> FIXME To be fault-tolerant:
 	 * 		If a master is not available, then all of its slaves are ignored;
 	 * 		If a master is available, then some of its slaves may be ignored if unavailable.
 	 */
-	protected List<Cluster> loadRemoteClusters() throws SiteStubParseException
+	protected List<ClusterActive> loadRemoteClusters() throws SiteStubParseException
 	{
 		return ((ClientMembership) this.client_membership).parallelStream()
-				.map(MemberCluster::parse)
-				.sorted(Cluster.CLUSTER_NO_COMPARATOR)
+				.map(ClusterInHibernate::parse)
+				.sorted(ClusterActive.CLUSTER_NO_COMPARATOR)
 				.collect(Collectors.toList());
 	}
 	

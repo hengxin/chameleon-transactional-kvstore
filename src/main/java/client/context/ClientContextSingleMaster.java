@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import context.Cluster;
+import context.ClusterActive;
 import exception.ContextException;
 import exception.network.membership.MemberParseException;
 import site.ISite;
@@ -64,7 +64,7 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	{
 		return this.cached_read_site.orElseGet(() ->
 			{
-				Cluster cluster = super.clusters.get(0);
+				ClusterActive cluster = super.clusters.get(0);
 				ISite read_site = cluster.hasNoSlaves() ? cluster.getMaster() : cluster.getRandomSlave(); 
 				this.cached_read_site = Optional.of(read_site);
 				return read_site;

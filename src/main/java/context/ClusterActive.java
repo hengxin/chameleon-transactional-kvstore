@@ -15,35 +15,35 @@ import site.ISite;
  * @author hengxin
  * @date Created on Jan 1, 2016
  */
-public final class Cluster {
+public final class ClusterActive {
 	/** globally unique cluster no. **/
 	private final int cno;
 	private final ISite master;
 	private final List<ISite> slaves;
 	
 	/**
-	 * Compare two {@link Cluster}s by {@link Cluster#cno}.
+	 * Compare two {@link ClusterActive}s by {@link ClusterActive#cno}.
 	 * @author hengxin
 	 * @date Created on Jan 1, 2016
 	 */
-	private static class ClusterNoCmp implements Comparator<Cluster> {
+	private static class ClusterNoCmp implements Comparator<ClusterActive> {
 
 		@Override
-		public int compare(Cluster c1, Cluster c2) {
+		public int compare(ClusterActive c1, ClusterActive c2) {
 			return c1.cno - c2.cno;
 		}
 
 	}
 
-	/** comparator for sorting {@link Cluster}s by {@link Cluster#cno} */
-	public static final Comparator<Cluster> CLUSTER_NO_COMPARATOR = new ClusterNoCmp();
+	/** comparator for sorting {@link ClusterActive}s by {@link ClusterActive#cno} */
+	public static final Comparator<ClusterActive> CLUSTER_NO_COMPARATOR = new ClusterNoCmp();
 
 	/**
 	 * @param cno	globally unique cluster no.
 	 * @param master	master site of this cluster
 	 * @param slaves	slaves of this cluster
 	 */
-	public Cluster(int cno, ISite master, List<ISite> slaves) {
+	public ClusterActive(int cno, ISite master, List<ISite> slaves) {
 		this.cno = cno;
 		this.master = master;
 		this.slaves = slaves;
