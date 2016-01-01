@@ -3,8 +3,8 @@ package master;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import exception.MemberParseException;
 import exception.SiteException;
+import exception.network.membership.MemberParseException;
 import jms.AbstractJMSParticipant;
 import jms.master.JMSCommitLogPublisher;
 import master.context.MasterContext;

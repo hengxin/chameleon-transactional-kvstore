@@ -1,14 +1,12 @@
 package network.membership;
 
-import java.util.AbstractMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import exception.MemberParseException;
+import exception.network.membership.MasterMemberParseException;
+import exception.network.membership.MemberParseException;
+import exception.network.membership.SlaveMemberParseException;
 
 /**
  * A client needs to know all the masters and their individual slaves.
@@ -24,7 +22,7 @@ import exception.MemberParseException;
  */
 public final class ClientMembership extends AbstractStaticMembership
 {
-	private Map<Member, List<Member>> master_slaves_map;
+	private List<MemberCluster> member_cluster_list;
 	
 	public ClientMembership(String file) throws MemberParseException
 	{
@@ -32,34 +30,51 @@ public final class ClientMembership extends AbstractStaticMembership
 	}
 
 	@Override
-	public void loadMembershipFromProp()
+	public void parseMembershipFromProp()
 	{
-		this.master_slaves_map = this.loadMasterSlavesMap();
+		this.member_cluster_list = this.loadMemberClusters();
 	}
 
 	/**
-	 * The .properties file consists of:
-	 * <blockquote>  
-	 * master = slave, slave, ...
-	 * <p>
-	 * master = slave, slave, ...
-	 * <p>
-	 * ...
-	 * </blockquote>
+	 * Load and parse {@link MemberCluster}s from .properties file which consists of 
+	 * <p> cno = master, slave, slave, ...
+	 * <p> cno = master, slave, slave, ...
+	 * <p> ...
+	 * @throws MasterMemberParseException
+	 * @throws SlaveMemberParseException
 	 */
-	private Map<Member, List<Member>> loadMasterSlavesMap()
+	private List<MemberCluster> loadMemberClusters() throws MasterMemberParseException, SlaveMemberParseException
 	{
-		return super.prop.entrySet().stream()
-			.<Entry<Member, List<Member>>>map(master_slaves_entry -> 
-			{
-				String master = (String) master_slaves_entry.getKey();
-				String slaves = (String) master_slaves_entry.getValue();
+		return super.prop.stringPropertyNames().parallelStream()
+			.map( cluster_no_str -> {
+				int cno = Integer.parseInt(cluster_no_str.trim());
 				
-				Optional<Member> master_member = Member.parseMember(master);
-				return master_member.isPresent() ? new AbstractMap.SimpleImmutableEntry<>(master_member.get(), Member.parseMembers(slaves)) : null;
-			})
-			.filter(Objects::nonNull)
-			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+				// cluster_str: master, slave, slave, ...
+				String cluster_str = super.prop.getProperty(cluster_no_str).trim();
+				
+				// master and slaves in string format
+				int sep = cluster_str.indexOf(',');
+				String master_str = cluster_str.substring(0, sep);
+				String slaves_str = cluster_str.substring(sep + 1).trim();
+				
+				// parse master
+				Member master;
+				try{
+					master = Member.parseMember(master_str);
+				} catch (MemberParseException mpe) {
+					throw new MasterMemberParseException(mpe);
+				}
+				
+				// parse slaves
+				List<Member> slaves; 
+				try{
+					slaves = Member.parseMembers(slaves_str);
+				} catch (MemberParseException mpe) {
+					throw new SlaveMemberParseException(mpe);
+				}
+
+				return new MemberCluster(cno, master, slaves);
+			}).collect(Collectors.toList());
 	}
 	
 	public Member self()
@@ -68,8 +83,8 @@ public final class ClientMembership extends AbstractStaticMembership
 		return null;
 	}
 	
-	public Map<Member, List<Member>> getMasterSlavesMap()
+	public Stream<MemberCluster> parallelStream()
 	{
-		return this.master_slaves_map;
+		return this.member_cluster_list.parallelStream();
 	}
 }

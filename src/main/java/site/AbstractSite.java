@@ -17,6 +17,7 @@ import com.google.common.base.MoreObjects;
 
 import context.IContext;
 import exception.SiteException;
+import exception.rmi.SiteStubParseException;
 import jms.AbstractJMSParticipant;
 import jms.master.JMSCommitLogPublisher;
 import jms.slave.JMSCommitLogSubscriber;
@@ -105,41 +106,31 @@ public abstract class AbstractSite implements ISite, IRMI
 	 * @return 
 	 * 		A stub for a remote object, wrapped by {@link Optional}; 
 	 * 		may be {@code Optional.empty()} if it fails to parse a stub from @param member.
+	 * @throws SiteStubParseException	if an error occurs during parse
 	 */
-	public static Optional<ISite> parseStub(Member member)
+	public static ISite parseStub(Member member) throws SiteStubParseException
 	{
-			try
-			{
-				return Optional.of((ISite) LocateRegistry.getRegistry(member.getAddrIp(), member.getRmiRegistryPort()).lookup(member.getRmiRegistryName()));
-			} catch (RemoteException | NotBoundException e)
-			{
-				Throwable cause = e.getCause();
-				LOGGER.warn("Failed to locate the remote stub for {}. I will ignore it for now. \n {}", member, 
-						Objects.isNull(cause) ? "Causes Unknown." : cause.toString());
-				return Optional.empty();
-			}
+		try
+		{
+			return (ISite) LocateRegistry.getRegistry(member.getAddrIp(), member.getRmiRegistryPort()).lookup(member.getRmiRegistryName());
+		} catch (RemoteException | NotBoundException e)
+		{
+			throw new SiteStubParseException(String.format("Failed to locate the remote stub for [%s].", member), e.getCause());
+		}
 	}
 	
 	/**
 	 * Locate the stubs for a list of {@link Member}s.
-	 * The remote stubs which cannot be located are ignored.
 	 * 
 	 * @param members 
 	 * 		A list of {@link Member}s to be parsed.
 	 * @return 
 	 * 		A list of {@link ISite} stubs; 
-	 * 		the list may be empty if none of the {@link Member}s is parsed successfully.
-	 * 
-	 * @implNote
-	 * 		This code using {@link Optional} to avoid null-check is due to
-	 * 		<a href = "http://stackoverflow.com/a/34170759/1833118">Brian Goetz @ Stackoverflow</a>.
 	 */
 	public static List<ISite> parseStubs(List<Member> members)
 	{
-		return members.stream()
+		return members.parallelStream()
 				.map(AbstractSite::parseStub)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
 				.collect(Collectors.toList());
 	}
 	

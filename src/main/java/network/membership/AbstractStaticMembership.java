@@ -7,8 +7,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import exception.MemberParseException;
-import exception.MembershipConfigException;
+import exception.network.membership.MemberParseException;
 
 /**
  * In this implementation, we load the membership information
@@ -17,55 +16,44 @@ import exception.MembershipConfigException;
  * @author hengxin
  * @date Created on 12-03-2015
  */
-public abstract class AbstractStaticMembership
-{
+public abstract class AbstractStaticMembership {
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractStaticMembership.class);
 	
 	protected final String file;
 	protected final Properties prop = new Properties();
 	protected Member self;
 	
-	public AbstractStaticMembership(String file) throws MemberParseException
-	{
+	public AbstractStaticMembership(String file) throws MemberParseException {
 		this.file = file;
 		this.loadProp();
-		this.loadMembershipFromProp();
+		this.parseMembershipFromProp();
 	}
 	
 	/**
-	 * @throws MemberParseException
-	 * 		Thrown if an error occurs during parsing {@link Member}.
+	 * Parse {@link #prop} into {@link Member}s.
 	 */
-	public abstract void loadMembershipFromProp() throws MemberParseException;
+	public abstract void parseMembershipFromProp();
 	
-	public Member self()
-	{
+	/**
+	 * Load {@link #prop} from {@link #file}.
+	 * The whole system exits if an error occurs.
+	 * <p> See <a href = "http://stackoverflow.com/a/2523252/1833118">Post: getSystemResourceAsStream() returns null@stackoverflow</a> 
+	 * for the use of {@code getResourceAsStream()}.
+	 */
+	protected void loadProp() {
+		ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
+		try (InputStream is = class_loader.getResourceAsStream(this.file)) {
+			this.prop.load(is);
+			LOGGER.info("Load the properties file [{}] successfully.", file);
+		} catch (NullPointerException | IOException | IllegalArgumentException e) {
+			LOGGER.error("Failed to load properties from [{}]. \n [{}]", this.file, e.getCause());
+			System.exit(1);
+		}
+	}
+
+	public Member self() {
 		return this.self;
 	}
 	
-	/**
-	 * Load the .properties file.
-	 * <p>
-	 * See <a href = "http://stackoverflow.com/a/2523252/1833118">Post: getSystemResourceAsStream() returns null @ StackOverflow</a> 
-	 * for the use of {@code getResourceAsStream()}.
-	 */
-	protected Properties loadProp()
-	{
-		ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
-		try (InputStream is = class_loader.getResourceAsStream(this.file)) 
-		{
-			this.prop.load(is);
-			LOGGER.info("Load the properties file ({}) successfully.", file);
-		} catch (NullPointerException npe)
-		{
-			LOGGER.error("The properties file ({}) cannot be found and loaded. \n {}", file, npe);
-			System.exit(1);
-		} catch (IllegalArgumentException | IOException ie)
-		{
-			LOGGER.error("An error occurred when reading from the properties {} file. \n {}", file, ie);
-			System.exit(1);
-		}
-		
-		return this.prop;
-	}
 }

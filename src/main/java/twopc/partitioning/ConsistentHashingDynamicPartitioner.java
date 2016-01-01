@@ -28,7 +28,6 @@ import kvs.compound.KVItem;
  */
 public final class ConsistentHashingDynamicPartitioner implements IPartitioner
 {
-
 	/**
 	 * {@inheritDoc}
 	 * @see	
@@ -36,17 +35,7 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner
 	 *   at StackOverflow.
 	 */
 	@Override
-	public int locateSiteIndexFor(Row r, Column c, int buckets)
-	{
-		HashCode hash_code = Hashing.murmur3_32().newHasher()
-				.putString(r.getRowKey(), StandardCharsets.UTF_8)
-				.putString(c.getColumnKey(), StandardCharsets.UTF_8)
-				.hash();
-		
-		return Hashing.consistentHash(hash_code, buckets);
-	}
-
-	private int locateSiteIndexFor(CompoundKey ck, int buckets)
+	public int locateSiteIndexFor(CompoundKey ck, int buckets)
 	{
 		return this.locateSiteIndexFor(ck.getRow(), ck.getCol(), buckets);
 	}
@@ -55,6 +44,23 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner
 	public Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets)
 	{
 		return updates.parallelStream()
-				.collect(Collectors.groupingBy(item -> locateSiteIndexFor(item.getCK(), buckets)));
+				.collect(Collectors.groupingByConcurrent(item -> locateSiteIndexFor(item.getCK(), buckets)));
+	}
+
+	/**
+	 * Utility method for {@link #locateSiteIndexFor(CompoundKey, int)}.
+	 * @param r		{@link Row} key
+	 * @param c		{@link Column} key
+	 * @param buckets		number of buckets (i.e., master nodes)
+	 * @return		the index of the site who is responsible for the key
+	 */
+	private int locateSiteIndexFor(Row r, Column c, int buckets)
+	{
+		HashCode hash_code = Hashing.murmur3_32().newHasher()
+				.putString(r.getRowKey(), StandardCharsets.UTF_8)
+				.putString(c.getColumnKey(), StandardCharsets.UTF_8)
+				.hash();
+		
+		return Hashing.consistentHash(hash_code, buckets);
 	}
 }

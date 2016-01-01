@@ -5,25 +5,30 @@ import static org.junit.Assert.*;
 import java.util.Properties;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import exception.MemberParseException;
+import exception.network.membership.MemberParseException;
 
-public class AbstractStaticMembershipTest
-{
+/**
+ * Test {@link AbstractStaticMembership#loadProp()}.
+ * @author hengxin
+ * @date Created on Jan 1, 2016
+ */
+@Ignore
+public final class AbstractStaticMembershipTest {
+
 	private final static String FILE = "membership-abstract-test.properties";
 
 	AbstractStaticMembership membership; 
 	
 	@Before
-	public void setUp() throws Exception
-	{
+	public void setUp() throws Exception {
 		this.membership = new BasicMembership(FILE);
 	}
 
 	@Test
-	public void testLoadProp()
-	{
+	public void testLoadProp() {
 		Properties expected_prop = new Properties();
 		expected_prop.setProperty("master", "192.168.107.128@8000;master@1099");
 		expected_prop.setProperty("slave", "192.168.107.128@5000;slave@1099");
@@ -33,17 +38,14 @@ public class AbstractStaticMembershipTest
 		assertEquals("Fails to load the properties file: " + FILE, expected_prop, actual_prop);
 	}
 	
-	private class BasicMembership extends AbstractStaticMembership
-	{
+	private final class BasicMembership extends AbstractStaticMembership {
 
-		public BasicMembership(String file) throws MemberParseException
-		{
+		public BasicMembership(String file) throws MemberParseException {
 			super(file);
 		}
 
 		@Override
-		public void loadMembershipFromProp()
-		{
+		public void parseMembershipFromProp() {
 		}
 		
 	}

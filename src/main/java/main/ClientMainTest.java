@@ -11,7 +11,7 @@ import client.clientlibrary.transaction.RVSITransaction;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.ContextException;
-import exception.MemberParseException;
+import exception.network.membership.MemberParseException;
 import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;

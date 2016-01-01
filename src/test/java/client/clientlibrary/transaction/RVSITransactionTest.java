@@ -14,8 +14,8 @@ import org.junit.Test;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.ContextException;
-import exception.MemberParseException;
 import exception.SiteException;
+import exception.network.membership.MemberParseException;
 import kvs.component.Timestamp;
 import master.MasterLauncher;
 

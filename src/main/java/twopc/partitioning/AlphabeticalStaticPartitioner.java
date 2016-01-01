@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import client.clientlibrary.transaction.BufferedUpdates;
-import kvs.component.Column;
-import kvs.component.Row;
+import kvs.compound.CompoundKey;
 import kvs.compound.KVItem;
 
 /**
@@ -24,7 +23,7 @@ public final class AlphabeticalStaticPartitioner implements IPartitioner
 	}
 
 	@Override
-	public int locateSiteIndexFor(Row row, Column col, int buckets)
+	public int locateSiteIndexFor(CompoundKey ck, int buckets)
 	{
 		return -1;
 	}

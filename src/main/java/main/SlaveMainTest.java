@@ -1,7 +1,7 @@
 package main;
 
-import exception.MemberParseException;
 import exception.SiteException;
+import exception.network.membership.MemberParseException;
 import slave.SlaveLauncher;
 
 /**

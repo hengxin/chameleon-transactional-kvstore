@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import client.clientlibrary.transaction.BufferedUpdates;
-import kvs.component.Column;
-import kvs.component.Row;
+import kvs.compound.CompoundKey;
 import kvs.compound.KVItem;
 import site.ISite;
 
@@ -18,14 +17,13 @@ import site.ISite;
 public interface IPartitioner
 {
 	/**
-	 * Given a key ({@link Row} key + {@link Column} key), the partitioner
-	 * returns the index of an {@link ISite} who is responsible for the key.
-	 * @param r {@link Row} key
-	 * @param c {@link Column} key
+	 * Given a {@link CompoundKey}, this partitioner returns 
+	 * the index of an {@link ISite} who is responsible for the key.
+	 * @param ck	key to locate
 	 * @param buckets number of buckets (i.e., storage nodes)
 	 * @return the index of an {@link ISite} who is responsible for the given key
 	 */
-	public abstract int locateSiteIndexFor(Row r, Column c, int buckets);
+	public abstract int locateSiteIndexFor(CompoundKey ck, int buckets);
 	
 	/**
 	 * Given {@link BufferedUpdates} (which contains a collection of {@link KVItem}s), the partitioner

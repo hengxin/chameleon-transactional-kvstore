@@ -1,8 +1,9 @@
 package client.context;
 
-import exception.MemberParseException;
+import exception.network.membership.MemberParseException;
 import kvs.compound.CompoundKey;
 import site.ISite;
+import twopc.partitioning.IPartitioner;
 
 /**
  * Provides context for transaction processing at the client side
@@ -14,9 +15,12 @@ import site.ISite;
  */
 public class ClientContextMultiMaster extends AbstractClientContext
 {
-	public ClientContextMultiMaster(String file) throws MemberParseException
+	private final IPartitioner partitioner;
+	
+	public ClientContextMultiMaster(String file, IPartitioner partitioner) throws MemberParseException
 	{
 		super(file);
+		this.partitioner = partitioner;
 	}
 
 	/**

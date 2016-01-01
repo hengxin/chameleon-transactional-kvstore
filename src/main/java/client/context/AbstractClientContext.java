@@ -1,29 +1,27 @@
 package client.context;
 
-import java.util.AbstractMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.transaction.RVSITransaction;
-import exception.MemberParseException;
+import context.Cluster;
+import exception.network.membership.MasterMemberParseException;
+import exception.rmi.SiteStubParseException;
+import master.IMaster;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
-import network.membership.Member;
-import site.AbstractSite;
+import network.membership.MemberCluster;
 import site.ISite;
+import slave.ISlave;
 
 /**
  * Provides context for transaction processing at the client side, including
  * <p>
  * <ul>
- * <li> {@link #master_slaves_stub_map}: a contact list of server nodes; 
+ * <li> {@link #master_slaves_map}: a contact list of server nodes; 
  * 	organized as a map of {@link IMaster}s to their individual list of {@link ISlave}s.
  * <li> TODO {@link #tx}: the currently active {@link RVSITransaction}
  * <li> TODO {@link #newTx()} and {@link #endTx()}: life-cycle management of {@link #tx}. 
@@ -37,9 +35,9 @@ public abstract class AbstractClientContext
 {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractClientContext.class);
 	
-	private final AbstractStaticMembership client_membership; 
+	private AbstractStaticMembership client_membership; 
 	
-	protected final Map<ISite, List<ISite>> master_slaves_stub_map;
+	protected final List<Cluster> clusters;
 	
 //	private RVSITransaction tx = null;
 	
@@ -47,51 +45,35 @@ public abstract class AbstractClientContext
 	 * Constructor with user-specified properties file.
 	 * @param file 
 	 * 		Path of the properties file.
-	 * @throws MemberParseException 
+	 * @throws SiteStubParseException	if an error occurs during paring site stub
 	 */
-	public AbstractClientContext(String file) throws MemberParseException
+	public AbstractClientContext(String file) throws SiteStubParseException
 	{
-		LOGGER.info("Using the properties file ({}) for {}.", file, this.getClass().getSimpleName());
+		LOGGER.info("Using the properties file [{}] for [{}].", file, this.getClass().getSimpleName());
 
-		this.client_membership = new ClientMembership(file);
-		this.master_slaves_stub_map = this.loadRemoteStubs();
+		try{
+			this.client_membership = new ClientMembership(file);
+		} catch (MasterMemberParseException mmpe) {
+			LOGGER.error("Failed to create client context.", mmpe);
+			System.exit(1);
+		}
+
+		this.clusters = this.loadRemoteClusters();
 	}
 
 	/**
-	 * Obtain the remote stubs (for RMI) of the {@link IMaster}s and their individual list of {@link ISlave}s.
-	 * 
-	 * @return 
-	 * 		A map from {@link IMaster}s to their individual list of {@link ISlave}s.
-	 * 
-	 * @implNote
+	 * @return 	a list of {@link Cluster}s, <i>sorted</i> by their cluster no.
+	 * @throws SiteStubParseException  if an error occurs during parsing site stub
+	 * <p> FIXME To be fault-tolerant:
 	 * 		If a master is not available, then all of its slaves are ignored;
 	 * 		If a master is available, then some of its slaves may be ignored if unavailable.
-	 * 		Please check the log for details.
 	 */
-	protected Map<ISite, List<ISite>> loadRemoteStubs()
+	protected List<Cluster> loadRemoteClusters() throws SiteStubParseException
 	{
-		return ((ClientMembership) this.client_membership).getMasterSlavesMap().entrySet().stream()
-			.<Entry<ISite, List<ISite>>>map(master_slaves_entry ->
-			{
-				Member master = master_slaves_entry.getKey();
-				List<Member> slaves = master_slaves_entry.getValue();
-
-				Optional<ISite> master_stub = AbstractSite.parseStub(master);
-				
-				if(master_stub.isPresent())
-				{
-					List<ISite> slaves_stub = AbstractSite.parseStubs(slaves);
-					LOGGER.info("Client has contacted the master {} and its slaves {}.", master_stub, slaves_stub);
-					return new AbstractMap.SimpleImmutableEntry<>(master_stub.get(), slaves_stub);
-				}
-				else 
-				{
-					LOGGER.warn("Failed to locate the master: {}. For now I will ignore it and all its slaves: {}. Note that this may cause serious problems later.", master, slaves);
-					return null;	// FIXME Using Optional more elegantly.
-				}
-			})
-			.filter(Objects::nonNull)
-			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+		return ((ClientMembership) this.client_membership).parallelStream()
+				.map(MemberCluster::parse)
+				.sorted(Cluster.CLUSTER_NO_COMPARATOR)
+				.collect(Collectors.toList());
 	}
 	
 	public abstract ISite getReadSite();

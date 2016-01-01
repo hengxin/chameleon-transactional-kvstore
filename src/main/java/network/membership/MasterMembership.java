@@ -1,17 +1,17 @@
 package network.membership;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import exception.MemberParseException;
+import exception.network.membership.MasterMemberParseException;
+import exception.network.membership.MemberParseException;
+import exception.network.membership.SlaveMemberParseException;
 
 /**
  * A master needs to know itself and all of <i>its</i> slaves.
- * In this implementation, a master does not necessarily know other masters
+ * However, in this implementation, a master does not necessarily know other masters
  * and their slaves.
  * 
  * @author hengxin
@@ -29,22 +29,34 @@ public final class MasterMembership extends AbstractStaticMembership
 	}
 
 	/**
-	 * Only one line in the .properties file: master = slave, slave, ... 
+	 * Only one line to parse: master = slave, slave, ... 
+	 * @throws MasterMemberParseException	if it fails to parse the master itself
+	 * @throws SlaveMemberParseException	if it fails to parse some of slaves
+	 * @throws MemberParseException			if super#prop is in ill-format.
 	 */
 	@Override
-	public void loadMembershipFromProp() throws MemberParseException
+	public void parseMembershipFromProp() 
+			throws MasterMemberParseException, SlaveMemberParseException, MemberParseException
 	{
-		Iterator<Entry<Object, Object>> master_slaves_iter = super.prop.entrySet().iterator();
-		if(! master_slaves_iter.hasNext())
-			throw new MemberParseException(String.format("Failed to load membership from (%s). Is it blank? It should be of the (master = slave, slave, ...) format.", super.file));
+		if (super.prop.size() != 1)
+			throw new MemberParseException(String.format("Failed to load membership from [%s]: It should contain a single line of the (master = slave, slave, ...) format.", super.file));
 		
-		Entry<Object, Object> master_slaves_entry = master_slaves_iter.next();
+		String master = super.prop.stringPropertyNames().toArray(new String[1])[0];
+		String slaves = super.prop.getProperty(master);
 
-		String master = (String) master_slaves_entry.getKey();
-		String slaves = (String) master_slaves_entry.getValue();
-
-		super.self = Member.parseMember(master).orElseThrow(() -> new MemberParseException(String.format("Failed to parse (%s) as self.", self)));
-		this.slaves = Member.parseMembers(slaves);
+		// parse the master itself
+		try{
+			super.self = Member.parseMember(master);
+		} catch(MemberParseException mpe) {
+			throw new MasterMemberParseException(mpe);
+		}
+		
+		// parse slaves
+		try{
+			this.slaves = Member.parseMembers(slaves);
+		} catch(MemberParseException mpe) {
+			throw new SlaveMemberParseException(mpe);
+		}
 
 		LOGGER.info("I am a master: {}. My slaves are: {}.", master, slaves);
 	}
