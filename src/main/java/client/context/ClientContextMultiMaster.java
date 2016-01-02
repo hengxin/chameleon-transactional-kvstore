@@ -1,9 +1,9 @@
 package client.context;
 
+import java.util.Optional;
+
 import kvs.compound.CompoundKey;
-import master.IMaster;
 import site.ISite;
-import slave.ISlave;
 import twopc.partitioning.IPartitioner;
 
 /**
@@ -17,26 +17,36 @@ import twopc.partitioning.IPartitioner;
 public class ClientContextMultiMaster extends AbstractClientContext {
 
 	private final IPartitioner partitioner;
+	private final int master_count;
 	
+	/**
+	 * Constructor with user-specified .properties file and keyspace partitioner.
+	 * @param file	.properties file name
+	 * @param partitioner	{@link IPartitioner} for keyspace partition
+	 */
 	public ClientContextMultiMaster(String file, IPartitioner partitioner) {
 		super(file);
 		this.partitioner = partitioner;
+		this.master_count = super.clusters.size();	// TODO check the initialization order
 	}
 
 	/**
-	 * Return the {@link IMaster} which is responsible for the queried {@link CompoundKey}.
-	 * @param ck	the {@link CompoundKey} queried
-	 * @return		the {@link IMaster} responsible for the queried {@link CompoundKey}.
+	 * @return the master site located by the partition strategy specified by this {@link #partitioner}
 	 */
-	public ISite getMaster(CompoundKey ck) {
-		// TODO
-		return null;
+	@Override
+	public ISite getMasterResponsibleFor(CompoundKey ck) {
+		int index = this.partitioner.locateSiteIndexFor(ck, this.master_count);
+		return super.clusters.get(index).getMaster();
 	}
 
 	@Override
-	public ISite getReadSite() {
-		// TODO Auto-generated method stub
-		return null;
+	public ISite getReadSite(CompoundKey ck) {
+		return super.cached_read_site.orElseGet(() -> {
+			int index = this.partitioner.locateSiteIndexFor(ck, this.master_count);
+			ISite read_site = super.clusters.get(index).getSiteForRead(); 
+			super.cached_read_site = Optional.of(read_site);
+			return read_site;
+		});
 	}
 
 }

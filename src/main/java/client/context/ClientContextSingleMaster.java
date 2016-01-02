@@ -5,9 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import context.ClusterActive;
-import exception.ContextException;
-import exception.network.membership.MemberParseException;
+import kvs.compound.CompoundKey;
 import site.ISite;
 
 /**
@@ -16,43 +14,38 @@ import site.ISite;
  * @author hengxin
  * @date Created on 12-04-2015
  */
-public class ClientContextSingleMaster extends AbstractClientContext
-{
+public class ClientContextSingleMaster extends AbstractClientContext {
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(ClientContextSingleMaster.class);
 	
 	private final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
-
-	private Optional<ISite> cached_read_site = Optional.empty();	
 	
 	/**
 	 * Constructor using the default properties file: {@value #DEFAULT_CLIENT_PROPERTIES_FILE}.
-	 * 
-	 * @throws ContextException 
-	 * 		Failed to create this context because no master is available.
-	 * @throws MemberParseException 
 	 */
-	public ClientContextSingleMaster() throws ContextException, MemberParseException
-	{
+	public ClientContextSingleMaster() {
 		this(DEFAULT_CLIENT_PROPERTIES_FILE);
 	}
 	
 	/**
 	 * Constructor using user-specified properties file.
 	 * 
-	 * @param file
-	 * 		Path of the properties file.
-	 * @throws ContextException 
-	 * 		Failed to create this context because no master is available.
-	 * @throws MemberParseException 
+	 * @param file	path of the properties file.
 	 */
-	public ClientContextSingleMaster(String file) throws ContextException, MemberParseException
-	{
+	public ClientContextSingleMaster(String file) {
 		super(file);
 	}
 	
-	public ISite getMaster()
-	{
+	public ISite getMaster() {
 		return super.clusters.get(0).getMaster();
+	}
+	
+	/**
+	 * @return	the only master in the "single-master-multiple-slave" setting
+	 */
+	@Override
+	public ISite getMasterResponsibleFor(CompoundKey ck) {
+		return this.getMaster();
 	}
 
 	/**
@@ -60,14 +53,12 @@ public class ClientContextSingleMaster extends AbstractClientContext
 	 * In this particular implementation, it prefers an already cached slave. 
 	 */
 	@Override
-	public ISite getReadSite()
-	{
-		return this.cached_read_site.orElseGet(() ->
-			{
-				ClusterActive cluster = super.clusters.get(0);
-				ISite read_site = cluster.hasNoSlaves() ? cluster.getMaster() : cluster.getRandomSlave(); 
-				this.cached_read_site = Optional.of(read_site);
+	public ISite getReadSite(CompoundKey ck) {
+		return super.cached_read_site.orElseGet(() -> {
+				ISite read_site = super.clusters.get(0).getSiteForRead(); 
+				super.cached_read_site = Optional.of(read_site);
 				return read_site;
 			});
 	}
+
 }

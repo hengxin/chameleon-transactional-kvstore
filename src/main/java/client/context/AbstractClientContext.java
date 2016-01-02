@@ -1,10 +1,13 @@
 package client.context;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sun.istack.Nullable;
 
 import client.clientlibrary.transaction.RVSITransaction;
 import context.ClusterActive;
@@ -12,6 +15,8 @@ import exception.network.membership.MasterMemberParseException;
 import exception.network.membership.MemberParseException;
 import exception.rmi.RMIRegistryException;
 import exception.rmi.RMIRegistryForMasterException;
+import exception.rmi.RMIRegistryForSlaveException;
+import kvs.compound.CompoundKey;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
 import site.ISite;
@@ -35,6 +40,8 @@ public abstract class AbstractClientContext {
 	private AbstractStaticMembership client_membership; 
 	
 	protected List<ClusterActive> clusters;
+
+	protected Optional<ISite> cached_read_site = Optional.empty();	
 	
 //	private RVSITransaction tx = null;
 	
@@ -44,7 +51,6 @@ public abstract class AbstractClientContext {
 	 * or located via RMI, the whole system exits immediately.
 	 * Slaves
 	 * @param file		path of the properties file.
-	 * @throws RMIRegistryException	if an error occurs during paring site stub
 	 */
 	public AbstractClientContext(String file) {
 		LOGGER.info("Using the properties file [{}] for [{}].", file, this.getClass().getSimpleName());
@@ -62,6 +68,7 @@ public abstract class AbstractClientContext {
 			this.clusters = this.activateClusters();
 		} catch (RMIRegistryForMasterException rrfme) {
 			LOGGER.error("Failed to create client context.", rrfme);
+			System.exit(1);
 		} catch (RMIRegistryException rre) {
 			LOGGER.warn("Some slave sites cannot be located via RMI", rre);
 		}
@@ -74,11 +81,23 @@ public abstract class AbstractClientContext {
 	 * @throws RMIRegistryForSlaveException		if an error occurs in locating remote stub for some slave site
 	 */
 	protected List<ClusterActive> activateClusters() {
-		return ((ClientMembership) this.client_membership).parallelStream()
+		return ((ClientMembership) this.client_membership).stream()
 				.map(ClusterActive::activate)
 				.sorted(ClusterActive.CLUSTER_NO_COMPARATOR)
 				.collect(Collectors.toList());
 	}
 	
-	public abstract ISite getReadSite();
+	/**
+	 * Return the master site who is responsible for the specified key. 
+	 * @param ck	{@link CompoundKey} key
+	 * @return		the master {@link ISite} responsible for the key
+	 */
+	public abstract ISite getMasterResponsibleFor(CompoundKey ck);
+
+	/**
+	 * Return a site who holds value(s) for the specified key
+	 * @param ck	{@link CompoundKey} key
+	 * @return		an {@link ISite}
+	 */
+	public abstract ISite getReadSite(CompoundKey ck);
 }

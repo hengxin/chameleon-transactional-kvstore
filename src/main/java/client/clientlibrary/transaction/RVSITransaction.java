@@ -86,7 +86,7 @@ public class RVSITransaction implements ITransaction
 	@Override
 	public ITimestampedCell read(Row r, Column c) throws TransactionReadException
 	{
-		ISite site = context.getReadSite();
+		ISite site = context.getReadSite(new CompoundKey(r, c));
 		
 		ITimestampedCell ts_cell = TimestampedCell.TIMESTAMPED_CELL_INIT;
 		try
@@ -127,7 +127,7 @@ public class RVSITransaction implements ITransaction
 		
 		try
 		{
-			return ((ClientContextSingleMaster) context).getMaster().commit(tx, vc_manager);
+			return ((ClientContextSingleMaster) context).getMaster().commit(tx, vc_manager);	
 		} catch (RemoteException | TransactionExecutionException re_tee)
 		{
 			throw new TransactionEndException(String.format("Transaction [%s] failed to commit.", this), re_tee.getCause());

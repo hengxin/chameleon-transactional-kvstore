@@ -48,7 +48,7 @@ public final class ClientMembership extends AbstractStaticMembership {
 		return null;
 	}
 	
-	public Stream<ClusterInHibernate> parallelStream() {
-		return this.hibernate_cluster_list.parallelStream();
+	public Stream<ClusterInHibernate> stream() {
+		return this.hibernate_cluster_list.stream();
 	}
 }

@@ -10,8 +10,6 @@ import client.clientlibrary.transaction.ITransaction;
 import client.clientlibrary.transaction.RVSITransaction;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
-import exception.ContextException;
-import exception.network.membership.MemberParseException;
 import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
@@ -35,15 +33,7 @@ public class ClientMainTest
 	public static void main(String[] args)
 	{
 		// context
-		AbstractClientContext context = null;
-		try
-		{
-			context = new ClientContextSingleMaster();
-		} catch (ContextException | MemberParseException ce)
-		{
-			LOGGER.error(ce.getMessage(), ce.getCause());
-			System.exit(1);
-		}
+		AbstractClientContext context = new ClientContextSingleMaster();
 
 		// create transaction
 		ITransaction tx = new RVSITransaction(context);

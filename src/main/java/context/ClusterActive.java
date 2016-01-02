@@ -84,19 +84,20 @@ public final class ClusterActive {
 	}
 	
 	/**
-	 * @return	a random slave site in this cluster
+	 * Return a site for read. It perfers a slave site. If no slaves are available, it returns the master.
+	 * @return	an {ISite} in this cluster
 	 */
-	public ISite getRandomSlave() {
-		return slaves.get(new Random().nextInt(slaves.size()));
+	public ISite getSiteForRead() {
+		return this.slaves.isEmpty() ? this.getMaster() : this.getRandomSlave();
 	}
 
 	/**
-	 * @return	{@code true} if there is no slaves in this cluster; {@code false}, otherwise.
+	 * @return	a random slave site in this cluster
 	 */
-	public boolean hasNoSlaves() {
-		return this.slaves.isEmpty();
+	private ISite getRandomSlave() {
+		return slaves.get(new Random().nextInt(slaves.size()));
 	}
-	
+
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
