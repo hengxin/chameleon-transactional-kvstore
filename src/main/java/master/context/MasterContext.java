@@ -45,7 +45,7 @@ public class MasterContext implements IContext {
 			System.exit(1);
 		}
 
-		this.slave_stubs = AbstractSite.parseStubs(((MasterMembership) this.master_membership).getSlaves());
+		this.slave_stubs = AbstractSite.locateRMISites(((MasterMembership) this.master_membership).getSlaves());
 		LOGGER.info("Successfully parse stubs of my slaves [{}]", this.slave_stubs);
 	}
 	

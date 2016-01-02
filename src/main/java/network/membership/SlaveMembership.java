@@ -30,8 +30,7 @@ public final class SlaveMembership extends AbstractStaticMembership {
 	 * @throws MemberParseException			if super#prop is in ill-format.
 	 */
 	@Override
-	public void parseMembershipFromProp() 
-			throws SlaveMemberParseException, MasterMemberParseException, MemberParseException {
+	public void parseMembershipFromProp() {
 		if (super.prop.size() != 1)
 			throw new MemberParseException(String.format("Failed to parse membership from [%s]: It should a single line of the (slave = master) format.", super.file));
 

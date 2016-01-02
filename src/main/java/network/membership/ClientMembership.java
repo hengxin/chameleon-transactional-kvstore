@@ -6,7 +6,6 @@ import java.util.stream.Stream;
 
 import context.ClusterInHibernate;
 import exception.network.membership.MasterMemberParseException;
-import exception.network.membership.MemberParseException;
 import exception.network.membership.SlaveMemberParseException;
 
 /**
@@ -21,71 +20,35 @@ import exception.network.membership.SlaveMemberParseException;
  * @author hengxin
  * @date Created on 12-03-2015
  */
-public final class ClientMembership extends AbstractStaticMembership
-{
-	private List<ClusterInHibernate> member_cluster_list;
+public final class ClientMembership extends AbstractStaticMembership {
+
+	private List<ClusterInHibernate> hibernate_cluster_list;
 	
-	public ClientMembership(String file) throws MemberParseException
-	{
+	public ClientMembership(String file) {
 		super(file);
 	}
 
-	@Override
-	public void parseMembershipFromProp()
-	{
-		this.member_cluster_list = this.loadMemberClusters();
-	}
-
 	/**
-	 * Load and parse {@link ClusterInHibernate}s from .properties file which consists of 
+	 * Load and parse {@link ClusterInHibernate}s from {@link super#prop} which is in form of 
 	 * <p> cno = master, slave, slave, ...
 	 * <p> cno = master, slave, slave, ...
 	 * <p> ...
 	 * @throws MasterMemberParseException
 	 * @throws SlaveMemberParseException
 	 */
-	private List<ClusterInHibernate> loadMemberClusters() throws MasterMemberParseException, SlaveMemberParseException
-	{
-		return super.prop.stringPropertyNames().parallelStream()
-			.map( cluster_no_str -> {
-				int cno = Integer.parseInt(cluster_no_str.trim());
-				
-				// cluster_str: master, slave, slave, ...
-				String cluster_str = super.prop.getProperty(cluster_no_str).trim();
-				
-				// master and slaves in string format
-				int sep = cluster_str.indexOf(',');
-				String master_str = cluster_str.substring(0, sep);
-				String slaves_str = cluster_str.substring(sep + 1).trim();
-				
-				// parse master
-				Member master;
-				try{
-					master = Member.parseMember(master_str);
-				} catch (MemberParseException mpe) {
-					throw new MasterMemberParseException(mpe);
-				}
-				
-				// parse slaves
-				List<Member> slaves; 
-				try{
-					slaves = Member.parseMembers(slaves_str);
-				} catch (MemberParseException mpe) {
-					throw new SlaveMemberParseException(mpe);
-				}
-
-				return new ClusterInHibernate(cno, master, slaves);
-			}).collect(Collectors.toList());
+	@Override
+	public void parseMembershipFromProp() {
+		this.hibernate_cluster_list = super.prop.stringPropertyNames().parallelStream()
+				.map(cluster_no_str -> ClusterInHibernate.parse(cluster_no_str, super.prop.getProperty(cluster_no_str)))
+				.collect(Collectors.toList());
 	}
-	
-	public Member self()
-	{
+
+	public Member self() {
 		// TODO identity of a client
 		return null;
 	}
 	
-	public Stream<ClusterInHibernate> parallelStream()
-	{
-		return this.member_cluster_list.parallelStream();
+	public Stream<ClusterInHibernate> parallelStream() {
+		return this.hibernate_cluster_list.parallelStream();
 	}
 }

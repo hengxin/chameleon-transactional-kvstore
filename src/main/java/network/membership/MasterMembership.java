@@ -17,14 +17,13 @@ import exception.network.membership.SlaveMemberParseException;
  * @author hengxin
  * @date Created on 12-03-2015
  */
-public final class MasterMembership extends AbstractStaticMembership
-{
+public final class MasterMembership extends AbstractStaticMembership {
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterMembership.class);
 	
 	private List<Member> slaves;
 
-	public MasterMembership(String file) throws MemberParseException
-	{
+	public MasterMembership(String file) {
 		super(file);
 	}
 
@@ -35,9 +34,7 @@ public final class MasterMembership extends AbstractStaticMembership
 	 * @throws MemberParseException			if super#prop is in ill-format.
 	 */
 	@Override
-	public void parseMembershipFromProp() 
-			throws MasterMemberParseException, SlaveMemberParseException, MemberParseException
-	{
+	public void parseMembershipFromProp() {
 		if (super.prop.size() != 1)
 			throw new MemberParseException(String.format("Failed to load membership from [%s]: It should contain a single line of the (master = slave, slave, ...) format.", super.file));
 		
@@ -61,8 +58,7 @@ public final class MasterMembership extends AbstractStaticMembership
 		LOGGER.info("I am a master: {}. My slaves are: {}.", master, slaves);
 	}
 
-	public List<Member> getSlaves()
-	{
+	public List<Member> getSlaves() {
 		return slaves;
 	}
 }

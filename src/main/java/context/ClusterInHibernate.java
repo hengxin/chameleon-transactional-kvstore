@@ -1,12 +1,15 @@
 package context;
 
+import java.util.Collections;
 import java.util.List;
 
-import exception.rmi.SiteStubParseException;
+import com.sun.istack.Nullable;
+
+import exception.network.membership.MasterMemberParseException;
+import exception.network.membership.MemberParseException;
+import exception.network.membership.SlaveMemberParseException;
 import network.membership.ClientMembership;
 import network.membership.Member;
-import site.AbstractSite;
-import site.ISite;
 
 /**
  * A {@link ClusterInHibernate} consists of a collection of {@link Member}s,
@@ -17,27 +20,50 @@ import site.ISite;
  */
 public class ClusterInHibernate {
 
-	private final int cno;
-	private final Member master;
-	private final List<Member> slaves;
+	protected final int cno;
+	protected final Member master;
+	protected final List<Member> slaves;
 	
-	public ClusterInHibernate(int cno, Member master, List<Member> slaves) {
+	public ClusterInHibernate(int cno, @Nullable Member master, List<Member> slaves) {
 		this.cno = cno;
 		this.master = master;
 		this.slaves = slaves;
 	}
 	
 	/**
-	 * Parse a {@link ClusterInHibernate} into a {@link ClusterActive}.
-	 * @param member_cluster	{@link ClusterInHibernate} to parse
-	 * @return		{@link ClusterActive} instance
-	 * @throws SiteStubParseException	if an error occurs during parsing site stub
+	 * Parse cluster in string format into an instance of {@link ClusterInHibernate}.
+	 * @param cluster_no_str	string format of {@link #cno}
+	 * @param cluster_str		string format of {@link #master} + {@link #slaves}, 
+	 * 						separated by commas: master, slave, slave, ...
+	 * @return	an instance of {@link ClusterInHibernate}
+	 * @throws MasterMemberParseException	if it fails to parse the master of the cluster
+	 * @throws SlaveMemberParseException	if it fails to parse some slave of the cluster
 	 */
-	public static ClusterActive parse(ClusterInHibernate member_cluster) throws SiteStubParseException {
-		ISite master_stub = AbstractSite.parseStub(member_cluster.master);
-		List<ISite> slave_stubs = AbstractSite.parseStubs(member_cluster.slaves);
-		
-		return new ClusterActive(member_cluster.cno, master_stub, slave_stubs);
+	public static ClusterInHibernate parse(String cluster_no_str, String cluster_str) {
+				int cno = Integer.parseInt(cluster_no_str);
+				
+				// master and slaves in string format
+				int sep = cluster_str.indexOf(',');
+				String master_str = cluster_str.substring(0, sep);
+				String slaves_str = cluster_str.substring(sep + 1).trim();
+				
+				// parse master
+				Member master = null;
+				try{
+					master = Member.parseMember(master_str);
+				} catch (MemberParseException mpe) {
+					throw new MasterMemberParseException(mpe);
+				}
+				
+				// parse slaves
+				List<Member> slaves = Collections.emptyList(); 
+				try{
+					slaves = Member.parseMembers(slaves_str);
+				} catch (MemberParseException mpe) {
+					throw new SlaveMemberParseException(mpe);
+				}
+
+				return new ClusterInHibernate(cno, master, slaves);
 	}
 	
 }

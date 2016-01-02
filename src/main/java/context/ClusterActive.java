@@ -1,17 +1,22 @@
 package context;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
 import com.google.common.base.MoreObjects;
 
+import exception.rmi.RMIRegistryException;
+import exception.rmi.RMIRegistryForMasterException;
+import exception.rmi.RMIRegistryForSlaveException;
+import site.AbstractSite;
 import site.ISite;
 
 /**
- * A cluster consists of a master and a collection of its slaves.
- * Each cluster has a globally unique number, upon which a {@link Comparator}
- * is provided. 
+ * A {@link ClusterActive} consists of a master and a collection of its slaves,
+ * upon which RMI can be invoked.
+ * Each cluster has a globally unique number, upon which a {@link Comparator} is provided. 
  * @author hengxin
  * @date Created on Jan 1, 2016
  */
@@ -47,6 +52,31 @@ public final class ClusterActive {
 		this.cno = cno;
 		this.master = master;
 		this.slaves = slaves;
+	}
+	
+	/**
+	 * Activate a {@link ClusterInHibernate} into a {@link ClusterActive}.
+	 * @param hibernate_cluster	{@link ClusterInHibernate} to parse
+	 * @return		an instance of {@link ClusterActive} 
+	 * @throws RMIRegistryForMasterException	if an error occurs in locating remote stub for the master
+	 * @throws RMIRegistryForSlaveException		if an error occurs in locating remote stub for some slave
+	 */
+	public static ClusterActive activate(ClusterInHibernate hibernate_cluster) {
+		ISite master_stub = null;
+		try{
+			master_stub = AbstractSite.locateRMISite(hibernate_cluster.master);
+		} catch (RMIRegistryException rre) {
+			throw new RMIRegistryForMasterException(rre);
+		}
+
+		List<ISite> slave_stubs = Collections.emptyList();
+		try{
+			slave_stubs = AbstractSite.locateRMISites(hibernate_cluster.slaves);
+		} catch (RMIRegistryException rre) {
+			throw new RMIRegistryForSlaveException(rre);
+		}
+		
+		return new ClusterActive(hibernate_cluster.cno, master_stub, slave_stubs);
 	}
 	
 	public ISite getMaster() {

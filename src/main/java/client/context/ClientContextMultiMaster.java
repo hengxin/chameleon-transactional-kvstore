@@ -1,8 +1,9 @@
 package client.context;
 
-import exception.network.membership.MemberParseException;
 import kvs.compound.CompoundKey;
+import master.IMaster;
 import site.ISite;
+import slave.ISlave;
 import twopc.partitioning.IPartitioner;
 
 /**
@@ -13,32 +14,27 @@ import twopc.partitioning.IPartitioner;
  * @author hengxin
  * @date Created on 12-04-2015
  */
-public class ClientContextMultiMaster extends AbstractClientContext
-{
+public class ClientContextMultiMaster extends AbstractClientContext {
+
 	private final IPartitioner partitioner;
 	
-	public ClientContextMultiMaster(String file, IPartitioner partitioner) throws MemberParseException
-	{
+	public ClientContextMultiMaster(String file, IPartitioner partitioner) {
 		super(file);
 		this.partitioner = partitioner;
 	}
 
 	/**
 	 * Return the {@link IMaster} which is responsible for the queried {@link CompoundKey}.
-	 * @param ck
-	 * 		the {@link CompoundKey} queried
-	 * @return
-	 * 		the {@link IMaster} responsible for the queried {@link CompoundKey}.
+	 * @param ck	the {@link CompoundKey} queried
+	 * @return		the {@link IMaster} responsible for the queried {@link CompoundKey}.
 	 */
-	public ISite getMaster(CompoundKey ck)
-	{
+	public ISite getMaster(CompoundKey ck) {
 		// TODO
 		return null;
 	}
 
 	@Override
-	public ISite getReadSite()
-	{
+	public ISite getReadSite() {
 		// TODO Auto-generated method stub
 		return null;
 	}
