@@ -14,7 +14,6 @@ import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.compound.KVItem;
 import site.ISite;
-import twopc.partitioning.IPartitioner;
 
 /**
  * Coordinator of 2PC protocol.
@@ -23,23 +22,22 @@ import twopc.partitioning.IPartitioner;
  * with "early commit notification".
  * @author hengxin
  * @date Created on Dec 27, 2015
- * 
- * 
  */
-public final class Coordinator implements ICoordinator
-{
+public final class Coordinator implements ICoordinator {
+
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	/**
 	 * {@link #prepared_decisions} and {@link #committed_decisions}:
-	 * Shared states among the coordinator (encapsulating a phaser) and the participants.
+	 * Shared states among the coordinator and the participants.
 	 * They collect the decisions of all the participants during the "PREPARE" phase 
 	 * and the "COMMIT" phase, respectively.
 	 * 
-	 * @see	#committed
+	 * @see	#to_commit_decision
+	 * @see #is_committed
 	 * 
 	 * @implNote
-	 * There is no AtomicBooleanArray; using AtomicBoolean[].
+	 * There is no AtomicBooleanArray; instead using AtomicBoolean[].
 	 * {@link AtomicIntegerArray} is also OK.
 	 * {@link BitSet} would be the most suitable one if it is thread-safe.
 	 * (Note: There is a [pitestrunner/AtomicBitSet]; but I don't want to introduce a dependence.)
@@ -48,14 +46,26 @@ public final class Coordinator implements ICoordinator
 	protected final AtomicBoolean[] committed_decisions;
 	
 	/**
-	 * {@link #committed}: 
-	 * Shared states among the coordinator (encapsulating a phaser) and the participants.
+	 * {@link #to_commit_decision}: 
+	 * Shared state among the coordinator and the participants.
 	 * It indicates the commit/abort decision for the "COMMIT" phase, and is computed 
 	 * based on {@link #prepared_decisions}.
 	 * 
-	 * @see #prepared_decisions and {@link #committed_decisions}
+	 * @see #prepared_decisions
 	 */
-	protected volatile boolean committed = false;
+	protected volatile boolean to_commit_decision = false;
+	
+	/**
+	 * {@link #is_committed}:
+	 * Shared state among the coordinator and the participants.
+	 * It indicates the final committed/aborted state of the transaction, 
+	 * and it is computed based on both {@link #to_commit_decision} 
+	 * and {@link #committed_decisions}.
+	 * 
+	 * @see #to_commit_decision
+	 * @see #committed_decisions
+	 */
+	protected volatile boolean is_committed = false;
 
 	private final Phaser phaser;
 
@@ -68,8 +78,7 @@ public final class Coordinator implements ICoordinator
 	private Map<ISite, List<KVItem>> site_items_map;
 	private int count;
 	
-	public Coordinator(final ToCommitTransaction tx, final VersionConstraintManager vcm /** , final IPartitioner partitioner **/)
-	{
+	public Coordinator(final ToCommitTransaction tx, final VersionConstraintManager vcm /** , final IPartitioner partitioner **/) {
 		this.phaser = new CommitPhaser(this);
 		
 		this.tx = tx;
@@ -85,10 +94,9 @@ public final class Coordinator implements ICoordinator
 	}
 
 	@Override
-	public boolean execute2PC()
-	{
+	public boolean execute2PC() {
 		IntStream.range(0, count).parallel().forEach(id -> 
-			exec.submit(new ToCommitTask(this, id, this.phaser, null, this.tx, this.vcm)));	// @param participant (replace {@code null} here)
+			exec.submit(new CommitPhaserTask(this, id, this.phaser, null, this.tx, this.vcm)));	// @param participant (replace {@code null} here)
 		
 		// TODO Auto-generated method stub
 		return false;

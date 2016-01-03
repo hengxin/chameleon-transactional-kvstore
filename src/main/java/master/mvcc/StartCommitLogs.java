@@ -76,7 +76,7 @@ public class StartCommitLogs
 		// collect all updated keys
 		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.parallelStream()
 				.map(update -> update.getUpdatedCKeys())
-				.flatMap(Set::parallelStream)
+				.flatMap(Set::stream)
 				.collect(Collectors.toSet());
 				
 		overlapping_updated_cks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());

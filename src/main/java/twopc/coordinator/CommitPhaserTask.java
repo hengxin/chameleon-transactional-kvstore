@@ -2,7 +2,6 @@ package twopc.coordinator;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Phaser;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +12,13 @@ import twopc.coordinator.CommitPhaser.Phase;
 import twopc.participant.IParticipant;
 
 /**
- * Two-phase commit protocol consists of "prepare" and "commit".
+ * {@link CommitPhaserTask} executes the 2PC protocols with a single participant.
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
-public class ToCommitTask implements Callable<Boolean>
-{
-	private final static Logger LOGGER = LoggerFactory.getLogger(ToCommitTask.class);
+public final class CommitPhaserTask implements Callable<Boolean> {
+
+	private final static Logger LOGGER = LoggerFactory.getLogger(CommitPhaserTask.class);
 	
 	private final Coordinator coordinator;
 	private final int id;
@@ -28,10 +27,9 @@ public class ToCommitTask implements Callable<Boolean>
 	private final ToCommitTransaction tx;
 	private final VersionConstraintManager vcm;
 
-	public ToCommitTask(final Coordinator coordinator,
+	public CommitPhaserTask(final Coordinator coordinator,
 			final int id, final Phaser phaser, final IParticipant participant, 
-			final ToCommitTransaction tx, final VersionConstraintManager vcm)
-	{
+			final ToCommitTransaction tx, final VersionConstraintManager vcm) {
 		this.coordinator = coordinator;
 		
 		this.id = id;
@@ -43,8 +41,7 @@ public class ToCommitTask implements Callable<Boolean>
 	}
 
 	@Override
-	public Boolean call() throws Exception
-	{
+	public Boolean call() throws Exception {
 		LOGGER.info("Begin the [{}] phase with participant [{}].", Phase.PREPARE, this.participant);
 		// call prepare() at this participant
 		this.coordinator.prepared_decisions[this.id].set(false);	// TODO to assign the actual value

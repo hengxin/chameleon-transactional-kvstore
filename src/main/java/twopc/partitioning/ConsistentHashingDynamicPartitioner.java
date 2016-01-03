@@ -40,7 +40,7 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner {
 	 * 	<a href="https://github.com/google/guava/wiki/CachesExplained">CachesExplained@google/guava</a>
 	 */
 	private final LoadingCache<HashingRequest, Integer> hash_caches = CacheBuilder.newBuilder()
-			.maximumSize(1000)
+			.maximumSize(1000)	// FIXME making it a configuration parameter
 			.build(
 				new CacheLoader<HashingRequest, Integer>() {
 					@Override
