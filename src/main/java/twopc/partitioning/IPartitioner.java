@@ -14,8 +14,8 @@ import site.ISite;
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
-public interface IPartitioner
-{
+public interface IPartitioner {
+
 	/**
 	 * Given a {@link CompoundKey}, this partitioner returns 
 	 * the index of an {@link ISite} who is responsible for the key.
@@ -30,7 +30,7 @@ public interface IPartitioner
 	 * returns for each item the index of the {@link ISite} who is responsible for storing it.
 	 * @param updates {@link BufferedUpdates}
 	 * @param buckets	number of buckets (i.e., storage nodes)
-	 * @return a map from an index of an {@link ISite} to the {@link KVItem}s (in @param updates) it is responsible for.
+	 * @return a map from an index of an {@link ISite} to a {@link List} of {@link KVItem} (in @param updates) it is responsible for.
 	 */
 	public abstract Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets);
 }

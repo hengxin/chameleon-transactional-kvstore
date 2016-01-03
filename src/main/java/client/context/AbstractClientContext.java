@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.istack.Nullable;
-
 import client.clientlibrary.transaction.RVSITransaction;
 import context.ClusterActive;
 import exception.network.membership.MasterMemberParseException;
@@ -20,6 +18,7 @@ import kvs.compound.CompoundKey;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
 import site.ISite;
+import twopc.partitioning.IPartitioner;
 
 /**
  * Provides context for transaction processing at the client side, including
@@ -36,11 +35,15 @@ import site.ISite;
 public abstract class AbstractClientContext {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractClientContext.class);
+
+	protected final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
 	
 	private AbstractStaticMembership client_membership; 
 	
 	protected List<ClusterActive> clusters;
+	protected int master_count;
 
+	protected IPartitioner partitioner;
 	protected Optional<ISite> cached_read_site = Optional.empty();	
 	
 //	private RVSITransaction tx = null;
@@ -66,6 +69,7 @@ public abstract class AbstractClientContext {
 
 		try{
 			this.clusters = this.activateClusters();
+			this.master_count = this.clusters.size();
 		} catch (RMIRegistryForMasterException rrfme) {
 			LOGGER.error("Failed to create client context.", rrfme);
 			System.exit(1);
@@ -88,16 +92,37 @@ public abstract class AbstractClientContext {
 	}
 	
 	/**
-	 * Return the master site who is responsible for the specified key. 
+	 * Return a master site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
-	 * @return		the master {@link ISite} responsible for the key
+	 * @return		the master {@link ISite} holding @param ck
+	 * @implNote 	This implementation requires and utilizes the {@link #partitioner}
+	 * 	specified by subclasses of this {@link AbstractClientContext}. If you don't want
+	 *  to rely on {@link Partitioner}, you can override this method.
 	 */
-	public abstract ISite getMasterResponsibleFor(CompoundKey ck);
+	public ISite getMasterResponsibleFor(CompoundKey ck) {
+		int index = this.partitioner.locateSiteIndexFor(ck, this.master_count);
+		return this.clusters.get(index).getMaster();
+	}
+
 
 	/**
-	 * Return a site who holds value(s) for the specified key
+	 * Return a site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
-	 * @return		an {@link ISite}
+	 * @return		an {@link ISite} holding @param ck
+	 * @implNote	In principle, the client is free to contact <i>any</i> site to read.
+	 * 	In this particular implementation, it prefers an already cached slave. 
+	 * 
+	 *  <p>This implementation requires and utilizes the {@link #partitioner} 
+	 * 	specified by subclasses of this {@link AbstractClientContext}. If you don't want
+	 *  to rely on {@link Partitioner}, you can override this method.
 	 */
-	public abstract ISite getReadSite(CompoundKey ck);
+	public ISite getReadSite(CompoundKey ck) {
+		return this.cached_read_site.orElseGet(() -> {
+			int index = this.partitioner.locateSiteIndexFor(ck, this.master_count);
+			ISite read_site = this.clusters.get(index).getSiteForRead(); 
+			this.cached_read_site = Optional.of(read_site);
+			return read_site;
+		});
+	}
+
 }

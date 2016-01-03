@@ -140,7 +140,7 @@ public abstract class AbstractTable
 	 */
 	public void apply(Timestamp cts, BufferedUpdates buffered_updates)
 	{
-		buffered_updates.parallelStream().forEach(this::put);
+		buffered_updates.stream().forEach(this::put);
 	}
 	
 	public void put(KVItem kv_item)

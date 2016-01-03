@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
@@ -43,8 +44,8 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner
 	@Override
 	public Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets)
 	{
-		return updates.parallelStream()
-				.collect(Collectors.groupingByConcurrent(item -> locateSiteIndexFor(item.getCK(), buckets)));
+		return updates.stream()
+				.collect(Collectors.groupingBy(item -> locateSiteIndexFor(item.getCK(), buckets)));
 	}
 
 	/**

@@ -36,19 +36,17 @@ import net.jcip.annotations.NotThreadSafe;
  *  its transaction is to commit.
  */
 @NotThreadSafe
-public final class BufferedUpdates implements Serializable
-{
+public final class BufferedUpdates implements Serializable {
+
 	private static final long serialVersionUID = 8322087463777227998L;
 
 	private final List<KVItem> buffered_update_list;
 	
-	public BufferedUpdates()
-	{
+	public BufferedUpdates() {
 		this.buffered_update_list = new ArrayList<>();
 	}
 
-	private BufferedUpdates(List<KVItem> kv_item_list)
-	{
+	private BufferedUpdates(List<KVItem> kv_item_list) {
 		this.buffered_update_list = kv_item_list;
 	}
 	
@@ -57,8 +55,7 @@ public final class BufferedUpdates implements Serializable
 	 * @param ck {@link CompoundKey}
 	 * @param cell {@link Cell}
 	 */
-	public void intoBuffer(CompoundKey ck, Cell cell)
-	{
+	public void intoBuffer(CompoundKey ck, Cell cell) {
 		this.buffered_update_list.add(new KVItem(ck, cell));
 	}
 	
@@ -68,8 +65,7 @@ public final class BufferedUpdates implements Serializable
 	 * @param c {@link Column}
 	 * @param cell {@link Cell}
 	 */
-	public void intoBuffer(Row r, Column c, Cell cell)
-	{
+	public void intoBuffer(Row r, Column c, Cell cell) {
 		this.buffered_update_list.add(new KVItem(r, c, cell));
 	}
 	
@@ -82,12 +78,10 @@ public final class BufferedUpdates implements Serializable
 	 * @param ck_ord_index 
 	 * 	Index of {@link Ordinal} for each {@link CompoundKey}; used to get the next ordinal. 
 	 */
-	public BufferedUpdates fillTsAndOrd(Timestamp cts, CKeyToOrdinalIndex ck_ord_index)
-	{
+	public BufferedUpdates fillTsAndOrd(Timestamp cts, CKeyToOrdinalIndex ck_ord_index) {
 		return new BufferedUpdates( 
 			this.buffered_update_list.parallelStream()
-				.map(kv_item -> 
-					{
+				.map(kv_item -> {
 						CompoundKey ck = kv_item.getCK();
 						ITimestampedCell ts_cell = kv_item.getTsCell();
 						
@@ -99,21 +93,18 @@ public final class BufferedUpdates implements Serializable
 				.collect(Collectors.toList()));
 	}
 	
-	public Stream<KVItem> parallelStream()
-	{
-		return this.buffered_update_list.parallelStream();
+	public Stream<KVItem> stream() {
+		return this.buffered_update_list.stream();
 	}
 	
-	public Set<CompoundKey> getUpdatedCKeys()
-	{
+	public Set<CompoundKey> getUpdatedCKeys() {
 		return this.buffered_update_list.parallelStream()
-				.map(kv_item -> kv_item.getCK())
+				.map(KVItem::getCK)
 				.collect(Collectors.toSet());
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.add("BufferedUpdates", this.buffered_update_list)
 				.toString();
