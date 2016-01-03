@@ -33,4 +33,5 @@ public interface IPartitioner {
 	 * @return a map from an index of an {@link ISite} to a {@link List} of {@link KVItem} (in @param updates) it is responsible for.
 	 */
 	public abstract Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets);
+
 }

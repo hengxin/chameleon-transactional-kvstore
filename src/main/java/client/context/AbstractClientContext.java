@@ -104,7 +104,6 @@ public abstract class AbstractClientContext {
 		return this.clusters.get(index).getMaster();
 	}
 
-
 	/**
 	 * Return a site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
