@@ -1,8 +1,6 @@
 package twopc.coordinator;
 
-import java.util.Arrays;
 import java.util.concurrent.Phaser;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +51,7 @@ public final class CommitPhaser extends Phaser {
 			 * and determine whether to commit or abort the transaction:
 			 * if all #prepared_decesions are true, then commit; otherwise, abort.
 			 */
-			coord.to_commit_decision = Arrays.stream(coord.prepared_decisions).parallel().allMatch(AtomicBoolean::get);
+			coord.to_commit_decision = coord.prepared_decisions.values().stream().allMatch(decision -> decision);
 
 			LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, coord.to_commit_decision);
 			return false;	// this phaser has not yet finished
@@ -68,7 +66,7 @@ public final class CommitPhaser extends Phaser {
 			 * (1) #to_committed_decision is true </i>and</i> 
 			 * (2) #comitted_decisions of all participants are true.
 			 */
-			coord.is_committed = coord.to_commit_decision && Arrays.stream(coord.committed_decisions).parallel().allMatch(AtomicBoolean::get);
+			coord.is_committed = coord.to_commit_decision && coord.committed_decisions.values().stream().allMatch(decision -> decision);
 			return true;	// this phaser has finished its job.
 			
 		default:

@@ -1,6 +1,7 @@
 package client.context;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.partitioning.IPartitioner;
+import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.RVSITransaction;
 import context.ClusterActive;
 import exception.network.membership.MasterMemberParseException;
@@ -16,6 +18,7 @@ import exception.rmi.RMIRegistryException;
 import exception.rmi.RMIRegistryForMasterException;
 import exception.rmi.RMIRegistryForSlaveException;
 import kvs.compound.CompoundKey;
+import kvs.compound.KVItem;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
 import site.ISite;
@@ -92,6 +95,15 @@ public abstract class AbstractClientContext {
 	}
 	
 	/**
+	 * Returns the ({@link ISite} => list of {@link KVItem} the site is responsible for) map.
+	 */
+	public Map<ISite, List<KVItem>> getMastersFor(BufferedUpdates buffered_updates) {
+		Map<Integer, List<KVItem>> index_items_map = this.partitioner.locateSiteIndicesFor(buffered_updates, this.master_count);
+		return index_items_map.keySet().stream().collect(Collectors.toMap(index -> this.getMaster(index.intValue()), 
+																		  index_items_map::get));
+	}
+	
+	/**
 	 * Return a master site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
 	 * @return		the master {@link ISite} holding @param ck
@@ -99,9 +111,9 @@ public abstract class AbstractClientContext {
 	 * 	specified by subclasses of this {@link AbstractClientContext}. If you don't want
 	 *  to rely on {@link Partitioner}, you can override this method.
 	 */
-	public ISite getMasterResponsibleFor(CompoundKey ck) {
+	public ISite getMasterFor(CompoundKey ck) {
 		int index = this.partitioner.locateSiteIndexFor(ck, this.master_count);
-		return this.clusters.get(index).getMaster();
+		return this.getMaster(index); 
 	}
 
 	/**
@@ -122,6 +134,15 @@ public abstract class AbstractClientContext {
 			this.cached_read_site = Optional.of(read_site);
 			return read_site;
 		});
+	}
+	
+	/**
+	 * Returns the master site of the {@link ClusterActive} with specified cluster_no.
+	 * @param cno	specified cluster_no
+	 * @return	the master site of the {@link ClusterActive} with @param cno 
+	 */
+	private ISite getMaster(int cno) {
+		return this.clusters.get(cno).getMaster();
 	}
 
 }

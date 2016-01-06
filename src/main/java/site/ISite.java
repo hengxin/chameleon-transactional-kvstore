@@ -18,8 +18,8 @@ import kvs.compound.ITimestampedCell;
  * @author hengxin
  * @date Created on 12-09-2015
  */
-public interface ISite extends Remote
-{
+public interface ISite extends Remote {
+
 	public ITimestampedCell read(Row r, Column c) throws RemoteException;
 
 	public Timestamp start() throws RemoteException, TransactionExecutionException;

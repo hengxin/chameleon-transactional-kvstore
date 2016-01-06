@@ -10,8 +10,7 @@ import client.clientlibrary.transaction.ToCommitTransaction;
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
-public interface IParticipant extends Remote
-{
+public interface IParticipant extends Remote {
 	public abstract boolean prepare2PC(ToCommitTransaction tx, VersionConstraintManager vcm);
 	public abstract boolean commit2PC();	// FIXME parameters
 }
