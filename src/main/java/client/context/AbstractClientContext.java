@@ -87,7 +87,7 @@ public abstract class AbstractClientContext {
 	protected List<ClusterActive> activateClusters() {
 		return ((ClientMembership) this.client_membership).stream()
 				.map(ClusterActive::activate)
-				.sorted(ClusterActive.CLUSTER_NO_COMPARATOR)
+				.sorted(ClusterActive.COMPARATOR_BY_CLUSTER_NO)
 				.collect(Collectors.toList());
 	}
 	

@@ -26,22 +26,8 @@ public final class ClusterActive {
 	private final ISite master;
 	private final List<ISite> slaves;
 	
-	/**
-	 * Compare two {@link ClusterActive}s by {@link ClusterActive#cno}.
-	 * @author hengxin
-	 * @date Created on Jan 1, 2016
-	 */
-	private static class ClusterNoCmp implements Comparator<ClusterActive> {
-
-		@Override
-		public int compare(ClusterActive c1, ClusterActive c2) {
-			return c1.cno - c2.cno;
-		}
-
-	}
-
-	/** comparator for sorting {@link ClusterActive}s by {@link ClusterActive#cno} */
-	public static final Comparator<ClusterActive> CLUSTER_NO_COMPARATOR = new ClusterNoCmp();
+	/** {@link Comparator} for {@link ClusterActive} by their {@link #cno} **/
+	public static final Comparator<ClusterActive> COMPARATOR_BY_CLUSTER_NO = Comparator.comparingInt(ClusterActive::getCno);
 
 	/**
 	 * @param cno	globally unique cluster no.
@@ -77,6 +63,10 @@ public final class ClusterActive {
 		}
 		
 		return new ClusterActive(hibernate_cluster.cno, master_stub, slave_stubs);
+	}
+	
+	public int getCno() {
+		return this.cno;
 	}
 	
 	public ISite getMaster() {

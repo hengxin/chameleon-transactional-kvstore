@@ -98,7 +98,7 @@ public class SVSpecification extends AbstractRVSISpecification
 				query_results.getTsCell(ck).map(ts_cell -> new KVItem(ck, ts_cell)))
 			.filter(Optional::isPresent)
 			.map(Optional::get)
-			.collect(Collectors.toCollection(() -> new TreeSet<KVItem>(KVItem.TIMESTAMP_COMPARATOR)));
+			.collect(Collectors.toCollection(() -> new TreeSet<KVItem>(KVItem.COMPARATOR_BY_TIMESTAMP)));
 	}
 
 	/**

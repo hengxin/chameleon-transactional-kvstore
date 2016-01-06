@@ -57,7 +57,7 @@ public class SVSpecificationTest
 	private ITimestampedCell ts_cell_v = new TimestampedCell(new Timestamp(6), new Ordinal(6), new Cell("Cell_v"));
 
 	private final QueryResults query_results = new QueryResults();
-	private final SortedSet<KVItem> kv_set = new TreeSet<>(KVItem.TIMESTAMP_COMPARATOR);
+	private final SortedSet<KVItem> kv_set = new TreeSet<>(KVItem.COMPARATOR_BY_TIMESTAMP);
 	private final List<VCEntryRawInfo> vce_info_xyz_list = new ArrayList<>();
 	private final List<VCEntryRawInfo> vce_info_xyzuv_list = new ArrayList<>();
 	private final List<VCEntry> vce_xyzuv_list = new ArrayList<>();
