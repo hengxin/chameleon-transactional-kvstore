@@ -1,7 +1,7 @@
 package client.context;
 
+import client.clientlibrary.partitioning.SingleMasterSettingPartitioner;
 import site.ISite;
-import twopc.partitioning.SingleMasterSettingPartitioner;
 
 /**
  * Provides context for transaction processing at the client side

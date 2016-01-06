@@ -1,4 +1,4 @@
-package twopc.partitioning;
+package client.clientlibrary.partitioning;
 
 import java.util.List;
 import java.util.Map;

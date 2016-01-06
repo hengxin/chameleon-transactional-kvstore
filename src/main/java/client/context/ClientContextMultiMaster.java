@@ -1,6 +1,6 @@
 package client.context;
 
-import twopc.partitioning.IPartitioner;
+import client.clientlibrary.partitioning.IPartitioner;
 
 /**
  * Provides context for transaction processing at the client side

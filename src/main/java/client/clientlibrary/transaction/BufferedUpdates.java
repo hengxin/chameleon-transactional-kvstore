@@ -52,11 +52,11 @@ public final class BufferedUpdates implements Serializable {
 	
 	/**
 	 * Buffer the update of (row&col-key, cell)
-	 * @param ck {@link CompoundKey}
-	 * @param cell {@link Cell}
+	 * @param ck {@link CompoundKey} to update
+	 * @param cell {@link Cell} value
 	 */
 	public void intoBuffer(CompoundKey ck, Cell cell) {
-		this.buffered_update_list.add(new KVItem(ck, cell));
+		this.intoBuffer(new KVItem(ck, cell));
 	}
 	
 	/**
@@ -66,7 +66,15 @@ public final class BufferedUpdates implements Serializable {
 	 * @param cell {@link Cell}
 	 */
 	public void intoBuffer(Row r, Column c, Cell cell) {
-		this.buffered_update_list.add(new KVItem(r, c, cell));
+		this.intoBuffer(new KVItem(r, c, cell));
+	}
+	
+	/**
+	 * Buffer the update represented by a {@link KVItem}.
+	 * @param kv_item	{@link KVItem} representing an update
+	 */
+	public void intoBuffer(KVItem kv_item) {
+		this.buffered_update_list.add(kv_item);
 	}
 	
 	/**

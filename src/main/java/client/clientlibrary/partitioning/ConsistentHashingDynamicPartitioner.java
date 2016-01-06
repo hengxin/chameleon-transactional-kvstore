@@ -1,4 +1,4 @@
-package twopc.partitioning;
+package client.clientlibrary.partitioning;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;

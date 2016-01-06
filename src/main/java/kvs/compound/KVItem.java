@@ -23,13 +23,11 @@ public final class KVItem {
 	private final ITimestampedCell ts_cell;
 	
 	public KVItem(final Row r, final Column c, final Cell cell) {
-		this.ck = new CompoundKey(r, c);
-		this.ts_cell = new TimestampedCell(cell);
+		this(new CompoundKey(r, c), new TimestampedCell(cell));
 	}
 	
 	public KVItem(final CompoundKey ck, final Cell cell) {
-		this.ck = ck;
-		this.ts_cell = new TimestampedCell(cell);
+		this(ck, new TimestampedCell(cell));
 	}
 	
 	public KVItem(final CompoundKey ck, ITimestampedCell ts_cell) {

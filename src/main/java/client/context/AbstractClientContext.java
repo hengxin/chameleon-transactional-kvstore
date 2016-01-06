@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.transaction.RVSITransaction;
 import context.ClusterActive;
 import exception.network.membership.MasterMemberParseException;
@@ -18,7 +19,6 @@ import kvs.compound.CompoundKey;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
 import site.ISite;
-import twopc.partitioning.IPartitioner;
 
 /**
  * Provides context for transaction processing at the client side, including
