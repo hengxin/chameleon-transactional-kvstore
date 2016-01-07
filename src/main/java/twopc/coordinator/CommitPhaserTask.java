@@ -26,6 +26,14 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 	private final ToCommitTransaction tx;
 	private final VersionConstraintManager vcm;
 
+	/**
+	 * @param coordinator	{@link Coordinator} of this task
+	 * @param participant	{@link IParticipant} of this task; it executes this task.
+	 * @param tx			{@link ToCommitTransaction} to process in this task
+	 * @param vcm			{@link VersionConstraintManager} associated with @param tx
+	 * 
+	 * FIXME using interface {@link ICoordinator}
+	 */
 	public CommitPhaserTask(final Coordinator coordinator,
 							final IParticipant participant, 
 							final ToCommitTransaction tx, final VersionConstraintManager vcm) {

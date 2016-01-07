@@ -67,7 +67,7 @@ public final class KVItem {
 			return true;
 		if(o == null)
 			return false;
-		if(! (this.getClass() == o.getClass()))
+		if(this.getClass() != o.getClass())
 			return false;
 		
 		KVItem that = (KVItem) o;

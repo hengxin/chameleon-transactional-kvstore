@@ -1,11 +1,9 @@
 package client.clientlibrary.partitioning;
 
-import java.util.List;
 import java.util.Map;
 
-import client.clientlibrary.transaction.BufferedUpdates;
+import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.compound.CompoundKey;
-import kvs.compound.KVItem;
 import site.ISite;
 
 /**
@@ -26,12 +24,14 @@ public interface IPartitioner {
 	public abstract int locateSiteIndexFor(CompoundKey ck, int buckets);
 	
 	/**
-	 * Given {@link BufferedUpdates} (which contains a collection of {@link KVItem}s), the partitioner
-	 * returns for each item the index of the {@link ISite} who is responsible for storing it.
-	 * @param updates {@link BufferedUpdates}
-	 * @param buckets	number of buckets (i.e., storage nodes)
-	 * @return a map from an index of an {@link ISite} to a {@link List} of {@link KVItem} (in @param updates) it is responsible for.
+	 * Given a {@link ToCommitTransaction}, the partitioner decomposes it into multiple
+	 * sub-{@link ToCommitTransaction}s, one for each {@link ISite} involved.
+	 * This method returns a map from the index of an {@link ISite} to the sub-{@link ToCommitTransaction}
+	 * it is responsible for.
+	 * @param tx {@link ToCommitTransaction} to partition
+	 * @param buckets	number of buckets (i.e., {@link ISite})
+	 * @return a map from the index of an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for
 	 */
-	public abstract Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets);
+	public abstract Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx, int buckets);
 
 }

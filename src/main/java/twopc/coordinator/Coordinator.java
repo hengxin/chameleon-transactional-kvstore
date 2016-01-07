@@ -1,6 +1,5 @@
 package twopc.coordinator;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -10,7 +9,6 @@ import java.util.concurrent.Phaser;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import kvs.compound.KVItem;
 import site.ISite;
 import twopc.participant.IParticipant;
 
@@ -31,7 +29,7 @@ public final class Coordinator implements ICoordinator {
 	private final VersionConstraintManager vcm;
 	private final AbstractClientContext ctx;
 
-	private final Map<ISite, List<KVItem>> site_items_map;
+	private final Map<ISite, ToCommitTransaction> site_tx_map;
 
 	/**
 	 * {@link #prepared_decisions} and {@link #committed_decisions}:
@@ -68,24 +66,23 @@ public final class Coordinator implements ICoordinator {
 	protected volatile boolean is_committed = false;
 
 	/**
-	 * 
-	 * @param tx
-	 * @param vcm
-	 * @param ctx
+	 * @param tx	transaction to commit
+	 * @param vcm	manager of version constraint associated with @param tx
+	 * @param ctx	client context 
 	 */
 	public Coordinator(final ToCommitTransaction tx, final VersionConstraintManager vcm, final AbstractClientContext ctx) {
 		this.vcm = vcm;
 		this.ctx = ctx;
-		this.site_items_map = this.ctx.getMastersFor(tx.getBufferedUpdates());
+		this.site_tx_map = this.ctx.partition(tx);
 
 		this.phaser = new CommitPhaser(this);	// FIXME circular ref???
 	}
 
 	@Override
 	public boolean execute2PC() {
-		this.site_items_map.keySet().stream()
+		this.site_tx_map.keySet().stream()
 			.forEach(site ->
-						exec.submit(new CommitPhaserTask(this, (IParticipant) site, null, this.vcm)));	// TODO the third parameter: the actual ToCommitTransaction
+						exec.submit(new CommitPhaserTask(this, (IParticipant) site, this.site_tx_map.get(site), this.vcm)));	// TODO the third parameter: the actual ToCommitTransaction
 		
 		// TODO the return value
 		return false;

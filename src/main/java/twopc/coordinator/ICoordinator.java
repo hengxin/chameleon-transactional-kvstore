@@ -7,9 +7,11 @@ package twopc.coordinator;
  * The client who issues the transaction to commit plays the role of coordinator.
  * @author hengxin
  * @date Created on Dec 27, 2015
+ * 
+ * @deprecated to replace it by {@link AbstractCoordinator}
  */
-public interface ICoordinator
-{
+@Deprecated
+public interface ICoordinator {
 	/**
 	 * The coordinator executes 2pc protocol.
 	 * @return {@code true} if 2pc protocol succeeds in committing; {@code false}, otherwise.

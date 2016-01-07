@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.partitioning.IPartitioner;
-import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.RVSITransaction;
+import client.clientlibrary.transaction.ToCommitTransaction;
 import context.ClusterActive;
 import exception.network.membership.MasterMemberParseException;
 import exception.network.membership.MemberParseException;
@@ -18,7 +18,6 @@ import exception.rmi.RMIRegistryException;
 import exception.rmi.RMIRegistryForMasterException;
 import exception.rmi.RMIRegistryForSlaveException;
 import kvs.compound.CompoundKey;
-import kvs.compound.KVItem;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
 import site.ISite;
@@ -95,10 +94,14 @@ public abstract class AbstractClientContext {
 	}
 	
 	/**
-	 * Returns the ({@link ISite} => list of {@link KVItem} the site is responsible for) map.
+	 * Partitions a {@link ToCommitTransaction} into multiple sub-{@link ToCommitTransaction}s,
+	 * each of which will be dispatched to an {@link ISite} responsible for it.
+	 * <p>It returns a map from an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for. 
+	 * @param tx	{@link ToCommitTransaction} to be partitioned
+	 * @return a map from an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for 
 	 */
-	public Map<ISite, List<KVItem>> getMastersFor(BufferedUpdates buffered_updates) {
-		Map<Integer, List<KVItem>> index_items_map = this.partitioner.locateSiteIndicesFor(buffered_updates, this.master_count);
+	public Map<ISite, ToCommitTransaction> partition(ToCommitTransaction tx) {
+		Map<Integer, ToCommitTransaction> index_items_map = this.partitioner.partition(tx, this.master_count);
 		return index_items_map.keySet().stream().collect(Collectors.toMap(index -> this.getMaster(index.intValue()), 
 																		  index_items_map::get));
 	}

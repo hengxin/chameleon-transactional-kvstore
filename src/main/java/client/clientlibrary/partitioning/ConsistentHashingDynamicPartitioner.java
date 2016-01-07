@@ -15,8 +15,10 @@ import com.google.common.hash.Hashing;
 import com.sun.istack.NotNull;
 
 import client.clientlibrary.transaction.BufferedUpdates;
+import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.component.Column;
 import kvs.component.Row;
+import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.KVItem;
 
@@ -61,14 +63,23 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner {
 	}
 	
 	/**
-	 * {@inheritDoc} 
-	 * 
+	 * {@inheritDoc}
+	 * FIXME to improve the lambda expression
+	 */
+	public Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx, int buckets) {
+		final Timestamp sts = tx.getSts();
+		return this.locateSiteIndicesFor(tx.getBufferedUpdates(), buckets)
+			.entrySet().stream()
+			.collect(Collectors.toMap(Map.Entry::getKey, 
+									entry -> new ToCommitTransaction(sts, new BufferedUpdates(entry.getValue()))));
+	}
+
+	/**
 	 * TODO try {@link LoadingCache#getAll(Iterable)} 
 	 * in <a href="https://github.com/google/guava/wiki/CachesExplained">CachesExplained</a>
 	 * and multi-threading.
 	 */
-	@Override
-	public Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets) {
+	protected Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets) {
 		return updates.stream()
 				.collect(Collectors.groupingBy(item -> locateSiteIndexFor(item.getCK(), buckets)));
 	}

@@ -1,14 +1,11 @@
 package client.clientlibrary.partitioning;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
 
-import client.clientlibrary.transaction.BufferedUpdates;
+import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.compound.CompoundKey;
-import kvs.compound.KVItem;
 
 /**
  * {@link SingleMasterSettingPartitioner} is a trivial partition strategy used in the
@@ -28,11 +25,11 @@ public class SingleMasterSettingPartitioner implements IPartitioner {
 	}
 
 	/**
-	 * Always map 0 (the index of the single master) to @param updates.
+	 * Always map 0 (the index of the single master) to @param tx.
 	 */
 	@Override
-	public Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets) {
-		return ImmutableMap.of(0, updates.stream().collect(Collectors.toList()));
+	public Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx, int buckets) {
+		return ImmutableMap.of(0, tx);
 	}
 
 }
