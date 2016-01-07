@@ -14,7 +14,6 @@ import kvs.compound.ITimestampedCell;
 /**
  * An {@link ISite} is a server which supports transactional operations
  * and can be remotely accessed.
- *
  * @author hengxin
  * @date Created on 12-09-2015
  */

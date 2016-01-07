@@ -21,13 +21,13 @@ public final class CommitPhaser extends Phaser {
 	
 	public enum Phase { PREPARE, COMMIT, ABORT }
 	
-	private final ICoordinator coordinator;
+	private final AbstractCoordinator coordinator;
 	
 	/**
-	 * Constructor of {@link CommitPhaser} with its coordinator (i.e., executor) {@link ICoordinator}. 
-	 * @param coordinator	{@link ICoordinator} of this {@link CommitPhaser}
+	 * Constructor of {@link CommitPhaser} with its coordinator (i.e., executor) {@link AbstractCoordinator}. 
+	 * @param coordinator	{@link AbstractCoordinator} of this {@link CommitPhaser}
 	 */
-	public CommitPhaser(ICoordinator coordinator) {
+	public CommitPhaser(AbstractCoordinator coordinator) {
 		this.coordinator = coordinator;
 	}
 
@@ -40,8 +40,6 @@ public final class CommitPhaser extends Phaser {
 	 */
 	@Override
 	protected boolean onAdvance(int phase, int registeredParties) {
-		Coordinator coord = (Coordinator) this.coordinator;
-		
 		switch (phase) {
 		case 0:
 			LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.PREPARE);
@@ -51,9 +49,9 @@ public final class CommitPhaser extends Phaser {
 			 * and determine whether to commit or abort the transaction:
 			 * if all #prepared_decesions are true, then commit; otherwise, abort.
 			 */
-			coord.to_commit_decision = coord.prepared_decisions.values().stream().allMatch(decision -> decision);
+			this.coordinator.to_commit_decision = this.coordinator.prepared_decisions.values().stream().allMatch(decision -> decision);
 
-			LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, coord.to_commit_decision);
+			LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, this.coordinator.to_commit_decision);
 			return false;	// this phaser has not yet finished
 
 		case 1:
@@ -66,7 +64,9 @@ public final class CommitPhaser extends Phaser {
 			 * (1) #to_committed_decision is true </i>and</i> 
 			 * (2) #comitted_decisions of all participants are true.
 			 */
-			coord.is_committed = coord.to_commit_decision && coord.committed_decisions.values().stream().allMatch(decision -> decision);
+			this.coordinator.is_committed = this.coordinator.to_commit_decision 
+					&& this.coordinator.committed_decisions.values().stream().allMatch(decision -> decision);
+
 			return true;	// this phaser has finished its job.
 			
 		default:
