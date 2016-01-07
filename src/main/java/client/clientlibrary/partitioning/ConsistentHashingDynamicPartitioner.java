@@ -1,10 +1,12 @@
 package client.clientlibrary.partitioning;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.cache.CacheBuilder;
@@ -20,7 +22,6 @@ import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
-import kvs.compound.KVItem;
 
 /**
  * Partitioner supporting dynamic join and exit of storage nodes.
@@ -64,24 +65,14 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner {
 	
 	/**
 	 * {@inheritDoc}
-	 * FIXME to improve the lambda expression
+	 * @see
+	 *   <a href="http://stackoverflow.com/q/34648849/1833118">groupingBy and collectingAndThen@stackoverflow</a>
 	 */
 	public Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx, int buckets) {
 		final Timestamp sts = tx.getSts();
-		return this.locateSiteIndicesFor(tx.getBufferedUpdates(), buckets)
-			.entrySet().stream()
-			.collect(Collectors.toMap(Map.Entry::getKey, 
-									entry -> new ToCommitTransaction(sts, new BufferedUpdates(entry.getValue()))));
-	}
-
-	/**
-	 * TODO try {@link LoadingCache#getAll(Iterable)} 
-	 * in <a href="https://github.com/google/guava/wiki/CachesExplained">CachesExplained</a>
-	 * and multi-threading.
-	 */
-	protected Map<Integer, List<KVItem>> locateSiteIndicesFor(BufferedUpdates updates, int buckets) {
-		return updates.stream()
-				.collect(Collectors.groupingBy(item -> locateSiteIndexFor(item.getCK(), buckets)));
+		return tx.getBufferedUpdates().stream()
+				 .collect(groupingBy(item -> locateSiteIndexFor(item.getCK(), buckets),
+									collectingAndThen(toList(), items -> new ToCommitTransaction(sts, new BufferedUpdates(items)))));
 	}
 
 	/**
