@@ -1,0 +1,133 @@
+package twopc.coordinator;
+
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Phaser;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
+import client.clientlibrary.transaction.ToCommitTransaction;
+import client.context.AbstractClientContext;
+import site.ISite;
+import twopc.participant.IParticipant;
+
+/**
+ * Coordinator of 2PC protocol for RVSI transactions.
+ * <p><del> FIXME The coordinator executes an optimized 2PC protocol
+ * with "early commit notification".</del>
+ * @author hengxin
+ * @date Created on Dec 27, 2015
+ */
+public final class RVSIBasic2PCCoordinator extends AbstractCoordinator {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(RVSIBasic2PCCoordinator.class);
+	
+	private static final ExecutorService exec = Executors.newCachedThreadPool();
+	
+	protected enum Phase { PREPARE, COMMIT, ABORT }
+	protected Phaser phaser;
+
+	private final VersionConstraintManager vcm;
+
+	/**
+	 * @param ctx	client context 
+	 * @param vcm	RVSI-specific version constraint manager   
+	 */
+	public RVSIBasic2PCCoordinator(final AbstractClientContext ctx, final VersionConstraintManager vcm)  {
+		super(ctx);
+
+		this.vcm = vcm;
+	}
+
+	@Override
+	public boolean execute2PC(final ToCommitTransaction tx) {
+		this.phaser = new CommitPhaser();
+		final Map<ISite, ToCommitTransaction> site_tx_map = super.ctx.partition(tx);
+		// TODO split the vcm
+
+		List<CommitPhaserTask> task_list = site_tx_map.entrySet().stream()
+				.map(site_tx_entry -> {
+					CommitPhaserTask task = new CommitPhaserTask(
+							this, (IParticipant) site_tx_entry.getKey(), site_tx_entry.getValue(), this.vcm);	// the fourth @param vcm
+					this.phaser.register();
+					return task;
+					})
+				.collect(toList());
+		
+		try {
+			exec.invokeAll(task_list);	// blocking here
+		} catch (InterruptedException ie) {
+			LOGGER.error("2PC protocol has been interrupted unexpectedly.", ie);	// FIXME fault-handling???
+		}
+
+		// FIXME the return value
+		return false;
+	}
+	
+
+	/**
+	 * {@link CommitPhaser} controls the two phases of the 2PC protocol:
+	 * the "prepare" phase and the "commit/abort" phase.
+	 * 
+	 * @author hengxin
+	 * @date Created on Dec 28, 2015
+	 * 
+	 * @implNote
+	 * {@link CommitPhase} extends {@link Phaser} introduced since Java 7.
+	 */
+	private final class CommitPhaser extends Phaser {
+
+		private final Logger LOGGER = LoggerFactory.getLogger(CommitPhaser.class);
+
+		/**
+		 * Coordinate the two phases on behalf of the enclosing {@link RVSIBasic2PCCoordinator}, including
+		 * <ul>
+		 * <li> Collecting results from each phase and computing for the next one
+		 * <li> Logging for each phase
+		 * <ul>
+		 */
+		@Override
+		protected boolean onAdvance(int phase, int registeredParties) {
+			AbstractCoordinator coord = RVSIBasic2PCCoordinator.super;
+
+			switch (phase) {
+			case 0:
+				LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.PREPARE);
+
+				/**
+				 * check the decisions of all participants during the Phase#PREPARE phase,
+				 * and determine whether to commit or abort the transaction:
+				 * if all #prepared_decesions are true, then commit; otherwise, abort.
+				 */
+				coord.to_commit_decision = coord.prepared_decisions.values().stream().allMatch(decision -> decision);
+
+				LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, coord.to_commit_decision);
+				return false;	// this phaser has not yet finished
+
+			case 1:
+				LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.COMMIT); 
+
+				/**
+				 * check the decisions of all participants during the Phase#COMMIT phase,
+				 * and compute the final committed/abort state of the transaction:
+				 * the transaction is committed if and only if
+				 * (1) #to_committed_decision is true </i>and</i> 
+				 * (2) #comitted_decisions of all participants are true.
+				 */
+				coord.is_committed = coord.to_commit_decision 
+						&& coord.committed_decisions.values().stream().allMatch(decision -> decision);
+
+				return true;	// this phaser has finished its job.
+
+			default:
+				return true;	
+			}
+		}
+	}
+}

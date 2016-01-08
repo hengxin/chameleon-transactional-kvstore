@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import site.ISite;
-import twopc.coordinator.CommitPhaser.Phase;
+import twopc.coordinator.RVSIBasic2PCCoordinator.Phase;
 import twopc.participant.IParticipant;
 
 /**
@@ -31,7 +31,9 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 	 * @param participant	{@link IParticipant} of this task; it executes this task.
 	 * @param tx			{@link ToCommitTransaction} to process in this task
 	 * @param vcm			{@link VersionConstraintManager} associated with @param tx
+	 * @deprecated	FIXME redesign @param vcm
 	 */
+	@Deprecated
 	public CommitPhaserTask(final AbstractCoordinator coordinator,
 							final IParticipant participant, 
 							final ToCommitTransaction tx, 
@@ -48,12 +50,12 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 		LOGGER.info("Begin the [{}] phase with participant [{}].", Phase.PREPARE, this.participant);
 		boolean prepared_decision = this.participant.prepare2PC(tx, vcm);
 		this.coordinator.prepared_decisions.put((ISite) participant, prepared_decision);
-		this.coordinator.phaser.arriveAndAwaitAdvance();
+		((RVSIBasic2PCCoordinator) this.coordinator).phaser.arriveAndAwaitAdvance();
 		
 		LOGGER.info("Begin the [{}] phase with participant [{}].", Phase.COMMIT, this.participant);
 		boolean committed_decision = this.participant.commit2PC();
 		this.coordinator.committed_decisions.put((ISite) participant, committed_decision);
-		this.coordinator.phaser.arriveAndAwaitAdvance();
+		((RVSIBasic2PCCoordinator) this.coordinator).phaser.arriveAndAwaitAdvance();
 
 		return null;
 	}

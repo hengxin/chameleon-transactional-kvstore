@@ -2,8 +2,11 @@ package twopc.coordinator;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Phaser;
 
+import com.sun.istack.Nullable;
+
+import client.clientlibrary.transaction.ToCommitTransaction;
+import client.context.AbstractClientContext;
 import site.ISite;
 
 /**
@@ -15,8 +18,6 @@ import site.ISite;
  * @date Created on Jan 7, 2016
  */
 public abstract class AbstractCoordinator {
-
-	protected Phaser phaser;
 
 	/**
 	 * {@link #prepared_decisions} and {@link #committed_decisions}:
@@ -52,11 +53,21 @@ public abstract class AbstractCoordinator {
 	 */
 	protected volatile boolean is_committed = false;
 	
-
+	protected final AbstractClientContext ctx;
+	
 	/**
-	 * The coordinator executes 2pc protocol.
-	 * @return {@code true} if 2pc protocol succeeds in committing; {@code false}, otherwise.
+	 * @param ctx	context for this coordinator; it may provide information about the data-store 
+	 * 	and the partition strategy. It can be {@code null}, if your coordinator does not need one.
 	 */
-	public abstract boolean execute2PC();
+	public AbstractCoordinator(@Nullable AbstractClientContext ctx) {
+		this.ctx = ctx;
+	}
+	
+	/**
+	 * The coordinator executes 2PC protocol.
+	 * @param 	the transaction to commit
+	 * @return {@code true} if 2PC protocol succeeds in committing; {@code false}, otherwise.
+	 */
+	public abstract boolean execute2PC(ToCommitTransaction tx);
 
 }
