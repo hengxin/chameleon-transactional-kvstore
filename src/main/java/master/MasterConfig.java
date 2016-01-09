@@ -7,8 +7,7 @@ import com.beust.jcommander.Parameter;
  * @author hengxin
  * @date Created on Dec 26, 2015
  */
-public class MasterConfig
-{
+public class MasterConfig {
 	@Parameter(names = "-capacity", description = "Number of Versions to Keep")
 	public static int TABLE_CAPACITY = 10;
 }

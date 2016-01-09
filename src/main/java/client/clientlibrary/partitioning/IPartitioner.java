@@ -4,7 +4,7 @@ import java.util.Map;
 
 import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.compound.CompoundKey;
-import site.ISite;
+import site.IDataProvider;
 
 /**
  * A partitioner is responsible for partitioning a large
@@ -16,21 +16,21 @@ public interface IPartitioner {
 
 	/**
 	 * Given a {@link CompoundKey}, this partitioner returns 
-	 * the index of an {@link ISite} who is responsible for the key.
+	 * the index of an {@link IDataProvider} who is responsible for the key.
 	 * @param ck	key to locate
 	 * @param buckets number of buckets (i.e., storage nodes)
-	 * @return the index of an {@link ISite} who is responsible for the given key
+	 * @return the index of an {@link IDataProvider} who is responsible for the given key
 	 */
 	public abstract int locateSiteIndexFor(CompoundKey ck, int buckets);
 	
 	/**
 	 * Given a {@link ToCommitTransaction}, the partitioner decomposes it into multiple
-	 * sub-{@link ToCommitTransaction}s, one for each {@link ISite} involved.
-	 * This method returns a map from the index of an {@link ISite} to the sub-{@link ToCommitTransaction}
+	 * sub-{@link ToCommitTransaction}s, one for each {@link IDataProvider} involved.
+	 * This method returns a map from the index of an {@link IDataProvider} to the sub-{@link ToCommitTransaction}
 	 * it is responsible for.
 	 * @param tx {@link ToCommitTransaction} to partition
-	 * @param buckets	number of buckets (i.e., {@link ISite})
-	 * @return a map from the index of an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for
+	 * @param buckets	number of buckets (i.e., {@link IDataProvider})
+	 * @return a map from the index of an {@link IDataProvider} to the sub-{@link ToCommitTransaction} it is responsible for
 	 */
 	public abstract Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx, int buckets);
 

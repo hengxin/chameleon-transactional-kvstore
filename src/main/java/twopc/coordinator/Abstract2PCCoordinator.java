@@ -7,17 +7,17 @@ import com.sun.istack.Nullable;
 
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import site.ISite;
+import rmi.IRemoteSite;
 
 /**
- * {@link AbstractCoordinator} is responsible for coordinating the 2PC protocol.
+ * {@link Abstract2PCCoordinator} is responsible for coordinating the 2PC protocol.
  * It maintains the basic states of the traditional 2PC mechanism,
  * and aims to support different variants of 2PC protocol.
  * <p> The client who issues the transaction to commit plays the role of coordinator.
  * @author hengxin
  * @date Created on Jan 7, 2016
  */
-public abstract class AbstractCoordinator {
+public abstract class Abstract2PCCoordinator {
 
 	/**
 	 * {@link #prepared_decisions} and {@link #committed_decisions}:
@@ -28,8 +28,8 @@ public abstract class AbstractCoordinator {
 	 * @see	#to_commit_decision
 	 * @see #is_committed
 	 */
-	protected final Map<ISite, Boolean> prepared_decisions = new ConcurrentHashMap<>();
-	protected final Map<ISite, Boolean> committed_decisions = new ConcurrentHashMap<>();
+	protected final Map<IRemoteSite, Boolean> prepared_decisions = new ConcurrentHashMap<>();
+	protected final Map<IRemoteSite, Boolean> committed_decisions = new ConcurrentHashMap<>();
 
 	/**
 	 * {@link #to_commit_decision}: 
@@ -59,7 +59,7 @@ public abstract class AbstractCoordinator {
 	 * @param ctx	context for this coordinator; it may provide information about the data-store 
 	 * 	and the partition strategy. It can be {@code null}, if your coordinator does not need one.
 	 */
-	public AbstractCoordinator(@Nullable AbstractClientContext ctx) {
+	public Abstract2PCCoordinator(@Nullable AbstractClientContext ctx) {
 		this.ctx = ctx;
 	}
 	

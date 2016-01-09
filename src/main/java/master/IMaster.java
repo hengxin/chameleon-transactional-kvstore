@@ -1,6 +1,5 @@
 package master;
 
-import java.net.NoRouteToHostException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -14,8 +13,7 @@ import kvs.component.Timestamp;
  * @date Created on 10-27-2015
  */
 @Deprecated
-public interface IMaster extends Remote
-{
-	public Timestamp start() throws RemoteException, NoRouteToHostException, TransactionExecutionException;
+public interface IMaster extends Remote {
+	public Timestamp start() throws RemoteException, TransactionExecutionException;
 	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws RemoteException;
 }

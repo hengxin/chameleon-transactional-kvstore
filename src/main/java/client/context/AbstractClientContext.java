@@ -20,7 +20,7 @@ import exception.rmi.RMIRegistryForSlaveException;
 import kvs.compound.CompoundKey;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
-import site.ISite;
+import rmi.IRemoteSite;
 
 /**
  * Provides context for transaction processing at the client side, including
@@ -46,7 +46,7 @@ public abstract class AbstractClientContext {
 	protected int master_count;
 
 	protected IPartitioner partitioner;
-	protected Optional<ISite> cached_read_site = Optional.empty();	
+	protected Optional<IRemoteSite> cached_read_site = Optional.empty();	
 	
 //	private RVSITransaction tx = null;
 	
@@ -95,12 +95,12 @@ public abstract class AbstractClientContext {
 	
 	/**
 	 * Partitions a {@link ToCommitTransaction} into multiple sub-{@link ToCommitTransaction}s,
-	 * each of which will be dispatched to an {@link ISite} responsible for it.
-	 * <p>It returns a map from an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for. 
+	 * each of which will be dispatched to an {@link IRemoteSite} responsible for it.
+	 * <p>It returns a map from an {@link IRemoteSite} to the sub-{@link ToCommitTransaction} it is responsible for. 
 	 * @param tx	{@link ToCommitTransaction} to be partitioned
-	 * @return a map from an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for 
+	 * @return a map from an {@link IRemoteSite} to the sub-{@link ToCommitTransaction} it is responsible for 
 	 */
-	public Map<ISite, ToCommitTransaction> partition(ToCommitTransaction tx) {
+	public Map<IRemoteSite, ToCommitTransaction> partition(ToCommitTransaction tx) {
 		Map<Integer, ToCommitTransaction> index_items_map = this.partitioner.partition(tx, this.master_count);
 		return index_items_map.keySet().stream().collect(Collectors.toMap(index -> this.getMaster(index.intValue()), 
 																		  index_items_map::get));
@@ -109,12 +109,12 @@ public abstract class AbstractClientContext {
 	/**
 	 * Return a master site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
-	 * @return		the master {@link ISite} holding @param ck
+	 * @return		the master {@link IRemoteSite} holding @param ck
 	 * @implNote 	This implementation requires and utilizes the {@link #partitioner}
 	 * 	specified by subclasses of this {@link AbstractClientContext}. If you don't want
 	 *  to rely on {@link Partitioner}, you can override this method.
 	 */
-	public ISite getMasterFor(CompoundKey ck) {
+	public IRemoteSite getMasterFor(CompoundKey ck) {
 		int index = this.partitioner.locateSiteIndexFor(ck, this.master_count);
 		return this.getMaster(index); 
 	}
@@ -122,7 +122,7 @@ public abstract class AbstractClientContext {
 	/**
 	 * Return a site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
-	 * @return		an {@link ISite} holding @param ck
+	 * @return		an {@link IRemoteSite} holding @param ck
 	 * @implNote	In principle, the client is free to contact <i>any</i> site to read.
 	 * 	In this particular implementation, it prefers an already cached slave. 
 	 * 
@@ -130,10 +130,10 @@ public abstract class AbstractClientContext {
 	 * 	specified by subclasses of this {@link AbstractClientContext}. If you don't want
 	 *  to rely on {@link Partitioner}, you can override this method.
 	 */
-	public ISite getReadSite(CompoundKey ck) {
+	public IRemoteSite getReadSite(CompoundKey ck) {
 		return this.cached_read_site.orElseGet(() -> {
 			int index = this.partitioner.locateSiteIndexFor(ck, this.master_count);
-			ISite read_site = this.clusters.get(index).getSiteForRead(); 
+			IRemoteSite read_site = this.clusters.get(index).getSiteForRead(); 
 			this.cached_read_site = Optional.of(read_site);
 			return read_site;
 		});
@@ -144,7 +144,7 @@ public abstract class AbstractClientContext {
 	 * @param cno	specified cluster_no
 	 * @return	the master site of the {@link ClusterActive} with @param cno 
 	 */
-	private ISite getMaster(int cno) {
+	private IRemoteSite getMaster(int cno) {
 		return this.clusters.get(cno).getMaster();
 	}
 

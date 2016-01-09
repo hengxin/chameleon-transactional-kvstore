@@ -25,6 +25,7 @@ import master.mvcc.StartCommitLogs;
 import messages.AbstractMessage;
 import messages.IMessageProducer;
 import site.AbstractSite;
+import site.ITransactional;
 
 /**
  * Master employs an MVCC protocol to locally implement (<i>nearly but not really</i>) 
@@ -43,8 +44,8 @@ import site.AbstractSite;
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public class SIMaster extends AbstractSite implements IMessageProducer
-{
+public class SIMaster extends AbstractSite implements ITransactional, IMessageProducer {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
 
 	private final ExecutorService exec = Executors.newCachedThreadPool();
@@ -56,8 +57,7 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	/**
 	 * Constructor with {@link MasterContext}.
 	 */
-	public SIMaster(IContext context)
-	{
+	public SIMaster(IContext context) {
 		super(context);
 		super.table = new MasterTable();	// the underlying database in the "table" form
 	}
@@ -70,22 +70,17 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	 * @throws TransactionExecutionException 
 	 */
 	@Override
-	public Timestamp start() throws TransactionExecutionException
-	{
+	public Timestamp start() throws TransactionExecutionException {
         // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
-		try
-		{
-			return new Timestamp(exec.submit( () -> 
-			{
+		try {
+			return new Timestamp(exec.submit( () -> {
 				return this.ts.incrementAndGet();
 			}).get());
-		} catch (InterruptedException ie)
-		{
+		} catch (InterruptedException ie) {
 			String msg = "Failed to start a transaction due to unexpected thread interruption.";
 			LOGGER.warn(msg, ie.getCause());	// log at the master site side
 			throw new TransactionExecutionException(msg, ie);	// thrown to the client side
-		} catch (ExecutionException ee)
-		{
+		} catch (ExecutionException ee) {
 			String msg = "Failed to generate a new start-timestamp for a transaction to start.";
 			LOGGER.warn(msg, ee.getCause());	// log at the master site side
 			throw new TransactionExecutionException(msg, ee);	// thrown to the client side
@@ -117,10 +112,8 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	 *  </ul>
 	 */
 	@Override
-	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws TransactionExecutionException
-	{
-		Future<Boolean> future_committed = exec.submit(() ->
-		{
+	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws TransactionExecutionException {
+		Future<Boolean> future_committed = exec.submit(() -> {
 			Timestamp cts = null;
 
 			/**
@@ -132,34 +125,28 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 			boolean can_committed = false;
 
 			this.logs.write_lock.lock();
-			try
-			{
+			try {
 				wcf_checked = this.logs.wcf(tx);
 				can_committed = vc_checked && wcf_checked;
 
-				if (can_committed)	// (1) check
-				{
+				if (can_committed) {	// (1) check 
 					cts = new Timestamp(this.ts.incrementAndGet());	// (2) commit-timestamp; commit in "commit order"
 					this.logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, this.ck_ord_index));	// (3) update start-commit-log
 				}
-			} finally
-			{
+			} finally {
 				this.logs.write_lock.unlock();
 			}
 
-			if(can_committed)
-			{
+			if(can_committed) {
 				/**
 				 * Chameleon does not require read operations of a transaction to get the <i>latest</i> version 
 				 * before the sts of that transaction. Thus it is not necessary for the master to synchronize the 
 				 * updates to the underlying table with read operations, both guarded by the lock on #logs. 
 				 */
 				this.table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
-				try
-				{
+				try {
 					this.send(tx); // (5) propagate
-				} catch (TransactionCommunicationException tae)
-				{
+				} catch (TransactionCommunicationException tae) {
 					LOGGER.warn(tae.getMessage(), tae.getCause());
 				}		
 			}
@@ -167,11 +154,9 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 			return can_committed;
 		});
 		
-		try
-		{
+		try {
 			return future_committed.get();
-		} catch (InterruptedException | ExecutionException e)
-		{
+		} catch (InterruptedException | ExecutionException e) {
 			String msg = String.format("Transaction aborted due to unexpected causes: %s.", e.getMessage());
 			LOGGER.error(msg, e.getCause());	// log at the master side
 			throw new TransactionExecutionException(msg, e.getCause());		// thrown to the client side
@@ -179,10 +164,8 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 	}
 
 	@Override
-	public void send(AbstractMessage msg) throws TransactionCommunicationException
-	{
-		Future<Void> dummy_future = this.exec.submit(() ->
-		{
+	public void send(AbstractMessage msg) throws TransactionCommunicationException {
+		Future<Void> dummy_future = this.exec.submit(() -> {
 			((JMSCommitLogPublisher) super.jmser.orElseThrow(() -> 
 				new IllegalStateException(String.format("The master [%s] has not been registered as a JMS publisher. Please call registerAsJMSParticipant() first.", this))))
 				.publish(msg);
@@ -191,11 +174,9 @@ public class SIMaster extends AbstractSite implements IMessageProducer
 			return null;
 		});
 		
-		try
-		{
+		try {
 			dummy_future.get();
-		} catch (InterruptedException | ExecutionException e)
-		{
+		} catch (InterruptedException | ExecutionException e) {
 			String log = String.format("I [{}] Failded to publish the commit log [{}]. \n {}", super.context.self(), msg);
 			LOGGER.error(log);	// log at the master side
 			throw new TransactionCommunicationException(log, e.getCause());	// thrown to the client side

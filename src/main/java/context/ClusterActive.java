@@ -10,8 +10,8 @@ import com.google.common.base.MoreObjects;
 import exception.rmi.RMIRegistryException;
 import exception.rmi.RMIRegistryForMasterException;
 import exception.rmi.RMIRegistryForSlaveException;
+import rmi.IRemoteSite;
 import site.AbstractSite;
-import site.ISite;
 
 /**
  * A {@link ClusterActive} consists of a master and a collection of its slaves,
@@ -23,8 +23,8 @@ import site.ISite;
 public final class ClusterActive {
 	/** globally unique cluster no. **/
 	private final int cno;
-	private final ISite master;
-	private final List<ISite> slaves;
+	private final IRemoteSite master;
+	private final List<IRemoteSite> slaves;
 	
 	/** {@link Comparator} for {@link ClusterActive} by their {@link #cno} **/
 	public static final Comparator<ClusterActive> COMPARATOR_BY_CLUSTER_NO = Comparator.comparingInt(ClusterActive::getCno);
@@ -34,7 +34,7 @@ public final class ClusterActive {
 	 * @param master	master site of this cluster
 	 * @param slaves	slaves of this cluster
 	 */
-	public ClusterActive(int cno, ISite master, List<ISite> slaves) {
+	public ClusterActive(int cno, IRemoteSite master, List<IRemoteSite> slaves) {
 		this.cno = cno;
 		this.master = master;
 		this.slaves = slaves;
@@ -48,14 +48,14 @@ public final class ClusterActive {
 	 * @throws RMIRegistryForSlaveException		if an error occurs in locating remote stub for some slave
 	 */
 	public static ClusterActive activate(ClusterInHibernate hibernate_cluster) {
-		ISite master_stub = null;
+		IRemoteSite master_stub = null;
 		try{
 			master_stub = AbstractSite.locateRMISite(hibernate_cluster.master);
 		} catch (RMIRegistryException rre) {
 			throw new RMIRegistryForMasterException(rre);
 		}
 
-		List<ISite> slave_stubs = Collections.emptyList();
+		List<IRemoteSite> slave_stubs = Collections.emptyList();
 		try{
 			slave_stubs = AbstractSite.locateRMISites(hibernate_cluster.slaves);
 		} catch (RMIRegistryException rre) {
@@ -69,22 +69,22 @@ public final class ClusterActive {
 		return this.cno;
 	}
 	
-	public ISite getMaster() {
+	public IRemoteSite getMaster() {
 		return this.master;
 	}
 	
 	/**
 	 * Return a site for read. It perfers a slave site. If no slaves are available, it returns the master.
-	 * @return	an {ISite} in this cluster
+	 * @return	an {@link IRemoteSite} in this cluster
 	 */
-	public ISite getSiteForRead() {
+	public IRemoteSite getSiteForRead() {
 		return this.slaves.isEmpty() ? this.getMaster() : this.getRandomSlave();
 	}
 
 	/**
 	 * @return	a random slave site in this cluster
 	 */
-	private ISite getRandomSlave() {
+	private IRemoteSite getRandomSlave() {
 		return slaves.get(new Random().nextInt(slaves.size()));
 	}
 

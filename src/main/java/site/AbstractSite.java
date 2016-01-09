@@ -27,7 +27,7 @@ import kvs.table.AbstractTable;
 import kvs.table.MasterTable;
 import kvs.table.SlaveTable;
 import network.membership.Member;
-import rmi.IRMI;
+import rmi.IRemoteSite;
 
 /**
  * An {@link AbstractSite} holds an {@link AbstractTable} 
@@ -40,7 +40,7 @@ import rmi.IRMI;
  * @author hengxin
  * @date Created on 11-25-2015
  */
-public abstract class AbstractSite implements ISite, IRMI {
+public abstract class AbstractSite implements IDataProvider, IRemoteSite {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSite.class);
 	
@@ -62,6 +62,14 @@ public abstract class AbstractSite implements ISite, IRMI {
 		return this.table.getTimestampedCell(r, c);
 	}
 	
+	/**
+	 * FIXME implementation? Is it appropriate for {@link #write(Row, Column, ITimestampedCell)} here?
+	 */
+	@Override
+	public boolean write(Row r, Column c, ITimestampedCell ts_cell) throws RemoteException {
+		return false;
+	}
+
 	/**
 	 * Export self for remote accesses via RMI.
 	 */
@@ -97,12 +105,12 @@ public abstract class AbstractSite implements ISite, IRMI {
 	 * Locate the stub for the {@link Member}; used later for RMI invocation.
 	 * 
 	 * @param member an {@link Member} representing a site
-	 * @return 	a remote stub of {@link ISite}
+	 * @return 	a remote stub of {@link IRemoteSite}
 	 * @throws RMIRegistryException		if an error occurs during RMI locating
 	 */
-	public static ISite locateRMISite(Member member) {
+	public static IRemoteSite locateRMISite(Member member) {
 		try {
-			return (ISite) LocateRegistry.getRegistry(member.getAddrIp(), member.getRmiRegistryPort()).lookup(member.getRmiRegistryName());
+			return (IRemoteSite) LocateRegistry.getRegistry(member.getAddrIp(), member.getRmiRegistryPort()).lookup(member.getRmiRegistryName());
 		} catch (RemoteException | NotBoundException e) {
 			throw new RMIRegistryException(member, e);
 		}
@@ -111,10 +119,10 @@ public abstract class AbstractSite implements ISite, IRMI {
 	/**
 	 * Locate the stubs for a list of {@link Member}. used later for RMI invocation.
 	 * @param members a list of {@link Member}s to be parsed.
-	 * @return 	a list of {@link ISite} stubs; 
+	 * @return 	a list of {@link IRemoteSite} stubs; 
 	 * @throws	RMIRegistryException 	if an error occurs in locating remote stub for some site
 	 */
-	public static List<ISite> locateRMISites(List<Member> members) {
+	public static List<IRemoteSite> locateRMISites(List<Member> members) {
 		return members.parallelStream()
 				.map(AbstractSite::locateRMISite)
 				.collect(Collectors.toList());

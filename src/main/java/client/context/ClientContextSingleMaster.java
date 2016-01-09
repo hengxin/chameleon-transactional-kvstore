@@ -1,7 +1,7 @@
 package client.context;
 
 import client.clientlibrary.partitioning.SingleMasterSettingPartitioner;
-import site.ISite;
+import rmi.IRemoteSite;
 
 /**
  * Provides context for transaction processing at the client side
@@ -31,7 +31,7 @@ public class ClientContextSingleMaster extends AbstractClientContext {
 	/**
 	 * @return	the single master in the "single-master-multiple-slave" setting
 	 */
-	public ISite getMaster() {
+	public IRemoteSite getMaster() {
 		return super.clusters.get(0).getMaster();
 	}
 

@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
@@ -14,24 +15,26 @@ import org.slf4j.LoggerFactory;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import site.ISite;
-import twopc.participant.IParticipant;
+import rmi.IRemoteSite;
+import twopc.participant.I2PCParticipant;
 
 /**
  * Coordinator of 2PC protocol for RVSI transactions.
  * <p><del> FIXME The coordinator executes an optimized 2PC protocol
  * with "early commit notification".</del>
+ * @implNote
+ * 	This coordinator implementation is based on class {@link Phaser} introduced since Java 7.
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
-public final class RVSIBasic2PCCoordinator extends AbstractCoordinator {
+public final class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RVSIBasic2PCCoordinator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RVSI2PCPhaserCoordinator.class);
 	
 	private static final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	protected enum Phase { PREPARE, COMMIT, ABORT }
-	protected Phaser phaser;
+	protected final Phaser phaser = new CommitPhaser();	// FIXME Is it a good idea to create an object of a nested class here?
 
 	private final VersionConstraintManager vcm;
 
@@ -39,25 +42,20 @@ public final class RVSIBasic2PCCoordinator extends AbstractCoordinator {
 	 * @param ctx	client context 
 	 * @param vcm	RVSI-specific version constraint manager   
 	 */
-	public RVSIBasic2PCCoordinator(final AbstractClientContext ctx, final VersionConstraintManager vcm)  {
+	public RVSI2PCPhaserCoordinator(final AbstractClientContext ctx, 
+								   final VersionConstraintManager vcm)  {
 		super(ctx);
-
 		this.vcm = vcm;
 	}
 
 	@Override
 	public boolean execute2PC(final ToCommitTransaction tx) {
-		this.phaser = new CommitPhaser();
-		final Map<ISite, ToCommitTransaction> site_tx_map = super.ctx.partition(tx);
+		final Map<IRemoteSite, ToCommitTransaction> site_tx_map = super.ctx.partition(tx);
 		// TODO split the vcm
 
-		List<CommitPhaserTask> task_list = site_tx_map.entrySet().stream()
-				.map(site_tx_entry -> {
-					CommitPhaserTask task = new CommitPhaserTask(
-							this, (IParticipant) site_tx_entry.getKey(), site_tx_entry.getValue(), this.vcm);	// the fourth @param vcm
-					this.phaser.register();
-					return task;
-					})
+		List<Callable<Boolean>> task_list = site_tx_map.entrySet().stream()
+				.map(site_tx_entry -> new CommitPhaserTask(
+						this, (I2PCParticipant) site_tx_entry.getKey(), site_tx_entry.getValue(), this.vcm))	// the fourth @param vcm
 				.collect(toList());
 		
 		try {
@@ -79,14 +77,14 @@ public final class RVSIBasic2PCCoordinator extends AbstractCoordinator {
 	 * @date Created on Dec 28, 2015
 	 * 
 	 * @implNote
-	 * {@link CommitPhase} extends {@link Phaser} introduced since Java 7.
+	 * {@link CommitPhaser} extends {@link Phaser} introduced since Java 7.
 	 */
 	private final class CommitPhaser extends Phaser {
 
 		private final Logger LOGGER = LoggerFactory.getLogger(CommitPhaser.class);
 
 		/**
-		 * Coordinate the two phases on behalf of the enclosing {@link RVSIBasic2PCCoordinator}, including
+		 * Coordinate the two phases on behalf of the enclosing {@link RVSI2PCPhaserCoordinator}, including
 		 * <ul>
 		 * <li> Collecting results from each phase and computing for the next one
 		 * <li> Logging for each phase
@@ -94,7 +92,7 @@ public final class RVSIBasic2PCCoordinator extends AbstractCoordinator {
 		 */
 		@Override
 		protected boolean onAdvance(int phase, int registeredParties) {
-			AbstractCoordinator coord = RVSIBasic2PCCoordinator.super;
+			Abstract2PCCoordinator coord = RVSI2PCPhaserCoordinator.super;
 
 			switch (phase) {
 			case 0:
