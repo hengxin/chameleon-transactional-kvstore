@@ -1,5 +1,6 @@
 package kvs.compound;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 import com.google.common.base.MoreObjects;
@@ -17,7 +18,9 @@ import kvs.component.Timestamp;
  * @author hengxin
  * @date Created on 11-29-2015
  */
-public final class KVItem {
+public final class KVItem implements Serializable {
+
+	private static final long serialVersionUID = 2520894384542543711L;
 
 	private final CompoundKey ck;
 	private final ITimestampedCell ts_cell;

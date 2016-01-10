@@ -7,8 +7,7 @@ import org.junit.Test;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import jms.master.JMSCommitLogPublisher;
-import jms.slave.JMSCommitLogSubscriber;
+import jms.master.JMSPublisher;
 import kvs.component.Cell;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
@@ -19,7 +18,7 @@ import slave.RCSlave;
 
 public class RCSlaveAsJMSCommitLogSubscriberTest
 {
-	private final AbstractJMSParticipant publisher = new JMSCommitLogPublisher();
+	private final AbstractJMSParticipant publisher = new JMSPublisher();
 	
 	private Timestamp sts; 
 	private CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
@@ -31,21 +30,18 @@ public class RCSlaveAsJMSCommitLogSubscriberTest
 	private AbstractMessage commit_log_message = null;
 	
 	private RCSlave slave = null;
-	private AbstractJMSParticipant subscriber = null;
 
 	@Before
 	public void setUp() throws Exception
 	{
 		this.slave = new RCSlave(null);	// no {@link IContext} needed for testing JMS
-		this.subscriber = new JMSCommitLogSubscriber();
-		this.slave.registerAsJMSParticipant(this.subscriber);
 		
 		this.sts = new Timestamp(1);
 		this.buffered_updates.intoBuffer(this.ck_rx_cx, this.cell_rx_cx);
 		this.buffered_updates.intoBuffer(this.ck_ry_cy, this.cell_ry_cy);
 		this.commit_log_message = new ToCommitTransaction(this.sts, this.buffered_updates);
 
-		((JMSCommitLogPublisher) this.publisher).publish(this.commit_log_message);
+		((JMSPublisher) this.publisher).publish(this.commit_log_message);
 	}
 
 	@Test

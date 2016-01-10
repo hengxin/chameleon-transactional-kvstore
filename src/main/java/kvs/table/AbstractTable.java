@@ -22,7 +22,6 @@ import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
-import kvs.compound.KVItem;
 import kvs.compound.TimestampedCell;
 import net.jcip.annotations.ThreadSafe;
 
@@ -34,8 +33,8 @@ import net.jcip.annotations.ThreadSafe;
  * <p> TODO using the built-in synchronization mechanism of {@link TreeBasedTable}.
  */
 @ThreadSafe
-public abstract class AbstractTable
-{
+public abstract class AbstractTable {
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractTable.class);
 	
 	private final TreeBasedTable<Row, Column, ITimestampedCellStore> table = TreeBasedTable.create();
@@ -51,8 +50,7 @@ public abstract class AbstractTable
 	 * 
 	 * FIXME not implemented yet
 	 */
-	public SortedMap<Column, ITimestampedCellStore> getRow(Row row)
-	{
+	public SortedMap<Column, ITimestampedCellStore> getRow(Row row) {
 //		return table.row(row);
 		return null;
 	}
@@ -68,14 +66,13 @@ public abstract class AbstractTable
 	 * @param col {@link Column} key
 	 * @return an {@link Optional} wrapper of {@link ITimestampedCell}
 	 */
-	public ITimestampedCell getTimestampedCell(Row row, Column col)
-	{
+	public ITimestampedCell getTimestampedCell(Row row, Column col) {
 		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
 		return ts_cell_store.isPresent() ? ts_cell_store.get().get() : TimestampedCell.TIMESTAMPED_CELL_INIT; 
 	}
 	
 	/**
-	 * get the <em>latest</em> preceding {@link ITimestampedCell} with {@link Timestamp} smaller than @param ts, 
+	 * Gets the <em>latest</em> preceding {@link ITimestampedCell} with {@link Timestamp} smaller than @param ts, 
 	 * indexed by a {@link Row} key (@param row) and a {@link Column} key (@param col).
 	 * 
 	 * <b>Note:</b> The result could be "NULL" (the initial value), 
@@ -86,8 +83,7 @@ public abstract class AbstractTable
 	 * @param ts {@link Timestamp} to compare
 	 * @return an {@link Optional} wrapper of {@link ITimestampedCell}
 	 */
-	public ITimestampedCell getTimestampedCell(Row row, Column col, Timestamp ts)
-	{
+	public ITimestampedCell getTimestampedCell(Row row, Column col, Timestamp ts) {
 		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
 		return ts_cell_store.isPresent() ? ts_cell_store.get().get(ts) : TimestampedCell.TIMESTAMPED_CELL_INIT;
 	}
@@ -102,14 +98,11 @@ public abstract class AbstractTable
 	 * @param col {@link Column} key
 	 * @return an {@link Optional} wrapper of {@link ITimestampedCellStore}
 	 */
-	protected Optional<ITimestampedCellStore> getTimestampedCellStore(Row row, Column col)
-	{
+	protected Optional<ITimestampedCellStore> getTimestampedCellStore(Row row, Column col) {
 		this.read_lock.lock();
-		try
-		{
+		try {
 			return Optional.ofNullable(table.get(row, col));
-		} finally
-		{
+		} finally {
 			this.read_lock.unlock();
 		}
 	}
@@ -121,38 +114,31 @@ public abstract class AbstractTable
 	 * 
 	 * FIXME Not implemented yet!
 	 */
-	public void put(Row row, Map<Column, ITimestampedCell> col_data_map)
-	{
+	public void put(Row row, Map<Column, ITimestampedCell> col_data_map) {
 	}
 	
 	/**
 	 * Apply the {@link ToCommitTransaction} to this {@link #table}
 	 * @param tx transaction commit log of type {@link ToCommitTransaction}
 	 */
-	public void apply(ToCommitTransaction tx)
-	{
+	public void apply(ToCommitTransaction tx) {
 		this.apply(tx.getSts(), tx.getBufferedUpdates());
 	}
 	
 	/**
 	 * Apply all the {@link BufferedUpdates} with timestamp @param cts to this {@link #table}.
-	 * @param buffered_updates {@link BufferedUpdates}
+	 * @param cts	new {@link Timestamp} for @param buffered_updates
+	 * @param buffered_updates {@link BufferedUpdates} to be applied
 	 */
-	public void apply(Timestamp cts, BufferedUpdates buffered_updates)
-	{
-		buffered_updates.stream().forEach(this::put);
-	}
-	
-	public void put(KVItem kv_item)
-	{
-		this.put(kv_item.getCK(), kv_item.getTsCell());
+	public void apply(Timestamp cts, BufferedUpdates buffered_updates) {
+		buffered_updates.stream().forEach(item -> 
+							this.put(item.getCK(), TimestampedCell.replaceTimestamp(cts, item.getTsCell())));
 	}
 	
 	/**
 	 * Put data ({@link CompoundKey}, {@link ITimestampedCell}) into {@link #table}.
 	 */
-	public void put(CompoundKey ck, ITimestampedCell tc)
-	{
+	public void put(CompoundKey ck, ITimestampedCell tc) {
 		this.put(ck.getRow(), ck.getCol(), tc);
 	}
 	
@@ -174,7 +160,7 @@ public abstract class AbstractTable
 	 */
 	public void put(Row row, Column col, ITimestampedCell tc)
 	{
-//		LOGGER.info("Put data [{}, {}, {}] into table.", row, col, tc);
+		LOGGER.info("Put data [{}, {}, {}] into table.", row, col, tc);
 		
 		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
 	

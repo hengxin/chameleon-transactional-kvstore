@@ -13,30 +13,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.MoreObjects;
+import com.sun.istack.Nullable;
 
 import context.IContext;
 import exception.SiteException;
 import exception.rmi.RMIRegistryException;
 import jms.AbstractJMSParticipant;
-import jms.master.JMSCommitLogPublisher;
-import jms.slave.JMSCommitLogSubscriber;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
-import kvs.table.MasterTable;
-import kvs.table.SlaveTable;
 import network.membership.Member;
 import rmi.IRemoteSite;
 
 /**
  * An {@link AbstractSite} holds an {@link AbstractTable} 
  * and acts as an {@link AbstractJMSParticipant}.
- * <p> 
- * Specifically, a master site holds a {@link MasterTable}
- * and acts as an {@link JMSCommitLogPublisher}, while a slave site
- * holds a {@link SlaveTable} and acts as an {@link JMSCommitLogSubscriber}.
- *  
+ * Upon its underlying {@link AbstractTable}, it provides 
+ * basic data access operations (by implementing {@link IDataProvider}),
+ * and these operations are available remotely (by implementing {@link IRemoteSite}).
  * @author hengxin
  * @date Created on 11-25-2015
  */
@@ -45,13 +40,15 @@ public abstract class AbstractSite implements IDataProvider, IRemoteSite {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSite.class);
 	
 	private final Member self;
-	protected AbstractTable table;
-	protected Optional<AbstractJMSParticipant> jmser = Optional.empty();
 	protected final IContext context;
+	protected AbstractTable table;
+	/** FIXME push down into its subclasses ({@link AbstractMaster} and {@link AbstractSlave}) ??? **/
+	protected Optional<AbstractJMSParticipant> jmser = Optional.empty();	
 	
-	public AbstractSite(IContext context) {
+	public AbstractSite(IContext context, @Nullable AbstractJMSParticipant jmser) {
 		this.context = context;
 		this.self = context.self();
+		this.jmser = Optional.ofNullable(jmser);
 	}
 	
 	/**
@@ -123,13 +120,9 @@ public abstract class AbstractSite implements IDataProvider, IRemoteSite {
 	 * @throws	RMIRegistryException 	if an error occurs in locating remote stub for some site
 	 */
 	public static List<IRemoteSite> locateRMISites(List<Member> members) {
-		return members.parallelStream()
+		return members.stream()
 				.map(AbstractSite::locateRMISite)
 				.collect(Collectors.toList());
-	}
-	
-	public void registerAsJMSParticipant(AbstractJMSParticipant jmser) {
-		this.jmser = Optional.of(jmser);
 	}
 
 	@Override

@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import exception.SiteException;
 import exception.network.membership.MemberParseException;
-import jms.AbstractJMSParticipant;
-import jms.slave.JMSCommitLogSubscriber;
 import site.AbstractSite;
 import slave.context.SlaveContext;
 
@@ -38,9 +36,6 @@ public class SlaveLauncher
 	{
 		SlaveContext context = new SlaveContext(file);
 		AbstractSite slave = new RCSlave(context);
-		
-		AbstractJMSParticipant subscriber = new JMSCommitLogSubscriber();
-		slave.registerAsJMSParticipant(subscriber);
 		
 		slave.export();
 		

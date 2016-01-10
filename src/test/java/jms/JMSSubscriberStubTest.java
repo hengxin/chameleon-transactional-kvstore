@@ -12,8 +12,8 @@ import org.junit.Test;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import jms.master.JMSCommitLogPublisher;
-import jms.slave.JMSCommitLogSubscriber;
+import jms.master.JMSPublisher;
+import jms.slave.JMSSubscriber;
 import kvs.component.Cell;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
@@ -24,15 +24,15 @@ import kvs.table.SlaveTable;
 import messages.AbstractMessage;
 
 /**
- * Mock {@link JMSCommitLogSubscriber} using {@link JMSCommitLogSubscriberStub} 
+ * Mock {@link JMSSubscriber} using {@link JMSSubscriberStub} 
  * and test it onMessage() method.
  * 
  * @author hengxin
  * @date Created on 11-25-2015
  */
-public class JMSCommitLogSubscriberStubTest
-{
-	private final AbstractJMSParticipant publisher = new JMSCommitLogPublisher();
+public class JMSSubscriberStubTest {
+
+	private final AbstractJMSParticipant publisher = new JMSPublisher();
 	
 	private Timestamp sts; 
 	private CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
@@ -49,9 +49,8 @@ public class JMSCommitLogSubscriberStubTest
 	private AbstractJMSParticipant subscriber = null;
 
 	@Before
-	public void setUp() throws Exception
-	{
-		this.subscriber = new JMSCommitLogSubscriberStub(this.table);
+	public void setUp() throws Exception {
+		this.subscriber = new JMSSubscriberStub(this.table);
 		
 		this.sts = new Timestamp(1);
 		this.buffered_updates.intoBuffer(this.ck_rx_cx, this.cell_rx_cx);
@@ -60,12 +59,11 @@ public class JMSCommitLogSubscriberStubTest
 
 		Assert.assertNotNull("The message to be published cannot be null.", this.commit_log_message);
 
-		((JMSCommitLogPublisher) this.publisher).publish(this.commit_log_message);
+		((JMSPublisher) this.publisher).publish(this.commit_log_message);
 	}
 
 	@Test
-	public void testOnMessage() throws InterruptedException
-	{
+	public void testOnMessage() throws InterruptedException {
 		// wait a moment for the subscriber to receive the {@link ToCommitTransaction} log and update the {@link #table}
 		Thread.sleep(2000);
 
@@ -83,28 +81,24 @@ public class JMSCommitLogSubscriberStubTest
 	 * @author hengxin
 	 * @date 11-25-2015
 	 * 
-	 * Mock {@link JMSCommitLogSubscriber}, then we can test its onMessage() behavior.
+	 * Mock {@link JMSSubscriber}, then we can test its onMessage() behavior.
 	 */
-	private final class JMSCommitLogSubscriberStub extends JMSCommitLogSubscriber
-	{
+	private final class JMSSubscriberStub extends JMSSubscriber {
+
 		private AbstractTable table = null;
 		
-		public JMSCommitLogSubscriberStub(AbstractTable table)
-		{
+		public JMSSubscriberStub(AbstractTable table) {
 			this.table = table;
 		}
 		
 		@Override
-		public void onMessage(Message msg)
-		{
+		public void onMessage(Message msg) {
 			ObjectMessage obj_msg = (ObjectMessage) msg;
-			try
-			{
+			try {
 				ToCommitTransaction commit_log_msg = (ToCommitTransaction) obj_msg.getObject();
 				this.table.apply(commit_log_msg.getSts(), commit_log_msg.getBufferedUpdates());
-			} catch (JMSException jmse)
-			{
-				System.out.format("Fail to receive the message: %s.", jmse.getMessage());
+			} catch (JMSException jmse) {
+				System.err.format("Fail to receive the message: %s.", jmse.getMessage());
 				jmse.printStackTrace();
 				System.exit(1);
 			}

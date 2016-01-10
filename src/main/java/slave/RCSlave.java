@@ -1,15 +1,12 @@
 package slave;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.sun.istack.Nullable;
 
-import client.clientlibrary.transaction.ToCommitTransaction;
 import context.IContext;
-import jms.AbstractJMSParticipant;
+import jms.slave.JMSSubscriber;
 import kvs.table.SlaveTable;
-import messages.AbstractMessage;
 import messages.IMessageConsumer;
-import site.AbstractSite;
+import site.ITransactional;
 
 /**
  * A {@link RCSlave} only needs to enforce the "Read Committed" isolation
@@ -21,28 +18,31 @@ import site.AbstractSite;
  * @author hengxin
  * @date Created on 11-25-2015
  */
-public final class RCSlave extends AbstractSite implements IMessageConsumer {
-
-	private final static Logger LOGGER = LoggerFactory.getLogger(RCSlave.class);
-	
-	public RCSlave(IContext context) {
-		super(context);
-		super.table = new SlaveTable();
-	}
+public final class RCSlave extends AbstractSlave implements IMessageConsumer {
 
 	/**
-	 * {@inheritDoc}
+	 * Constructor with {@link SlaveTable} as the default underlying table
+	 * and with {@link JMSSubscriber} as the default underlying 
+	 * mechanism of receiving message.
+	 * @param context	context for this slave site
 	 */
-	@Override
-	public void onMessage(AbstractMessage msg) {
-		LOGGER.info("Receiving commit log [{}].", msg);
-		super.table.apply((ToCommitTransaction) msg);
+	public RCSlave(IContext context) {
+		super(context, new JMSSubscriber());
+		super.table = new SlaveTable();
 	}
 	
-	@Override
-	public void registerAsJMSParticipant(AbstractJMSParticipant jmser) {
-		super.registerAsJMSParticipant(jmser);
-		jmser.bindto(this);
+	/**
+	 * Constructor with {@link SlaveTable} as the default underlying table
+	 * and with user-specified {@link JMSSubscriber} as the underlying
+	 * mechanism of message propagation.
+	 * @param context	context for the master site
+	 * @param jms_subscriber	the underlying mechanism of receiving messages; 
+	 * 	it can be {@code null} if this slave site does not receive messages. 
+	 * @implNote
+	 *   FIXME removing the default {@link SlaveTable}; putting it into the parameters.
+	 */
+	public RCSlave(IContext context, @Nullable JMSSubscriber jms_subscriber) {
+		super(context, jms_subscriber);
 	}
 
 }

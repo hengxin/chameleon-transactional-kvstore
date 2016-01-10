@@ -12,9 +12,10 @@ import kvs.component.Timestamp;
  * 
  * <p> Interface for timestamped-cells, {@link Cell}s associated with {@link Timestamp}s.
  */
-public interface ITimestampedCell extends Comparable<ITimestampedCell>, Serializable
-{
+public interface ITimestampedCell extends Comparable<ITimestampedCell>, Serializable {
+
 	public Timestamp getTS();
 	public Ordinal getOrdinal();
 	public Cell getCell();
+
 }

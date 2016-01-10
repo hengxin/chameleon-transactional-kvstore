@@ -6,25 +6,21 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
-import javax.jms.IllegalStateException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sun.istack.Nullable;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.IContext;
 import exception.transaction.TransactionCommunicationException;
 import exception.transaction.TransactionExecutionException;
-import jms.master.JMSCommitLogPublisher;
+import jms.master.JMSPublisher;
 import kvs.component.Timestamp;
 import kvs.compound.CKeyToOrdinalIndex;
 import kvs.table.MasterTable;
-import master.context.MasterContext;
 import master.mvcc.StartCommitLogs;
-import messages.AbstractMessage;
-import messages.IMessageProducer;
-import site.AbstractSite;
 import site.ITransactional;
 
 /**
@@ -44,10 +40,9 @@ import site.ITransactional;
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public class SIMaster extends AbstractSite implements ITransactional, IMessageProducer {
+public final class SIMaster extends AbstractMaster implements ITransactional {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
-
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
@@ -55,18 +50,33 @@ public class SIMaster extends AbstractSite implements ITransactional, IMessagePr
 	private final CKeyToOrdinalIndex ck_ord_index = new CKeyToOrdinalIndex();
 
 	/**
-	 * Constructor with {@link MasterContext}.
+	 * Constructor with {@link MasterTable} as the default underlying table
+	 * and with {@link JMSPublisher} as the default underlying 
+	 * mechanism of message propagation.
+	 * @param context	context for the master site
 	 */
 	public SIMaster(IContext context) {
-		super(context);
+		this(context, new JMSPublisher());
+	}
+	
+	/**
+	 * Constructor with {@link MasterTable} as the default underlying table
+	 * and with user-specified {@link JMSPublisher} as the underlying
+	 * mechanism of message propagation.
+	 * @param context	context for the master site
+	 * @param jms_publisher		the underlying mechanism of message propagation; 
+	 * 	it can be {@code null} if this master site does not need to propagate messages. 
+	 * @implNote
+	 *   FIXME removing the default {@link MasterTable}; putting it into the parameters.
+	 */
+	public SIMaster(IContext context, @Nullable JMSPublisher jms_publisher) {
+		super(context, jms_publisher);
 		super.table = new MasterTable();	// the underlying database in the "table" form
 	}
 	
 	/**
 	 * Start a transaction: generate and assign a new start-timestamp.
-	 * 
-	 * @return 
-	 * 		A start-timestamp 
+	 * @return A start-timestamp 
 	 * @throws TransactionExecutionException 
 	 */
 	@Override
@@ -145,7 +155,7 @@ public class SIMaster extends AbstractSite implements ITransactional, IMessagePr
 				 */
 				this.table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
 				try {
-					this.send(tx); // (5) propagate
+					super.send(tx); // (5) propagate
 				} catch (TransactionCommunicationException tae) {
 					LOGGER.warn(tae.getMessage(), tae.getCause());
 				}		
@@ -163,23 +173,4 @@ public class SIMaster extends AbstractSite implements ITransactional, IMessagePr
 		}
 	}
 
-	@Override
-	public void send(AbstractMessage msg) throws TransactionCommunicationException {
-		Future<Void> dummy_future = this.exec.submit(() -> {
-			((JMSCommitLogPublisher) super.jmser.orElseThrow(() -> 
-				new IllegalStateException(String.format("The master [%s] has not been registered as a JMS publisher. Please call registerAsJMSParticipant() first.", this))))
-				.publish(msg);
-
-			LOGGER.info("The master [{}] has published the commit log [{}] to its slaves.", this, msg);
-			return null;
-		});
-		
-		try {
-			dummy_future.get();
-		} catch (InterruptedException | ExecutionException e) {
-			String log = String.format("I [{}] Failded to publish the commit log [{}]. \n {}", super.context.self(), msg);
-			LOGGER.error(log);	// log at the master side
-			throw new TransactionCommunicationException(log, e.getCause());	// thrown to the client side
-		}
-	}
 }
