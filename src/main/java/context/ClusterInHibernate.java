@@ -1,13 +1,13 @@
 package context;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-import com.sun.istack.Nullable;
+import javax.annotation.Nonnull;
 
-import exception.network.membership.MasterMemberParseException;
-import exception.network.membership.MemberParseException;
-import exception.network.membership.SlaveMemberParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import network.membership.ClientMembership;
 import network.membership.Member;
 
@@ -19,12 +19,15 @@ import network.membership.Member;
  * @date Created on Jan 1, 2016
  */
 public class ClusterInHibernate {
-
-	protected final int cno;
-	protected final Member master;
-	protected final List<Member> slaves;
 	
-	public ClusterInHibernate(int cno, @Nullable Member master, List<Member> slaves) {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClusterInHibernate.class);
+
+	/** globally unique cluster no **/
+	protected final int cno;
+	@Nonnull protected final Member master;
+	@Nonnull protected final List<Member> slaves;
+	
+	public ClusterInHibernate(int cno, @Nonnull Member master, List<Member> slaves) {
 		this.cno = cno;
 		this.master = master;
 		this.slaves = slaves;
@@ -35,9 +38,8 @@ public class ClusterInHibernate {
 	 * @param cluster_no_str	string format of {@link #cno}
 	 * @param cluster_str		string format of {@link #master} + {@link #slaves}, 
 	 * 						separated by commas: master, slave, slave, ...
-	 * @return	an instance of {@link ClusterInHibernate}
-	 * @throws MasterMemberParseException	if it fails to parse the master of the cluster
-	 * @throws SlaveMemberParseException	if it fails to parse some slave of the cluster
+	 * @return	an instance of {@link ClusterInHibernate}; If the master of this cluster
+	 * 	cannot be parsed, the system exits.
 	 */
 	public static ClusterInHibernate parse(String cluster_no_str, String cluster_str) {
 				int cno = Integer.parseInt(cluster_no_str);
@@ -48,22 +50,14 @@ public class ClusterInHibernate {
 				String slaves_str = cluster_str.substring(sep + 1).trim();
 				
 				// parse master
-				Member master = null;
-				try{
-					master = Member.parseMember(master_str);
-				} catch (MemberParseException mpe) {
-					throw new MasterMemberParseException(mpe);
+				Optional<Member> master_opt = Member.parseMember(master_str);
+				if (! master_opt.isPresent()) {
+					LOGGER.error("Cannot parse the master [{}]", master_str);
+					System.exit(1);	// fail fast
 				}
 				
-				// parse slaves
-				List<Member> slaves = Collections.emptyList(); 
-				try{
-					slaves = Member.parseMembers(slaves_str);
-				} catch (MemberParseException mpe) {
-					throw new SlaveMemberParseException(mpe);
-				}
-
-				return new ClusterInHibernate(cno, master, slaves);
+				return new ClusterInHibernate(cno, master_opt.get(), 
+												Member.parseMembers(slaves_str));
 	}
 	
 }

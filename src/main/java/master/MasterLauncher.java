@@ -23,20 +23,17 @@ public class MasterLauncher {
 	 * Launch with default properties file, which is
 	 * {@value #MASTER_MEMBERSHIP_PROPERTIES_FILE}.
 	 * @throws SiteException 
-	 * @throws MemberParseException 
 	 */
-	public MasterLauncher() throws SiteException, MemberParseException {
+	public MasterLauncher() {
 		this(MASTER_MEMBERSHIP_PROPERTIES_FILE);
 	}
 	
 	/**
 	 * Launch with user-specified properties file.
-	 * @param file
-	 * 		Path of the properties file.
+	 * @param file path of the properties file.
 	 * @throws SiteException 
-	 * @throws MemberParseException 
 	 */
-	public MasterLauncher(String file) throws SiteException, MemberParseException {
+	public MasterLauncher(String file) {
 		MasterContext context = new MasterContext(file);
 		AbstractSite master = new SIMaster(context);
 		

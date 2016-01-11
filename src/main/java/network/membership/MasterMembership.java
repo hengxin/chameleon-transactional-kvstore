@@ -1,13 +1,12 @@
 package network.membership;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import exception.network.membership.MasterMemberParseException;
-import exception.network.membership.MemberParseException;
-import exception.network.membership.SlaveMemberParseException;
 
 /**
  * A master needs to know itself and all of <i>its</i> slaves.
@@ -21,44 +20,42 @@ public final class MasterMembership extends AbstractStaticMembership {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterMembership.class);
 	
-	private List<Member> slaves;
+	@Nonnull private List<Member> slaves;
 
-	public MasterMembership(String file) {
+	public MasterMembership(@Nonnull String file) {
 		super(file);
 	}
 
 	/**
 	 * Only one line to parse: master = slave, slave, ... 
-	 * @throws MasterMemberParseException	if it fails to parse the master itself
-	 * @throws SlaveMemberParseException	if it fails to parse some of slaves
-	 * @throws MemberParseException			if super#prop is in ill-format.
+	 * <p> The system exits if an error occurs during parse 
+	 * 	(maybe due to ill-formated file or master parse error).
 	 */
 	@Override
 	public void parseMembershipFromProp() {
-		if (super.prop.size() != 1)
-			throw new MemberParseException(String.format("Failed to load membership from [%s]: It should contain a single line of the (master = slave, slave, ...) format.", super.file));
+		if (super.prop.size() != 1) {
+			LOGGER.error("Failed to parse membership from [%s]: It should a single line of the (master = slave, slave, ...) format.", super.file);
+			System.exit(1);	// fail fast
+		}
 		
 		String master = super.prop.stringPropertyNames().toArray(new String[1])[0];
 		String slaves = super.prop.getProperty(master);
 
 		// parse the master itself
-		try{
-			super.self = Member.parseMember(master);
-		} catch(MemberParseException mpe) {
-			throw new MasterMemberParseException(mpe);
+		Optional<Member> master_opt = Member.parseMember(master);
+		if(! master_opt.isPresent()) {
+			LOGGER.error("Cannot parse this master [{}] itself.", master);
+			System.exit(1);	// fail fast
 		}
+		super.self = master_opt.get();
 		
 		// parse slaves
-		try{
-			this.slaves = Member.parseMembers(slaves);
-		} catch(MemberParseException mpe) {
-			throw new SlaveMemberParseException(mpe);
-		}
+		this.slaves = Member.parseMembers(slaves);
 
 		LOGGER.info("I am a master: {}. My slaves are: {}.", master, slaves);
 	}
 
-	public List<Member> getSlaves() {
+	public @Nonnull List<Member> getSlaves() {
 		return slaves;
 	}
 }

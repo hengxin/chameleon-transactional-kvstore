@@ -7,7 +7,7 @@ import com.sun.istack.Nullable;
 
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import rmi.IRemoteSite;
+import rmi.IRMI;
 
 /**
  * {@link Abstract2PCCoordinator} is responsible for coordinating the 2PC protocol.
@@ -28,8 +28,8 @@ public abstract class Abstract2PCCoordinator {
 	 * @see	#to_commit_decision
 	 * @see #is_committed
 	 */
-	protected final Map<IRemoteSite, Boolean> prepared_decisions = new ConcurrentHashMap<>();
-	protected final Map<IRemoteSite, Boolean> committed_decisions = new ConcurrentHashMap<>();
+	protected final Map<IRMI, Boolean> prepared_decisions = new ConcurrentHashMap<>();
+	protected final Map<IRMI, Boolean> committed_decisions = new ConcurrentHashMap<>();
 
 	/**
 	 * {@link #to_commit_decision}: 

@@ -8,15 +8,15 @@ import kvs.component.Row;
 import kvs.compound.ITimestampedCell;
 
 /**
- * Interface {@link IDataProvider} exposes basic (i.e., non-transactional)
+ * Interface {@link ISite} exposes basic (i.e., non-transactional)
  * data access operations like {@link #read(Row, Column)} and 
- * {@link #write(Row, Column, ITimestampedCell)}.
+ * {@link #put(Row, Column, ITimestampedCell)}.
  * These operations are available remotely, by letting this interface 
- * {@link IDataProvider} extend {@link Remote}.
+ * {@link ISite} extend {@link Remote}.
  * @author hengxin
  * @date Created on 12-09-2015
  */
-public interface IDataProvider extends Remote {
+public interface ISite extends Remote {
 
 	/**
 	 * Reads from this data provider.
@@ -35,5 +35,5 @@ public interface IDataProvider extends Remote {
 	 * @return		{@code true} if write successfully; {@code false}, otherwise.
 	 * @throws RemoteException	if an error occurs during the RMI call
 	 */
-	public boolean write(Row r, Column c, ITimestampedCell ts_cell) throws RemoteException;
+	public boolean put(Row r, Column c, ITimestampedCell ts_cell) throws RemoteException;
 }

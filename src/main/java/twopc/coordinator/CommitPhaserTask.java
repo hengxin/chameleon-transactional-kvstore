@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import rmi.IRemoteSite;
+import rmi.IRMI;
 import twopc.coordinator.RVSI2PCPhaserCoordinator.Phase;
 import twopc.participant.I2PCParticipant;
 
@@ -51,12 +51,12 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 	public Boolean call() throws Exception {
 		LOGGER.info("Begin the [{}] phase with participant [{}].", Phase.PREPARE, this.participant);
 		boolean prepared_decision = this.participant.prepare(tx, vcm);
-		this.coordinator.prepared_decisions.put((IRemoteSite) participant, prepared_decision);
+		this.coordinator.prepared_decisions.put((IRMI) participant, prepared_decision);
 		((RVSI2PCPhaserCoordinator) this.coordinator).phaser.arriveAndAwaitAdvance();
 		
 		LOGGER.info("Begin the [{}] phase with participant [{}].", Phase.COMMIT, this.participant);
 		boolean committed_decision = this.participant.complete();
-		this.coordinator.committed_decisions.put((IRemoteSite) participant, committed_decision);
+		this.coordinator.committed_decisions.put((IRMI) participant, committed_decision);
 		((RVSI2PCPhaserCoordinator) this.coordinator).phaser.arriveAndAwaitAdvance();
 
 		return null;

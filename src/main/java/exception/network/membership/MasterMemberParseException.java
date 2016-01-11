@@ -6,7 +6,9 @@ package exception.network.membership;
  * @author hengxin
  * @date Created on Jan 1, 2016
  * @see {@link SlaveMemberParseException}
+ * @deprecated not used any more
  */
+@Deprecated
 public class MasterMemberParseException extends MemberParseException {
 
 	private static final long serialVersionUID = 4267885981567197079L;

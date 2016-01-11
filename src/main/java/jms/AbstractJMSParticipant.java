@@ -50,8 +50,6 @@ public abstract class AbstractJMSParticipant {
 	protected TopicPublisher publisher = null;
 	protected TopicSubscriber subscriber = null;
 	
-	protected AbstractSite site = null;	// bind to a site
-	
 	/**
 	 * Load JMS configuration, initialize context, create connection factory, create top connection,
 	 * create session, create publisher or subscriber (as a message listener),
@@ -119,12 +117,4 @@ public abstract class AbstractJMSParticipant {
 		}
 	}
 
-//	/**
-//	 * Bind this {@link AbstractJMSParticipant} to an {@link AbstractSite}.
-//	 * <p> For now, only the {@link JMSSubscriber} needs to implement it 
-//	 * and binds itself to an {@link ISlave}.
-//	 * @param site an {@link AbstractSite} to be bound to
-//	 */
-//	public abstract void bindto(AbstractSite site);
-	
 }

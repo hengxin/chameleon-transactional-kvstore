@@ -16,26 +16,28 @@ import com.google.common.base.MoreObjects;
 import com.sun.istack.Nullable;
 
 import context.IContext;
-import exception.SiteException;
 import exception.rmi.RMIRegistryException;
 import jms.AbstractJMSParticipant;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
+import master.AbstractMaster;
 import network.membership.Member;
-import rmi.IRemoteSite;
+import rmi.IRMI;
+import slave.AbstractSlave;
 
 /**
  * An {@link AbstractSite} holds an {@link AbstractTable} 
  * and acts as an {@link AbstractJMSParticipant}.
- * Upon its underlying {@link AbstractTable}, it provides 
- * basic data access operations (by implementing {@link IDataProvider}),
- * and these operations are available remotely (by implementing {@link IRemoteSite}).
+ * Upon its underlying {@link AbstractTable}, it provides remotely available 
+ * {@code get/put} operations (by implementing {@link ISite}).
+ * An {@link AbstractSite} is able to export itself for RMI calls 
+ * (by implementing {@link IRMI}).
  * @author hengxin
  * @date Created on 11-25-2015
  */
-public abstract class AbstractSite implements IDataProvider, IRemoteSite {
+public abstract class AbstractSite implements ISite, IRMI {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSite.class);
 	
@@ -60,10 +62,10 @@ public abstract class AbstractSite implements IDataProvider, IRemoteSite {
 	}
 	
 	/**
-	 * FIXME implementation? Is it appropriate for {@link #write(Row, Column, ITimestampedCell)} here?
+	 * FIXME implementation? Is it appropriate for {@link #put(Row, Column, ITimestampedCell)} here?
 	 */
 	@Override
-	public boolean write(Row r, Column c, ITimestampedCell ts_cell) throws RemoteException {
+	public boolean put(Row r, Column c, ITimestampedCell ts_cell) {
 		return false;
 	}
 
@@ -71,7 +73,7 @@ public abstract class AbstractSite implements IDataProvider, IRemoteSite {
 	 * Export self for remote accesses via RMI.
 	 */
 	@Override
-	public void export() throws SiteException {
+	public void export() {
 		System.setProperty("java.rmi.server.hostname", this.self.getAddrIp());
 
 		try {
@@ -79,49 +81,54 @@ public abstract class AbstractSite implements IDataProvider, IRemoteSite {
 			LocateRegistry.createRegistry(this.self.getRmiRegistryPort()).rebind(this.self.getRmiRegistryName(), remote);
 			LOGGER.info("The site [{}] has successfully exported itself as [{}] for remote accesses.", this.self, remote);
 		} catch (RemoteException re) {
-			throw new SiteException(String.format("Failed to export self [%s] for remote accesses.", self), re.getCause());
+			throw new RMIRegistryException(String.format("Failed to export self [%s] for remote accesses.", self), re.getCause());
 		}
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * 
-	 * @implNote
-	 * 		FIXME Currently this implementation is buggy. Don't call it in your code.
+	 * @implNote 
+	 * 	@deprecated FIXME Currently this implementation is buggy. Don't call it in your code.
 	 */
+	@Deprecated
 	@Override
-	public void reclaim() throws SiteException {
+	public void reclaim() {
 		try {
 			LocateRegistry.getRegistry(this.self.getAddrIp(), this.self.getRmiRegistryPort()).unbind(this.self.getRmiRegistryName());
 		} catch (RemoteException | NotBoundException e) {
-			throw new SiteException(String.format("Failed to reclaim self (%s) from remote access.", this.self), e.getCause());
+			throw new RMIRegistryException(String.format("Failed to reclaim self (%s) from remote access.", this.self), e.getCause());
 		}
 	}
 	
 	/**
 	 * Locate the stub for the {@link Member}; used later for RMI invocation.
-	 * 
 	 * @param member an {@link Member} representing a site
-	 * @return 	a remote stub of {@link IRemoteSite}
-	 * @throws RMIRegistryException		if an error occurs during RMI locating
+	 * @return 	an {@link Optional}-wrapped remote stub of {@link ISite}; 
+	 * 	it could be {@code Optional.empty()} if an error occurs during RMI localization.
 	 */
-	public static IRemoteSite locateRMISite(Member member) {
+	public static Optional<ISite> locateRMISite(Member member) {
 		try {
-			return (IRemoteSite) LocateRegistry.getRegistry(member.getAddrIp(), member.getRmiRegistryPort()).lookup(member.getRmiRegistryName());
+			ISite site = (ISite) LocateRegistry.getRegistry(member.getAddrIp(), 
+															member.getRmiRegistryPort())
+											   .lookup(member.getRmiRegistryName());
+			return Optional.of(site);
 		} catch (RemoteException | NotBoundException e) {
-			throw new RMIRegistryException(member, e);
+			LOGGER.warn("Cannot locate [{}] via RMI.", member);
+			return Optional.empty();
 		}
 	}
 	
 	/**
-	 * Locate the stubs for a list of {@link Member}. used later for RMI invocation.
-	 * @param members a list of {@link Member}s to be parsed.
-	 * @return 	a list of {@link IRemoteSite} stubs; 
-	 * @throws	RMIRegistryException 	if an error occurs in locating remote stub for some site
+	 * Locate the stubs for a list of {@link Member}; used later for RMI invocation.
+	 * @param members a list of {@link Member}s to be located.
+	 * @return 	a list of {@link ISite} stubs
+	 * @implNote Note that only the {@link ISite}s that can be located 
+	 * 	via RMI are returned; others are ignored. Therefore, the return list may be empty.
 	 */
-	public static List<IRemoteSite> locateRMISites(List<Member> members) {
+	public static List<ISite> locateRMISites(List<Member> members) {
 		return members.stream()
 				.map(AbstractSite::locateRMISite)
+				.filter(Optional::isPresent)
+				.map(Optional::get)
 				.collect(Collectors.toList());
 	}
 

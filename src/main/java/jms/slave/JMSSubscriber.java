@@ -11,7 +11,6 @@ import javax.jms.ObjectMessage;
 import jms.AbstractJMSParticipant;
 import jms.master.JMSPublisher;
 import messages.AbstractMessage;
-import site.AbstractSite;
 import slave.AbstractSlave;
 
 /**
@@ -22,6 +21,8 @@ import slave.AbstractSlave;
  */
 public class JMSSubscriber extends AbstractJMSParticipant implements MessageListener {
 
+	private AbstractSlave site = null;	// bind to a site
+
 	/**
 	 * Receive messages from {@link JMSPublisher},
 	 * and dispatch them to {@link #site} (which should be an {@link AbstractSlave}).
@@ -31,7 +32,7 @@ public class JMSSubscriber extends AbstractJMSParticipant implements MessageList
 		ObjectMessage obj_msg = (ObjectMessage) msg;
 		try {
 			AbstractMessage a_msg = (AbstractMessage) obj_msg.getObject();
-			((AbstractSlave) super.site).onMessage(a_msg);
+			this.site.onMessage(a_msg);
 		} catch (JMSException jmse) {
 			System.out.format("Fail to receive messages, due to %s.", jmse.getMessage());
 			jmse.printStackTrace();
@@ -47,8 +48,8 @@ public class JMSSubscriber extends AbstractJMSParticipant implements MessageList
 		super.subscriber.setMessageListener(this);	// FIXME unsafe object publishing???
 	}
 
-	public void bindto(AbstractSite site) {
-		super.site = site;
+	public void bindto(AbstractSlave site) { 	// FIXME replaced by constructor
+		this.site = site;	
 	}
 
 }

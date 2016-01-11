@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,11 +20,11 @@ public abstract class AbstractStaticMembership {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractStaticMembership.class);
 	
-	protected final String file;
-	protected final Properties prop = new Properties();
-	protected Member self;
+	@Nonnull protected final String file;
+	@Nonnull protected final Properties prop = new Properties();
+	@Nonnull protected Member self;
 	
-	public AbstractStaticMembership(String file) {
+	public AbstractStaticMembership(@Nonnull String file) {
 		this.file = file;
 		this.loadProp();
 		this.parseMembershipFromProp();
@@ -44,8 +46,8 @@ public abstract class AbstractStaticMembership {
 		try (InputStream is = class_loader.getResourceAsStream(this.file)) {
 			this.prop.load(is);
 			LOGGER.info("Load the properties file [{}] successfully.", file);
-		} catch (NullPointerException | IOException | IllegalArgumentException e) {
-			LOGGER.error("Failed to load properties from [{}]. \n [{}]", this.file, e.getCause());
+		} catch (NullPointerException | IOException | IllegalArgumentException exp) {	// TODO catch Exception???
+			LOGGER.error("Failed to load properties from [{}]. \n [{}]", this.file, exp);
 			System.exit(1);
 		}
 	}

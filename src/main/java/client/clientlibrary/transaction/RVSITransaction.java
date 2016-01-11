@@ -25,8 +25,7 @@ import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
-import rmi.IRemoteSite;
-import site.IDataProvider;
+import site.ISite;
 import site.ITransactional;
 
 /**
@@ -63,7 +62,7 @@ public class RVSITransaction implements ITransaction {
 	 */
 	@Override
 	public boolean begin() {
-		IRemoteSite master = ((ClientContextSingleMaster) context).getMaster();
+		ISite master = ((ClientContextSingleMaster) context).getMaster();
 		
 		try {
 			this.sts = ((ITransactional) master).start();
@@ -82,11 +81,11 @@ public class RVSITransaction implements ITransaction {
 
 	@Override
 	public ITimestampedCell read(Row r, Column c) throws TransactionReadException {
-		IRemoteSite site = context.getReadSite(new CompoundKey(r, c));
+		ISite site = context.getReadSite(new CompoundKey(r, c));
 		
 		ITimestampedCell ts_cell = TimestampedCell.TIMESTAMPED_CELL_INIT;
 		try { 
-			ts_cell = ((IDataProvider) site).read(r, c);
+			ts_cell = site.read(r, c);
 			this.query_results.put(new CompoundKey(r, c), ts_cell);
 			LOGGER.info("Transaction [{}] read {} from [{}+{}] at site {}", this, ts_cell, r, c, site);
 		} catch (RemoteException re) {
@@ -118,7 +117,7 @@ public class RVSITransaction implements ITransaction {
 		ToCommitTransaction tx = new ToCommitTransaction(this.sts, this.buffered_updates);
 		
 		try {
-			IRemoteSite master = ((ClientContextSingleMaster) context).getMaster();
+			ISite master = ((ClientContextSingleMaster) context).getMaster();
 			return ((ITransactional) master).commit(tx, vc_manager);	
 		} catch (RemoteException | TransactionExecutionException re_tee) {
 			throw new TransactionEndException(String.format("Transaction [%s] failed to commit.", this), re_tee.getCause());

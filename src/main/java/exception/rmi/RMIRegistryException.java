@@ -3,8 +3,9 @@ package exception.rmi;
 import network.membership.Member;
 
 /**
- * A {@link RMIRegistryException} indicates an error in locating, via
- * RMI registry, the remote stub of a site.
+ * A {@link RMIRegistryException} is a {@link RuntimeException} 
+ * which indicates an error in locating, via RMI registry, 
+ * the remote stub of an {@link ISite}.
  * @author hengxin
  * @date Created on Jan 1, 2016
  */

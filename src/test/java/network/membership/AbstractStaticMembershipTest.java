@@ -40,7 +40,7 @@ public final class AbstractStaticMembershipTest {
 	
 	private final class BasicMembership extends AbstractStaticMembership {
 
-		public BasicMembership(String file) throws MemberParseException {
+		public BasicMembership(String file) {
 			super(file);
 		}
 

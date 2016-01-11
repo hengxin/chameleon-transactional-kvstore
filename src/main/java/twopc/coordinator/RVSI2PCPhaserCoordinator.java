@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import rmi.IRemoteSite;
+import site.ISite;
 import twopc.participant.I2PCParticipant;
 
 /**
@@ -50,7 +50,7 @@ public final class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
 	@Override
 	public boolean execute2PC(final ToCommitTransaction tx) {
-		final Map<IRemoteSite, ToCommitTransaction> site_tx_map = super.ctx.partition(tx);
+		final Map<ISite, ToCommitTransaction> site_tx_map = super.ctx.partition(tx);
 		// TODO split the vcm
 
 		List<Callable<Boolean>> task_list = site_tx_map.entrySet().stream()

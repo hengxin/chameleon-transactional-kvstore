@@ -26,12 +26,11 @@ import kvs.compound.ITimestampedCell;
  * @author hengxin
  * @date Created on 12-05-2015
  */
-public class ClientMainTest
-{
+public class ClientMainTest {
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(ClientMainTest.class);
 	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		// context
 		AbstractClientContext context = new ClientContextSingleMaster();
 
@@ -46,12 +45,10 @@ public class ClientMainTest
 		Row r = new Row("R");
 		Column c = new Column("C");
 		
-		try
-		{
+		try {
 			ITimestampedCell ts_cell = tx.read(r, c);
 			LOGGER.info("Read {} from {} + {}.", ts_cell, r, c);
-		} catch (TransactionReadException tre)
-		{
+		} catch (TransactionReadException tre) {
 			LOGGER.error(tre.getMessage(), tre.getCause());
 			System.exit(1);
 		}
@@ -61,12 +58,10 @@ public class ClientMainTest
 		LOGGER.info("Write {} to {} + {}.", "RC11", r, c);
 
 		// end
-		try
-		{
+		try {
 			tx.end();
 			LOGGER.info("Committed.");
-		} catch (TransactionEndException tee)
-		{
+		} catch (TransactionEndException tee) {
 			LOGGER.error(tee.getMessage(), tee.getCause());
 			System.exit(1);
 		}

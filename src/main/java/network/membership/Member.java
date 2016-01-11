@@ -1,13 +1,15 @@
 package network.membership;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import com.google.common.base.MoreObjects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import exception.network.membership.MemberParseException;
+import com.google.common.base.MoreObjects;
 
 /**
  * A member (i.e., site), as a communication entity,
@@ -24,6 +26,8 @@ import exception.network.membership.MemberParseException;
  * @date Created on 12-03-2015
  */
 public final class Member {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Member.class);
 
 	private final String addr_ip;
 	private final int addr_port;
@@ -40,25 +44,23 @@ public final class Member {
 	/**
 	 * Parse a string of the format of "addr_ip@addr_port;rmi_registry_name@rmi_registry_port"
 	 * into a {@link Member} instance.
-	 * 
 	 * @param		member String format of {@link Member}
-	 * @return		A {@link Member} instance
-	 * @throws MemberParseException		if it fails to parse this member
+	 * @return		an {@link Optional}-wrapped {@link Member} instance; it may be {@code Optional.empty()}
+	 * 	if an error occurs during parse.
 	 */
-	public static final Member parseMember(String member) throws MemberParseException {
-		String[] parts = member.replaceAll("\\s", "").split("@|;");
+	public static final Optional<Member> parseMember(String member) {
+		String[] parts = member.replaceAll("\\s", "").split("@|;");		// FIXME remove hard-wired code here
 		
-		try
-		{
+		try {
 			final String addr_ip = parts[0];
 			final int addr_port = Integer.parseInt(parts[1]);
 			final String rmi_registry_name = parts[2];
 			final int rmi_registry_port = Integer.parseInt(parts[3]);
 
-			return new Member(addr_ip, addr_port, rmi_registry_name, rmi_registry_port);
-		} catch (NullPointerException | NumberFormatException e)	// FIXME catch NullPointerException or not?
-		{
-			throw new MemberParseException(String.format("Failed to parse [%s] to a Member because it is ill-formated.", member), e.getCause());
+			return Optional.of(new Member(addr_ip, addr_port, rmi_registry_name, rmi_registry_port));
+		} catch (NullPointerException | NumberFormatException e) {	// FIXME catch NullPointerException or not?
+			LOGGER.error("Failed to parse [{}] to a Member because it is ill-formated. \\n {}", member, e.getCause());
+			return Optional.empty();
 		}
 	}
 	
@@ -66,47 +68,41 @@ public final class Member {
 	 * Parse a collection of strings, separated by commas, into {@link Member} instances.
 	 * 
 	 * @param members String format of a list of {@link Member}
-	 * @return A list of {@link Member}; it may be empty.
-	 * @throws MemberParseException		if it fails to parse some members
+	 * @return a list of {@link Member}; Note that only the {@link Member}s that are successfully
+	 * 	parsed are returned; therefore, the list may be empty.
 	 */
-	public static final List<Member> parseMembers(String members) throws MemberParseException {
-		String[] member_array = members.replaceAll("\\s", "").split(",");
-
-		return Arrays.stream(member_array).parallel() 	// TODO choose appropriate collector for parallel stream
-				.map(Member::parseMember)
-				.collect(Collectors.toList());
+	public static final List<Member> parseMembers(String members) {
+		return Pattern.compile(",").splitAsStream(members.replaceAll("\\s", ""))
+								   .map(Member::parseMember)
+								   .filter(Optional::isPresent)
+								   .map(Optional::get)
+								   .collect(Collectors.toList());
 	}
 
-	public String getAddrIp()
-	{
+	public String getAddrIp() {
 		return addr_ip;
 	}
 
-	public int getAddrPort()
-	{
+	public int getAddrPort() {
 		return addr_port;
 	}
 
-	public String getRmiRegistryName()
-	{
+	public String getRmiRegistryName() {
 		return rmi_registry_name;
 	}
 
-	public int getRmiRegistryPort()
-	{
+	public int getRmiRegistryPort() {
 		return rmi_registry_port;
 	}
 
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		return Objects.hash(addr_ip, addr_port, rmi_registry_name, rmi_registry_port);
 	}
 	
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		if(o == this)
 			return true;
 		if(o == null)
@@ -116,13 +112,14 @@ public final class Member {
 		
 		Member that = (Member) o;
 		
-		return Objects.equals(this.addr_ip, that.addr_ip) && Objects.equals(this.addr_port, that.addr_port)
-				&& Objects.equals(this.rmi_registry_name, that.rmi_registry_name) && Objects.equals(this.rmi_registry_port, that.rmi_registry_port);
+		return Objects.equals(this.addr_ip, that.addr_ip) 
+				&& Objects.equals(this.addr_port, that.addr_port)
+				&& Objects.equals(this.rmi_registry_name, that.rmi_registry_name) 
+				&& Objects.equals(this.rmi_registry_port, that.rmi_registry_port);
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.add("addr_ip", this.addr_ip)
 				.add("addr_port", this.addr_port)
@@ -130,4 +127,5 @@ public final class Member {
 				.add("rmi_registry_port", this.rmi_registry_port)
 				.toString();
 	}
+
 }

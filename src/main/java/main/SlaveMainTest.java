@@ -1,7 +1,6 @@
 package main;
 
 import exception.SiteException;
-import exception.network.membership.MemberParseException;
 import slave.SlaveLauncher;
 
 /**
@@ -10,15 +9,12 @@ import slave.SlaveLauncher;
  * @author hengxin
  * @date Created on 12-05-2015
  */
-public class SlaveMainTest
-{
-	public static void main(String[] args)
-	{
-		try
-		{
+public class SlaveMainTest {
+
+	public static void main(String[] args) {
+		try {
 			new SlaveLauncher();
-		} catch (SiteException | MemberParseException e)
-		{
+		} catch (SiteException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}

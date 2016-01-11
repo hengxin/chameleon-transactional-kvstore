@@ -1,11 +1,11 @@
 package master.context;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import context.IContext;
-import exception.network.membership.MasterMemberParseException;
-import exception.network.membership.MemberParseException;
 import network.membership.AbstractStaticMembership;
 import network.membership.MasterMembership;
 import network.membership.Member;
@@ -29,28 +29,15 @@ public class MasterContext implements IContext {
 	
 	/**
 	 * Constructor using user-specified properties file.
-	 * @param file
-	 * 		Path of the properties file.
+	 * @param file path of the properties file; it cannot be {@code null}.
 	 */
-	public MasterContext(String file) {
+	public MasterContext(@Nonnull String file) {
 		LOGGER.info("Using the properties file [{}] for [{}].", file, this.getClass().getSimpleName());
-
-		try{
-			this.master_membership = new MasterMembership(file);
-		} catch (MasterMemberParseException mmpe) {
-			LOGGER.error("Failed to create master context.", mmpe);
-			System.exit(1);
-		} catch (MemberParseException mpe) {
-			LOGGER.warn("Some slave sites cannot be parsed.", mpe);
-		}
-
-		// FIXME exception handling
-//		this.slave_stubs = AbstractSite.locateRMISites(((MasterMembership) this.master_membership).getSlaves());
-//		LOGGER.info("Successfully parse stubs of my slaves [{}]", this.slave_stubs);
+		this.master_membership = new MasterMembership(file);
 	}
 	
 	@Override
-	public Member self() {
+	public @Nonnull Member self() {
 		return this.master_membership.self();
 	}
 }

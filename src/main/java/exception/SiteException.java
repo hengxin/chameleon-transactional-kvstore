@@ -1,19 +1,16 @@
 package exception;
 
 /**
- * Site-related exception class, for instance,
- * thrown if a site fails to export itself for remote accesses
- * or to reclaim itself from remote accesses.
- * 
+ * A {@link SiteException} is a {@link RuntimeException} that TODO
  * @author hengxin
- * @date Created on 12-09-2015
+ * @date Created on Jan 11, 2016
  */
-public class SiteException extends Exception
-{
-	private static final long serialVersionUID = 5971234679471968716L;
+public class SiteException extends RuntimeException {
 
-	public SiteException(String msg, Throwable cause)
-	{
+	private static final long serialVersionUID = 1392038805996776185L;
+	
+	public SiteException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
+
 }

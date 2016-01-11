@@ -7,7 +7,9 @@ package exception.network.membership;
  * and {@link SlaveMemberParseException}.
  * @author hengxin
  * @date Created on 12-10-2015
+ * @deprecated not used any more
  */
+@Deprecated
 public class MemberParseException extends RuntimeException {
 
 	private static final long serialVersionUID = 1002517245882512187L;

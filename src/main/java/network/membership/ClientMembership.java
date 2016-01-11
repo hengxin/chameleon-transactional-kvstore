@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
+
 import context.ClusterInHibernate;
-import exception.network.membership.MasterMemberParseException;
-import exception.network.membership.SlaveMemberParseException;
 
 /**
  * A client needs to know all the masters and their individual slaves.
@@ -24,7 +24,7 @@ public final class ClientMembership extends AbstractStaticMembership {
 
 	private List<ClusterInHibernate> hibernate_cluster_list;
 	
-	public ClientMembership(String file) {
+	public ClientMembership(@Nonnull String file) {
 		super(file);
 	}
 
@@ -33,14 +33,16 @@ public final class ClientMembership extends AbstractStaticMembership {
 	 * <p> cno = master, slave, slave, ...
 	 * <p> cno = master, slave, slave, ...
 	 * <p> ...
-	 * @throws MasterMemberParseException
-	 * @throws SlaveMemberParseException
+	 * @implNote	The system exits if some {@link ClusterInHibernate} cannot be parsed successfully.
 	 */
 	@Override
 	public void parseMembershipFromProp() {
-		this.hibernate_cluster_list = super.prop.stringPropertyNames().parallelStream()
-				.map(cluster_no_str -> ClusterInHibernate.parse(cluster_no_str, super.prop.getProperty(cluster_no_str)))
-				.collect(Collectors.toList());
+		this.hibernate_cluster_list = 
+				super.prop.stringPropertyNames()
+						  .stream()
+						  .map(cluster_no_str -> 
+						  		ClusterInHibernate.parse(cluster_no_str, super.prop.getProperty(cluster_no_str)))
+						  .collect(Collectors.toList());
 	}
 
 	public Member self() {
