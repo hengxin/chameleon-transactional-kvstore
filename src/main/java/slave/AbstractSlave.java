@@ -1,9 +1,9 @@
 package slave;
 
+import javax.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.istack.Nullable;
 
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.IContext;
@@ -22,6 +22,8 @@ import site.AbstractSite;
  */
 public abstract class AbstractSlave extends AbstractSite implements IMessageConsumer {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSlave.class);
+
 	/**
 	 * @param context	context for this slave site
 	 * @param jms_subscriber	the underlying mechanism of receiving messages; 
@@ -31,8 +33,6 @@ public abstract class AbstractSlave extends AbstractSite implements IMessageCons
 		super(context, jms_subscriber);
 		jms_subscriber.bindto(this);
 	}
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSlave.class);
 
 	@Override
 	public void onMessage(AbstractMessage msg) {

@@ -52,7 +52,7 @@ public class RVSITransactionTest {
 	}
 
 	/**
-	 * Test method for {@link client.clientlibrary.transaction.RVSITransaction#read(kvs.table.Row, kvs.table.Column)}.
+	 * Test method for {@link client.clientlibrary.transaction.RVSITransaction#get(kvs.table.Row, kvs.table.Column)}.
 	 */
 	@Test
 	@Ignore

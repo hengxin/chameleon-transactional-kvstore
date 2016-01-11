@@ -5,6 +5,7 @@ package rmi;
  * operations for remote RMI accesses. 
  * @author hengxin
  * @date Created on 12-03-2015
+ * FIXME alternative: replaced by "extends {@link UnicastRemoteObject}"
  */
 public interface IRMI {
 

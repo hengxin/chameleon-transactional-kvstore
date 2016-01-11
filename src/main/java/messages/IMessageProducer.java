@@ -15,8 +15,8 @@ import exception.transaction.TransactionCommunicationException;
 public interface IMessageProducer {
 	/**
 	 * Sends a message to {@link IMessageConsumer}.
-	 * @param message	{@link AbstractMessage} to send
+	 * @param msg	{@link AbstractMessage} to send
 	 * @throws TransactionCommunicationException	if an error occurs during sending message 
 	 */
-	public abstract void send(AbstractMessage message) throws TransactionCommunicationException;
+	public abstract void send(AbstractMessage msg) throws TransactionCommunicationException;
 }

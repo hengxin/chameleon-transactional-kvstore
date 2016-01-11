@@ -54,10 +54,10 @@ public abstract class AbstractSite implements ISite, IRMI {
 	}
 	
 	/**
-	 * FIXME Is it appropriate for {@link #read(Row, Column)} here?
+	 * FIXME Is it appropriate for {@link #get(Row, Column)} here?
 	 */
 	@Override
-	public ITimestampedCell read(Row r, Column c) {
+	public ITimestampedCell get(Row r, Column c) {
 		return this.table.getTimestampedCell(r, c);
 	}
 	

@@ -50,13 +50,13 @@ public class RCSlaveAsJMSCommitLogSubscriberTest
 		// wait a moment for the subscriber to receive the {@link ToCommitTransaction} log and update the {@link #table}
 		Thread.sleep(2000);
 
-		ITimestampedCell ts_cell_rx_cx = this.slave.read(this.ck_rx_cx.getRow(), this.ck_rx_cx.getCol());
+		ITimestampedCell ts_cell_rx_cx = this.slave.get(this.ck_rx_cx.getRow(), this.ck_rx_cx.getCol());
 		assertEquals("Should get the updated cell: RxCx.", this.cell_rx_cx, ts_cell_rx_cx.getCell());
 		
-		ITimestampedCell ts_cell_ry_cy = this.slave.read(this.ck_ry_cy.getRow(), this.ck_ry_cy.getCol());
+		ITimestampedCell ts_cell_ry_cy = this.slave.get(this.ck_ry_cy.getRow(), this.ck_ry_cy.getCol());
 		assertEquals("Should get the updated cell: RyCy.", this.cell_ry_cy, ts_cell_ry_cy.getCell());
 		
-		ITimestampedCell ts_cell_no_such_data = this.slave.read(this.ck_rx_cx.getRow(), this.ck_ry_cy.getCol());
+		ITimestampedCell ts_cell_no_such_data = this.slave.get(this.ck_rx_cx.getRow(), this.ck_ry_cy.getCol());
 		assertEquals("Should get the initial cell.", TimestampedCell.TIMESTAMPED_CELL_INIT, ts_cell_no_such_data);
 	}
 }

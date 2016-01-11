@@ -33,7 +33,7 @@ import site.ITransactional;
  *  version committed before <i>sts</i>. 
  *  <p>
  *  This design choice has an effect on the implementation of both 
- *  {@link #read(kvs.component.Row, kvs.component.Column)} and 
+ *  {@link #get(kvs.component.Row, kvs.component.Column)} and 
  *  {@link #commit(ToCommitTransaction, VersionConstraintManager)}, especially on
  *  their synchronization and locking strategies.
  * 
@@ -117,7 +117,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 	 *  <ul>
 	 *  <li> The wcf check, cts generation, and commit-log update should be protected by
 	 *  	the same write-lock of {@link #logs}.
-	 *  <li> No need to synchronize {@link #read(kvs.component.Row, kvs.component.Column)}
+	 *  <li> No need to synchronize {@link #get(kvs.component.Row, kvs.component.Column)}
 	 *    	with the update of the underlying table under the read/write-lock of {@link #logs}.
 	 *  </ul>
 	 */

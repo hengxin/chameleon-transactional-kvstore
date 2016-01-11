@@ -85,7 +85,7 @@ public class RVSITransaction implements ITransaction {
 		
 		ITimestampedCell ts_cell = TimestampedCell.TIMESTAMPED_CELL_INIT;
 		try { 
-			ts_cell = site.read(r, c);
+			ts_cell = site.get(r, c);
 			this.query_results.put(new CompoundKey(r, c), ts_cell);
 			LOGGER.info("Transaction [{}] read {} from [{}+{}] at site {}", this, ts_cell, r, c, site);
 		} catch (RemoteException re) {

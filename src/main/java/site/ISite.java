@@ -9,7 +9,7 @@ import kvs.compound.ITimestampedCell;
 
 /**
  * Interface {@link ISite} exposes basic (i.e., non-transactional)
- * data access operations like {@link #read(Row, Column)} and 
+ * data access operations like {@link #get(Row, Column)} and 
  * {@link #put(Row, Column, ITimestampedCell)}.
  * These operations are available remotely, by letting this interface 
  * {@link ISite} extend {@link Remote}.
@@ -25,7 +25,7 @@ public interface ISite extends Remote {
 	 * @return		an {@link ITimestampedCell} corresponding to @param r and @param c
 	 * @throws RemoteException	if an error occurs during the RMI call
 	 */
-	public ITimestampedCell read(Row r, Column c) throws RemoteException;
+	public ITimestampedCell get(Row r, Column c) throws RemoteException;
 	
 	/**
 	 * Writes into this data provider.

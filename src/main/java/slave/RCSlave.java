@@ -5,7 +5,6 @@ import com.sun.istack.Nullable;
 import context.IContext;
 import jms.slave.JMSSubscriber;
 import kvs.table.SlaveTable;
-import messages.IMessageConsumer;
 import site.ITransactional;
 
 /**
@@ -18,7 +17,7 @@ import site.ITransactional;
  * @author hengxin
  * @date Created on 11-25-2015
  */
-public final class RCSlave extends AbstractSlave implements IMessageConsumer {
+public final class RCSlave extends AbstractSlave {
 
 	/**
 	 * Constructor with {@link SlaveTable} as the default underlying table
