@@ -17,7 +17,7 @@ public final class SlaveMembership extends AbstractStaticMembership {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(SlaveMembership.class);
 	
-	@Nonnull private Member master;
+	private Optional<Member> master;
 	
 	public SlaveMembership(@Nonnull String file) {
 		super(file);
@@ -26,7 +26,7 @@ public final class SlaveMembership extends AbstractStaticMembership {
 	/**
 	 * Only one line to parse: slave = master
 	 * <p> The system exits if an error occurs during parse 
-	 * 	(maybe due to ill-formated file, slave itself parse error, or master parse error).
+	 * 	(maybe due to ill-formated file or slave itself parse error).
 	 */
 	@Override
 	public void parseMembershipFromProp() {
@@ -47,17 +47,16 @@ public final class SlaveMembership extends AbstractStaticMembership {
 		super.self = slave_opt.get();
 		
 		// parse the master of this slave
-		Optional<Member> master_opt = Member.parseMember(master);
-		if (! master_opt.isPresent()) {
-			LOGGER.error("Cannot parse my [{}] master [{}]", slave, master);
-			System.exit(1);	// fail fast
+		this.master = Member.parseMember(master);
+		if (! this.master.isPresent()) {
+			LOGGER.warn("Cannot parse my [{}] master [{}]", slave, master);
+//			System.exit(1);	// fail fast
 		}
-		this.master = master_opt.get();
 
 		LOGGER.info("I am a slave: [{}]. My master is: [{}].", slave, master);
 	}
 
-	public @Nonnull Member getMaster() {
+	public Optional<Member> getMaster() {
 		return master;
 	}
 

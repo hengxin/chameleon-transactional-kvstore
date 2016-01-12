@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import exception.SiteException;
-import exception.network.membership.MemberParseException;
 import master.context.MasterContext;
 import site.AbstractSite;
 

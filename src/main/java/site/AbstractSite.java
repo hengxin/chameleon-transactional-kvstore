@@ -13,27 +13,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.MoreObjects;
-import com.sun.istack.Nullable;
 
 import context.IContext;
 import exception.rmi.RMIRegistryException;
-import jms.AbstractJMSParticipant;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
-import master.AbstractMaster;
 import network.membership.Member;
 import rmi.IRMI;
-import slave.AbstractSlave;
 
 /**
- * An {@link AbstractSite} holds an {@link AbstractTable} 
- * and acts as an {@link AbstractJMSParticipant}.
- * Upon its underlying {@link AbstractTable}, it provides remotely available 
- * {@code get/put} operations (by implementing {@link ISite}).
- * An {@link AbstractSite} is able to export itself for RMI calls 
- * (by implementing {@link IRMI}).
+ * An {@link AbstractSite} holds an {@link AbstractTable}, upon which
+ * it provides remotely available {@code get/put} operations 
+ * (by implementing {@link ISite}).
+ * An {@link AbstractSite} exports itself for RMI calls by implementing {@link IRMI}.
  * @author hengxin
  * @date Created on 11-25-2015
  */
@@ -44,13 +38,10 @@ public abstract class AbstractSite implements ISite, IRMI {
 	private final Member self;
 	protected final IContext context;
 	protected AbstractTable table;
-	/** FIXME push down into its subclasses ({@link AbstractMaster} and {@link AbstractSlave}) ??? **/
-	protected Optional<AbstractJMSParticipant> jmser = Optional.empty();	
 	
-	public AbstractSite(IContext context, @Nullable AbstractJMSParticipant jmser) {
+	public AbstractSite(IContext context) {
 		this.context = context;
 		this.self = context.self();
-		this.jmser = Optional.ofNullable(jmser);
 	}
 	
 	/**

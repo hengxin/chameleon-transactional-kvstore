@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author hengxin
  * @date Created on Dec 11, 2015
  */
-public abstract class AbstractMessage implements Serializable
-{
+public abstract class AbstractMessage implements Serializable {
+
 	private static final long serialVersionUID = -3239013342020968109L;
 }

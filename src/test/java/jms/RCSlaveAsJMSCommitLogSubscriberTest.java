@@ -14,11 +14,11 @@ import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
 import messages.AbstractMessage;
+import messages.IMessageProducer;
 import slave.RCSlave;
 
-public class RCSlaveAsJMSCommitLogSubscriberTest
-{
-	private final AbstractJMSParticipant publisher = new JMSPublisher();
+public class RCSlaveAsJMSCommitLogSubscriberTest {
+	private final IMessageProducer publisher = new JMSPublisher();
 	
 	private Timestamp sts; 
 	private CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
@@ -32,8 +32,7 @@ public class RCSlaveAsJMSCommitLogSubscriberTest
 	private RCSlave slave = null;
 
 	@Before
-	public void setUp() throws Exception
-	{
+	public void setUp() throws Exception {
 		this.slave = new RCSlave(null);	// no {@link IContext} needed for testing JMS
 		
 		this.sts = new Timestamp(1);
@@ -41,12 +40,11 @@ public class RCSlaveAsJMSCommitLogSubscriberTest
 		this.buffered_updates.intoBuffer(this.ck_ry_cy, this.cell_ry_cy);
 		this.commit_log_message = new ToCommitTransaction(this.sts, this.buffered_updates);
 
-		((JMSPublisher) this.publisher).publish(this.commit_log_message);
+		this.publisher.send(this.commit_log_message);
 	}
 
 	@Test
-	public void testOnMessageOfRCSlave() throws InterruptedException
-	{
+	public void testOnMessageOfRCSlave() throws InterruptedException {
 		// wait a moment for the subscriber to receive the {@link ToCommitTransaction} log and update the {@link #table}
 		Thread.sleep(2000);
 

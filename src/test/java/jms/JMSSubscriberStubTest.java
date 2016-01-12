@@ -22,6 +22,7 @@ import kvs.compound.TimestampedCell;
 import kvs.table.AbstractTable;
 import kvs.table.SlaveTable;
 import messages.AbstractMessage;
+import messages.IMessageProducer;
 
 /**
  * Mock {@link JMSSubscriber} using {@link JMSSubscriberStub} 
@@ -32,7 +33,7 @@ import messages.AbstractMessage;
  */
 public class JMSSubscriberStubTest {
 
-	private final AbstractJMSParticipant publisher = new JMSPublisher();
+	private final IMessageProducer publisher = new JMSPublisher();
 	
 	private Timestamp sts; 
 	private CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
@@ -59,7 +60,7 @@ public class JMSSubscriberStubTest {
 
 		Assert.assertNotNull("The message to be published cannot be null.", this.commit_log_message);
 
-		((JMSPublisher) this.publisher).publish(this.commit_log_message);
+		this.publisher.send(this.commit_log_message);
 	}
 
 	@Test

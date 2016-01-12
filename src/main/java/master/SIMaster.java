@@ -155,7 +155,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 				 */
 				this.table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
 				try {
-					super.send(tx); // (5) propagate
+					super.messenger.ifPresent(messenger -> messenger.send(tx));	// (5) propagate 
 				} catch (TransactionCommunicationException tae) {
 					LOGGER.warn(tae.getMessage(), tae.getCause());
 				}		
