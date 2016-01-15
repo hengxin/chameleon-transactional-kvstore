@@ -31,7 +31,7 @@ public final class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RVSI2PCPhaserCoordinator.class);
 	
-	private static final ExecutorService exec = Executors.newCachedThreadPool();
+	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
 	protected enum Phase { PREPARE, COMMIT, ABORT }
 	protected final Phaser phaser = new CommitPhaser();	// FIXME Is it a good idea to create an object of a nested class here?
