@@ -1,6 +1,7 @@
 package twopc.participant;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
@@ -15,8 +16,6 @@ import client.clientlibrary.transaction.ToCommitTransaction;
  * @date Created on Dec 27, 2015
  */
 public interface I2PCParticipant extends Remote {
-
-	public abstract boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm);
-	public abstract boolean complete();	// FIXME parameters
-
+	boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm) throws RemoteException;
+	boolean complete() throws RemoteException;	// FIXME parameters
 }

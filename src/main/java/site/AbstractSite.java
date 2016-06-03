@@ -1,18 +1,19 @@
 package site;
 
-import java.rmi.NotBoundException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.google.common.base.MoreObjects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.MoreObjects;
+import java.rmi.NotBoundException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import context.IContext;
 import exception.rmi.RMIRegistryException;
@@ -22,6 +23,8 @@ import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
 import network.membership.Member;
 import rmi.IRMI;
+
+import static java.rmi.registry.LocateRegistry.getRegistry;
 
 /**
  * An {@link AbstractSite} holds an {@link AbstractTable}, upon which
@@ -34,8 +37,18 @@ import rmi.IRMI;
 public abstract class AbstractSite implements ISite, IRMI {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSite.class);
-	
-	private final Member self;
+    private static Registry rmiRegistry;
+
+    static {
+        try {
+            rmiRegistry = LocateRegistry.createRegistry(RMI_REGISTRY_PORT);
+        } catch (RemoteException re) {
+            LOGGER.error("Failed to create RMI Registry on port [{}].", RMI_REGISTRY_PORT);
+            re.printStackTrace();
+        }
+    }
+
+    private final Member self;
 	protected final IContext context;
 	protected AbstractTable table;
 	
@@ -69,12 +82,13 @@ public abstract class AbstractSite implements ISite, IRMI {
 
 		try {
 			Remote remote = UnicastRemoteObject.exportObject(this, 0);	// port 0: chosen at runtime
-			LocateRegistry.createRegistry(this.self.getRmiRegistryPort()).rebind(this.self.getRmiRegistryName(), remote);
+            LocateRegistry.getRegistry().rebind(this.self.getRmiRegistryName(), remote);
+//			LocateRegistry.createRegistry(this.self.getRmiRegistryPort()).rebind(this.self.getRmiRegistryName(), remote);
 			LOGGER.info("The site [{}] has successfully exported itself as [{}] for remote accesses.", this.self, remote);
 		} catch (RemoteException re) {
-			throw new RMIRegistryException(String.format("Failed to export self [%s] for remote accesses.", self), re.getCause());
-		}
-	}
+            throw new RMIRegistryException(String.format("Failed to export self [%s] for remote accesses.", self), re.getCause());
+        }
+    }
 	
 	/**
 	 * @implNote 
@@ -84,7 +98,7 @@ public abstract class AbstractSite implements ISite, IRMI {
 	@Override
 	public void reclaim() {
 		try {
-			LocateRegistry.getRegistry(this.self.getAddrIp(), this.self.getRmiRegistryPort()).unbind(this.self.getRmiRegistryName());
+			getRegistry(this.self.getAddrIp(), this.self.getRmiRegistryPort()).unbind(this.self.getRmiRegistryName());
 		} catch (RemoteException | NotBoundException e) {
 			throw new RMIRegistryException(String.format("Failed to reclaim self (%s) from remote access.", this.self), e.getCause());
 		}
@@ -98,7 +112,7 @@ public abstract class AbstractSite implements ISite, IRMI {
 	 */
 	public static Optional<ISite> locateRMISite(Member member) {
 		try {
-			ISite site = (ISite) LocateRegistry.getRegistry(member.getAddrIp(), 
+			ISite site = (ISite) getRegistry(member.getAddrIp(),
 															member.getRmiRegistryPort())
 											   .lookup(member.getRmiRegistryName());
 			return Optional.of(site);

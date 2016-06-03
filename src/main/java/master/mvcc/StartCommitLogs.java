@@ -1,5 +1,11 @@
 package master.mvcc;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -7,16 +13,11 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import intervaltree.IntervalTree;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
 
 /**
  * @author hengxin
@@ -30,10 +31,11 @@ import net.jcip.annotations.ThreadSafe;
  * @licenceNote 
  * 	The {@link IntervalTree} implementation used here is credited to gds12/IntervalTree
  *  (see <a href="https://github.com/gds12/IntervalTree">gds12/IntervalTree AT GitHub</a>).
+ *
+ * todo Using <a href="https://github.com/lowasser/intervaltree">lowasser/intervaltree@GitHub</a>.
  */
 @ThreadSafe
-public class StartCommitLogs
-{
+public class StartCommitLogs {
 	private final static Logger LOGGER = LoggerFactory.getLogger(StartCommitLogs.class);
 	
 	@GuardedBy("read_lock, write_lock")

@@ -1,7 +1,5 @@
 package kvs.table;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,8 +10,10 @@ import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
 
-public class TableTest
-{
+import static org.junit.Assert.assertEquals;
+
+public class TableTest {
+
 	private AbstractTable master_table = new MasterTable(); // using {@link MultiTimestampedCellsStore}
 	private AbstractTable slave_table = new SlaveTable(); // using {@link SingleTimestampedCellStore}
 
@@ -22,8 +22,7 @@ public class TableTest
 	ITimestampedCell ts_cell_4L = null;
 
 	@Before
-	public void setUp() throws Exception
-	{
+	public void setUp() throws Exception {
 		Row row = new Row("R1");
 		Column col = new Column("C1");
 
@@ -43,8 +42,7 @@ public class TableTest
 	}
 
 	@Test
-	public void testGetTimestampedCellRowColumn()
-	{
+	public void testGetTimestampedCellRowColumn() {
 		ITimestampedCell ts_cell_master = this.master_table.getTimestampedCell(new Row("R1"), new Column("C1"));
 		assertEquals("The latest data in the master table should be TS_CELL_4L.", ts_cell_4L, ts_cell_master);
 		
@@ -53,8 +51,7 @@ public class TableTest
 	}
 
 	@Test
-	public void testGetTimestampedCellRowColumnTimestamp()
-	{
+	public void testGetTimestampedCellRowColumnTimestamp() {
 		ITimestampedCell ts_cell_master = this.master_table.getTimestampedCell(new Row("R1"), new Column("C1"), new Timestamp(3L));
 		assertEquals("The last preceding data before TS_CELL_3L in the master table should be TS_CELL_2L.", ts_cell_2L, ts_cell_master);
 		

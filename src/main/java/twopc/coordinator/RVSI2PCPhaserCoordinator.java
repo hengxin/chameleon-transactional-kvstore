@@ -1,6 +1,7 @@
 package twopc.coordinator;
 
-import static java.util.stream.Collectors.toList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -9,14 +10,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
+import context.IContext;
 import site.ISite;
 import twopc.participant.I2PCParticipant;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Coordinator of 2PC protocol for RVSI transactions.
@@ -27,7 +28,7 @@ import twopc.participant.I2PCParticipant;
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
-public final class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
+public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RVSI2PCPhaserCoordinator.class);
 	
@@ -42,7 +43,7 @@ public final class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 	 * @param ctx	client context 
 	 * @param vcm	RVSI-specific version constraint manager   
 	 */
-	public RVSI2PCPhaserCoordinator(final AbstractClientContext ctx, 
+	public RVSI2PCPhaserCoordinator(final AbstractClientContext ctx,
 								   final VersionConstraintManager vcm)  {
 		super(ctx);
 		this.vcm = vcm;
@@ -92,10 +93,10 @@ public final class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 		 */
 		@Override
 		protected boolean onAdvance(int phase, int registeredParties) {
-			Abstract2PCCoordinator coord = RVSI2PCPhaserCoordinator.super;
+			Abstract2PCCoordinator coord = RVSI2PCPhaserCoordinator.this;
 
 			switch (phase) {
-			case 0:
+				case 0:
 				LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.PREPARE);
 
 				/**
@@ -108,7 +109,7 @@ public final class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 				LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, coord.to_commit_decision);
 				return false;	// this phaser has not yet finished
 
-			case 1:
+				case 1:
 				LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.COMMIT); 
 
 				/**

@@ -9,16 +9,18 @@ package rmi;
  */
 public interface IRMI {
 
-	/** 
+    int RMI_REGISTRY_PORT = 1099;
+
+	/**
 	 * A remote object (is able to and) exports itself for remote accesses.
 	 * @throws RMIRegistryException if an error occurs during export.
 	 */
-	public void export();
+    void export();
 	
 	/**
 	 * A remote object reclaims itself from remote accesses.
 	 * @throws RMIRegistryException if an error occurs during reclaim.
 	 */
-	public void reclaim();
+    void reclaim();
 
 }

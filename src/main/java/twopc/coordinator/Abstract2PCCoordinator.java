@@ -1,9 +1,9 @@
 package twopc.coordinator;
 
+import com.sun.istack.Nullable;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.sun.istack.Nullable;
 
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
@@ -65,9 +65,8 @@ public abstract class Abstract2PCCoordinator {
 	
 	/**
 	 * The coordinator executes 2PC protocol.
-	 * @param 	the transaction to commit
+	 * @param tx	transaction to commit
 	 * @return {@code true} if 2PC protocol succeeds in committing; {@code false}, otherwise.
 	 */
 	public abstract boolean execute2PC(ToCommitTransaction tx);
-
 }

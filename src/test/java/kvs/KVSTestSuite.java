@@ -17,7 +17,6 @@ import kvs.compound.TimestampedCellTest;
 @SuiteClasses({OrdinalTest.class,
 	CKeyToOrdinalIndexTest.class,
 	TimestampedCellTest.class})
-public class KVSTestSuite
-{
+public class KVSTestSuite {
 
 }

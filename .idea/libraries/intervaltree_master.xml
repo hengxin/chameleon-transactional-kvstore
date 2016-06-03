@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="intervaltree-master">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../eclipse-mars-projects/IntervalTree-master/intervaltree-master.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../eclipse-mars-projects/IntervalTree-master/intervaltree-master.jar!/" />
+    </SOURCES>
+  </library>
+</component>

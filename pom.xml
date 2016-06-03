@@ -86,11 +86,13 @@
 			of IntervalTree) -->
 		<!-- <dependency> <groupId>org.nmdp.ngs</groupId> <artifactId>ngs-range</artifactId> 
 			<version>1.8.3</version> </dependency> -->
+		<!-- not found any more
 		<dependency>
 			<groupId>intervaltree-master</groupId>
 			<artifactId>intervaltree-master</artifactId>
 			<version>0.1</version>
 		</dependency>
+		-->
 		<!-- for unit test -->
 		<dependency>
 			<groupId>junit</groupId>
