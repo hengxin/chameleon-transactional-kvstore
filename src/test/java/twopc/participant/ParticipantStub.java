@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
@@ -33,6 +34,15 @@ public class ParticipantStub extends AbstractMaster implements I2PCParticipant {
 
     @Override
     public boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm) {
+        LOGGER.debug("The participant [{}] is in Thread [{}].", this, Thread.currentThread());
+
+        try {
+            long duration = (long) (Math.random() * 10);
+            TimeUnit.SECONDS.sleep(duration);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+
         boolean prepared = rand.nextBoolean();
         LOGGER.info("In PREPARE phase, reply with [{}]", prepared);
         return prepared;

@@ -19,19 +19,23 @@ import master.context.MasterContext;
 public class ParticipantStubTest {
     private final static Logger LOGGER = LoggerFactory.getLogger(ParticipantStubTest.class);
 
+    /**
+     * Export two masters (as participants in 2PC protocol) in the same JVM.
+     * @throws Exception
+     */
     @BeforeClass
     public static void setUpParticipants() throws Exception {
         final Stream<String> masterPropFiles = Stream.of(
-                "twopc/local/membership-master-5000.properties",
-                "twopc/local/membership-master-6000.properties",
-                "twopc/local/membership-master-8000.properties",
-                "twopc/local/membership-master-9000.properties" );
+                "twopc/local/participant/membership-master-5000.properties",
+                "twopc/local/participant/membership-master-6000.properties");
 
         masterPropFiles.forEach(prop -> {
             AbstractMaster participantMaster = new ParticipantStub(new MasterContext(prop), new JMSPublisher());
             participantMaster.export();
             LOGGER.info("MasterIn2PC [{}] has been successfully launched.", participantMaster);
         });
+
+        Thread.sleep(100000);
     }
 
     @After

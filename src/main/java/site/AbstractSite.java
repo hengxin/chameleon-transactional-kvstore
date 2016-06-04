@@ -39,12 +39,22 @@ public abstract class AbstractSite implements ISite, IRMI {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSite.class);
     private static Registry rmiRegistry;
 
+    /**
+     * The following "create-exception-get" pattern avoids creating registry twice
+     * on the same port in a single host.
+     *
+     * @see <a ref="https://community.oracle.com/thread/2082536?start=0&tstart=0">How to check if RMI Registry is already running?</a>
+     */
     static {
         try {
             rmiRegistry = LocateRegistry.createRegistry(RMI_REGISTRY_PORT);
-        } catch (RemoteException re) {
-            LOGGER.error("Failed to create RMI Registry on port [{}].", RMI_REGISTRY_PORT);
-            re.printStackTrace();
+        } catch (RemoteException e) {
+            try {
+                rmiRegistry = LocateRegistry.getRegistry(RMI_REGISTRY_PORT);
+            } catch (RemoteException re) {
+                LOGGER.error("Failed to create/get RMI Registry on port [{}].", RMI_REGISTRY_PORT);
+                re.printStackTrace();
+            }
         }
     }
 

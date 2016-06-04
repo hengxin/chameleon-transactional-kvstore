@@ -33,4 +33,14 @@ public final class RVSI2PCSequentialLockingCoordinator extends Abstract2PCCoordi
 		return false;
 	}
 
+    @Override
+    public boolean onPreparePhaseFinished() {
+        return false;
+    }
+
+    @Override
+    public boolean onCommitPhaseFinished() {
+        return false;
+    }
+
 }

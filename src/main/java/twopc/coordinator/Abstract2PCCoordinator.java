@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import rmi.IRMI;
+import twopc.participant.I2PCParticipant;
 
 /**
  * {@link Abstract2PCCoordinator} is responsible for coordinating the 2PC protocol.
@@ -28,8 +28,8 @@ public abstract class Abstract2PCCoordinator {
 	 * @see	#to_commit_decision
 	 * @see #is_committed
 	 */
-	protected final Map<IRMI, Boolean> prepared_decisions = new ConcurrentHashMap<>();
-	protected final Map<IRMI, Boolean> committed_decisions = new ConcurrentHashMap<>();
+	protected final Map<I2PCParticipant, Boolean> prepared_decisions = new ConcurrentHashMap<>();
+	protected final Map<I2PCParticipant, Boolean> committed_decisions = new ConcurrentHashMap<>();
 
 	/**
 	 * {@link #to_commit_decision}: 
@@ -69,4 +69,7 @@ public abstract class Abstract2PCCoordinator {
 	 * @return {@code true} if 2PC protocol succeeds in committing; {@code false}, otherwise.
 	 */
 	public abstract boolean execute2PC(ToCommitTransaction tx);
+
+    public abstract boolean onPreparePhaseFinished();
+    public abstract boolean onCommitPhaseFinished();
 }

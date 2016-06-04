@@ -13,8 +13,8 @@ import java.util.concurrent.Phaser;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import context.IContext;
 import site.ISite;
+import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 
 import static java.util.stream.Collectors.toList;
@@ -31,11 +31,9 @@ import static java.util.stream.Collectors.toList;
 public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RVSI2PCPhaserCoordinator.class);
-	
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
-	protected enum Phase { PREPARE, COMMIT, ABORT }
-	protected final Phaser phaser = new CommitPhaser();	// FIXME Is it a good idea to create an object of a nested class here?
+	Phaser phaser;  // TODO put it in {@link Abstract2PCCoordinator}
 
 	private final VersionConstraintManager vcm;
 
@@ -47,6 +45,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 								   final VersionConstraintManager vcm)  {
 		super(ctx);
 		this.vcm = vcm;
+        this.phaser = new CommitPhaser(this);   /** TODO Is it safe to pass {@code this} reference? */
 	}
 
 	@Override
@@ -68,65 +67,31 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 		// FIXME the return value
 		return false;
 	}
-	
 
-	/**
-	 * {@link CommitPhaser} controls the two phases of the 2PC protocol:
-	 * the "prepare" phase and the "commit/abort" phase.
-	 * 
-	 * @author hengxin
-	 * @date Created on Dec 28, 2015
-	 * 
-	 * @implNote
-	 * {@link CommitPhaser} extends {@link Phaser} introduced since Java 7.
-	 */
-	private final class CommitPhaser extends Phaser {
 
-		private final Logger LOGGER = LoggerFactory.getLogger(CommitPhaser.class);
+    /**
+     * Check the decisions of all participants during the Phase#PREPARE phase,
+     * and determine whether to commit or abort the transaction:
+     * if all #prepared_decesions are true, then commit; otherwise, abort.
+     */
+    @Override
+    public boolean onPreparePhaseFinished() {
+        to_commit_decision = prepared_decisions.values().stream().allMatch(decision -> decision);
+        return to_commit_decision;
+    }
 
-		/**
-		 * Coordinate the two phases on behalf of the enclosing {@link RVSI2PCPhaserCoordinator}, including
-		 * <ul>
-		 * <li> Collecting results from each phase and computing for the next one
-		 * <li> Logging for each phase
-		 * <ul>
-		 */
-		@Override
-		protected boolean onAdvance(int phase, int registeredParties) {
-			Abstract2PCCoordinator coord = RVSI2PCPhaserCoordinator.this;
+    /**
+     * check the decisions of all participants during the Phase#COMMIT phase,
+     * and compute the final committed/abort state of the transaction:
+     * the transaction is committed if and only if
+     * (1) #to_committed_decision is true </i>and</i>
+     * (2) #comitted_decisions of all participants are true.
+     */
+    @Override
+    public boolean onCommitPhaseFinished() {
+        is_committed = to_commit_decision
+                && committed_decisions.values().stream().allMatch(decision -> decision);
+        return is_committed;
+    }
 
-			switch (phase) {
-				case 0:
-				LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.PREPARE);
-
-				/**
-				 * check the decisions of all participants during the Phase#PREPARE phase,
-				 * and determine whether to commit or abort the transaction:
-				 * if all #prepared_decesions are true, then commit; otherwise, abort.
-				 */
-				coord.to_commit_decision = coord.prepared_decisions.values().stream().allMatch(decision -> decision);
-
-				LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, coord.to_commit_decision);
-				return false;	// this phaser has not yet finished
-
-				case 1:
-				LOGGER.info("All [{}] masters have been finished the [{}] phase.", registeredParties, Phase.COMMIT); 
-
-				/**
-				 * check the decisions of all participants during the Phase#COMMIT phase,
-				 * and compute the final committed/abort state of the transaction:
-				 * the transaction is committed if and only if
-				 * (1) #to_committed_decision is true </i>and</i> 
-				 * (2) #comitted_decisions of all participants are true.
-				 */
-				coord.is_committed = coord.to_commit_decision 
-						&& coord.committed_decisions.values().stream().allMatch(decision -> decision);
-
-				return true;	// this phaser has finished its job.
-
-			default:
-				return true;	
-			}
-		}
-	}
 }
