@@ -21,7 +21,7 @@ public class BVSpecification extends AbstractRVSISpecification
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp ts)
 	{
-		return new BVVersionConstraint(AbstractRVSISpecification.transform(super.vce_info_list, ts));
+		return new BVVersionConstraint(AbstractRVSISpecification.transform(super.vceInfos, ts));
 	}
 
 }

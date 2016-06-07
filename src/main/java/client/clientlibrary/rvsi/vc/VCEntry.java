@@ -6,13 +6,14 @@ import com.google.common.base.Objects;
 import kvs.component.Ordinal;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
+import kvs.compound.ITimestampedCell;
 
 /**
  * A {@link VCEntry} represents an entry of an {@link AbstractVersionConstraint}.
  * It consists of four parts:
  * <p><ul>
  * <li> {@link #vce_ck}: the {@link CompoundKey} under constraint
- * <li> {@link #vce_ord}: the <em>ordinal number</em> of an {@link ITimestampedCell} 
+ * <li> {@link #vce_ord}: the <em>ordinal number</em> of an {@link ITimestampedCell}
  *  we are interested in; it should corresponds to the {@link #vce_ck}.
  * <li> {@link #vce_ts}: a {@link Timestamp} for {@link #vce_ord} to be checked against
  * <li> {@link #vce_bound}: the staleness bound allowed for {@link #vce_ord}
@@ -21,15 +22,13 @@ import kvs.compound.CompoundKey;
  * @author hengxin
  * @date Created on 11-28-2015
  */
-public final class VCEntry
-{
+public final class VCEntry {
 	private final CompoundKey vce_ck;
 	private final Ordinal vce_ord;
 	private final Timestamp vce_ts;
 	private final long vce_bound;
 	
-	public VCEntry(final CompoundKey ck, final Ordinal ord, final Timestamp ts, final long bound)
-	{
+	public VCEntry(final CompoundKey ck, final Ordinal ord, final Timestamp ts, final long bound) {
 		this.vce_ck = ck;
 		this.vce_ord = ord;
 		this.vce_ts = ts;
@@ -63,8 +62,7 @@ public final class VCEntry
 	}
 	
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		if(o == this)
 			return true;
 		if(o == null)
@@ -78,8 +76,7 @@ public final class VCEntry
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.addValue(vce_ck)
 				.addValue(vce_ord)

@@ -30,4 +30,5 @@ public final class AlphabeticalStaticPartitioner implements IPartitioner {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

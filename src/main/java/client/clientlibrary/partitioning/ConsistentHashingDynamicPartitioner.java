@@ -1,13 +1,5 @@
 package client.clientlibrary.partitioning;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.Objects;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -16,12 +8,20 @@ import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
 import com.sun.istack.NotNull;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.Objects;
+
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Partitioner supporting dynamic join and exit of storage nodes.
@@ -35,7 +35,9 @@ import kvs.compound.CompoundKey;
  * @author hengxin
  * @date Created on Dec 31, 2015
  */
-public final class ConsistentHashingDynamicPartitioner implements IPartitioner {
+public enum  ConsistentHashingDynamicPartitioner implements IPartitioner {
+
+    INSTANCE;
 
 	/**
 	 * Cache for consistent hashing.
@@ -75,12 +77,12 @@ public final class ConsistentHashingDynamicPartitioner implements IPartitioner {
 									collectingAndThen(toList(), items -> new ToCommitTransaction(sts, new BufferedUpdates(items)))));
 	}
 
-	/**
-	 * @param hr	{@link HashsingRequest} to locate
+    /**
+	 * @param hr	{@link HashingRequest} to locate
 	 * @return	the index of the (master) site responsible for the {@link HashingRequest} 
 	 */
 	private int locateSiteIndexFor(HashingRequest hr) {
-		return this.locateSiteIndexFor(hr.getCK().getRow(), hr.getCK().getCol(), hr.getBuckets());
+		return locateSiteIndexFor(hr.getCK().getRow(), hr.getCK().getCol(), hr.getBuckets());
 	}
 	
 	/**

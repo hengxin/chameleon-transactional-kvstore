@@ -21,7 +21,7 @@ public class FVSpecification extends AbstractRVSISpecification
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp ts)
 	{
-		return new FVVersionConstraint(AbstractRVSISpecification.transform(super.vce_info_list, ts));
+		return new FVVersionConstraint(AbstractRVSISpecification.transform(super.vceInfos, ts));
 	}
 
 }

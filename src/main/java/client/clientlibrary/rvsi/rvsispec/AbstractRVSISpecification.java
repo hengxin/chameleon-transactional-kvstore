@@ -31,11 +31,10 @@ import kvs.compound.CompoundKey;
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public abstract class AbstractRVSISpecification
-{
+public abstract class AbstractRVSISpecification {
 	// FIXME replace HashSet by Set???
-	protected Map<HashSet<CompoundKey>, Long> rvsi_spec_map = new HashMap<>();
-	protected List<VCEntryRawInfo> vce_info_list = null;
+	protected final Map<HashSet<CompoundKey>, Long> rvsi_spec_map = new HashMap<>();
+	protected List<VCEntryRawInfo> vceInfos;
 	
 	public void addSpec(HashSet<CompoundKey> ckey_set_r1, long bound)
 	{
@@ -58,8 +57,7 @@ public abstract class AbstractRVSISpecification
 	 * 
 	 * @return a <em>flatten</em> map representation of RVSI specifications.
 	 */
-	protected Map<CompoundKey, Long> flattenRVSISpecMap()
-	{
+	protected Map<CompoundKey, Long> flattenRVSISpecMap() {
 		return this.rvsi_spec_map.entrySet().stream()
 		   .<Entry<CompoundKey, Long>>flatMap(rvsi_spec_entry -> 
 		       rvsi_spec_entry.getKey().stream()
@@ -93,12 +91,11 @@ public abstract class AbstractRVSISpecification
 	 * (see AbstractRVSISpecification#flattenRVSISpecMap()) and that the query_result_map is 
 	 * { x->TC1, u->TC2}, then the result will be a list { <x,TC1,2>, <u,TC2,4> }. 
 	 * 
-	 * @param query_result {@link QueryResults}
+	 * @param query_results {@link QueryResults}
 	 * @return 
 	 */
-	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results)
-	{
-		this.vce_info_list = this.flattenRVSISpecMap().entrySet().stream()
+	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results) {
+		this.vceInfos = this.flattenRVSISpecMap().entrySet().stream()
 			.<Optional<VCEntryRawInfo>> map(flatten_rvsi_spec_entry ->
 				{
 					CompoundKey ck = flatten_rvsi_spec_entry.getKey();
@@ -109,13 +106,11 @@ public abstract class AbstractRVSISpecification
 			.map(Optional::get)
 			.collect(Collectors.toList());
 		
-		return this.vce_info_list;
+		return this.vceInfos;
 	}
 
-	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results, Timestamp ts)
-	{
+	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results, Timestamp ts) {
 		this.extractVCEntryRawInfo(query_results);
-		
 		return this.generateVersionConstraint(ts);
 	}
 	/**
@@ -131,8 +126,7 @@ public abstract class AbstractRVSISpecification
 	 * @param ts an additional {@link Timestamp} for constructing {@link VCEntry}
 	 * @return a list of {@link VCEntry}
 	 */
-	protected static List<VCEntry> transform(List<VCEntryRawInfo> vce_info_list, Timestamp ts)
-	{
+	protected static List<VCEntry> transform(List<VCEntryRawInfo> vce_info_list, Timestamp ts) {
 		return vce_info_list.stream()
 				.<VCEntry>map(vce_info -> new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoOrd(), ts, vce_info.getVceInfoBound()))
 				.collect(Collectors.toList());
@@ -140,6 +134,6 @@ public abstract class AbstractRVSISpecification
 	
 	protected void setVceInfoList(List<VCEntryRawInfo> vce_info_list)
 	{
-		this.vce_info_list = vce_info_list;
+		this.vceInfos = vce_info_list;
 	}
 }

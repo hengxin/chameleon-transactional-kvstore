@@ -1,13 +1,11 @@
 package client.clientlibrary.rvsi.rvsispec;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.vc.BVVersionConstraint;
@@ -19,8 +17,10 @@ import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.TimestampedCell;
 
-public class BVSpecificationTest
-{
+import static org.junit.Assert.assertEquals;
+
+public class BVSpecificationTest {
+
 	private AbstractRVSISpecification rvsi_spec = new BVSpecification();
 	private QueryResults query_results = new QueryResults();
 	
@@ -35,8 +35,7 @@ public class BVSpecificationTest
 	private Timestamp sts = new Timestamp(5L);
 	
 	@Before
-	public void setUp() throws Exception
-	{
+	public void setUp() throws Exception {
 		HashSet<CompoundKey> ck_grp_r1 = new HashSet<>();
 		ck_grp_r1.add(ck_r1_c1);
 		ck_grp_r1.add(ck_r1_c2);
@@ -53,8 +52,7 @@ public class BVSpecificationTest
 	}
 
 	@Test
-	public void testGenerateVersionConstraint()
-	{
+	public void testGenerateVersionConstraint() {
 		AbstractVersionConstraint bv_vc = this.rvsi_spec.generateVersionConstraint(this.query_results, this.sts);
 		
 		VCEntry vce_r1_c1 = new VCEntry(this.ck_r1_c1, new Ordinal(1), this.sts, 1L);

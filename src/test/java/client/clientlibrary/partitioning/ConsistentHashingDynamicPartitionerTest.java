@@ -1,14 +1,12 @@
 package client.clientlibrary.partitioning;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.google.common.collect.ImmutableMap;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
@@ -17,9 +15,11 @@ import kvs.compound.CompoundKey;
 import kvs.compound.KVItem;
 import kvs.compound.TimestampedCell;
 
+import static org.junit.Assert.assertEquals;
+
 public class ConsistentHashingDynamicPartitionerTest {
 
-	IPartitioner partitioner = new ConsistentHashingDynamicPartitioner();
+	private IPartitioner partitioner = ConsistentHashingDynamicPartitioner.INSTANCE;
 	
 	int buckets = 5;
 	CompoundKey ck1 = new CompoundKey("R1", "C1");

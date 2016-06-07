@@ -59,12 +59,12 @@ public class SVSpecification extends AbstractRVSISpecification
 	@Override
 	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results)
 	{
-		super.vce_info_list = this.rvsi_spec_map.entrySet().stream()
+		super.vceInfos = this.rvsi_spec_map.entrySet().stream()
 				.<VCEntryRawInfo>flatMap(rvsi_spec_entry ->
 						this.expand(this.join(rvsi_spec_entry.getKey(), query_results), rvsi_spec_entry.getValue()).stream()
 					)
 				.collect(Collectors.toList());
-		return super.vce_info_list;
+		return super.vceInfos;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class SVSpecification extends AbstractRVSISpecification
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts)
 	{
-		List<VCEntry> vce_list =  super.vce_info_list.stream()
+		List<VCEntry> vce_list =  super.vceInfos.stream()
 				.<VCEntry>map(vce_info -> 
 					new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoOrd(), vce_info.getVceInfoTsOptional(), vce_info.getVceInfoBound()))
 				.collect(Collectors.toList());

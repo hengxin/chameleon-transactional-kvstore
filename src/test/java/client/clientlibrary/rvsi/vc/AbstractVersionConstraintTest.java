@@ -1,8 +1,7 @@
 package client.clientlibrary.rvsi.vc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,15 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
-import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
-import client.clientlibrary.rvsi.vc.BVVersionConstraint;
-import client.clientlibrary.rvsi.vc.FVVersionConstraint;
-import client.clientlibrary.rvsi.vc.VCEntry;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.component.Cell;
 import kvs.component.Ordinal;
@@ -26,8 +18,11 @@ import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.TimestampedCell;
 
-public class AbstractVersionConstraintTest
-{
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+public class AbstractVersionConstraintTest {
+
 	private AbstractRVSISpecification rvsi_spec = new BVSpecification();
 	private QueryResults query_results = new QueryResults();
 
@@ -40,8 +35,7 @@ public class AbstractVersionConstraintTest
 	private TimestampedCell tc2 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, Ordinal.ORDINAL_INIT, new Cell("R2C2"));
 	
 	@Before
-	public void setUp() throws Exception
-	{
+	public void setUp() throws Exception {
 		// set the {@value #rvsi_spec}
 		HashSet<CompoundKey> ckey_set_r1 = Stream.of(ck_r1_c1, ck_r1_c2)
 				.collect(Collectors.toCollection(HashSet::new));
@@ -58,14 +52,12 @@ public class AbstractVersionConstraintTest
 	}
 	
 	@Test
-	public void testCheck()
-	{
+	public void testCheck() {
 	}
 
 
 	@Test
-	public void testEquals()
-	{
+	public void testEquals() {
 		Timestamp ts = new Timestamp(1L);
 		
 		VCEntry vc_entry_r1_c1 = new VCEntry(this.ck_r1_c1, this.tc1.getOrdinal(), ts, 2L);
