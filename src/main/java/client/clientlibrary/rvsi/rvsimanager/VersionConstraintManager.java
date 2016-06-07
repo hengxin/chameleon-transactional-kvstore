@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.vc.SVVersionConstraint;
 
@@ -45,14 +46,16 @@ public final class VersionConstraintManager implements Serializable {
 	}
 
     /**
+     * Partition this {@link VersionConstraintManager} into multiple ones, according to {@link IPartitioner}.
      *
-     * @param buckets
-     * @return
+     * @param partitioner instance of {@link IPartitioner} to use
+     * @param buckets   number of buckets in partitioning
+     * @return  a map from a site index to a {@link VersionConstraintManager}
      */
-    public Map<Integer, VersionConstraintManager> partition(int buckets) {
+    public Map<Integer, VersionConstraintManager> partition(IPartitioner partitioner, int buckets) {
         return vcList.stream()
                 .filter(vc -> ! (vc instanceof SVVersionConstraint))
-                .map(vc -> vc.partition(buckets))
+                .map(vc -> vc.partition(partitioner, buckets))
                 .map(Map::entrySet)
                 .flatMap(Set::stream)
                 .collect(groupingBy(

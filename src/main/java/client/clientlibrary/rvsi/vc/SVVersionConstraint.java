@@ -3,6 +3,7 @@ package client.clientlibrary.rvsi.vc;
 import java.util.List;
 import java.util.Map;
 
+import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.transaction.QueryResults;
 
@@ -31,7 +32,7 @@ public final class SVVersionConstraint extends AbstractVersionConstraint {
      * @throws UnsupportedOperationException
      */
     @Override
-    public Map<Integer, AbstractVersionConstraint> partition(int buckets) {
+    public Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets) {
         throw new UnsupportedOperationException("No partition method supported for SVVersionConstraint.");
     }
 

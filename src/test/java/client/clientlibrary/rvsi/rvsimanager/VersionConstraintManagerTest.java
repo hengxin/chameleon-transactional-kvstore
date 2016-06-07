@@ -67,7 +67,7 @@ public class VersionConstraintManagerTest {
 
     @Test
     public void partition() throws Exception {
-        Map<Integer, VersionConstraintManager> vcmMap = vcm.partition(BUCKETS);
+        Map<Integer, VersionConstraintManager> vcmMap = vcm.partition(partitioner, BUCKETS);
 
         // construct expected result
         int site4R1C1 = partitioner.locateSiteIndexFor(ckR1C1, BUCKETS);

@@ -3,7 +3,7 @@ package client.clientlibrary.rvsi.vc;
 import java.util.List;
 import java.util.Map;
 
-import client.clientlibrary.partitioning.ConsistentHashingDynamicPartitioner;
+import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
 import client.clientlibrary.transaction.QueryResults;
 
@@ -33,9 +33,9 @@ public final class BVVersionConstraint extends AbstractVersionConstraint {
 	}
 
     @Override
-    public Map<Integer, AbstractVersionConstraint> partition(int buckets) {
+    public Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets) {
         return vcEntries.stream()
-                .collect(groupingBy(vce -> ConsistentHashingDynamicPartitioner.INSTANCE.locateSiteIndexFor(vce.getVceCk(), buckets),
+                .collect(groupingBy(vce -> partitioner.locateSiteIndexFor(vce.getVceCk(), buckets),
                         collectingAndThen(toList(), BVVersionConstraint::new)));
     }
 

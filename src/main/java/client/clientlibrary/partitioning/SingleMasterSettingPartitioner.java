@@ -1,10 +1,5 @@
 package client.clientlibrary.partitioning;
 
-import java.util.Map;
-
-import com.google.common.collect.ImmutableMap;
-
-import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.compound.CompoundKey;
 
 /**
@@ -17,19 +12,13 @@ import kvs.compound.CompoundKey;
 public class SingleMasterSettingPartitioner implements IPartitioner {
 
 	/**
-	 * Returns 0 (the index of the single master) always for any @param ck.
+     * @param ck {@link CompoundKey} to locate
+     * @param buckets not used for this partitioner
+	 * @return always returns 0 (the index of the single master) for any key
 	 */
 	@Override
 	public int locateSiteIndexFor(CompoundKey ck, int buckets) {
 		return 0;
-	}
-
-	/**
-	 * Always map 0 (the index of the single master) to @param tx.
-	 */
-	@Override
-	public Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx, int buckets) {
-		return ImmutableMap.of(0, tx);
 	}
 
 }

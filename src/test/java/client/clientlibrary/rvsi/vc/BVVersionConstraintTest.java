@@ -70,7 +70,7 @@ public class BVVersionConstraintTest {
         expectedMap.put(siteR1C1, new BVVersionConstraint(Arrays.asList(vceR1C1)));
         expectedMap.put(siteR2C2, new BVVersionConstraint(Arrays.asList(vceR2C2)));
 
-        assertEquals("Partition version constraint as expected.", expectedMap, bvVc.partition(BUCKETS));
+        assertEquals("Partition version constraint as expected.", expectedMap, bvVc.partition(partitioner, BUCKETS));
     }
 
 }

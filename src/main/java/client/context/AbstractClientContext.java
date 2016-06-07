@@ -1,5 +1,8 @@
 package client.context;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -7,15 +10,10 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.transaction.RVSITransaction;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.ClusterActive;
-import exception.network.membership.MasterMemberParseException;
-import exception.network.membership.MemberParseException;
 import kvs.compound.CompoundKey;
 import network.membership.AbstractStaticMembership;
 import network.membership.ClientMembership;
@@ -26,8 +24,8 @@ import site.ISite;
  * Provides context for transaction processing at the client side, including
  * <p><ul>
  * <li> {@link #clusters}: a list of {@link ClusterActive}
- * <li> TODO {@link #tx}: the currently active {@link RVSITransaction}
- * <li> TODO {@link #newTx()} and {@link #endTx()}: life-cycle management of {@link #tx}. 
+ * <li> TODO {link #tx}: the currently active {@link RVSITransaction}
+ * <li> TODO {link #newTx()} and {link #endTx()}: life-cycle management of {link #tx}.
  * <li> TO BE IMPLEMENTED
  * </ul>
  * 
@@ -86,9 +84,13 @@ public abstract class AbstractClientContext {
 	 * @return a map from an {@link IRMI} to the sub-{@link ToCommitTransaction} it is responsible for 
 	 */
 	public Map<ISite, ToCommitTransaction> partition(ToCommitTransaction tx) {
-		Map<Integer, ToCommitTransaction> index_items_map = this.partitioner.partition(tx, this.master_count);
-		return index_items_map.keySet().stream().collect(Collectors.toMap(index -> this.getMaster(index.intValue()), 
-																		  index_items_map::get));
+		Map<Integer, ToCommitTransaction> index_items_map = tx.partition(partitioner, master_count);
+
+		return index_items_map.keySet().stream()
+                .collect(Collectors.toMap(
+                        index -> getMaster(index.intValue()),
+                        index_items_map::get
+                ));
 	}
 	
 	/**
@@ -97,10 +99,10 @@ public abstract class AbstractClientContext {
 	 * @return		the master {@link IRMI} holding @param ck
 	 * @implNote 	This implementation requires and utilizes the {@link #partitioner}
 	 * 	specified by subclasses of this {@link AbstractClientContext}. If you don't want
-	 *  to rely on {@link Partitioner}, you can override this method.
+	 *  to rely on {@link IPartitioner}, you can override this method.
 	 */
 	public ISite getMasterFor(CompoundKey ck) {
-		int index = this.partitioner.locateSiteIndexFor(ck, this.master_count);
+		int index = partitioner.locateSiteIndexFor(ck, this.master_count);
 		return this.getMaster(index); 
 	}
 
@@ -113,7 +115,7 @@ public abstract class AbstractClientContext {
 	 * 
 	 *  <p>This implementation requires and utilizes the {@link #partitioner} 
 	 * 	specified by subclasses of this {@link AbstractClientContext}. If you don't want
-	 *  to rely on {@link Partitioner}, you can override this method.
+	 *  to rely on {@link IPartitioner}, you can override this method.
 	 */
 	public ISite getReadSite(CompoundKey ck) {
 		return this.cached_read_site.orElseGet(() -> {

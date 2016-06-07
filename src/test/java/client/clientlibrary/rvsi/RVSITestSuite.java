@@ -4,10 +4,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManagerTest;
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecificationTest;
 import client.clientlibrary.rvsi.rvsispec.BVSpecificationTest;
 import client.clientlibrary.rvsi.rvsispec.SVSpecificationTest;
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraintTest;
+import client.clientlibrary.rvsi.vc.BVVersionConstraintTest;
 import client.clientlibrary.rvsi.vc.VCEntryTest;
 
 /**
@@ -17,11 +19,13 @@ import client.clientlibrary.rvsi.vc.VCEntryTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	VCEntryTest.class,
-	AbstractRVSISpecificationTest.class,
-	BVSpecificationTest.class,
-	SVSpecificationTest.class,
-	AbstractVersionConstraintTest.class
+        VCEntryTest.class,
+        AbstractRVSISpecificationTest.class,
+        BVSpecificationTest.class,
+        SVSpecificationTest.class,
+        AbstractVersionConstraintTest.class,
+        BVVersionConstraintTest.class,
+        VersionConstraintManagerTest.class,
 })
 public class RVSITestSuite {
 

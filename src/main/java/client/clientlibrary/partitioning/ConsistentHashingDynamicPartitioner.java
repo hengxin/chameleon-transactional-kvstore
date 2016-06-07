@@ -9,19 +9,11 @@ import com.google.common.hash.Hashing;
 import com.sun.istack.NotNull;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 import java.util.Objects;
 
-import client.clientlibrary.transaction.BufferedUpdates;
-import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.component.Column;
 import kvs.component.Row;
-import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
-
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Partitioner supporting dynamic join and exit of storage nodes.
@@ -65,18 +57,6 @@ public enum  ConsistentHashingDynamicPartitioner implements IPartitioner {
 		return this.hash_caches.getUnchecked(new HashingRequest(ck, buckets));
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * @see
-	 *   <a href="http://stackoverflow.com/q/34648849/1833118">groupingBy and collectingAndThen@stackoverflow</a>
-	 */
-	public Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx, int buckets) {
-		final Timestamp sts = tx.getSts();
-		return tx.getBufferedUpdates().stream()
-				 .collect(groupingBy(item -> locateSiteIndexFor(item.getCK(), buckets),
-									collectingAndThen(toList(), items -> new ToCommitTransaction(sts, new BufferedUpdates(items)))));
-	}
-
     /**
 	 * @param hr	{@link HashingRequest} to locate
 	 * @return	the index of the (master) site responsible for the {@link HashingRequest} 

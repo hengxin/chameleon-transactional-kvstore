@@ -1,8 +1,5 @@
 package client.clientlibrary.partitioning;
 
-import java.util.Map;
-
-import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.compound.CompoundKey;
 
 /**
@@ -23,12 +20,6 @@ public final class AlphabeticalStaticPartitioner implements IPartitioner {
 	public int locateSiteIndexFor(CompoundKey ck, int buckets) {
 		// TODO Not yet implemented
 		return -1;
-	}
-
-	@Override
-	public Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx, int buckets) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

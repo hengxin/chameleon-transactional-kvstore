@@ -2,12 +2,18 @@ package client.clientlibrary.transaction;
 
 import com.google.common.base.MoreObjects;
 
-import static org.junit.Assert.assertEquals;
-
+import java.util.Map;
 import java.util.Objects;
 
+import client.clientlibrary.partitioning.IPartitioner;
 import kvs.component.Timestamp;
 import messages.AbstractMessage;
+import site.ISite;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author hengxin
@@ -45,17 +51,32 @@ public class ToCommitTransaction extends AbstractMessage {
 	public boolean equals(Object o) {
 		if(o == this)
 			return true;
-		if(o == null)
+		if(o == null || o.getClass() != this.getClass())
 			return false;
-		if(o.getClass() != this.getClass())
-			return false;
-		
+
 		ToCommitTransaction that = (ToCommitTransaction) o;
 		
-		return Objects.equals(this.sts, that.sts)
-				&& Objects.equals(this.updates, that.updates);
+		return Objects.equals(sts, that.sts)
+				&& Objects.equals(updates, that.updates);
 	}
-	
+
+    /**
+     * Partition a {@link ToCommitTransaction} into multiple ones, according to
+     * {@link IPartitioner}.
+     *
+     * @param partitioner instance of {@link IPartitioner}
+     * @param buckets	number of buckets (i.e., {@link ISite})
+     * @return a map from the index of an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for
+     *
+     * @see
+     *   <a href="http://stackoverflow.com/q/34648849/1833118">groupingBy and collectingAndThen@stackoverflow</a>
+     */
+    public Map<Integer, ToCommitTransaction> partition(IPartitioner partitioner, int buckets) {
+        return getBufferedUpdates().stream()
+                .collect(groupingBy(item -> partitioner.locateSiteIndexFor(item.getCK(), buckets),
+                        collectingAndThen(toList(), items -> new ToCommitTransaction(sts, new BufferedUpdates(items)))));
+    }
+
 	/**
 	 * Merges two {@link ToCommitTransaction}s and returns a new one. The original {@link ToCommitTransaction}s
 	 * are not modified.

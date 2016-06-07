@@ -8,6 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.List;
 import java.util.Map;
 
+import client.clientlibrary.partitioning.IPartitioner;
+
 /**
  * Each {@link AbstractVersionConstraint} consists of a list of {@link VCEntry}s.
  * 
@@ -26,10 +28,11 @@ public abstract class AbstractVersionConstraint {
     /**
      * Partition a version constraint into multiple ones according to some
      * {@link client.clientlibrary.partitioning.IPartitioner} mechanism.
+     * @param partitioner instance of {@link IPartitioner} to use
      * @param buckets
      * @return a map from index of {@link site.ISite} to {@link AbstractVersionConstraint}
      */
-    public abstract Map<Integer, AbstractVersionConstraint> partition(int buckets);
+    public abstract Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets);
 	
 	@Override
 	public int hashCode() {

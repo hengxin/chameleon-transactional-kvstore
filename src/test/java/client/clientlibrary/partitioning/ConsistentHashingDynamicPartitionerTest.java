@@ -62,8 +62,8 @@ public class ConsistentHashingDynamicPartitionerTest {
 		int ck2_hash = partitioner.locateSiteIndexFor(ck2, buckets);
 		int ck3_hash = partitioner.locateSiteIndexFor(ck3, buckets);
 		
-		Map<Integer, ToCommitTransaction> actual_partition_map = partitioner.partition(tx, buckets);
-		
+		Map<Integer, ToCommitTransaction> actual_partition_map = tx.partition(partitioner, buckets);
+        
 		Map<ToCommitTransaction, Integer> expected_hashing_map = ImmutableMap.of(tx1, ck1_hash, tx2, ck2_hash, tx3, ck3_hash);
 		Map<Integer, ToCommitTransaction> expected_partition_map = expected_hashing_map.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey, ToCommitTransaction::merge));
 
