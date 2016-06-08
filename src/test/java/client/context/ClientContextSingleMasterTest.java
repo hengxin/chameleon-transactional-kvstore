@@ -1,21 +1,18 @@
 package client.context;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
-public class ClientContextSingleMasterTest
-{
+import static org.junit.Assert.fail;
+
+public class ClientContextSingleMasterTest {
 
 	@Before
-	public void setUp() throws Exception
-	{
+	public void setUp() throws Exception {
 	}
 
 	@Test
-	public void testGetMaster()
-	{
+	public void testGetMaster() {
 		fail("Not yet implemented"); // TODO
 	}
 

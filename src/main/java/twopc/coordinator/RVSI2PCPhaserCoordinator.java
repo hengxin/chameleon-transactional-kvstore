@@ -13,7 +13,6 @@ import java.util.concurrent.Phaser;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import site.ISite;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 
@@ -50,16 +49,16 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
 	@Override
 	public boolean execute2PC(final ToCommitTransaction tx) {
-		final Map<ISite, ToCommitTransaction> site_tx_map = super.ctx.partition(tx);
-		// TODO split the vcm
+		final Map<Integer, ToCommitTransaction> siteTxMap = ctx.partition(tx);
+        final Map<Integer, VersionConstraintManager> siteVcmMap = ctx.partition(vcm);
 
-		List<Callable<Boolean>> task_list = site_tx_map.entrySet().stream()
-				.map(site_tx_entry -> new CommitPhaserTask(
-						this, (I2PCParticipant) site_tx_entry.getKey(), site_tx_entry.getValue(), this.vcm))	// the fourth @param vcm
-				.collect(toList());
+		List<Callable<Boolean>> tasks = siteTxMap.keySet().stream()
+				.map(index -> new CommitPhaserTask(this, (I2PCParticipant) ctx.getMaster(index),
+                        siteTxMap.get(index), siteVcmMap.get(index)))
+                .collect(toList());
 		
 		try {
-			exec.invokeAll(task_list);	// blocking here
+			exec.invokeAll(tasks);	// blocking here
 		} catch (InterruptedException ie) {
 			LOGGER.error("2PC protocol has been interrupted unexpectedly.", ie);	// FIXME fault-handling???
 		}

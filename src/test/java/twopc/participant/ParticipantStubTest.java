@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import jms.master.JMSPublisher;
@@ -35,7 +36,7 @@ public class ParticipantStubTest {
             LOGGER.info("MasterIn2PC [{}] has been successfully launched.", participantMaster);
         });
 
-        Thread.sleep(100000);
+        TimeUnit.SECONDS.sleep(100);
     }
 
     @After

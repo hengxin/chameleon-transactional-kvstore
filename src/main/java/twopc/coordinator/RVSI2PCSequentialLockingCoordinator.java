@@ -1,11 +1,8 @@
 package twopc.coordinator;
 
-import java.util.Map;
-
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import site.ISite;
 
 /**
  * {@link RVSI2PCSequentialLockingCoordinator} is a 2PC coordinator for committing
@@ -26,10 +23,7 @@ public final class RVSI2PCSequentialLockingCoordinator extends Abstract2PCCoordi
 	
 	@Override
 	public boolean execute2PC(ToCommitTransaction tx) {
-		final Map<ISite, ToCommitTransaction> site_tx_map = super.ctx.partition(tx);
-		// TODO split the vcm
-		
-		
+		// TODO not yet implemented
 		return false;
 	}
 

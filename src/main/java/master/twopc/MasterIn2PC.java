@@ -7,6 +7,7 @@ import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.IContext;
 import jms.master.JMSPublisher;
+import kvs.table.MasterTable;
 import master.AbstractMaster;
 import twopc.participant.I2PCParticipant;
 
@@ -42,12 +43,15 @@ public final class MasterIn2PC extends AbstractMaster implements I2PCParticipant
 	@Override
 	public boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm) {
 		// TODO Auto-generated method stub
+        LOGGER.debug("Master [{}] receives ToCommitTransaction [{}] and associated VersionConstraintManager [{}] " +
+                "at the PREPARE phase", toString(), tx.toString(), vcm.toString());
 		return false;
 	}
 
 	@Override
 	public boolean complete() {
 		// TODO Auto-generated method stub
+        LOGGER.debug("Master [{}] at the COMMIT phase.", toString());
 		return false;
 	}
 

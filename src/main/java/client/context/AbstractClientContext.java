@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 import client.clientlibrary.partitioning.IPartitioner;
+import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.RVSITransaction;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.ClusterActive;
@@ -78,21 +79,35 @@ public abstract class AbstractClientContext {
 	
 	/**
 	 * Partitions a {@link ToCommitTransaction} into multiple sub-{@link ToCommitTransaction}s,
-	 * each of which will be dispatched to an {@link IRMI} responsible for it.
-	 * <p>It returns a map from an {@link IRMI} to the sub-{@link ToCommitTransaction} it is responsible for. 
+	 * each of which will be dispatched to an {@link ISite} responsible for it.
+	 * <p>It returns a map from an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for.
 	 * @param tx	{@link ToCommitTransaction} to be partitioned
-	 * @return a map from an {@link IRMI} to the sub-{@link ToCommitTransaction} it is responsible for 
+	 * @return a map from an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for
 	 */
-	public Map<ISite, ToCommitTransaction> partition(ToCommitTransaction tx) {
-		Map<Integer, ToCommitTransaction> index_items_map = tx.partition(partitioner, master_count);
+//	public Map<ISite, ToCommitTransaction> partition(ToCommitTransaction tx) {
+//		Map<Integer, ToCommitTransaction> index_items_map = tx.partition(partitioner, master_count);
+//
+//		return index_items_map.keySet().stream()
+//                .collect(Collectors.toMap(
+//                        this::getMaster,
+//                        index_items_map::get
+//                ));
+//	}
 
-		return index_items_map.keySet().stream()
-                .collect(Collectors.toMap(
-                        index -> getMaster(index.intValue()),
-                        index_items_map::get
-                ));
-	}
-	
+    /**
+     * Partition a {@link ToCommitTransaction} into multiple ones,
+     * according to the specific {@link #partitioner} and {@link #master_count}.
+     * @param tx  {@link ToCommitTransaction} to partition
+     * @return a map from site index to {@link ToCommitTransaction}
+     */
+    public Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx) {
+        return tx.partition(partitioner, master_count);
+    }
+
+    public Map<Integer, VersionConstraintManager> partition(VersionConstraintManager vcm) {
+        return vcm.partition(partitioner, master_count);
+    }
+
 	/**
 	 * Return a master site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
@@ -103,7 +118,7 @@ public abstract class AbstractClientContext {
 	 */
 	public ISite getMasterFor(CompoundKey ck) {
 		int index = partitioner.locateSiteIndexFor(ck, this.master_count);
-		return this.getMaster(index); 
+		return getMaster(index);
 	}
 
 	/**
@@ -131,7 +146,7 @@ public abstract class AbstractClientContext {
 	 * @param cno	specified cluster_no
 	 * @return	the master site of the {@link ClusterActive} with @param cno 
 	 */
-	private ISite getMaster(int cno) {
+	public ISite getMaster(int cno) {
 		return this.clusters.get(cno).getMaster();
 	}
 

@@ -31,6 +31,7 @@ public class RVSI2PCPhaserCoordinatorStub extends RVSI2PCPhaserCoordinator {
     /**
      * @param ctx client context
      * @param vcm RVSI-specific version constraint manager
+     * @param sites specify the participant sites directly (for test)
      */
     public RVSI2PCPhaserCoordinatorStub(AbstractClientContext ctx,
                                         VersionConstraintManager vcm,
