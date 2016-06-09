@@ -38,8 +38,7 @@ public final class ClientMembership extends AbstractStaticMembership {
 	@Override
 	public void parseMembershipFromProp() {
 		this.hibernate_cluster_list = 
-				super.prop.stringPropertyNames()
-						  .stream()
+				super.prop.stringPropertyNames().stream()
 						  .map(cluster_no_str -> 
 						  		ClusterInHibernate.parse(cluster_no_str, super.prop.getProperty(cluster_no_str)))
 						  .collect(Collectors.toList());

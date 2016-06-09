@@ -22,17 +22,21 @@ import kvs.component.Row;
 import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
 import network.membership.Member;
+import network.membership.RuntimeMember;
 import rmi.IRMI;
 
 import static java.rmi.registry.LocateRegistry.getRegistry;
 
 /**
  * An {@link AbstractSite} holds an {@link AbstractTable}, upon which
- * it provides remotely available {@code get/put} operations 
- * (by implementing {@link ISite}).
+ * it provides remotely available {@code get/put} operations (by implementing {@link ISite}).
+ *
  * An {@link AbstractSite} exports itself for RMI calls by implementing {@link IRMI}.
+ *
  * @author hengxin
  * @date Created on 11-25-2015
+ *
+ * FIXME separate the rmi logic (export/unexport) from the table logic (get/put)???
  */
 public abstract class AbstractSite implements ISite, IRMI {
 
@@ -88,13 +92,13 @@ public abstract class AbstractSite implements ISite, IRMI {
 	 */
 	@Override
 	public void export() {
-		System.setProperty("java.rmi.server.hostname", this.self.getAddrIp());
+		System.setProperty("java.rmi.server.hostname", self.getHost());
 
 		try {
-			Remote remote = UnicastRemoteObject.exportObject(this, 0);	// port 0: chosen at runtime
-            LocateRegistry.getRegistry().rebind(this.self.getRmiRegistryName(), remote);
+			Remote remote = UnicastRemoteObject.exportObject(this, self.getPort());
+            LocateRegistry.getRegistry().rebind(self.getRmiRegistryName(), remote);
 //			LocateRegistry.createRegistry(this.self.getRmiRegistryPort()).rebind(this.self.getRmiRegistryName(), remote);
-			LOGGER.info("The site [{}] has successfully exported itself as [{}] for remote accesses.", this.self, remote);
+			LOGGER.info("The site [{}] has successfully exported itself as [{}] for remote accesses.", self, remote);
 		} catch (RemoteException re) {
             throw new RMIRegistryException(String.format("Failed to export self [%s] for remote accesses.", self), re.getCause());
         }
@@ -108,7 +112,7 @@ public abstract class AbstractSite implements ISite, IRMI {
 	@Override
 	public void reclaim() {
 		try {
-			getRegistry(this.self.getAddrIp(), this.self.getRmiRegistryPort()).unbind(this.self.getRmiRegistryName());
+			getRegistry(this.self.getHost(), this.self.getRmiRegistryPort()).unbind(this.self.getRmiRegistryName());
 		} catch (RemoteException | NotBoundException e) {
 			throw new RMIRegistryException(String.format("Failed to reclaim self (%s) from remote access.", this.self), e.getCause());
 		}
@@ -122,8 +126,7 @@ public abstract class AbstractSite implements ISite, IRMI {
 	 */
 	public static Optional<ISite> locateRMISite(Member member) {
 		try {
-			ISite site = (ISite) getRegistry(member.getAddrIp(),
-															member.getRmiRegistryPort())
+			ISite site = (ISite) getRegistry(member.getHost(), member.getRmiRegistryPort())
 											   .lookup(member.getRmiRegistryName());
 			return Optional.of(site);
 		} catch (RemoteException | NotBoundException e) {
@@ -131,7 +134,18 @@ public abstract class AbstractSite implements ISite, IRMI {
 			return Optional.empty();
 		}
 	}
-	
+
+    public static Optional<RuntimeMember> locateRuntimeMember(Member member) {
+        try {
+            ISite site = (ISite) getRegistry(member.getHost(), member.getRmiRegistryPort())
+                    .lookup(member.getRmiRegistryName());
+            return Optional.of(new RuntimeMember(member, site));
+        } catch (RemoteException | NotBoundException e) {
+            LOGGER.warn("Cannot locate [{}] via RMI.", member);
+            return Optional.empty();
+        }
+    }
+
 	/**
 	 * Locate the stubs for a list of {@link Member}; used later for RMI invocation.
 	 * @param members a list of {@link Member}s to be located.
@@ -146,6 +160,14 @@ public abstract class AbstractSite implements ISite, IRMI {
 				.map(Optional::get)
 				.collect(Collectors.toList());
 	}
+
+    public static List<RuntimeMember> locateRuntimeMembers(List<Member> members) {
+        return members.stream()
+                .map(AbstractSite::locateRuntimeMember)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+    }
 
 	@Override
 	public String toString() {

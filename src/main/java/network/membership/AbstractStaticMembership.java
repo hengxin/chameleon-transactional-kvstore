@@ -1,13 +1,13 @@
 package network.membership;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import javax.annotation.Nonnull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * In this implementation, we load the membership information
@@ -43,11 +43,11 @@ public abstract class AbstractStaticMembership {
 	 */
 	protected void loadProp() {
 		ClassLoader class_loader = Thread.currentThread().getContextClassLoader();
-		try (InputStream is = class_loader.getResourceAsStream(this.file)) {
+		try (InputStream is = class_loader.getResourceAsStream(file)) {
 			this.prop.load(is);
 			LOGGER.info("Load the properties file [{}] successfully.", file);
 		} catch (NullPointerException | IOException | IllegalArgumentException exp) {	// TODO catch Exception???
-			LOGGER.error("Failed to load properties from [{}]. \n [{}]", this.file, exp);
+			LOGGER.error("Failed to load properties from [{}]. \n [{}]", file, exp);
 			System.exit(1);
 		}
 	}
