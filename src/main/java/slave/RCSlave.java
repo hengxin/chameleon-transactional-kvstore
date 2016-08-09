@@ -2,7 +2,7 @@ package slave;
 
 import com.sun.istack.Nullable;
 
-import context.IContext;
+import context.AbstractContext;
 import jms.slave.JMSSubscriber;
 import kvs.table.SlaveTable;
 import messages.IMessageListener;
@@ -25,7 +25,7 @@ public final class RCSlave extends AbstractSlave {
 	 * mechanism for receiving message.
 	 * @param context	context for this slave site
 	 */
-	public RCSlave(IContext context) {
+	public RCSlave(AbstractContext context) {
 		super(context, new JMSSubscriber());
 		super.table = new SlaveTable();
 	}
@@ -40,7 +40,7 @@ public final class RCSlave extends AbstractSlave {
 	 * @implNote
 	 *   FIXME removing the default {@link SlaveTable}; putting it into the parameters.
 	 */
-	public RCSlave(IContext context, @Nullable IMessageListener listener) {
+	public RCSlave(AbstractContext context, @Nullable IMessageListener listener) {
 		super(context, listener);
 	}
 

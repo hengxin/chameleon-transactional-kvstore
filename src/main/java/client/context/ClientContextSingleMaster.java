@@ -32,7 +32,7 @@ public class ClientContextSingleMaster extends AbstractClientContext {
 	 * @return	the single master in the "single-master-multiple-slave" setting
 	 */
 	public ISite getMaster() {
-		return super.clusters.get(0).getMaster();
+		return membership.getMasterSites().get(0);
 	}
 
 }

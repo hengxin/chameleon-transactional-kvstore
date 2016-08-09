@@ -1,19 +1,15 @@
 package context;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-
-import javax.annotation.Nonnull;
+import com.google.common.base.MoreObjects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.MoreObjects;
+import java.util.Comparator;
+import java.util.List;
 
-import rmi.IRMI;
-import site.AbstractSite;
+import javax.annotation.Nonnull;
+
 import site.ISite;
 
 /**
@@ -23,6 +19,7 @@ import site.ISite;
  * @author hengxin
  * @date Created on Jan 1, 2016
  */
+@Deprecated
 public final class ClusterActive {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClusterActive.class);
@@ -46,22 +43,22 @@ public final class ClusterActive {
 		this.slaves = slaves;
 	}
 	
-	/**
-	 * Activates a {@link ClusterInHibernate} into a {@link ClusterActive}.
-	 * @param hibernate_cluster	a {@link ClusterInHibernate} to activate
-	 * @return	an instance of {@link ClusterActive} if it can be activated; 
-	 * 	otherwise, the system exits.
-	 */
-	public static ClusterActive activate(ClusterInHibernate hibernate_cluster) {
-		Optional<ISite> master_stub = AbstractSite.locateRMISite(hibernate_cluster.master);
-		if(! master_stub.isPresent()) {
-			LOGGER.error("Cannot activate this cluster [{}] because the master [{}] cannot be activated.", hibernate_cluster, hibernate_cluster.master);
-			System.exit(1);	// fail fast
-		}
-		
-		return new ClusterActive(hibernate_cluster.cno, master_stub.get(), 
-									AbstractSite.locateRMISites(hibernate_cluster.slaves));
-	}
+//	/**
+//	 * Activates a {@link ClusterInHibernate} into a {@link ClusterActive}.
+//	 * @param hibernate_cluster	a {@link ClusterInHibernate} to activate
+//	 * @return	an instance of {@link ClusterActive} if it can be activated;
+//	 * 	otherwise, the system exits.
+//	 */
+//	public static ClusterActive activate(ClusterInHibernate hibernate_cluster) {
+//		Optional<ISite> master_stub = AbstractSite.locateRMISite(hibernate_cluster.master);
+//		if(! master_stub.isPresent()) {
+//			LOGGER.error("Cannot activate this cluster [{}] because the master [{}] cannot be activated.", hibernate_cluster, hibernate_cluster.master);
+//			System.exit(1);	// fail fast
+//		}
+//
+//		return new ClusterActive(hibernate_cluster.cno, master_stub.get(),
+//									AbstractSite.locateRMISites(hibernate_cluster.slaves));
+//	}
 	
 	public int getCno() {
 		return this.cno;
@@ -71,21 +68,6 @@ public final class ClusterActive {
 		return this.master;
 	}
 	
-	/**
-	 * Return a site for read. It perfers a slave site. If no slaves are available, it returns the master.
-	 * @return	an {@link IRMI} in this cluster
-	 */
-	public ISite getSiteForRead() {
-		return this.slaves.isEmpty() ? this.getMaster() : this.getRandomSlave();
-	}
-
-	/**
-	 * @return	a random slave site in this cluster
-	 */
-	private ISite getRandomSlave() {
-		return slaves.get(new Random().nextInt(slaves.size()));
-	}
-
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)

@@ -42,15 +42,16 @@ public final class Member {
 	}
 
 	/**
-	 * Parse a string of the format of "host@port;rmiRegistryName@rmiRegistryPort"
-	 * into a {@link Member} instance.
+     * Parse a string of the format of "addr_ip@addr_port;rmi_registry_name@rmi_registry_port"
+     * into an instance of {@link Member}.
+     *
 	 * @param		member String format of {@link Member}
 	 * @return		an {@link Optional}-wrapped {@link Member} instance; it may be {@code Optional.empty()}
-	 * 	if an error occurs during parse.
+	 * 	if an error occurs during parseReplGrps.
 	 */
 	public static Optional<Member> parseMember(String member) {
 		String[] parts = member.replaceAll("\\s", "").split("@|;");		// FIXME remove hard-wired code here
-		
+
 		try {
 			final String addr_ip = parts[0];
 			final int addr_port = Integer.parseInt(parts[1]);
@@ -59,7 +60,7 @@ public final class Member {
 
 			return Optional.of(new Member(addr_ip, addr_port, rmi_registry_name, rmi_registry_port));
 		} catch (NullPointerException | NumberFormatException e) {	// FIXME catch NullPointerException or not?
-			LOGGER.error("Failed to parse [{}] to a Member because it is ill-formated. \\n {}", member, e.getCause());
+			LOGGER.error("Failed to parseReplGrps [{}] to a Member because it is ill-formated. \\n {}", member, e.getCause());
 			return Optional.empty();
 		}
 	}

@@ -29,9 +29,7 @@ public class SlaveLauncher {
 	public SlaveLauncher(String file) throws SiteException {
 		SlaveContext context = new SlaveContext(file);
 		AbstractSite slave = new RCSlave(context);
-		
-		slave.export();
-		
+
 		LOGGER.info("Slave [{}] has been successfully launched.", slave);
 	}
 

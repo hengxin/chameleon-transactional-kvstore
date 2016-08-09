@@ -1,5 +1,8 @@
 package network.membership;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import site.ISite;
 
 /**
@@ -10,15 +13,15 @@ import site.ISite;
  * @date 16-6-8
  */
 public final class RuntimeMember {
-    private final Member literalMember;
-    private final ISite rmiSite;
+    @NotNull private final Member literalMember;
+    @Nullable private final ISite rmiSite;
 
-    public RuntimeMember(Member literalMember, ISite rmiSite) {
+    public RuntimeMember(@NotNull Member literalMember, @Nullable ISite rmiSite) {
         this.literalMember = literalMember;
         this.rmiSite = rmiSite;
     }
 
-    public ISite getRmiSite() {
-        return rmiSite;
-    }
+    public Member getLiteralMember() { return literalMember; }
+
+    public ISite getRmiSite() { return rmiSite; }
 }

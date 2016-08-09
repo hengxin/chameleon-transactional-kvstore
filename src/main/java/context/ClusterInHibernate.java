@@ -1,12 +1,12 @@
 package context;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import network.membership.ClientMembership;
 import network.membership.Member;
@@ -18,6 +18,7 @@ import network.membership.Member;
  * @author hengxin
  * @date Created on Jan 1, 2016
  */
+@Deprecated
 public class ClusterInHibernate {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClusterInHibernate.class);
@@ -49,10 +50,10 @@ public class ClusterInHibernate {
 				String master_str = cluster_str.substring(0, sep);
 				String slaves_str = cluster_str.substring(sep + 1).trim();
 				
-				// parse master
+				// parseReplGrps master
 				Optional<Member> master_opt = Member.parseMember(master_str);
 				if (! master_opt.isPresent()) {
-					LOGGER.error("Cannot parse the master [{}]", master_str);
+					LOGGER.error("Cannot parseReplGrps the master [{}]", master_str);
 					System.exit(1);	// fail fast
 				}
 				

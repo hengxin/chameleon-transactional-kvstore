@@ -1,6 +1,12 @@
 package network.membership;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.List;
+import java.util.Random;
+
+import site.AbstractSite;
+import site.ISite;
 
 /**
  * A {@link ReplicationGroup}, associated with a globally unique integer identifier ({@link #replGrpId}),
@@ -11,7 +17,7 @@ import java.util.List;
  */
 public final class ReplicationGroup {
     private final int replGrpId;
-    private final RuntimeMember master;
+    private RuntimeMember master;
     private final List<RuntimeMember> slaves;
 
     public ReplicationGroup(int replGrpId, RuntimeMember master, List<RuntimeMember> slaves) {
@@ -20,11 +26,61 @@ public final class ReplicationGroup {
         this.slaves = slaves;
     }
 
-    public int getReplGrpId() {
-        return replGrpId;
+    public int getReplGrpId() { return replGrpId; }
+
+    public RuntimeMember getMaster() { return master; }
+    public Member getMasterMember() { return master.getLiteralMember(); }
+    public ISite getMasterSite() {
+        if (master.getRmiSite() == null)
+            master = AbstractSite.locateRuntimeMember(master.getLiteralMember());
+        return master.getRmiSite();
     }
 
-    public RuntimeMember getMaster() {
-        return master;
+    public List<RuntimeMember> getSlaves() { return slaves; }
+
+    /**
+     * Parse the {@link ReplicationGroup} whose id is <code>idStr</code>.
+     * @param grpId the id of the {@link ReplicationGroup} to be parsed
+     * @param grpStr the string format of {@link ReplicationGroup} to be parsed
+     * @return  an instance of {@link ReplicationGroup}
+     */
+    public static ReplicationGroup parseReplicationGroup(final int grpId, final String grpStr) {
+        int sep = grpStr.indexOf(',');
+        String masterStr = grpStr.substring(0, sep);
+        String slavesStr = grpStr.substring(sep + 1).trim();
+
+        Member master = Member.parseMember(masterStr).get();
+        List<Member> slaves = Member.parseMembers(slavesStr);
+
+        return new ReplicationGroup(grpId,
+                AbstractSite.locateRuntimeMember(master),
+                AbstractSite.locateRuntimeMembers(slaves));
+    }
+
+    /**
+     * Return a site for read. It prefers a slave site.
+     * If no slaves are available, it returns the master.
+     *
+     * @return	an {@link ISite} in this {@link ReplicationGroup}
+     */
+    public ISite getSiteForRead() {
+        return this.slaves.isEmpty() ? master.getRmiSite() : getRandomSlave();
+    }
+
+    /**
+     * @return	a random slave site in this {@link ReplicationGroup}
+     */
+    private ISite getRandomSlave() {
+        return slaves.get(new Random().nextInt(slaves.size()))
+                .getRmiSite();
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("ReplicationGroupId", replGrpId)
+                .addValue(master)
+                .addValue(slaves)
+                .toString();
     }
 }

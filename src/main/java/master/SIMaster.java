@@ -1,19 +1,19 @@
 package master;
 
+import com.sun.istack.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.sun.istack.Nullable;
-
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import context.IContext;
+import context.AbstractContext;
 import exception.transaction.TransactionCommunicationException;
 import exception.transaction.TransactionExecutionException;
 import jms.master.JMSPublisher;
@@ -55,7 +55,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 	 * mechanism of message propagation.
 	 * @param context	context for the master site
 	 */
-	public SIMaster(IContext context) {
+	public SIMaster(AbstractContext context) {
 		this(context, new JMSPublisher());
 	}
 	
@@ -69,7 +69,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 	 * @implNote
 	 *   FIXME removing the default {@link MasterTable}; putting it into the parameters.
 	 */
-	public SIMaster(IContext context, @Nullable JMSPublisher jms_publisher) {
+	public SIMaster(AbstractContext context, @Nullable JMSPublisher jms_publisher) {
 		super(context, jms_publisher);
 		super.table = new MasterTable();	// the underlying database in the "table" form
 	}
@@ -83,9 +83,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 	public Timestamp start() throws TransactionExecutionException {
         // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
 		try {
-			return new Timestamp(exec.submit( () -> {
-				return this.ts.incrementAndGet();
-			}).get());
+			return new Timestamp(exec.submit( () -> ts.incrementAndGet()).get());
 		} catch (InterruptedException ie) {
 			String msg = "Failed to start a transaction due to unexpected thread interruption.";
 			LOGGER.warn(msg, ie.getCause());	// log at the master site side

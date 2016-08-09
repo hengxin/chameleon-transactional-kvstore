@@ -9,5 +9,5 @@ import com.beust.jcommander.Parameter;
  */
 public class MasterConfig {
 	@Parameter(names = "-capacity", description = "Number of Versions to Keep")
-	public static int TABLE_CAPACITY = 10;
+	public static final int TABLE_CAPACITY = 10;
 }

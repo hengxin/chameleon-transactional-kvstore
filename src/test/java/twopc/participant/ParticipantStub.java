@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import context.IContext;
+import context.AbstractContext;
 import master.AbstractMaster;
 import messages.IMessageProducer;
 import twopc.coordinator.RVSI2PCPhaserCoordinatorStub;
@@ -28,7 +28,7 @@ public class ParticipantStub extends AbstractMaster implements I2PCParticipant {
      * @param messenger the underlying mechanism of message propagation;
      *                  it can be {@code null} if this master site does not need to propagate messages.
      */
-    public ParticipantStub(IContext context, @Nullable IMessageProducer messenger) {
+    public ParticipantStub(AbstractContext context, @Nullable IMessageProducer messenger) {
         super(context, messenger);
     }
 

@@ -1,12 +1,11 @@
 package network.membership;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
+import javax.annotation.Nonnull;
 
 /**
  * A master needs to know itself and all of <i>its</i> slaves.
@@ -16,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author hengxin
  * @date Created on 12-03-2015
  */
+@Deprecated
 public final class MasterMembership extends AbstractStaticMembership {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterMembership.class);
@@ -27,33 +27,32 @@ public final class MasterMembership extends AbstractStaticMembership {
 	}
 
 	/**
-	 * Only one line to parse: master = slave, slave, ... 
-	 * <p> The system exits if an error occurs during parse 
-	 * 	(maybe due to ill-formated file or master parse error).
+	 * Only one line to parseReplGrps: master = slave, slave, ...
+	 * <p> The system exits if an error occurs during parseReplGrps
+	 * 	(maybe due to ill-formated file or master parseReplGrps error).
 	 */
-	@Override
-	public void parseMembershipFromProp() {
-		if (super.prop.size() != 1) {
-			LOGGER.error("Failed to parse membership from [%s]: It should a single line of the (master = slave, slave, ...) format.", super.file);
-			System.exit(1);	// fail fast
-		}
-		
-		String master = super.prop.stringPropertyNames().toArray(new String[1])[0];
-		String slaves = super.prop.getProperty(master);
-
-		// parse the master itself
-		Optional<Member> master_opt = Member.parseMember(master);
-		if(! master_opt.isPresent()) {
-			LOGGER.error("Cannot parse this master [{}] itself.", master);
-			System.exit(1);	// fail fast
-		}
-		super.self = master_opt.get();
-		
-		// parse slaves
-		this.slaves = Member.parseMembers(slaves);
-
-		LOGGER.info("I am a master: {}. My slaves are: {}.", master, slaves);
-	}
+//	public void parseMembershipFromProp() {
+//		if (super.prop.size() != 1) {
+//			LOGGER.error("Failed to parseReplGrps membership from [%s]: It should a single line of the (master = slave, slave, ...) format.", super.file);
+//			System.exit(1);	// fail fast
+//		}
+//
+//		String master = super.prop.stringPropertyNames().toArray(new String[1])[0];
+//		String slaves = super.prop.getProperty(master);
+//
+//		// parseReplGrps the master itself
+//		Optional<Member> master_opt = Member.parseMember(master);
+//		if(! master_opt.isPresent()) {
+//			LOGGER.error("Cannot parseReplGrps this master [{}] itself.", master);
+//			System.exit(1);	// fail fast
+//		}
+//		super.self = master_opt.get();
+//
+//		// parseReplGrps slaves
+//		this.slaves = Member.parseMembers(slaves);
+//
+//		LOGGER.info("I am a master: {}. My slaves are: {}.", master, slaves);
+//	}
 
 	public @Nonnull List<Member> getSlaves() {
 		return slaves;

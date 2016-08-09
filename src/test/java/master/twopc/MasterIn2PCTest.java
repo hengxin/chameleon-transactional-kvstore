@@ -48,7 +48,6 @@ public class MasterIn2PCTest {
     private static void launch(String file) {
         MasterContext ctx = new MasterContext(file);
         AbstractSite master = new MasterIn2PC(ctx);
-        master.export();
 
         LOGGER.info("MasterIn2PC [{}] has been successfully launched.", master);
     }

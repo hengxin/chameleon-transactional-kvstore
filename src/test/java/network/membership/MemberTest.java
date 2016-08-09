@@ -21,7 +21,7 @@ public class MemberTest {
 		Member expected_member = new Member("127.0.0.1", 8000, "rmi-master", 1099);
 		Member actual_member = Member.parseMember("127.0.0.1@8000;rmi-master@1099").get();
 		
-		assertEquals("Fails to parse membership.", expected_member, actual_member);
+		assertEquals("Fails to parseReplGrps membership.", expected_member, actual_member);
 	}
 	
 	@Test
@@ -36,7 +36,7 @@ public class MemberTest {
 
 		List<Member> actual_member_list = Member.parseMembers(members);
 
-		assertTrue("Fails to parse several members.", CollectionUtils.isEqualCollection(expected_member_list, actual_member_list));
+		assertTrue("Fails to parseReplGrps several members.", CollectionUtils.isEqualCollection(expected_member_list, actual_member_list));
 	}
 
 }

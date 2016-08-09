@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import context.IContext;
+import context.AbstractContext;
 import jms.master.JMSPublisher;
 import kvs.table.MasterTable;
 import master.AbstractMaster;
@@ -26,7 +26,7 @@ public final class MasterIn2PC extends AbstractMaster implements I2PCParticipant
 	 * and {@link JMSPublisher} as the default mechanism of message propagation.
 	 * @param context	context for this master
 	 */
-	public MasterIn2PC(IContext context) {
+	public MasterIn2PC(AbstractContext context) {
 		super(context, new JMSPublisher());
 	}
 
@@ -36,7 +36,7 @@ public final class MasterIn2PC extends AbstractMaster implements I2PCParticipant
 	 * @param context
 	 * @param jms_publisher
 	 */
-	public MasterIn2PC(IContext context, JMSPublisher jms_publisher) {
+	public MasterIn2PC(AbstractContext context, JMSPublisher jms_publisher) {
 		super(context, jms_publisher);
 	}
 

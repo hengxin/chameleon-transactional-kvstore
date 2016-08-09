@@ -32,7 +32,6 @@ public class ParticipantStubTest {
 
         masterPropFiles.forEach(prop -> {
             AbstractMaster participantMaster = new ParticipantStub(new MasterContext(prop), new JMSPublisher());
-            participantMaster.export();
             LOGGER.info("MasterIn2PC [{}] has been successfully launched.", participantMaster);
         });
 

@@ -14,7 +14,7 @@ public class MasterMemberParseException extends MemberParseException {
 	private static final long serialVersionUID = 4267885981567197079L;
 
 	public MasterMemberParseException(Throwable cause) {
-		super("Fails to parse master!", cause);
+		super("Fails to parseReplGrps master!", cause);
 	}
 
 }

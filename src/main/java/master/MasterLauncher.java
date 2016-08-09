@@ -35,13 +35,8 @@ public class MasterLauncher {
 	public MasterLauncher(String file) {
 		MasterContext context = new MasterContext(file);
 		AbstractSite siMaster = new SIMaster(context);
-//        AbstractSite masterIn2PC = new MasterIn2PC(context);
-		
-		siMaster.export();
-//        masterIn2PC.export();
-		
+
 		LOGGER.info("SIMaster [{}] has been successfully launched.", siMaster);
-//        LOGGER.info("MasterIn2PC [{}] has been successfully launched.", masterIn2PC);
 	}
 
 }

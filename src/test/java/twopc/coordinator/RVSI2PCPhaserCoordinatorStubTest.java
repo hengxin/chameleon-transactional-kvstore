@@ -4,14 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
-import java.util.List;
-
-import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import network.membership.AbstractStaticMembership;
 import network.membership.MasterMembership;
-import site.AbstractSite;
-import site.ISite;
 
 /**
  * @author hengxin
@@ -27,9 +21,9 @@ public class RVSI2PCPhaserCoordinatorStubTest {
     @Before
     public void setUp() throws Exception {
         AbstractStaticMembership membership = new MasterMembership(PARTICIPANTS_MEMBERSHIP_FILE);
-        List<ISite> participants = AbstractSite.locateRMISites(((MasterMembership) membership).getSlaves());
-        coord = new RVSI2PCPhaserCoordinatorStub(null, new VersionConstraintManager(Collections.emptyList()),
-                participants.stream());
+//        List<ISite> participants = AbstractSite.locateRuntimeMembers(((MasterMembership) membership).getSlaves());
+//        coord = new RVSI2PCPhaserCoordinatorStub(null, new VersionConstraintManager(Collections.emptyList()),
+//                participants.stream());
     }
 
     @After

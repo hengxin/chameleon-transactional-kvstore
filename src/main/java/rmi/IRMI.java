@@ -1,5 +1,7 @@
 package rmi;
 
+import exception.rmi.RMIRegistryException;
+
 /**
  * Interface {@link IRMI} exposes {@link #export()} and {@link #reclaim()}
  * operations for remote RMI accesses. 

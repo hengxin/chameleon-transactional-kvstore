@@ -14,7 +14,7 @@ public class SlaveMemberParseException extends MemberParseException {
 	private static final long serialVersionUID = 5935449312080439973L;
 
 	public SlaveMemberParseException(Throwable cause) {
-		super("Failed to parse slave.", cause);
+		super("Failed to parseReplGrps slave.", cause);
 	}
 
 }

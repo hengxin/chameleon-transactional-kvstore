@@ -12,10 +12,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import context.IContext;
+import context.AbstractContext;
 import exception.rmi.RMIRegistryException;
 import kvs.component.Column;
 import kvs.component.Row;
@@ -63,12 +62,13 @@ public abstract class AbstractSite implements ISite, IRMI {
     }
 
     private final Member self;
-	protected final IContext context;
+	protected final AbstractContext context;
 	protected AbstractTable table;
 	
-	public AbstractSite(IContext context) {
+	public AbstractSite(AbstractContext context) {
 		this.context = context;
-		this.self = context.self();
+		self = context.getMembership().getSelf();
+        export();
 	}
 	
 	/**
@@ -97,7 +97,6 @@ public abstract class AbstractSite implements ISite, IRMI {
 		try {
 			Remote remote = UnicastRemoteObject.exportObject(this, self.getPort());
             LocateRegistry.getRegistry().rebind(self.getRmiRegistryName(), remote);
-//			LocateRegistry.createRegistry(this.self.getRmiRegistryPort()).rebind(this.self.getRmiRegistryName(), remote);
 			LOGGER.info("The site [{}] has successfully exported itself as [{}] for remote accesses.", self, remote);
 		} catch (RemoteException re) {
             throw new RMIRegistryException(String.format("Failed to export self [%s] for remote accesses.", self), re.getCause());
@@ -108,64 +107,40 @@ public abstract class AbstractSite implements ISite, IRMI {
 	 * @implNote 
 	 * 	@deprecated FIXME Currently this implementation is buggy. Don't call it in your code.
 	 */
-	@Deprecated
 	@Override
 	public void reclaim() {
-		try {
-			getRegistry(this.self.getHost(), this.self.getRmiRegistryPort()).unbind(this.self.getRmiRegistryName());
-		} catch (RemoteException | NotBoundException e) {
-			throw new RMIRegistryException(String.format("Failed to reclaim self (%s) from remote access.", this.self), e.getCause());
-		}
+//		try {
+//			getRegistry(this.self.getHost(), this.self.getRmiRegistryPort()).unbind(this.self.getRmiRegistryName());
+//		} catch (RemoteException | NotBoundException e) {
+//			throw new RMIRegistryException(String.format("Failed to reclaim self (%s) from remote access.", this.self), e.getCause());
+//		}
 	}
 	
 	/**
 	 * Locate the stub for the {@link Member}; used later for RMI invocation.
 	 * @param member an {@link Member} representing a site
-	 * @return 	an {@link Optional}-wrapped remote stub of {@link ISite}; 
-	 * 	it could be {@code Optional.empty()} if an error occurs during RMI localization.
+     * @return instance of {@link RuntimeMember}
 	 */
-	public static Optional<ISite> locateRMISite(Member member) {
-		try {
-			ISite site = (ISite) getRegistry(member.getHost(), member.getRmiRegistryPort())
-											   .lookup(member.getRmiRegistryName());
-			return Optional.of(site);
-		} catch (RemoteException | NotBoundException e) {
-			LOGGER.warn("Cannot locate [{}] via RMI.", member);
-			return Optional.empty();
-		}
-	}
-
-    public static Optional<RuntimeMember> locateRuntimeMember(Member member) {
+    public static RuntimeMember locateRuntimeMember(Member member) {
         try {
             ISite site = (ISite) getRegistry(member.getHost(), member.getRmiRegistryPort())
                     .lookup(member.getRmiRegistryName());
-            return Optional.of(new RuntimeMember(member, site));
+            LOGGER.info("Successfully locate [{}] via RMI.", member);
+            return new RuntimeMember(member, site);
         } catch (RemoteException | NotBoundException e) {
             LOGGER.warn("Cannot locate [{}] via RMI.", member);
-            return Optional.empty();
+            return new RuntimeMember(member, null);
         }
     }
 
 	/**
 	 * Locate the stubs for a list of {@link Member}; used later for RMI invocation.
 	 * @param members a list of {@link Member}s to be located.
-	 * @return 	a list of {@link ISite} stubs
-	 * @implNote Note that only the {@link ISite}s that can be located 
-	 * 	via RMI are returned; others are ignored. Therefore, the return list may be empty.
+	 * @return 	a list of {@link RuntimeMember}
 	 */
-	public static List<ISite> locateRMISites(List<Member> members) {
-		return members.stream()
-				.map(AbstractSite::locateRMISite)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
-				.collect(Collectors.toList());
-	}
-
     public static List<RuntimeMember> locateRuntimeMembers(List<Member> members) {
         return members.stream()
                 .map(AbstractSite::locateRuntimeMember)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .collect(Collectors.toList());
     }
 

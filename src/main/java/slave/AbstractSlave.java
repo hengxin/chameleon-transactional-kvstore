@@ -1,12 +1,12 @@
 package slave;
 
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
+
 import client.clientlibrary.transaction.ToCommitTransaction;
-import context.IContext;
+import context.AbstractContext;
 import messages.AbstractMessage;
 import messages.IMessageConsumer;
 import messages.IMessageListener;
@@ -28,7 +28,7 @@ public abstract class AbstractSlave extends AbstractSite implements IMessageCons
 	 * @param listener	the underlying mechanism of receiving messages; 
 	 * 	it can be {@code null} if this slave site does not receive messages. 
 	 */
-	public AbstractSlave(IContext context, @Nullable IMessageListener listener) {
+	public AbstractSlave(AbstractContext context, @Nullable IMessageListener listener) {
 		super(context);
 		if (listener != null)
 			listener.bind(this);
