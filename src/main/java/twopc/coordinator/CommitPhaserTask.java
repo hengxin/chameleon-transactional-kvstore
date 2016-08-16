@@ -49,15 +49,22 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 
 	@Override
 	public Boolean call() throws Exception {
-		LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.PREPARE, this.participant);
+		LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.PREPARE, participant);
         boolean prepared_decision = participant.prepare(tx, vcm);
         coord.prepared_decisions.put(participant, prepared_decision);
+
         phaser.arriveAndAwaitAdvance();
 
-		LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.COMMIT, this.participant);
-        boolean committed_decision = participant.complete();
+        if (coord.to_commit_decision) { // commit case of the second phase of 2PC protocol
+            LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.COMMIT, participant);
+            boolean committed_decision = participant.commit(tx, coord.cts);
+            coord.committed_decisions.put(participant, committed_decision);
+        } else { // abort case of the second phase of 2PC protocol
+            LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.ABORT, participant);
+            participant.abort();
+        }
+
         phaser.arriveAndAwaitAdvance();
-        coord.committed_decisions.put(participant, committed_decision);
 
 		return true;
 	}

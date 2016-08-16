@@ -195,7 +195,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
     }
 
     @Override
-    public boolean complete(boolean ca, ToCommitTransaction tx, Timestamp cts)
+    public boolean commit(ToCommitTransaction tx, Timestamp cts)
             throws RemoteException, TransactionExecutionException {
         // update start-commit-log
         logs.addStartCommitLog(tx.getSts(), cts,
@@ -216,6 +216,12 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
         }
 
         return true;
+    }
+
+    @Override
+    public void abort() {
+        // TODO what else to do?
+        logs.write_lock.unlock();
     }
 
 }

@@ -1,0 +1,36 @@
+@startuml
+title To Commit a Transaction
+
+autonumber "<b>[0]"
+
+participant RVSITransaction as tx
+participant RVSI2PCPhaserCoordinator as coord
+participant CommitPhaser as phaser
+participant "CommitPhaserTask.call()" as task
+participant "I2PCParticipant[i]\n(SIMaster)" as part
+
+tx -> coord: end()
+activate coord
+coord --> task: execute2PC()
+activate task
+
+task -> part: prepare()
+activate part
+part -> task: prepared
+task -> phaser: arriveAndonAdvance()
+activate phaser
+phaser -> coord: onPreparePhaseFinished()
+coord -> phaser:
+phaser -> task:
+
+task -> part: commit()/abort()
+part -> task: committed/aborted
+deactivate part
+task -> phaser: arriveAndonAdvance()
+deactivate task
+phaser -> coord: onCommitPhaseFinished()
+deactivate phaser
+coord -> tx: isCommitted
+deactivate coord
+
+@enduml

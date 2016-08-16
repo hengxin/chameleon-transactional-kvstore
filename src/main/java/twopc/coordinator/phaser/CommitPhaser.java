@@ -25,9 +25,7 @@ public final class CommitPhaser extends Phaser {
     private Abstract2PCCoordinator coord;
     public enum Phase { PREPARE, COMMIT, ABORT }
 
-    public CommitPhaser(Abstract2PCCoordinator coord) {
-        this.coord = coord;
-    }
+    public CommitPhaser(Abstract2PCCoordinator coord) { this.coord = coord; }
 
     /**
      * Coordinate the two phases on behalf of the enclosing {@link RVSI2PCPhaserCoordinator}, including

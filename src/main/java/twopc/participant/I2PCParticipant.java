@@ -11,7 +11,7 @@ import kvs.component.Timestamp;
 /**
  * Interface {@link I2PCParticipant} exposes 
  * {@link #prepare(ToCommitTransaction, VersionConstraintManager)}
- * and {@link #complete()} for participants of 2PC protocol.
+ * and {@link #commit(ToCommitTransaction, Timestamp)} for participants of 2PC protocol.
  * These operations are available remotely, by letting this interface
  * extend {@link Remote}.
  * @author hengxin
@@ -31,14 +31,18 @@ public interface I2PCParticipant extends Remote {
             throws RemoteException, TransactionExecutionException;
 
     /**
-     * The second phase of 2PC protocol.
-     * @param ca to commit ({@code true}) or to abort ({@code false})
-     * @param tx {@link ToCommitTransaction} to commit if ca is {@code true}
+     * The second phase of 2PC protocol: the commit case
+     * @param tx {@link ToCommitTransaction} to commit
      * @param cts commit timestamp
      * @return {@code true} if committed successfully; {@code false}, otherwise.
      * @throws RemoteException
      * @throws TransactionExecutionException
      */
-	boolean complete(boolean ca, ToCommitTransaction tx, Timestamp cts)
+	boolean commit(ToCommitTransaction tx, Timestamp cts)
             throws RemoteException, TransactionExecutionException;
+
+    /**
+     * The second phase of 2PC protocol: the abort case
+     */
+    void abort();
 }

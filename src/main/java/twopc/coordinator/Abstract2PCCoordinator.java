@@ -10,6 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
+import exception.transaction.TransactionExecutionException;
+import kvs.component.Timestamp;
 import rmi.IRMI;
 import twopc.participant.I2PCParticipant;
 
@@ -57,15 +59,14 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI {
 	 */
 	protected volatile boolean is_committed = false;
 	
-	protected final AbstractClientContext ctx;
-	
-	/**
+	protected final AbstractClientContext cctx;
+    protected Timestamp cts;  // commit timestamp
+
+    /**
 	 * @param ctx	context for this coordinator; it may provide information about the data-store 
 	 * 	and the partition strategy. It can be {@code null}, if your coordinator does not need one.
 	 */
-	public Abstract2PCCoordinator(@Nullable AbstractClientContext ctx) {
-		this.ctx = ctx;
-	}
+	public Abstract2PCCoordinator(@Nullable AbstractClientContext ctx) { cctx = ctx; }
 	
 	/**
 	 * The coordinator executes 2PC protocol.
@@ -74,7 +75,7 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI {
      * @throws RemoteException thrown if errors occur in remote accesses
 	 */
 	public abstract boolean execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
-        throws RemoteException;
+            throws RemoteException, TransactionExecutionException;
 
     public abstract boolean onPreparePhaseFinished();
     public abstract boolean onCommitPhaseFinished();
