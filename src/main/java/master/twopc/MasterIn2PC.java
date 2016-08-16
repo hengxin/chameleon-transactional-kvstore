@@ -5,10 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import context.AbstractContext;
-import jms.master.JMSPublisher;
-import kvs.table.MasterTable;
-import master.AbstractMaster;
 import twopc.participant.I2PCParticipant;
 
 /**
@@ -17,29 +13,11 @@ import twopc.participant.I2PCParticipant;
  * @author hengxin
  * @date Created on Jan 9, 2016
  */
-public final class MasterIn2PC extends AbstractMaster implements I2PCParticipant {
+@Deprecated
+public final class MasterIn2PC implements I2PCParticipant {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MasterIn2PC.class);
 	
-	/**
-	 * Constructor with {@link MasterTable} as the default underlying table
-	 * and {@link JMSPublisher} as the default mechanism of message propagation.
-	 * @param context	context for this master
-	 */
-	public MasterIn2PC(AbstractContext context) {
-		super(context, new JMSPublisher());
-	}
-
-	/**
-	 * Constructor with {@link MasterTable} as the default underlying table
-	 * and user-specified mechanism of message propagation.
-	 * @param context
-	 * @param jms_publisher
-	 */
-	public MasterIn2PC(AbstractContext context, JMSPublisher jms_publisher) {
-		super(context, jms_publisher);
-	}
-
 	@Override
 	public boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm) {
 		// TODO Auto-generated method stub

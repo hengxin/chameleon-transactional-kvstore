@@ -1,8 +1,8 @@
 package twopc.timing;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import net.jcip.annotations.ThreadSafe;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A simple centralized timestamp oracle.
@@ -11,14 +11,21 @@ import net.jcip.annotations.ThreadSafe;
  * @date Created on Dec 27, 2015
  */
 @ThreadSafe
-public final class CentralizedTimestampOracle implements ITimestampOracle
-{
+public enum CentralizedTimestampOracle implements ITimestampOracle {
+    INSTANCE;
 	private final AtomicInteger ts = new AtomicInteger();
 	
 	@Override
-	public int get()
-	{
-		return this.ts.getAndIncrement();
-	}
+	public int get() { return ts.getAndIncrement(); }
+
+    @Override
+    public void export() {
+
+    }
+
+    @Override
+    public void reclaim() {
+
+    }
 
 }

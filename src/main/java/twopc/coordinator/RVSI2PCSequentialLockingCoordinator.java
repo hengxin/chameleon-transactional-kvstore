@@ -1,5 +1,7 @@
 package twopc.coordinator;
 
+import java.rmi.RemoteException;
+
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
@@ -20,12 +22,11 @@ public final class RVSI2PCSequentialLockingCoordinator extends Abstract2PCCoordi
 		super(ctx);
 		this.vcm = vcm;
 	}
-	
-	@Override
-	public boolean execute2PC(ToCommitTransaction tx) {
-		// TODO not yet implemented
-		return false;
-	}
+
+    @Override
+    public boolean execute2PC(ToCommitTransaction tx, VersionConstraintManager vcm) throws RemoteException {
+        return false;
+    }
 
     @Override
     public boolean onPreparePhaseFinished() {

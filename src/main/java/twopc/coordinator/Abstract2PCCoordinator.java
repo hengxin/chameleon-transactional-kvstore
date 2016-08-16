@@ -2,11 +2,15 @@ package twopc.coordinator;
 
 import com.sun.istack.Nullable;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
+import rmi.IRMI;
 import twopc.participant.I2PCParticipant;
 
 /**
@@ -17,7 +21,7 @@ import twopc.participant.I2PCParticipant;
  * @author hengxin
  * @date Created on Jan 7, 2016
  */
-public abstract class Abstract2PCCoordinator {
+public abstract class Abstract2PCCoordinator implements Remote, IRMI {
 
 	/**
 	 * {@link #prepared_decisions} and {@link #committed_decisions}:
@@ -67,9 +71,21 @@ public abstract class Abstract2PCCoordinator {
 	 * The coordinator executes 2PC protocol.
 	 * @param tx	transaction to commit
 	 * @return {@code true} if 2PC protocol succeeds in committing; {@code false}, otherwise.
+     * @throws RemoteException thrown if errors occur in remote accesses
 	 */
-	public abstract boolean execute2PC(ToCommitTransaction tx);
+	public abstract boolean execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
+        throws RemoteException;
 
     public abstract boolean onPreparePhaseFinished();
     public abstract boolean onCommitPhaseFinished();
+
+    @Override
+    public void export() {
+        // TODO
+    }
+
+    @Override
+    public void reclaim() {
+
+    }
 }

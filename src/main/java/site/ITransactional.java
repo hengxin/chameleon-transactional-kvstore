@@ -25,7 +25,8 @@ public interface ITransactional extends Remote {
 	 * @throws RemoteException	if an error occurs during RMI
 	 * @throws TransactionExecutionException	if an error occurs during the transactional start operation
 	 */
-	public Timestamp start() throws RemoteException, TransactionExecutionException;
+    Timestamp start()
+            throws RemoteException, TransactionExecutionException;
 	
 	/**
 	 * To commit a transaction.
@@ -35,5 +36,6 @@ public interface ITransactional extends Remote {
 	 * @throws RemoteException	if an error occurs during RMI
 	 * @throws TransactionExecutionException	if an error occurs during the transactional commit operation
 	 */
-	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws RemoteException, TransactionExecutionException;
+    boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager)
+            throws RemoteException, TransactionExecutionException;
 }

@@ -1,0 +1,46 @@
+@startuml
+title Sequence Diagram for Two-phase commit protocol (2pc)
+
+!pragma teoz true
+autonumber "<b>[0]"
+skinparam sequenceParticipant underline
+
+actor Client
+participant TimeOracle
+participant Coord
+participant Part_1
+participant Part_2
+
+== Begin ==
+Client -> TimeOracle: getTs()
+TimeOracle -> Client: sts
+
+== Read/Write ==
+Client -> Part_1: read()
+Part_1 -> Client: return value
+|||
+Client -> Client: write()
+
+== Commit ==
+Client -> Coord: commit(sts)
+
+group 2pc
+!pragma teoz true
+Coord -> Part_1: prepare()
+Coord -> Part_2: prepare()
+Part_1 -> Coord: prepared
+Part_2 -> Coord: prepared
+|||
+
+Coord -> TimeOracle: getTs()
+TimeOracle -> Coord: cts()
+|||
+
+Coord -> Part_1: commit()
+Coord -> Part_2: commit()
+Part_1 -> Coord: committed
+Part_2 -> Coord: committed
+end
+
+Coord -> Client: committed
+@enduml

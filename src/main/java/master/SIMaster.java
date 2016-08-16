@@ -5,6 +5,7 @@ import com.sun.istack.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.rmi.RemoteException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,6 +23,7 @@ import kvs.compound.CKeyToOrdinalIndex;
 import kvs.table.MasterTable;
 import master.mvcc.StartCommitLogs;
 import site.ITransactional;
+import twopc.participant.I2PCParticipant;
 
 /**
  * Master employs an MVCC protocol to locally implement (<i>nearly but not really</i>) 
@@ -40,7 +42,7 @@ import site.ITransactional;
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public final class SIMaster extends AbstractMaster implements ITransactional {
+public final class SIMaster extends AbstractMaster implements ITransactional, I2PCParticipant {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
 	private final ExecutorService exec = Executors.newCachedThreadPool();
@@ -55,9 +57,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 	 * mechanism of message propagation.
 	 * @param context	context for the master site
 	 */
-	public SIMaster(AbstractContext context) {
-		this(context, new JMSPublisher());
-	}
+	public SIMaster(AbstractContext context) { this(context, new JMSPublisher()); }
 	
 	/**
 	 * Constructor with {@link MasterTable} as the default underlying table
@@ -119,8 +119,10 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 	 *    	with the update of the underlying table under the read/write-lock of {@link #logs}.
 	 *  </ul>
 	 */
+	@Deprecated
 	@Override
-	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws TransactionExecutionException {
+	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vcm)
+            throws TransactionExecutionException {
 		Future<Boolean> future_committed = exec.submit(() -> {
 			Timestamp cts = null;
 
@@ -128,21 +130,21 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 			 * {@link VersionConstraintManager} is local to this method.
 			 * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free). 
 			 */
-			boolean vc_checked = vc_manager.check();
+			boolean vc_checked = vcm.check();
 			boolean wcf_checked = false;
 			boolean can_committed = false;
 
-			this.logs.write_lock.lock();
+			logs.write_lock.lock();
 			try {
-				wcf_checked = this.logs.wcf(tx);
+				wcf_checked = logs.wcf(tx);
 				can_committed = vc_checked && wcf_checked;
 
 				if (can_committed) {	// (1) check 
-					cts = new Timestamp(this.ts.incrementAndGet());	// (2) commit-timestamp; commit in "commit order"
-					this.logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, this.ck_ord_index));	// (3) update start-commit-log
+					cts = new Timestamp(ts.incrementAndGet());	// (2) commit-timestamp; commit in "commit order"
+					logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, ck_ord_index));	// (3) update start-commit-log
 				}
 			} finally {
-				this.logs.write_lock.unlock();
+				logs.write_lock.unlock();
 			}
 
 			if(can_committed) {
@@ -151,7 +153,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 				 * before the sts of that transaction. Thus it is not necessary for the master to synchronize the 
 				 * updates to the underlying table with read operations, both guarded by the lock on #logs. 
 				 */
-				this.table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
+				table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
 				try {
 					super.messenger.ifPresent(messenger -> messenger.send(tx));	// (5) propagate 
 				} catch (TransactionCommunicationException tae) {
@@ -164,11 +166,56 @@ public final class SIMaster extends AbstractMaster implements ITransactional {
 		
 		try {
 			return future_committed.get();
-		} catch (InterruptedException | ExecutionException e) {
-			String msg = String.format("Transaction aborted due to unexpected causes: %s.", e.getMessage());
-			LOGGER.error(msg, e.getCause());	// log at the master side
-			throw new TransactionExecutionException(msg, e.getCause());		// thrown to the client side
+		} catch (InterruptedException | ExecutionException ieee) {
+			String msg = String.format("Transaction aborted due to unexpected causes: %s.", ieee.getMessage());
+			LOGGER.error(msg, ieee.getCause());	// log at the master side
+			throw new TransactionExecutionException(msg, ieee.getCause());		// thrown to the client side
 		}
 	}
+
+    @Override
+    public boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm)
+            throws RemoteException, TransactionExecutionException {
+        Future<Boolean> prepareFuture = exec.submit(() -> {
+            /**
+             * {@link VersionConstraintManager} is local to this method.
+             * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free).
+             */
+            logs.write_lock.lock();
+            return vcm.check() && logs.wcf(tx);
+        });
+
+        try {
+            return prepareFuture.get();
+        } catch (InterruptedException | ExecutionException ieee) {
+            String msg = String.format("Transaction aborted due to unexpected causes: %s.", ieee.getMessage());
+            LOGGER.error(msg, ieee.getCause());	// log at the master side
+            throw new TransactionExecutionException(msg, ieee.getCause());		// thrown to the client side
+        }
+    }
+
+    @Override
+    public boolean complete(boolean ca, ToCommitTransaction tx, Timestamp cts)
+            throws RemoteException, TransactionExecutionException {
+        // update start-commit-log
+        logs.addStartCommitLog(tx.getSts(), cts,
+                tx.getBufferedUpdates().fillTsAndOrd(cts, ck_ord_index));
+        logs.write_lock.unlock();
+
+        /**
+         * Chameleon does not require read operations of a transaction to
+         * get the <i>latest</i> version before the sts of that transaction.
+         * Thus it is not necessary for the master to synchronize the updates
+         * to the underlying table with read operations, both guarded by the lock on #logs.
+         */
+        table.apply(cts, tx.getBufferedUpdates());	// apply buffered-updates to the in-memory table
+        try {
+            super.messenger.ifPresent(messenger -> messenger.send(tx));	// propagate
+        } catch (TransactionCommunicationException tae) {
+            LOGGER.warn(tae.getMessage(), tae.getCause());
+        }
+
+        return true;
+    }
 
 }

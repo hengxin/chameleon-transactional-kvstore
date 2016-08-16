@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
  * It consists of a transaction's start-timestamp and buffered updates.
  */
 public class ToCommitTransaction extends AbstractMessage {
-
 	private static final long serialVersionUID = -137070517043340731L;
 
 	private final Timestamp sts;

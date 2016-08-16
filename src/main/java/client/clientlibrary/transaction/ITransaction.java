@@ -3,6 +3,7 @@
  */
 package client.clientlibrary.transaction;
 
+import exception.transaction.TransactionBeginException;
 import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
@@ -18,8 +19,8 @@ import kvs.compound.ITimestampedCell;
  * @date 10-27-2015
  */
 public interface ITransaction {
-	boolean begin();
+	boolean begin() throws TransactionBeginException;
 	ITimestampedCell read(Row r, Column c) throws TransactionReadException;
-	boolean write(Row r, Column c, Cell data);
+	void write(Row r, Column c, Cell data);
 	boolean end() throws TransactionEndException;
 }

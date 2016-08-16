@@ -34,21 +34,16 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 	
 	Phaser phaser;  // TODO put it in {@link Abstract2PCCoordinator}
 
-	private final VersionConstraintManager vcm;
-
 	/**
 	 * @param ctx	client context 
-	 * @param vcm	RVSI-specific version constraint manager   
 	 */
-	public RVSI2PCPhaserCoordinator(final AbstractClientContext ctx,
-								   final VersionConstraintManager vcm)  {
+	public RVSI2PCPhaserCoordinator(final AbstractClientContext ctx)  {
 		super(ctx);
-		this.vcm = vcm;
         this.phaser = new CommitPhaser(this);   /** TODO Is it safe to pass {@code this} reference? */
 	}
 
 	@Override
-	public boolean execute2PC(final ToCommitTransaction tx) {
+	public boolean execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm) {
 		final Map<Integer, ToCommitTransaction> siteTxMap = ctx.partition(tx);
         final Map<Integer, VersionConstraintManager> siteVcmMap = ctx.partition(vcm);
 

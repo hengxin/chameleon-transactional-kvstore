@@ -1,11 +1,11 @@
 package client.clientlibrary.transaction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.NoRouteToHostException;
 import java.rmi.ConnectIOException;
 import java.rmi.RemoteException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import client.clientlibrary.rvsi.rvsimanager.RVSISpecificationManager;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
@@ -14,9 +14,8 @@ import client.clientlibrary.rvsi.rvsispec.BVSpecification;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
 import client.context.AbstractClientContext;
-import client.context.ClientContextSingleMaster;
+import exception.transaction.TransactionBeginException;
 import exception.transaction.TransactionEndException;
-import exception.transaction.TransactionExecutionException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
 import kvs.component.Column;
@@ -24,9 +23,8 @@ import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
-import kvs.compound.TimestampedCell;
 import site.ISite;
-import site.ITransactional;
+import twopc.timing.ITimestampOracle;
 
 /**
  * {@link RVSITransaction} is a kind of transactions with rvsi semantics
@@ -39,51 +37,48 @@ public class RVSITransaction implements ITransaction {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(RVSITransaction.class);
 	
-	private final AbstractClientContext context;
+	private final AbstractClientContext cctx;
 	
 	private Timestamp sts = Timestamp.TIMESTAMP_INIT;	// start-timestamp
 //	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
 
-	private final BufferedUpdates buffered_updates = new BufferedUpdates();	
+	private final BufferedUpdates bufferedUpdates = new BufferedUpdates();
 	private final QueryResults query_results = new QueryResults();
 	
 	private final RVSISpecificationManager rvsi_manager = new RVSISpecificationManager();
 
-	public RVSITransaction(AbstractClientContext context) {
-		this.context = context;
+	public RVSITransaction(AbstractClientContext ctx) {
+		this.cctx = ctx;
 	}
 	
 	/**
-	 * To begin a transaction, the client contacts <i>the</i> master to 
-	 * acquire a globally unique start timestamp.
+	 * To begin a transaction, the client contacts the {@link twopc.timing.ITimestampOracle}
+	 * to acquire a globally unique start timestamp.
+     *
+     * @throws TransactionBeginException thrown if errors occur when acquire a timestamp
 	 * 
 	 * FIXME Who is responsible for handling the exceptions such as
 	 * 	{@link NoRouteToHostException}, {@link ConnectIOException}, and {@link RemoteException}?
 	 */
 	@Override
-	public boolean begin() {
-		ISite master = ((ClientContextSingleMaster) context).getMaster();
-		
+	public boolean begin() throws TransactionBeginException {
+
+        ITimestampOracle tsOracle = cctx.getTsOracle();
 		try {
-			this.sts = ((ITransactional) master).start();
+            sts = new Timestamp(tsOracle.get());
 			LOGGER.info("The transaction (ID TBD) has successfully obtained a start-timestamp ({}).", sts);
 			return true;
-		} catch (ConnectIOException cioe) {
-			LOGGER.error("An IOException occurs while making a connection to the remote host for a remote method call. \\n {}", cioe.getMessage());
 		} catch (RemoteException re) {
-			LOGGER.error("An error occurs while contacting the remote master {}. \n {}", master, re.getMessage());
-		} catch (TransactionExecutionException te) {
-			LOGGER.error(te.getMessage() + "\n" + te.getCause());
+            throw new TransactionBeginException(String.format("Transaction [%s] failed to begin.", this),
+                    re.getCause());
 		}
-		
-		return false;
 	}
 
 	@Override
 	public ITimestampedCell read(Row r, Column c) throws TransactionReadException {
-		ISite site = context.getReadSite(new CompoundKey(r, c));
+		ISite site = cctx.getReadSite(new CompoundKey(r, c));
 		
-		ITimestampedCell ts_cell = TimestampedCell.TIMESTAMPED_CELL_INIT;
+		ITimestampedCell ts_cell;
 		try { 
 			ts_cell = site.get(r, c);
 			this.query_results.put(new CompoundKey(r, c), ts_cell);
@@ -95,16 +90,20 @@ public class RVSITransaction implements ITransaction {
 		return ts_cell;
 	}
 
+    /**
+     * Write data locally.
+     * @param r {@link Row}
+     * @param c {@link Column}
+     * @param data {@link Cell}
+     */
 	@Override
-	public boolean write(Row r, Column c, Cell data) {
-		this.buffered_updates.intoBuffer(r, c, data);
-		return true;
+	public void write(Row r, Column c, Cell data) {
+		bufferedUpdates.intoBuffer(r, c, data);
 	}
 
 	/**
 	 * Issued by a client to try to commit this transaction.
-	 * @return
-	 * 	{@code true} if transaction has been committed; {@code false}, otherwise.
+	 * @return 	{@code true} if transaction has been committed; {@code false}, otherwise.
 	 * @throws TransactionEndException 
 	 * 
 	 * @implNote
@@ -113,14 +112,14 @@ public class RVSITransaction implements ITransaction {
 	 */
 	@Override
 	public boolean end() throws TransactionEndException {
-		VersionConstraintManager vc_manager = this.generateVCManager();
-		ToCommitTransaction tx = new ToCommitTransaction(this.sts, this.buffered_updates);
+		VersionConstraintManager vcm = generateVCManager();
+		ToCommitTransaction tx = new ToCommitTransaction(sts, bufferedUpdates);
 		
 		try {
-			ISite master = ((ClientContextSingleMaster) context).getMaster();
-			return ((ITransactional) master).commit(tx, vc_manager);	
-		} catch (RemoteException | TransactionExecutionException re_tee) {
-			throw new TransactionEndException(String.format("Transaction [%s] failed to commit.", this), re_tee.getCause());
+            return cctx.getCoord(tx).execute2PC(tx, vcm);
+		} catch (RemoteException re) {
+			throw new TransactionEndException(String.format("Transaction [%s] failed to commit.", this),
+                    re.getCause());
 		}
 	}
 
@@ -135,15 +134,9 @@ public class RVSITransaction implements ITransaction {
 		this.rvsi_manager.collectRVSISpecification(rvsi_spec);
 	}
 	
-	public VersionConstraintManager generateVCManager() {
-		return this.rvsi_manager.generateVCManager(this);
-	}
+	public VersionConstraintManager generateVCManager() { return rvsi_manager.generateVCManager(this); }
 	
-	public Timestamp getSts() {
-		return this.sts;
-	}
+	public Timestamp getSts() { return sts; }
 	
-	public QueryResults getQueryResults() {
-		return this.query_results;
-	}
+	public QueryResults getQueryResults() { return query_results; }
 }

@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -18,6 +20,7 @@ import network.membership.ReplicationGroup;
 import network.membership.StaticMembershipFromProperties;
 import rmi.IRMI;
 import site.ISite;
+import twopc.coordinator.Abstract2PCCoordinator;
 
 /**
  * Provides context for transaction processing at the client side, including
@@ -65,6 +68,18 @@ public abstract class AbstractClientContext extends AbstractContext {
         return vcm.partition(partitioner, membership.getReplGrpNo());
     }
 
+    /**
+     * Get the coordinator for committing the transaction {@code tx}
+     * @param tx {@link ToCommitTransaction} to commit
+     * @return an {@link Abstract2PCCoordinator}
+     */
+    public Abstract2PCCoordinator getCoord(ToCommitTransaction tx) {
+        Set<Integer> masterIds = partition(tx).keySet();
+        int size = masterIds.size();
+        int coordId = masterIds.toArray(new Integer[size])[new Random().nextInt(size)];
+        return getCoord(coordId);
+    }
+
 	/**
 	 * Return a master site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
@@ -107,5 +122,10 @@ public abstract class AbstractClientContext extends AbstractContext {
 	public ISite getMaster(int replGrpId) {
 		return membership.getMaster(replGrpId);
 	}
+
+	private Abstract2PCCoordinator getCoord(int coordId) {
+	    // TODO return a coordinator
+        return null;
+    }
 
 }
