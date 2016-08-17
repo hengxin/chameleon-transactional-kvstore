@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import context.AbstractContext;
-import network.membership.StaticMembershipFromProperties;
+import membership.site.StaticSiteMembershipFromProperties;
 
 /**
  * Context for slave sites.
@@ -21,7 +21,7 @@ public class SlaveContext extends AbstractContext {
 	 */
 	public SlaveContext(@NotNull String file) {
 		LOGGER.info("Using the properties file [{}] for [{}].", file, this.getClass().getSimpleName());
-		membership = new StaticMembershipFromProperties(file);
+		membership = new StaticSiteMembershipFromProperties(file);
 	}
 
 }

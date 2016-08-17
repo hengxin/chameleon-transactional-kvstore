@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import client.clientlibrary.ClientLibraryTestSuite;
 import kvs.table.KVSTableTestSuite;
-import network.NetworkTestSuite;
+import membership.NetworkTestSuite;
 
 @RunWith(Suite.class)
 @SuiteClasses({ClientLibraryTestSuite.class, KVSTableTestSuite.class, NetworkTestSuite.class})

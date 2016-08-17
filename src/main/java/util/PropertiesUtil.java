@@ -15,7 +15,8 @@ import java.util.Properties;
 public final class PropertiesUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
 
-    public static Properties load(final String properties) throws IOException {
+    public static Properties load(final String properties)
+            throws IOException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
         Properties props = new Properties();

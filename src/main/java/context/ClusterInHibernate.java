@@ -8,8 +8,8 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import network.membership.ClientMembership;
-import network.membership.Member;
+import membership.site.ClientMembership;
+import membership.site.Member;
 
 /**
  * A {@link ClusterInHibernate} consists of a collection of {@link Member}s,

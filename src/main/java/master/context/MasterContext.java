@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 
 import context.AbstractContext;
-import network.membership.StaticMembershipFromProperties;
+import membership.site.StaticSiteMembershipFromProperties;
 
 /**
  * Providing context for master sites, including
@@ -27,7 +27,7 @@ public class MasterContext extends AbstractContext { // implements IContext {
 	 */
 	public MasterContext(@Nonnull String file) {
 		LOGGER.info("Using the properties file [{}] for [{}].", file, this.getClass().getSimpleName());
-        membership = new StaticMembershipFromProperties(file);
+        membership = new StaticSiteMembershipFromProperties(file);
 	}
 
 }

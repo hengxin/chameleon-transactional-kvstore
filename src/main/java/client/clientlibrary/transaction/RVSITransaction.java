@@ -16,6 +16,7 @@ import client.clientlibrary.rvsi.rvsispec.SVSpecification;
 import client.context.AbstractClientContext;
 import exception.transaction.TransactionBeginException;
 import exception.transaction.TransactionEndException;
+import exception.transaction.TransactionExecutionException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
 import kvs.component.Column;
@@ -118,10 +119,15 @@ public class RVSITransaction implements ITransaction {
 		try {
             return cctx.getCoord(tx).execute2PC(tx, vcm);
 		} catch (RemoteException re) {
-			throw new TransactionEndException(String.format("Transaction [%s] failed to commit.", this),
+			throw new TransactionEndException(
+			        String.format("Transaction [%s] failed to commit due to RMI-related issues.", this),
                     re.getCause());
-		}
-	}
+		} catch (TransactionExecutionException tee) {
+		    throw new TransactionEndException(
+		            String.format("Transaction [%s] failed to commit.", this),
+                    tee.getCause());
+        }
+    }
 
 	/**
 	 * Collect {@link AbstractRVSISpecification} whose type could be {@link BVSpecification}, 

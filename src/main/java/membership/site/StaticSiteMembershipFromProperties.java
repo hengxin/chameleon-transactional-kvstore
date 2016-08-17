@@ -1,4 +1,4 @@
-package network.membership;
+package membership.site;
 
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import site.ISite;
 
 /**
- * The {@link StaticMembershipFromProperties} loads/maintains a global, static membership view
+ * The {@link StaticSiteMembershipFromProperties} loads/maintains a global, static membership view
  * from a properties file.
  *
  * The global membership view consists of a map of {@link ReplicationGroup}s, indexed by their identifiers.
@@ -21,8 +21,8 @@ import site.ISite;
  * @author hengxin
  * @date 2016-6-8
  */
-public final class StaticMembershipFromProperties implements IMembership {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StaticMembershipFromProperties.class);
+public final class StaticSiteMembershipFromProperties implements ISiteMembership {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StaticSiteMembershipFromProperties.class);
     @Language("Properties")
     private static final String DEFAULT_PROPERTIES = "network/membership/membership.properties";
 
@@ -32,7 +32,7 @@ public final class StaticMembershipFromProperties implements IMembership {
     /**
      * Constructor with default properties file: {@value #DEFAULT_PROPERTIES}.
      */
-    public StaticMembershipFromProperties() {
+    public StaticSiteMembershipFromProperties() {
         this(DEFAULT_PROPERTIES);
     }
 
@@ -40,7 +40,7 @@ public final class StaticMembershipFromProperties implements IMembership {
      * Constructor with properties file.
      * @param properties  membership properties file
      */
-    public StaticMembershipFromProperties(final String properties) {
+    public StaticSiteMembershipFromProperties(final String properties) {
         MembershipPropertiesParser parser = new MembershipPropertiesParser(properties);
         self = parser.parseSelf();
         replGrps = parser.parseReplGrps();

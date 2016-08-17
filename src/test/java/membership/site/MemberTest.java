@@ -1,4 +1,4 @@
-package network.membership;
+package membership.site;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Before;

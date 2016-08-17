@@ -1,5 +1,6 @@
 package client.context;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,16 +9,15 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.RVSITransaction;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.AbstractContext;
 import kvs.compound.CompoundKey;
-import network.membership.ReplicationGroup;
-import network.membership.StaticMembershipFromProperties;
+import membership.coordinator.CoordinatorMembership;
+import membership.site.ReplicationGroup;
+import membership.site.StaticSiteMembershipFromProperties;
 import rmi.IRMI;
 import site.ISite;
 import twopc.coordinator.Abstract2PCCoordinator;
@@ -26,7 +26,7 @@ import twopc.coordinator.Abstract2PCCoordinator;
  * Provides context for transaction processing at the client side, including
  * <p><ul>
  * <li> {@link #membership}: a collection of {@link ReplicationGroup} maintained
- *    by {@link StaticMembershipFromProperties}
+ *    by {@link StaticSiteMembershipFromProperties}
  * <li> TODO {link #tx}: the currently active {@link RVSITransaction}
  * <li> TODO {link #newTx()} and {link #endTx()}: life-cycle management of {link #tx}.
  * <li> TO BE IMPLEMENTED
@@ -37,7 +37,6 @@ import twopc.coordinator.Abstract2PCCoordinator;
  */
 public abstract class AbstractClientContext extends AbstractContext {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractClientContext.class);
-
 	protected final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
 	
 	protected IPartitioner partitioner;
@@ -47,11 +46,15 @@ public abstract class AbstractClientContext extends AbstractContext {
 	 * Constructor with user-specified properties file.
 	 * <p> If some master site cannot be parsed from .properties file 
 	 * or located via RMI, the whole system exits immediately.
-	 * @param file		path of the properties file; it cannot be {@code null}.
+	 * @param siteProperties	path of the properties file; it cannot be {@code null}.
+     * @param cfProperties  path of the cf properties file; it cannot be {@code null}
+     *    TODO default: on sites
 	 */
-	public AbstractClientContext(@Nonnull String file) {
-		LOGGER.info("Using the properties file [{}] for [{}].", file, this.getClass().getSimpleName());
-        membership = new StaticMembershipFromProperties(file);
+	public AbstractClientContext(@NotNull String siteProperties, @NotNull String cfProperties) {
+		LOGGER.info("Using site properties file [{}] and cf properties for [{}].",
+                siteProperties, cfProperties, this.getClass().getSimpleName());
+        membership = new StaticSiteMembershipFromProperties(siteProperties);
+        coordMembership = new CoordinatorMembership(cfProperties);
 	}
 
     /**
@@ -77,7 +80,7 @@ public abstract class AbstractClientContext extends AbstractContext {
         Set<Integer> masterIds = partition(tx).keySet();
         int size = masterIds.size();
         int coordId = masterIds.toArray(new Integer[size])[new Random().nextInt(size)];
-        return getCoord(coordId);
+        return coordMembership.getCoord(coordId, this);
     }
 
 	/**
@@ -122,10 +125,5 @@ public abstract class AbstractClientContext extends AbstractContext {
 	public ISite getMaster(int replGrpId) {
 		return membership.getMaster(replGrpId);
 	}
-
-	private Abstract2PCCoordinator getCoord(int coordId) {
-	    // TODO return a coordinator
-        return null;
-    }
 
 }

@@ -4,8 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import network.membership.AbstractStaticMembership;
-import network.membership.MasterMembership;
+import membership.site.AbstractStaticMembership;
+import membership.site.MasterMembership;
 
 /**
  * @author hengxin
@@ -33,7 +33,7 @@ public class RVSI2PCPhaserCoordinatorStubTest {
 
     @Test
     public void execute2PC() throws Exception {
-        coord.execute2PC(null);
+        coord.execute2PC(null, null);
     }
 
 }

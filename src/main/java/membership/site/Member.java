@@ -1,4 +1,4 @@
-package network.membership;
+package membership.site;
 
 import com.google.common.base.MoreObjects;
 

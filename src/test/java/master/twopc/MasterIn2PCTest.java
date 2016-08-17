@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import master.context.MasterContext;
-import site.AbstractSite;
+import twopc.participant.I2PCParticipant;
 
 /**
  * @author hengxin
@@ -46,9 +45,7 @@ public class MasterIn2PCTest {
     }
 
     private static void launch(String file) {
-        MasterContext ctx = new MasterContext(file);
-        AbstractSite master = new MasterIn2PC(ctx);
-
+        I2PCParticipant master = new MasterIn2PC();
         LOGGER.info("MasterIn2PC [{}] has been successfully launched.", master);
     }
 

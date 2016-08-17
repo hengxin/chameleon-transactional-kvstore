@@ -1,6 +1,6 @@
 package exception.rmi;
 
-import network.membership.Member;
+import membership.site.Member;
 
 /**
  * A {@link RMIRegistryException} is a {@link RuntimeException} 

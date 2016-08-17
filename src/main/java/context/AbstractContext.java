@@ -2,7 +2,8 @@ package context;
 
 import org.jetbrains.annotations.NotNull;
 
-import network.membership.IMembership;
+import membership.coordinator.ICoordinatorMembership;
+import membership.site.ISiteMembership;
 import twopc.timing.CentralizedTimestampOracle;
 import twopc.timing.ITimestampOracle;
 
@@ -11,8 +12,9 @@ import twopc.timing.ITimestampOracle;
  * @date 16-8-9
  */
 public abstract class AbstractContext {
-    @NotNull protected IMembership membership;
+    protected @NotNull ISiteMembership membership;
+    protected ICoordinatorMembership coordMembership;
 
-    public IMembership getMembership() { return membership; }
-    public ITimestampOracle getTsOracle() { return CentralizedTimestampOracle.INSTANCE; }
+    public @NotNull ISiteMembership getMembership() { return membership; }
+    public ITimestampOracle getTsOracle() { return CentralizedTimestampOracle.INSTANCE; }  // FIXME refactor it
 }

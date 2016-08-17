@@ -1,8 +1,5 @@
 package main;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +7,7 @@ import client.clientlibrary.transaction.ITransaction;
 import client.clientlibrary.transaction.RVSITransaction;
 import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
+import exception.transaction.TransactionBeginException;
 import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
@@ -17,6 +15,9 @@ import kvs.component.Column;
 import kvs.component.Row;
 import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Main class at the client side. 
@@ -30,7 +31,7 @@ public class ClientMainTest {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(ClientMainTest.class);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws TransactionBeginException {
 		// context
 		AbstractClientContext context = new ClientContextSingleMaster();
 

@@ -5,12 +5,15 @@ import com.sun.istack.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.rmi.RemoteException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.AbstractContext;
+import exception.transaction.TransactionExecutionException;
+import kvs.component.Timestamp;
 import master.AbstractMaster;
 import messages.IMessageProducer;
 import twopc.coordinator.RVSI2PCPhaserCoordinatorStub;
@@ -49,9 +52,15 @@ public class ParticipantStub extends AbstractMaster implements I2PCParticipant {
     }
 
     @Override
-    public boolean complete() {
+    public boolean commit(ToCommitTransaction tx, Timestamp cts) throws RemoteException, TransactionExecutionException {
         boolean committed = rand.nextBoolean();
         LOGGER.info("In COMMIT phase, reply with [{}]", committed);
         return committed;
     }
+
+    @Override
+    public void abort() {
+
+    }
+
 }

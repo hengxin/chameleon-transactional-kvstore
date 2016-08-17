@@ -1,4 +1,4 @@
-package network.membership;
+package membership.site;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -6,11 +6,11 @@ import java.util.stream.Stream;
 import site.ISite;
 
 /**
- * Interface {@link IMembership} provides accesses to master/slave sites.
+ * Interface {@link ISiteMembership} provides accesses to master/slave sites.
  * @author hengxin
  * @date 16-6-8
  */
-public interface IMembership {
+public interface ISiteMembership {
     int getReplGrpNo();
     ISite getMaster(int replGrpId);
     List<ISite> getMasterSites();

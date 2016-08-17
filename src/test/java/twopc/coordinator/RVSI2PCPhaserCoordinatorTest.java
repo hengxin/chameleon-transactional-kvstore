@@ -5,9 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
-
-import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.context.ClientContextSingleMaster;
 
 /**
@@ -22,8 +19,7 @@ public class RVSI2PCPhaserCoordinatorTest {
 
     @Before
     public void setUp() throws Exception {
-        coord = new RVSI2PCPhaserCoordinator(new ClientContextSingleMaster(PARTICIPANTS_MEMBERSHIP_FILE),
-                new VersionConstraintManager(Collections.emptyList()));
+        coord = new RVSI2PCPhaserCoordinator(new ClientContextSingleMaster(PARTICIPANTS_MEMBERSHIP_FILE, ""));
     }
 
     @After

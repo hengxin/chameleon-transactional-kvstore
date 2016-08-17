@@ -1,4 +1,4 @@
-package network.membership;
+package membership.site;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

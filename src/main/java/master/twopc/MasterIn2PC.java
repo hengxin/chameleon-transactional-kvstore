@@ -3,8 +3,12 @@ package master.twopc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.rmi.RemoteException;
+
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
+import exception.transaction.TransactionExecutionException;
+import kvs.component.Timestamp;
 import twopc.participant.I2PCParticipant;
 
 /**
@@ -26,11 +30,15 @@ public final class MasterIn2PC implements I2PCParticipant {
 		return false;
 	}
 
-	@Override
-	public boolean complete() {
-		// TODO Auto-generated method stub
+    @Override
+    public boolean commit(ToCommitTransaction tx, Timestamp cts) throws RemoteException, TransactionExecutionException {
         LOGGER.debug("Master [{}] at the COMMIT phase.", toString());
-		return false;
-	}
+        return false;
+    }
+
+    @Override
+    public void abort() {
+
+    }
 
 }

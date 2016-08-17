@@ -1,5 +1,6 @@
-package network.membership;
+package membership.site;
 
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,7 @@ public final class MembershipPropertiesParser {
         }
     }
 
+    @Nullable
     public Member parseSelf() {
         String selfMember = prop.getProperty(SELF);
         if (selfMember != null)

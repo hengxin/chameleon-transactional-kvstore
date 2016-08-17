@@ -1,4 +1,4 @@
-package network.membership;
+package membership.site;
 
 import javax.annotation.Nonnull;
 
@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 public final class ClientMembership extends AbstractStaticMembership {
 
 //	private List<ClusterInHibernate> hibernate_cluster_list;
-	private IMembership membership;
+	private ISiteMembership membership;
 
 	public ClientMembership(@Nonnull String file) {
 		super(file);

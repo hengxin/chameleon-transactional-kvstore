@@ -32,7 +32,6 @@ import static java.util.stream.Collectors.toList;
  * @date Created on Dec 27, 2015
  */
 public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(RVSI2PCPhaserCoordinator.class);
 	private final ExecutorService exec = Executors.newCachedThreadPool();
 	
@@ -43,7 +42,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 	 */
 	public RVSI2PCPhaserCoordinator(final AbstractClientContext ctx)  {
 		super(ctx);
-        phaser = new CommitPhaser(this);   /** TODO Is it safe to pass {@code this} reference? */
+        phaser = new CommitPhaser(this);   // TODO Is it safe to pass {@code this} reference?
 	}
 
 	@Override

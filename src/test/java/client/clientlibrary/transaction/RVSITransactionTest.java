@@ -15,6 +15,7 @@ import client.context.AbstractClientContext;
 import client.context.ClientContextSingleMaster;
 import exception.ContextException;
 import exception.SiteException;
+import exception.transaction.TransactionBeginException;
 import kvs.component.Timestamp;
 import master.MasterLauncher;
 
@@ -42,10 +43,12 @@ public class RVSITransactionTest {
 	 * @throws SecurityException 
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
-	 * @throws IllegalArgumentException 
+	 * @throws IllegalArgumentException
+     * @throws TransactionBeginException
 	 */
 	@Test
-	public void testBegin() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testBegin()
+            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, TransactionBeginException {
 		assertTrue("Transaction does not begin successfully.", tx.begin());
 		
 		assertEquals("Start-timestamp has not been assigned correctly.", new Timestamp(1L), ((RVSITransaction) tx).getSts());

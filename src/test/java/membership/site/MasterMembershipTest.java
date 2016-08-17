@@ -1,4 +1,4 @@
-package network.membership;
+package membership.site;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

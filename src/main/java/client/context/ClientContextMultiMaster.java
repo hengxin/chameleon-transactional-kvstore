@@ -2,6 +2,8 @@ package client.context;
 
 import client.clientlibrary.partitioning.IPartitioner;
 
+import static membership.coordinator.CoordinatorMembership.DEFAULT_COORD_FACTORY_PROPERTIES_FILE;
+
 /**
  * Provides context for transaction processing at the client side
  * in the <i>multiple-masters</i> setting.
@@ -17,16 +19,17 @@ public class ClientContextMultiMaster extends AbstractClientContext {
 	 * @param partitioner	{@link IPartitioner} for keyspace partition strategy
 	 */
 	public ClientContextMultiMaster(IPartitioner partitioner) {
-		this(DEFAULT_CLIENT_PROPERTIES_FILE, partitioner);
+		this(DEFAULT_COORD_FACTORY_PROPERTIES_FILE, DEFAULT_CLIENT_PROPERTIES_FILE, partitioner);
 	}
 	
 	/**
-	 * Constructor with user-specified .properties file and keyspace {@link IPartitioner}.
-	 * @param file	.properties file name
+	 * Constructor with user-specified .properties files and {@link IPartitioner}.
+     * @param siteProperties
+     * @param cfProperties
 	 * @param partitioner	{@link IPartitioner} for keyspace partition strategy
 	 */
-	public ClientContextMultiMaster(String file, IPartitioner partitioner) {
-		super(file);
+	public ClientContextMultiMaster(String siteProperties, String cfProperties, IPartitioner partitioner) {
+		super(siteProperties, cfProperties);
 		super.partitioner = partitioner;
 	}
 
