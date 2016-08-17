@@ -1,5 +1,6 @@
 package client.context;
 
+import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +38,11 @@ import twopc.coordinator.Abstract2PCCoordinator;
  */
 public abstract class AbstractClientContext extends AbstractContext {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractClientContext.class);
-	protected final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/membership-client.properties";
-	
+    @Language("Properties")
+	protected final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/site.properties";
+    @Language("Properties")
+    protected final static String DEFAULT_COORD_FACTORY_PROPERTIES_FILE = "client/cf.properties";
+
 	protected IPartitioner partitioner;
 	protected Optional<ISite> cached_read_site = Optional.empty();	
 	

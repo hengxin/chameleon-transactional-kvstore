@@ -1,5 +1,7 @@
 package membership.coordinator;
 
+import com.google.common.base.MoreObjects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,23 +26,16 @@ import util.PropertiesUtil;
  */
 public class CoordinatorMembership implements ICoordinatorMembership {
     private static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorMembership.class);
-    public static final String DEFAULT_COORD_FACTORY_PROPERTIES_FILE = "membership/coordinator/cf.properties";
 
-    private final Map<Integer, CoordinatorFactory> cfMap = new HashMap<>();
-
-    /**
-     * Constructor with default {@value #DEFAULT_COORD_FACTORY_PROPERTIES_FILE}
-     */
-    public CoordinatorMembership() {
-        this(DEFAULT_COORD_FACTORY_PROPERTIES_FILE);
-    }
+    private Map<Integer, ICoordinatorFactory> cfMap = new HashMap<>();
 
     public CoordinatorMembership(String properties) {
         try {
             Properties prop = PropertiesUtil.load(properties);
 
-            prop.stringPropertyNames().stream()
+            cfMap = prop.stringPropertyNames().stream()
                     .map(idStr -> new CFMember(idStr, prop.getProperty(idStr)))
+                    .peek(System.out::println)
                     .collect(Collectors.toMap(CFMember::getId, CFMember::getCf));
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,14 +55,23 @@ public class CoordinatorMembership implements ICoordinatorMembership {
 
     private class CFMember {
         private int id;
-        private CoordinatorFactory cf;
+        private ICoordinatorFactory cf;
 
         CFMember(String idStr, String memberStr) {
+            System.out.println(memberStr);
             id = Integer.parseInt(idStr);
-            cf = (CoordinatorFactory) RMIUtil.lookup(memberStr);
+            cf = (ICoordinatorFactory) RMIUtil.lookup(memberStr);
         }
 
         int getId() { return id; }
-        CoordinatorFactory getCf() { return cf; }
+        ICoordinatorFactory getCf() { return cf; }
+
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add("id", id)
+                    .addValue(cf)
+                    .toString();
+        }
     }
 }

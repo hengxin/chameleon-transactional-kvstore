@@ -2,8 +2,6 @@ package client.context;
 
 import client.clientlibrary.partitioning.IPartitioner;
 
-import static membership.coordinator.CoordinatorMembership.DEFAULT_COORD_FACTORY_PROPERTIES_FILE;
-
 /**
  * Provides context for transaction processing at the client side
  * in the <i>multiple-masters</i> setting.

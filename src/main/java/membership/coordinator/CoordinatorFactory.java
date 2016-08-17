@@ -1,10 +1,10 @@
 package membership.coordinator;
 
+import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Properties;
 import java.util.Set;
@@ -22,8 +22,9 @@ import util.PropertiesUtil;
  * @author hengxin
  * @date 16-8-16
  */
-public class CoordinatorFactory implements Remote, IRMI {
+public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
     private static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorFactory.class);
+    @Language("Properties")
     private static final String DEFAULT_CF_PROPERTIES = "membership/coordinator/cf.properties";
 
     private Member self;
@@ -44,11 +45,7 @@ public class CoordinatorFactory implements Remote, IRMI {
         }
     }
 
-    /**
-     * @param ctx {@link AbstractClientContext}
-     * @return an instance of {@link RVSI2PCPhaserCoordinator}
-     * @throws RemoteException
-     */
+    @Override
     public Abstract2PCCoordinator getRVSI2PCPhaserCoord(AbstractClientContext ctx)
             throws RemoteException {
         return new RVSI2PCPhaserCoordinator(ctx);

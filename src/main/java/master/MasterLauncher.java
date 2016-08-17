@@ -1,5 +1,6 @@
 package master;
 
+import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,8 @@ import site.AbstractSite;
 public class MasterLauncher {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterLauncher.class);
-	private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "master/membership-master.properties";
+	@Language("Properties")
+    private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "master/site.properties";
 
 	/**
 	 * Launch with default properties file, which is

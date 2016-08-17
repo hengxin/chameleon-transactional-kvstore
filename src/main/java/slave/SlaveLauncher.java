@@ -1,5 +1,6 @@
 package slave;
 
+import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,8 @@ import slave.context.SlaveContext;
 public class SlaveLauncher {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(SlaveLauncher.class);
-	private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "slave/membership-slave.properties";
+	@Language("Properties")
+    private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "slave/site.properties";
 
 	/**
 	 * Launch with default properties file, which is

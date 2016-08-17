@@ -70,7 +70,7 @@ public final class RMIUtil {
 
     @Nullable
     public static Remote lookup(Member member) {
-        return lookup(member.getHost(), member.getPort(), member.getRmiRegistryName());
+        return lookup(member.getHost(), member.getRmiRegistryPort(), member.getRmiRegistryName());
     }
 
     /**

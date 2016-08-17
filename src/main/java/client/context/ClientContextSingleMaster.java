@@ -3,8 +3,6 @@ package client.context;
 import client.clientlibrary.partitioning.SingleMasterSettingPartitioner;
 import site.ISite;
 
-import static membership.coordinator.CoordinatorMembership.DEFAULT_COORD_FACTORY_PROPERTIES_FILE;
-
 /**
  * Provides context for transaction processing at the client side
  * in the <i>single-master-multiple-slave</i> setting. 
@@ -19,7 +17,7 @@ public class ClientContextSingleMaster extends AbstractClientContext {
 	
 	public ClientContextSingleMaster(String siteProperties, String cfProperties) {
 		super(siteProperties, cfProperties);
-		this.partitioner = new SingleMasterSettingPartitioner();
+		partitioner = new SingleMasterSettingPartitioner();
 	}
 	
 	/**
