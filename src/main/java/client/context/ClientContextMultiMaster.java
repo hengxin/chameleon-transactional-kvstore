@@ -17,7 +17,7 @@ public class ClientContextMultiMaster extends AbstractClientContext {
 	 * @param partitioner	{@link IPartitioner} for keyspace partition strategy
 	 */
 	public ClientContextMultiMaster(IPartitioner partitioner) {
-		this(DEFAULT_COORD_FACTORY_PROPERTIES_FILE, DEFAULT_SITE_PROPERTIES_FILE, partitioner);
+		this(DEFAULT_SITE_PROPERTIES_FILE, DEFAULT_COORD_FACTORY_PROPERTIES_FILE, partitioner);
 	}
 	
 	/**

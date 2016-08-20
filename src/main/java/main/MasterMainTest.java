@@ -15,7 +15,7 @@ public class MasterMainTest {
 
 	public static void main(String[] args) {
 		try {
-			new MasterLauncher();
+			new MasterLauncher(args[0]);
 		} catch (SiteException e) {
 			e.printStackTrace();
 			System.exit(1);

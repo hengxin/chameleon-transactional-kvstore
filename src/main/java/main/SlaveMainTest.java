@@ -13,7 +13,7 @@ public class SlaveMainTest {
 
 	public static void main(String[] args) {
 		try {
-			new SlaveLauncher();
+			new SlaveLauncher(args[0]);
 		} catch (SiteException e) {
 			e.printStackTrace();
 			System.exit(1);
