@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ import util.PropertiesUtil;
  * @author hengxin
  * @date 16-8-17
  */
-public class CoordinatorMembership implements ICoordinatorMembership {
+public class CoordinatorMembership implements ICoordinatorMembership, Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorMembership.class);
 
     private Map<Integer, ICoordinatorFactory> cfMap = new HashMap<>();
@@ -35,7 +36,6 @@ public class CoordinatorMembership implements ICoordinatorMembership {
 
             cfMap = prop.stringPropertyNames().stream()
                     .map(idStr -> new CFMember(idStr, prop.getProperty(idStr)))
-                    .peek(System.out::println)
                     .collect(Collectors.toMap(CFMember::getId, CFMember::getCf));
         } catch (IOException e) {
             e.printStackTrace();

@@ -23,8 +23,8 @@ import static org.junit.Assert.assertNotEquals;
 
 public class AbstractVersionConstraintTest {
 
-	private AbstractRVSISpecification rvsi_spec = new BVSpecification();
-	private QueryResults query_results = new QueryResults();
+	private AbstractRVSISpecification rvsiSpec = new BVSpecification();
+	private QueryResults queryResults = new QueryResults();
 
 	private CompoundKey ck_r1_c1 = new CompoundKey("R1", "C1");
 	private CompoundKey ck_r1_c2 = new CompoundKey("R1", "C2");
@@ -36,19 +36,18 @@ public class AbstractVersionConstraintTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		// set the {@value #rvsi_spec}
 		HashSet<CompoundKey> ckey_set_r1 = Stream.of(ck_r1_c1, ck_r1_c2)
 				.collect(Collectors.toCollection(HashSet::new));
 		
 		HashSet<CompoundKey> ckey_set_r2 = Stream.of(ck_r2_c1, ck_r2_c2)
 				.collect(Collectors.toCollection(HashSet::new));
 		
-		this.rvsi_spec.addSpec(ckey_set_r1, 1L);
-		this.rvsi_spec.addSpec(ckey_set_r2, 2L);
+		rvsiSpec.addSpec(ckey_set_r1, 1);
+		rvsiSpec.addSpec(ckey_set_r2, 2);
 		
-		// set the the {@link #query_results}
-		this.query_results.put(ck_r1_c1, tc1);
-		this.query_results.put(ck_r2_c2, tc2);
+		// set the the {@link #queryResults}
+		queryResults.put(ck_r1_c1, tc1);
+		queryResults.put(ck_r2_c2, tc2);
 	}
 	
 	@Test

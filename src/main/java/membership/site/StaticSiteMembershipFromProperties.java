@@ -1,16 +1,19 @@
 package membership.site;
 
-import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import client.context.AbstractClientContext;
 import site.ISite;
+
+import static client.context.AbstractClientContext.DEFAULT_SITE_PROPERTIES_FILE;
 
 /**
  * The {@link StaticSiteMembershipFromProperties} loads/maintains a global, static membership view
@@ -21,19 +24,17 @@ import site.ISite;
  * @author hengxin
  * @date 2016-6-8
  */
-public final class StaticSiteMembershipFromProperties implements ISiteMembership {
+public final class StaticSiteMembershipFromProperties implements ISiteMembership, Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(StaticSiteMembershipFromProperties.class);
-    @Language("Properties")
-    private static final String DEFAULT_PROPERTIES = "network/membership/membership.properties";
 
     @NotNull private final Member self;
     @NotNull private final Map<Integer, ReplicationGroup> replGrps;
 
     /**
-     * Constructor with default properties file: {@value #DEFAULT_PROPERTIES}.
+     * Constructor with default site properties file: {@link AbstractClientContext#DEFAULT_SITE_PROPERTIES_FILE}
      */
     public StaticSiteMembershipFromProperties() {
-        this(DEFAULT_PROPERTIES);
+        this(DEFAULT_SITE_PROPERTIES_FILE);
     }
 
     /**

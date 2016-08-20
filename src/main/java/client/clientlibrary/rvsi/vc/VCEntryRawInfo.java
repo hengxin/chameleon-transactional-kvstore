@@ -24,71 +24,51 @@ import kvs.compound.KVItem;
  * @author hengxin
  * @date Created on 11-16-2015
  */
-public class VCEntryRawInfo
-{
+public class VCEntryRawInfo {
 	private final KVItem vce_info_kv;
 	private final KVItem vce_info_kv_optional;
-	private final long vce_info_bound;
+	private final int vce_info_bound;
 	
-	public VCEntryRawInfo(final KVItem kv, final KVItem kv_optional, final long bound)
-	{
-		this.vce_info_kv = kv;
-		this.vce_info_kv_optional = kv_optional;
-		this.vce_info_bound = bound;
+	public VCEntryRawInfo(final KVItem kv, final KVItem kv_optional, final int bound) {
+		vce_info_kv = kv;
+		vce_info_kv_optional = kv_optional;
+		vce_info_bound = bound;
 	}
 
 	/**
 	 * Constructor without {@link #vce_info_kv_optional}.
 	 * Prepared for constructing {@link VCEntry} for {@link BVVersionConstraint} or {@link FVVersionConstraint}.
 	 */
-	public VCEntryRawInfo(final CompoundKey ck, final ITimestampedCell ts_cell, final long bound)
-	{
-		this.vce_info_kv = new KVItem(ck, ts_cell);
-		this.vce_info_bound = bound;
+	public VCEntryRawInfo(final CompoundKey ck, final ITimestampedCell ts_cell, final int bound) {
+		vce_info_kv = new KVItem(ck, ts_cell);
+		vce_info_bound = bound;
 		
-		this.vce_info_kv_optional = null;
+		vce_info_kv_optional = null;
 	}
 
 	/**
 	 * Prepared for constructing {@link VCEntry} for {@link SVVersionConstraint}. 
 	 */
-	public VCEntryRawInfo(final CompoundKey ck, final ITimestampedCell ts_cell, 
-			final CompoundKey ck_optional, final ITimestampedCell ts_cell_optional, final long bound)
-	{
-		this.vce_info_kv = new KVItem(ck, ts_cell);
-		this.vce_info_kv_optional = new KVItem(ck_optional, ts_cell_optional);
-		this.vce_info_bound = bound;
+	public VCEntryRawInfo(final CompoundKey ck, final ITimestampedCell ts_cell,
+			final CompoundKey ck_optional, final ITimestampedCell ts_cell_optional, final int bound) {
+		vce_info_kv = new KVItem(ck, ts_cell);
+		vce_info_kv_optional = new KVItem(ck_optional, ts_cell_optional);
+		vce_info_bound = bound;
 	}
 	
-	public CompoundKey getVceInfoCk()
-	{
-		return this.vce_info_kv.getCK();
-	}
-
-	public Ordinal getVceInfoOrd()
-	{
-		return this.vce_info_kv.getTsCell().getOrdinal();
-	}
-	
-	public long getVceInfoBound()
-	{
-		return vce_info_bound;
-	}
-	
-	public Timestamp getVceInfoTsOptional()
-	{
-		return this.vce_info_kv_optional.getTsCell().getTS();
-	}
+	public CompoundKey getVceInfoCk() { return vce_info_kv.getCK(); }
+	public Ordinal getVceInfoOrd() { return vce_info_kv.getTsCell().getOrdinal(); }
+	public long getVceInfoBound() { return vce_info_bound; }
+	public Timestamp getVceInfoTsOptional() { return vce_info_kv_optional.getTsCell().getTS(); }
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hashCode(this.vce_info_kv, this.vce_info_kv_optional, this.vce_info_bound);
+		return Objects.hashCode(vce_info_kv, vce_info_kv_optional, vce_info_bound);
 	}
 
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		if (o == this)
 			return true;
 		if (o == null)
@@ -102,12 +82,11 @@ public class VCEntryRawInfo
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.addValue(this.vce_info_kv)
-				.addValue(this.vce_info_kv_optional)
-				.add("bound", this.vce_info_bound)
+				.addValue(vce_info_kv)
+				.addValue(vce_info_kv_optional)
+				.add("bound", vce_info_bound)
 				.toString();
 	}
 }

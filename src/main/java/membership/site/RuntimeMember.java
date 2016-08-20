@@ -3,6 +3,8 @@ package membership.site;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
+
 import site.ISite;
 
 /**
@@ -12,7 +14,7 @@ import site.ISite;
  * @author hengxin
  * @date 16-6-8
  */
-public final class RuntimeMember {
+public final class RuntimeMember implements Serializable {
     @NotNull private final Member literalMember;
     @Nullable private final ISite rmiSite;
 
@@ -22,6 +24,6 @@ public final class RuntimeMember {
     }
 
     public Member getLiteralMember() { return literalMember; }
-
     public ISite getRmiSite() { return rmiSite; }
+
 }

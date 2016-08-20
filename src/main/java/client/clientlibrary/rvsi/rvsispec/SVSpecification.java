@@ -25,8 +25,7 @@ import kvs.compound.KVItem;
  * @author hengxin
  * @date 10-27-2015
  */
-public class SVSpecification extends AbstractRVSISpecification
-{
+public class SVSpecification extends AbstractRVSISpecification {
 
 	/**
 	 * Extract {@link VCEntryRawInfo} for {@link SVVersionConstraint}. Each one
@@ -57,11 +56,10 @@ public class SVSpecification extends AbstractRVSISpecification
 	 * 
 	 */
 	@Override
-	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results)
-	{
-		super.vceInfos = this.rvsi_spec_map.entrySet().stream()
+	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results) {
+		super.vceInfos = rvsiSpecMap.entrySet().stream()
 				.<VCEntryRawInfo>flatMap(rvsi_spec_entry ->
-						this.expand(this.join(rvsi_spec_entry.getKey(), query_results), rvsi_spec_entry.getValue()).stream()
+						expand(join(rvsi_spec_entry.getKey(), query_results), rvsi_spec_entry.getValue()).stream()
 					)
 				.collect(Collectors.toList());
 		return super.vceInfos;
@@ -91,8 +89,7 @@ public class SVSpecification extends AbstractRVSISpecification
 	 *   { [x, Cell_x], [y, Cell_y], [z, Cell_z] }.
 	 * <p>
 	 */
-	protected SortedSet<KVItem> join(Set<CompoundKey> ck_set, QueryResults query_results)
-	{
+	protected SortedSet<KVItem> join(Set<CompoundKey> ck_set, QueryResults query_results) {
 		return ck_set.stream()
 			.<Optional<KVItem>>map(ck -> 
 				query_results.getTsCell(ck).map(ts_cell -> new KVItem(ck, ts_cell)))
@@ -127,8 +124,7 @@ public class SVSpecification extends AbstractRVSISpecification
 	 * <li>[ vce_info_kv = {y, Cell_y}, vce_info_kv_optional = {z, Cell_z}, vce_info_bound = 2] 
 	 * <p>
 	 */
-	protected List<VCEntryRawInfo> expand(SortedSet<KVItem> kv_set, final long bound)
-	{
+	protected List<VCEntryRawInfo> expand(SortedSet<KVItem> kv_set, final int bound) {
 		if (kv_set.size() < 2)
 			return new ArrayList<VCEntryRawInfo>();
 
@@ -147,8 +143,7 @@ public class SVSpecification extends AbstractRVSISpecification
 	 * @param sts This parameter is not used.
 	 */
 	@Override
-	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts)
-	{
+	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts) {
 		List<VCEntry> vce_list =  super.vceInfos.stream()
 				.<VCEntry>map(vce_info -> 
 					new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoOrd(), vce_info.getVceInfoTsOptional(), vce_info.getVceInfoBound()))

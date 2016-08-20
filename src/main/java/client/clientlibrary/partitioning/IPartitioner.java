@@ -1,5 +1,7 @@
 package client.clientlibrary.partitioning;
 
+import java.io.Serializable;
+
 import kvs.compound.CompoundKey;
 import site.ISite;
 
@@ -9,7 +11,7 @@ import site.ISite;
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
-public interface IPartitioner {
+public interface IPartitioner extends Serializable {
 
 	/**
 	 * Given a {@link CompoundKey}, this partitioner returns 

@@ -3,6 +3,8 @@ package twopc.coordinator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +34,10 @@ import static java.util.stream.Collectors.toList;
  * @date Created on Dec 27, 2015
  */
 public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
-	private static final Logger LOGGER = LoggerFactory.getLogger(RVSI2PCPhaserCoordinator.class);
-	private final ExecutorService exec = Executors.newCachedThreadPool();
-	
-	Phaser phaser;  // TODO put it in {@link Abstract2PCCoordinator}
+	private transient static final Logger LOGGER = LoggerFactory.getLogger(RVSI2PCPhaserCoordinator.class);
+	private transient static final ExecutorService exec = Executors.newCachedThreadPool();
+
+	transient Phaser phaser;  // TODO put it in {@link Abstract2PCCoordinator}
 
     /**
 	 * @param ctx	client context 
@@ -97,4 +99,8 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
         return is_committed;
     }
 
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        phaser = new CommitPhaser(this);
+    }
 }

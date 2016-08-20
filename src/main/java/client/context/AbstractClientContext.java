@@ -39,12 +39,12 @@ import twopc.coordinator.Abstract2PCCoordinator;
 public abstract class AbstractClientContext extends AbstractContext {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractClientContext.class);
     @Language("Properties")
-	protected final static String DEFAULT_CLIENT_PROPERTIES_FILE = "client/site.properties";
+    public final static String DEFAULT_SITE_PROPERTIES_FILE = "client/site.properties";
     @Language("Properties")
     protected final static String DEFAULT_COORD_FACTORY_PROPERTIES_FILE = "client/cf.properties";
 
 	protected IPartitioner partitioner;
-	protected Optional<ISite> cached_read_site = Optional.empty();	
+	protected transient Optional<ISite> cached_read_site = Optional.empty();
 	
 	/**
 	 * Constructor with user-specified properties file.
@@ -84,7 +84,7 @@ public abstract class AbstractClientContext extends AbstractContext {
         Set<Integer> masterIds = partition(tx).keySet();
         int size = masterIds.size();
         int coordId = masterIds.toArray(new Integer[size])[new Random().nextInt(size)];
-        return coordMembership.getCoord(coordId, this);
+        return coordMembership.getCoord(coordId, this);  // FIXME "this" contains too much stuff
     }
 
 	/**
@@ -115,7 +115,7 @@ public abstract class AbstractClientContext extends AbstractContext {
 		return cached_read_site.orElseGet(() -> {
 			int index = partitioner.locateSiteIndexFor(ck, membership.getReplGrpNo());
 			ISite read_site = membership.getReplGrp(index).getSiteForRead();
-			this.cached_read_site = Optional.of(read_site);
+			cached_read_site = Optional.of(read_site);
 			return read_site;
 		});
 	}

@@ -1,5 +1,7 @@
 package client.clientlibrary.rvsi.rvsimanager;
 
+import com.google.common.base.MoreObjects;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,16 +35,14 @@ public final class VersionConstraintManager implements Serializable {
 
 	private final List<AbstractVersionConstraint> vcList;
 	
-	public VersionConstraintManager(List<AbstractVersionConstraint> vcList) {
-		this.vcList = vcList;
-	}
+	public VersionConstraintManager(List<AbstractVersionConstraint> vcList) { this.vcList = vcList; }
 	
 	/**
 	 * Check whether all the {@link AbstractVersionConstraint} can be satisfied.
 	 * @return <code>true</code> if all can be satisfied; <code>false</code>, otherwise.
 	 */
 	public boolean check() {
-		return this.vcList.stream().allMatch(AbstractVersionConstraint::check);
+		return vcList.stream().allMatch(AbstractVersionConstraint::check);
 	}
 
     /**
@@ -78,5 +78,12 @@ public final class VersionConstraintManager implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(vcList);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .addValue(vcList)
+                .toString();
     }
 }

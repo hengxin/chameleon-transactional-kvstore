@@ -23,15 +23,13 @@ import util.PropertiesUtil;
  * @date 16-8-16
  */
 public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorFactory.class);
+    private transient static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorFactory.class);
     @Language("Properties")
     private static final String DEFAULT_CF_PROPERTIES = "membership/coordinator/cf.properties";
 
     private Member self;
 
-    public CoordinatorFactory() {
-        this(DEFAULT_CF_PROPERTIES);
-    }
+    public CoordinatorFactory() { this(DEFAULT_CF_PROPERTIES); }
 
     public CoordinatorFactory(String cfProperties) {
         try {

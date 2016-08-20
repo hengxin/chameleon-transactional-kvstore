@@ -5,6 +5,7 @@ import com.google.common.base.MoreObjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
  * @author hengxin
  * @date Created on 12-03-2015
  */
-public final class Member {
+public final class Member implements Serializable {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Member.class);
 
 	private final String host;

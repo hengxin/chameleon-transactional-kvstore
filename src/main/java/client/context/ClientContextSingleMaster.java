@@ -12,9 +12,9 @@ import site.ISite;
 public class ClientContextSingleMaster extends AbstractClientContext {
 
 	public ClientContextSingleMaster() {
-		this(DEFAULT_CLIENT_PROPERTIES_FILE, DEFAULT_COORD_FACTORY_PROPERTIES_FILE);
+		this(DEFAULT_SITE_PROPERTIES_FILE, DEFAULT_COORD_FACTORY_PROPERTIES_FILE);
 	}
-	
+
 	public ClientContextSingleMaster(String siteProperties, String cfProperties) {
 		super(siteProperties, cfProperties);
 		partitioner = new SingleMasterSettingPartitioner();

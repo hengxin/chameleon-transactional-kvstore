@@ -12,12 +12,12 @@ import client.clientlibrary.partitioning.IPartitioner;
 public class ClientContextMultiMaster extends AbstractClientContext {
 	
 	/**
-	 * Constructor with the default .properties file: {@value #DEFAULT_CLIENT_PROPERTIES_FILE}
+	 * Constructor with the default .properties file: {@value #DEFAULT_SITE_PROPERTIES_FILE}
 	 * and user-specified {@link IPartitioner}.
 	 * @param partitioner	{@link IPartitioner} for keyspace partition strategy
 	 */
 	public ClientContextMultiMaster(IPartitioner partitioner) {
-		this(DEFAULT_COORD_FACTORY_PROPERTIES_FILE, DEFAULT_CLIENT_PROPERTIES_FILE, partitioner);
+		this(DEFAULT_COORD_FACTORY_PROPERTIES_FILE, DEFAULT_SITE_PROPERTIES_FILE, partitioner);
 	}
 	
 	/**

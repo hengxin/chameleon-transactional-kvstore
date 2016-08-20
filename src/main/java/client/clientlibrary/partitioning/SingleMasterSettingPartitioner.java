@@ -17,8 +17,6 @@ public class SingleMasterSettingPartitioner implements IPartitioner {
 	 * @return always returns 0 (the index of the single master) for any key
 	 */
 	@Override
-	public int locateSiteIndexFor(CompoundKey ck, int buckets) {
-		return 0;
-	}
+	public int locateSiteIndexFor(CompoundKey ck, int buckets) { return 0; }
 
 }

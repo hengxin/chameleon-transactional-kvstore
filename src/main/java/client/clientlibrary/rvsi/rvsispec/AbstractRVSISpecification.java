@@ -33,17 +33,17 @@ import kvs.compound.CompoundKey;
  */
 public abstract class AbstractRVSISpecification {
 	// FIXME replace HashSet by Set???
-	protected final Map<HashSet<CompoundKey>, Long> rvsi_spec_map = new HashMap<>();
+	protected final Map<HashSet<CompoundKey>, Integer> rvsiSpecMap = new HashMap<>();
 	protected List<VCEntryRawInfo> vceInfos;
 	
-	public void addSpec(HashSet<CompoundKey> ckey_set_r1, long bound)
+	public void addSpec(HashSet<CompoundKey> ckSet, int bound)
 	{
-		this.rvsi_spec_map.put(ckey_set_r1, bound);
+		rvsiSpecMap.put(ckSet, bound);
 	}
 
 	/**
-	 * Flatten the {@link #rvsi_spec_map}.
-	 * For example, if {@link #rvsi_spec_map} is
+	 * Flatten the {@link #rvsiSpecMap}.
+	 * For example, if {@link #rvsiSpecMap} is
 	 * { {x,y} -> 2, {z} -> 3, {u,v,w} -> 4 },
 	 * then the result flatten_map is
 	 * {x -> 2, y -> 2, z -> 3, u -> 4, v -> 4, w -> 4}.
@@ -57,22 +57,12 @@ public abstract class AbstractRVSISpecification {
 	 * 
 	 * @return a <em>flatten</em> map representation of RVSI specifications.
 	 */
-	protected Map<CompoundKey, Long> flattenRVSISpecMap() {
-		return this.rvsi_spec_map.entrySet().stream()
-		   .<Entry<CompoundKey, Long>>flatMap(rvsi_spec_entry -> 
+	protected Map<CompoundKey, Integer> flattenRVSISpecMap() {
+		return rvsiSpecMap.entrySet().stream()
+		   .<Entry<CompoundKey, Integer>>flatMap(rvsi_spec_entry ->
 		       rvsi_spec_entry.getKey().stream()
 		            .map(ck -> new AbstractMap.SimpleImmutableEntry<>(ck, rvsi_spec_entry.getValue())))
 		   .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-		       
-//		Map<CompoundKey, Integer> flatten_map = new HashMap<>();
-//		this.rvsi_spec_map.entrySet().forEach(
-//				rvsi_spec_entry -> 
-//				{rvsi_spec_entry.getKey().forEach(
-//						compound_key -> 
-//						{flatten_map.put(compound_key, rvsi_spec_entry.getValue());}
-//						);}
-//				);
-//		return flatten_map;
 	}
 	
 	/**
@@ -95,23 +85,22 @@ public abstract class AbstractRVSISpecification {
 	 * @return 
 	 */
 	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results) {
-		this.vceInfos = this.flattenRVSISpecMap().entrySet().stream()
-			.<Optional<VCEntryRawInfo>> map(flatten_rvsi_spec_entry ->
-				{
+		vceInfos = flattenRVSISpecMap().entrySet().stream()
+			.<Optional<VCEntryRawInfo>> map(flatten_rvsi_spec_entry -> {
 					CompoundKey ck = flatten_rvsi_spec_entry.getKey();
-					long bound = flatten_rvsi_spec_entry.getValue();
+					int bound = flatten_rvsi_spec_entry.getValue();
 					return query_results.getTsCell(ck).map(ts_cell -> new VCEntryRawInfo(ck, ts_cell, bound));
 				})
 			.filter(Optional::isPresent)
 			.map(Optional::get)
 			.collect(Collectors.toList());
 		
-		return this.vceInfos;
+		return vceInfos;
 	}
 
 	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results, Timestamp ts) {
-		this.extractVCEntryRawInfo(query_results);
-		return this.generateVersionConstraint(ts);
+		extractVCEntryRawInfo(query_results);
+		return generateVersionConstraint(ts);
 	}
 	/**
 	 * @param ts {@link Timestamp} to be checked against
@@ -132,8 +121,5 @@ public abstract class AbstractRVSISpecification {
 				.collect(Collectors.toList());
 	}
 	
-	protected void setVceInfoList(List<VCEntryRawInfo> vce_info_list)
-	{
-		this.vceInfos = vce_info_list;
-	}
+	protected void setVceInfoList(List<VCEntryRawInfo> vce_info_list) { vceInfos = vce_info_list; }
 }

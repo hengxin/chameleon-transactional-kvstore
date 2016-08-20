@@ -1,17 +1,14 @@
 package client.clientlibrary.rvsi.rvsispec;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.apache.commons.collections4.CollectionUtils;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.junit.Before;
-import org.junit.Test;
 
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.vc.SVVersionConstraint;
@@ -26,26 +23,28 @@ import kvs.compound.ITimestampedCell;
 import kvs.compound.KVItem;
 import kvs.compound.TimestampedCell;
 
-public class SVSpecificationTest
-{
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public final class SVSpecificationTest {
 	private final SVSpecification sv_rvsi_spec = new SVSpecification();
 	
 	private final CompoundKey ck_rt_ct = new CompoundKey("Rt", "Ct");
 	private final CompoundKey ck_rs_cs = new CompoundKey("Rs", "Cs");
 	private final HashSet<CompoundKey> ck_set_ts = new HashSet<>();
-	private long bound_ts = 1;
+	private int bound_ts = 1;
 
 	private final CompoundKey ck_rw_cw = new CompoundKey("Rw", "Cw");
 	private final CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
 	private final CompoundKey ck_ry_cy = new CompoundKey("Ry", "Cy");
 	private final CompoundKey ck_rz_cz = new CompoundKey("Rz", "Cz");
 	private final HashSet<CompoundKey> ck_set_wxyz = new HashSet<>();
-	private long bound_wxyz = 2;
+	private int bound_wxyz = 2;
 
 	private final CompoundKey ck_ru_cu = new CompoundKey("Ru", "Cu");
 	private final CompoundKey ck_rv_cv = new CompoundKey("Rv", "Cv");
 	private final HashSet<CompoundKey> ck_set_uv = new HashSet<>(); 
-	private long bound_uv = 3;
+	private int bound_uv = 3;
 	
 	private ITimestampedCell ts_cell_t = new TimestampedCell(new Timestamp(1), new Ordinal(1), new Cell("Cell_t"));
 
@@ -139,8 +138,7 @@ public class SVSpecificationTest
 	}
 
 	@Test
-	public void testExtractVCEntryRawInfo()
-	{
+	public void testExtractVCEntryRawInfo() {
 		List<VCEntryRawInfo> expected_vce_info_list = this.vce_info_xyzuv_list;
 		List<VCEntryRawInfo> actual_vce_info_list = this.sv_rvsi_spec.extractVCEntryRawInfo(query_results);
 		
@@ -151,8 +149,7 @@ public class SVSpecificationTest
 	 * Test the overridden {@link AbstractRVSISpecification#generateVersionConstraint(Timestamp)} method 
 	 */
 	@Test
-	public void testGenerateVersionConstraintTimestamp()
-	{
+	public void testGenerateVersionConstraintTimestamp() {
 		this.sv_rvsi_spec.setVceInfoList(vce_info_xyzuv_list);
 		AbstractVersionConstraint actual_sv_vc = this.sv_rvsi_spec.generateVersionConstraint(Timestamp.TIMESTAMP_INIT);	// the parameter #sts for generating {@link SVSpecification} is not used.
 		
@@ -163,16 +160,14 @@ public class SVSpecificationTest
 	 * Test the inherited {@link AbstractRVSISpecification#generateVersionConstraint(QueryResults, Timestamp)} method
 	 */
 	@Test
-	public void testSuperGenerateVersionConstraintQueryResultsTimestamp()
-	{
+	public void testSuperGenerateVersionConstraintQueryResultsTimestamp() {
 		AbstractVersionConstraint actual_sv_vc = this.sv_rvsi_spec.generateVersionConstraint(this.query_results, Timestamp.TIMESTAMP_INIT);	// the parameter #sts for generating {@link SVSpecification} is not used.
 
 		assertEquals("Fails to generate SV version constraint.", this.sv_vc, actual_sv_vc);
 	}
 	
 	@Test
-	public void testJoin()
-	{
+	public void testJoin() {
 		SortedSet<KVItem> expected_kv_set = this.kv_set;
 		SortedSet<KVItem> actual_kv_set = this.sv_rvsi_spec.join(this.ck_set_wxyz, this.query_results);
 		
@@ -180,8 +175,7 @@ public class SVSpecificationTest
 	}
 
 	@Test
-	public void testExpand()
-	{
+	public void testExpand() {
 		List<VCEntryRawInfo> expected_vce_info_list = this.vce_info_xyz_list;
 		List<VCEntryRawInfo> actual_vce_info_list = this.sv_rvsi_spec.expand(this.kv_set, 2);
 		

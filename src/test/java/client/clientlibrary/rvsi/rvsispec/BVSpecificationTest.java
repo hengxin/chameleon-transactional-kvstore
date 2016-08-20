@@ -19,7 +19,7 @@ import kvs.compound.TimestampedCell;
 
 import static org.junit.Assert.assertEquals;
 
-public class BVSpecificationTest {
+public final class BVSpecificationTest {
 
 	private AbstractRVSISpecification rvsi_spec = new BVSpecification();
 	private QueryResults query_results = new QueryResults();
@@ -44,8 +44,8 @@ public class BVSpecificationTest {
 		ck_grp_r2.add(ck_r2_c1);
 		ck_grp_r2.add(ck_r2_c2);
 		
-		this.rvsi_spec.addSpec(ck_grp_r1, 1L);
-		this.rvsi_spec.addSpec(ck_grp_r2, 2L);
+		this.rvsi_spec.addSpec(ck_grp_r1, 1);
+		this.rvsi_spec.addSpec(ck_grp_r2, 2);
 		
 		this.query_results.put(ck_r1_c1, tc1);
 		this.query_results.put(ck_r2_c2, tc2);

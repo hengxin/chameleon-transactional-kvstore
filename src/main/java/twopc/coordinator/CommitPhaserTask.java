@@ -50,6 +50,8 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 	@Override
 	public Boolean call() throws Exception {
 		LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.PREPARE, participant);
+        LOGGER.debug("Prepare args: tx is [{}] and vcm is [{}]", tx, vcm);
+
         boolean prepared_decision = participant.prepare(tx, vcm);
         coord.prepared_decisions.put(participant, prepared_decision);
 

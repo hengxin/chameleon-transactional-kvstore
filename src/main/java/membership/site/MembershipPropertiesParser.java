@@ -1,5 +1,6 @@
 package membership.site;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public final class MembershipPropertiesParser {
      * See <a href = "http://stackoverflow.com/a/2523252/1833118">Post: getSystemResourceAsStream() returns
      * null@stackoverflow</a> for the use of {@code getResourceAsStream()}.
      */
-    public MembershipPropertiesParser(final String properties) {
+    public MembershipPropertiesParser(@NotNull final String properties) {
         try {
             prop = PropertiesUtil.load(properties);
         } catch (IOException e) {

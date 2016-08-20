@@ -1,7 +1,8 @@
 package twopc.coordinator;
 
-import com.sun.istack.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
@@ -23,7 +24,7 @@ import twopc.participant.I2PCParticipant;
  * @author hengxin
  * @date Created on Jan 7, 2016
  */
-public abstract class Abstract2PCCoordinator implements Remote, IRMI {
+public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializable {
 
 	/**
 	 * {@link #prepared_decisions} and {@link #committed_decisions}:
@@ -34,8 +35,8 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI {
 	 * @see	#to_commit_decision
 	 * @see #is_committed
 	 */
-	protected final Map<I2PCParticipant, Boolean> prepared_decisions = new ConcurrentHashMap<>();
-	protected final Map<I2PCParticipant, Boolean> committed_decisions = new ConcurrentHashMap<>();
+	protected transient final Map<I2PCParticipant, Boolean> prepared_decisions = new ConcurrentHashMap<>();
+	protected transient final Map<I2PCParticipant, Boolean> committed_decisions = new ConcurrentHashMap<>();
 
 	/**
 	 * {@link #to_commit_decision}: 
@@ -45,7 +46,7 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI {
 	 * 
 	 * @see #prepared_decisions
 	 */
-	protected volatile boolean to_commit_decision = false;
+	protected transient volatile boolean to_commit_decision = false;
 	
 	/**
 	 * {@link #is_committed}:
@@ -57,17 +58,17 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI {
 	 * @see #to_commit_decision
 	 * @see #committed_decisions
 	 */
-	protected volatile boolean is_committed = false;
+	protected transient volatile boolean is_committed = false;
 	
 	protected final AbstractClientContext cctx;
-    protected Timestamp cts;  // commit timestamp
+    protected transient Timestamp cts;  // commit timestamp
 
     /**
-	 * @param ctx	context for this coordinator; it may provide information about the data-store 
-	 * 	and the partition strategy. It can be {@code null}, if your coordinator does not need one.
+	 * @param ctx	context for this coordinator;
+     *              it provides information about the sites and the partition strategy.
 	 */
-	public Abstract2PCCoordinator(@Nullable AbstractClientContext ctx) { cctx = ctx; }
-	
+	public Abstract2PCCoordinator(@NotNull AbstractClientContext ctx) { cctx = ctx; }
+
 	/**
 	 * The coordinator executes 2PC protocol.
 	 * @param tx	transaction to commit

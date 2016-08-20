@@ -44,9 +44,9 @@ public class RVSITransaction implements ITransaction {
 //	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
 
 	private final BufferedUpdates bufferedUpdates = new BufferedUpdates();
-	private final QueryResults query_results = new QueryResults();
+	private final QueryResults queryResults = new QueryResults();
 	
-	private final RVSISpecificationManager rvsi_manager = new RVSISpecificationManager();
+	private final RVSISpecificationManager rvsiSpecManager = new RVSISpecificationManager();
 
 	public RVSITransaction(AbstractClientContext ctx) {
 		this.cctx = ctx;
@@ -79,16 +79,16 @@ public class RVSITransaction implements ITransaction {
 	public ITimestampedCell read(Row r, Column c) throws TransactionReadException {
 		ISite site = cctx.getReadSite(new CompoundKey(r, c));
 		
-		ITimestampedCell ts_cell;
+		ITimestampedCell tsCell;
 		try { 
-			ts_cell = site.get(r, c);
-			this.query_results.put(new CompoundKey(r, c), ts_cell);
-			LOGGER.info("Transaction [{}] read {} from [{}+{}] at site {}", this, ts_cell, r, c, site);
+			tsCell = site.get(r, c);
+			queryResults.put(new CompoundKey(r, c), tsCell);
+			LOGGER.info("Transaction [{}] read {} from [{}+{}] at site {}", this, tsCell, r, c, site);
 		} catch (RemoteException re) {
 			throw new TransactionReadException(String.format("The transaction [%s] failed to read [%s+%s] at site [%s].", this, r, c, site), re.getCause());
 		}
 
-		return ts_cell;
+		return tsCell;
 	}
 
     /**
@@ -133,16 +133,16 @@ public class RVSITransaction implements ITransaction {
 	 * Collect {@link AbstractRVSISpecification} whose type could be {@link BVSpecification}, 
 	 * {@link FVSpecification}, or {@link SVSpecification}.
 	 * 
-	 * @param rvsi_spec 
+	 * @param rvsiSpec
 	 * 	an {@link AbstractRVSISpecification}
 	 */
-	public void collectRVSISpecification(AbstractRVSISpecification rvsi_spec) {
-		this.rvsi_manager.collectRVSISpecification(rvsi_spec);
+	public void collectRVSISpecification(AbstractRVSISpecification rvsiSpec) {
+		rvsiSpecManager.collectRVSISpecification(rvsiSpec);
 	}
 	
-	public VersionConstraintManager generateVCManager() { return rvsi_manager.generateVCManager(this); }
+	private VersionConstraintManager generateVCManager() { return rvsiSpecManager.generateVCManager(this); }
 	
 	public Timestamp getSts() { return sts; }
 	
-	public QueryResults getQueryResults() { return query_results; }
+	public QueryResults getQueryResults() { return queryResults; }
 }

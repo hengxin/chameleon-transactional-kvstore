@@ -2,6 +2,7 @@ package membership.site;
 
 import com.google.common.base.MoreObjects;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ import site.ISite;
  * @author hengxin
  * @date 16-6-8
  */
-public final class ReplicationGroup {
+public final class ReplicationGroup implements Serializable {
     private final int replGrpId;
     private RuntimeMember master;
     private final List<RuntimeMember> slaves;
@@ -64,7 +65,7 @@ public final class ReplicationGroup {
      * @return	an {@link ISite} in this {@link ReplicationGroup}
      */
     public ISite getSiteForRead() {
-        return this.slaves.isEmpty() ? master.getRmiSite() : getRandomSlave();
+        return slaves.isEmpty() ? master.getRmiSite() : getRandomSlave();
     }
 
     /**
