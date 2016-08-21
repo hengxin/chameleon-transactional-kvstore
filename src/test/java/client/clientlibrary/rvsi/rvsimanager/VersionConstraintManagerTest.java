@@ -39,10 +39,10 @@ public class VersionConstraintManagerTest {
 
     private Timestamp sts = new Timestamp(5L);
 
-    private VCEntry bvVceR1C1 = new VCEntry(ckR1C1, new Ordinal(1), sts, 1L);
-    private VCEntry bvVceR2C2 = new VCEntry(ckR2C2, new Ordinal(2), sts, 2L);
-    private VCEntry fvVceR1C1 = new VCEntry(ckR1C1, new Ordinal(11), sts, 1L);
-    private VCEntry fvVceR2C2 = new VCEntry(ckR2C2, new Ordinal(22), sts, 2L);
+    private VCEntry bvVceR1C1 = new VCEntry(ckR1C1, new Ordinal(1), sts, 1);
+    private VCEntry bvVceR2C2 = new VCEntry(ckR2C2, new Ordinal(2), sts, 2);
+    private VCEntry fvVceR1C1 = new VCEntry(ckR1C1, new Ordinal(11), sts, 1);
+    private VCEntry fvVceR2C2 = new VCEntry(ckR2C2, new Ordinal(22), sts, 2);
 
     private List<VCEntry> bvVcEntries = asList(bvVceR1C1, bvVceR2C2);
     private List<VCEntry> fvVcEntries = asList(fvVceR1C1, fvVceR2C2);

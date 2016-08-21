@@ -59,8 +59,8 @@ public class AbstractVersionConstraintTest {
 	public void testEquals() {
 		Timestamp ts = new Timestamp(1L);
 		
-		VCEntry vc_entry_r1_c1 = new VCEntry(this.ck_r1_c1, this.tc1.getOrdinal(), ts, 2L);
-		VCEntry vc_entry_r2_c2 = new VCEntry(this.ck_r2_c2, this.tc2.getOrdinal(), ts, 4L);
+		VCEntry vc_entry_r1_c1 = new VCEntry(this.ck_r1_c1, this.tc1.getOrdinal(), ts, 2);
+		VCEntry vc_entry_r2_c2 = new VCEntry(this.ck_r2_c2, this.tc2.getOrdinal(), ts, 4);
 		List<VCEntry> vc_entry_list = new ArrayList<>();
 		vc_entry_list.add(vc_entry_r1_c1);
 		vc_entry_list.add(vc_entry_r2_c2);

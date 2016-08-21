@@ -3,6 +3,7 @@ package twopc.coordinator.phaser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.concurrent.Phaser;
 
 import twopc.coordinator.Abstract2PCCoordinator;
@@ -18,8 +19,8 @@ import twopc.coordinator.RVSI2PCPhaserCoordinator;
  * @implNote
  * {@link CommitPhaser} extends {@link Phaser} introduced since Java 7.
  */
-public final class CommitPhaser extends Phaser {
-
+public final class CommitPhaser extends Phaser implements Serializable {
+    private static final long serialVersionUID = -14446810211374850L;
     private static final Logger LOGGER = LoggerFactory.getLogger(CommitPhaser.class);
 
     private Abstract2PCCoordinator coord;

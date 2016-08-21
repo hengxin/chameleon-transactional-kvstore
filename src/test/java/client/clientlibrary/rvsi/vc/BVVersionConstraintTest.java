@@ -36,8 +36,8 @@ public class BVVersionConstraintTest {
 
     private Timestamp sts = new Timestamp(5L);
 
-    private VCEntry vceR1C1 = new VCEntry(ckR1C1, new Ordinal(1), sts, 1L);
-    private VCEntry vceR2C2 = new VCEntry(ckR2C2, new Ordinal(2), sts, 2L);
+    private VCEntry vceR1C1 = new VCEntry(ckR1C1, new Ordinal(1), sts, 1);
+    private VCEntry vceR2C2 = new VCEntry(ckR2C2, new Ordinal(2), sts, 2);
 
     private List<VCEntry> vcEntries = new ArrayList<>();
 

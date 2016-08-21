@@ -25,6 +25,10 @@ import master.mvcc.StartCommitLogs;
 import site.ITransactional;
 import twopc.participant.I2PCParticipant;
 
+import static twopc.coordinator.phaser.CommitPhaser.Phase.ABORT;
+import static twopc.coordinator.phaser.CommitPhaser.Phase.COMMIT;
+import static twopc.coordinator.phaser.CommitPhaser.Phase.PREPARE;
+
 /**
  * Master employs an MVCC protocol to locally implement (<i>nearly but not really</i>) 
  * snapshot isolation (SI, for short).
@@ -81,6 +85,8 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	 */
 	@Override
 	public Timestamp start() throws TransactionExecutionException {
+	    LOGGER.debug("[{}] starts a transaction.", this.getClass().getSimpleName());
+
         // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
 		try {
 			return new Timestamp(exec.submit( () -> ts.incrementAndGet()).get());
@@ -134,7 +140,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 			boolean wcf_checked = false;
 			boolean can_committed = false;
 
-			logs.write_lock.lock();
+			logs.writeLock.lock();
 			try {
 				wcf_checked = logs.wcf(tx);
 				can_committed = vc_checked && wcf_checked;
@@ -144,7 +150,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 					logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, ck_ord_index));	// (3) update start-commit-log
 				}
 			} finally {
-				logs.write_lock.unlock();
+				logs.writeLock.unlock();
 			}
 
 			if(can_committed) {
@@ -176,12 +182,20 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
     @Override
     public boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException {
+        LOGGER.info("[{}] begins the [{}] phase with tx [{}] and vcm [{}]",
+                this.getClass().getSimpleName(), PREPARE, tx, vcm);
+
         Future<Boolean> prepareFuture = exec.submit(() -> {
             /**
              * {@link VersionConstraintManager} is local to this method.
              * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free).
              */
-            logs.write_lock.lock();
+            logs.writeLock.lock();
+
+            LOGGER.debug("The result of checking vcm [{}] is [{}].", vcm, vcm.check());
+            LOGGER.debug("The result of checking wcf against tx [{}] and logs [{}] is [{}].",
+                    tx, logs, logs.wcf(tx));
+
             return vcm.check() && logs.wcf(tx);
         });
 
@@ -197,10 +211,13 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
     @Override
     public boolean commit(ToCommitTransaction tx, Timestamp cts)
             throws RemoteException, TransactionExecutionException {
+        LOGGER.info("[{}] begins the [{}] phase with tx [{}] and cts [{}]",
+                this.getClass().getSimpleName(), COMMIT, tx, cts);
+
         // update start-commit-log
         logs.addStartCommitLog(tx.getSts(), cts,
                 tx.getBufferedUpdates().fillTsAndOrd(cts, ck_ord_index));
-        logs.write_lock.unlock();
+        logs.writeLock.unlock();
 
         /**
          * Chameleon does not require read operations of a transaction to
@@ -220,8 +237,10 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 
     @Override
     public void abort() {
+        LOGGER.info("[{}] begins the [{}] phase.", this.getClass().getSimpleName(), ABORT);
+
         // TODO what else to do?
-        logs.write_lock.unlock();
+        logs.writeLock.unlock();
     }
 
 }

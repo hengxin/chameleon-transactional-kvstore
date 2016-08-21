@@ -55,8 +55,8 @@ public final class BVSpecificationTest {
 	public void testGenerateVersionConstraint() {
 		AbstractVersionConstraint bv_vc = this.rvsi_spec.generateVersionConstraint(this.query_results, this.sts);
 		
-		VCEntry vce_r1_c1 = new VCEntry(this.ck_r1_c1, new Ordinal(1), this.sts, 1L);
-		VCEntry vce_r2_c2 = new VCEntry(this.ck_r2_c2, new Ordinal(2), this.sts, 2L);
+		VCEntry vce_r1_c1 = new VCEntry(this.ck_r1_c1, new Ordinal(1), this.sts, 1);
+		VCEntry vce_r2_c2 = new VCEntry(this.ck_r2_c2, new Ordinal(2), this.sts, 2);
 		
 		List<VCEntry> expected_vc_entry_list = new ArrayList<>();
 		expected_vc_entry_list.add(vce_r1_c1);

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ClientMainTest" type="Application" factoryName="Application" nameIsGenerated="true">
+  <configuration default="false" name="ClientMainTest" type="Application" factoryName="Application" folderName="client" show_console_on_std_out="true" show_console_on_std_err="true" nameIsGenerated="true">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
         <option name="PATTERN" value="main.*" />

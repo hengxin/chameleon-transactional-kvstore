@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="allinone" type="Multirun" factoryName="Multirun" separateTabs="false" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="false" delayTime="2">
+    <runConfiguration name="SlaveMainTest (00)" type="Application" />
+    <runConfiguration name="SlaveMainTest (01)" type="Application" />
+    <runConfiguration name="SlaveMainTest (10)" type="Application" />
+    <runConfiguration name="SlaveMainTest (11)" type="Application" />
+    <runConfiguration name="SlaveMainTest (20)" type="Application" />
+    <runConfiguration name="SlaveMainTest (21)" type="Application" />
+    <runConfiguration name="MasterMainTest (0)" type="Application" />
+    <runConfiguration name="MasterMainTest (1)" type="Application" />
+    <runConfiguration name="MasterMainTest (2)" type="Application" />
+    <runConfiguration name="CoordinatorFactoryMainTest (0)" type="Application" />
+    <runConfiguration name="CoordinatorFactoryMainTest (1)" type="Application" />
+    <runConfiguration name="CoordinatorFactoryMainTest (2)" type="Application" />
+    <method />
+  </configuration>
+</component>

@@ -38,12 +38,12 @@ import kvs.compound.CompoundKey;
 public class StartCommitLogs {
 	private final static Logger LOGGER = LoggerFactory.getLogger(StartCommitLogs.class);
 	
-	@GuardedBy("read_lock, write_lock")
+	@GuardedBy("read_lock, writeLock")
 	private IntervalTree<Timestamp, BufferedUpdates> start_commit_logs = new IntervalTree<>();
 
 	private final ReadWriteLock lock = new ReentrantReadWriteLock();
 	public final Lock read_lock = this.lock.readLock();
-	public final Lock write_lock = this.lock.writeLock();
+	public final Lock writeLock = this.lock.writeLock();
 	
 	/**
 	 * Adding a new start-commit-log of a transaction
@@ -53,13 +53,13 @@ public class StartCommitLogs {
 	 */
 	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) 
 	{
-		this.write_lock.lock();
+		this.writeLock.lock();
 		try
 		{
 			this.start_commit_logs.put(sts, cts, updates);
 		} finally
 		{
-			this.write_lock.unlock();
+			this.writeLock.unlock();
 		}
 	}
 	

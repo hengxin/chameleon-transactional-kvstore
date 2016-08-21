@@ -5,6 +5,7 @@ import com.google.common.base.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -16,12 +17,12 @@ import client.clientlibrary.partitioning.IPartitioner;
  * @author hengxin
  * @date Created on 11-16-2015
  */
-public abstract class AbstractVersionConstraint {
-	protected final List<VCEntry> vcEntries;
+public abstract class AbstractVersionConstraint implements Serializable {
+    private static final long serialVersionUID = -3517827362703797614L;
+
+    final List<VCEntry> vcEntries;
 	
-	public AbstractVersionConstraint(List<VCEntry> vcEntries) {
-		this.vcEntries = vcEntries;
-	}
+	public AbstractVersionConstraint(List<VCEntry> vcEntries) { this.vcEntries = vcEntries; }
 	
 	public abstract boolean check();
 

@@ -110,8 +110,10 @@ public class ClientMainTest {
 
 		// end
 		try {
-			tx.end();
-			LOGGER.info("Committed.");
+			if (tx.end())
+                LOGGER.info("Committed.");
+            else
+                LOGGER.info("Aborted.");
 		} catch (TransactionEndException tee) {
 			LOGGER.error(tee.getMessage(), tee.getCause());
 			System.exit(1);

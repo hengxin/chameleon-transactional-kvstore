@@ -34,10 +34,12 @@ import static java.util.stream.Collectors.toList;
  * @date Created on Dec 27, 2015
  */
 public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
+    private static final long serialVersionUID = -4499972927601545388L;
+
 	private transient static final Logger LOGGER = LoggerFactory.getLogger(RVSI2PCPhaserCoordinator.class);
 	private transient static final ExecutorService exec = Executors.newCachedThreadPool();
 
-	transient Phaser phaser;  // TODO put it in {@link Abstract2PCCoordinator}
+    Phaser phaser;  // TODO put it in {@link Abstract2PCCoordinator}
 
     /**
 	 * @param ctx	client context 
@@ -56,6 +58,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 		List<Callable<Boolean>> tasks = siteTxMap.keySet().stream()
 				.map(index -> new CommitPhaserTask(this, (I2PCParticipant) cctx.getMaster(index),
                         siteTxMap.get(index), siteVcmMap.get(index)))
+                .peek(System.out::println)
                 .collect(toList());
 		
 		try {
@@ -67,9 +70,8 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 		}
 
 		// FIXME the return value
-		return is_committed;
+		return isCommitted;
 	}
-
 
     /**
      * Check the decisions of all participants during the Phase#PREPARE phase,
@@ -78,11 +80,11 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
      */
     @Override
     public boolean onPreparePhaseFinished() {
-        to_commit_decision = prepared_decisions.values().stream().allMatch(decision -> decision);
-        // TODO check k3SI condition
-        if (to_commit_decision)
+        toCommitDecision = preparedDecisions.values().stream().allMatch(decision -> decision);
+        // TODO check k3SI condition here
+        if (toCommitDecision)
             cts = new Timestamp(CentralizedTimestampOracle.INSTANCE.get());
-        return to_commit_decision;
+        return toCommitDecision;
     }
 
     /**
@@ -94,9 +96,9 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
      */
     @Override
     public boolean onCommitPhaseFinished() {
-        is_committed = to_commit_decision
-                && committed_decisions.values().stream().allMatch(decision -> decision);
-        return is_committed;
+        isCommitted = toCommitDecision
+                && committedDecisions.values().stream().allMatch(decision -> decision);
+        return isCommitted;
     }
 
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {

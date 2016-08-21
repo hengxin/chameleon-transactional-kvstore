@@ -115,11 +115,11 @@ public abstract class AbstractRVSISpecification {
 	 * @param ts an additional {@link Timestamp} for constructing {@link VCEntry}
 	 * @return a list of {@link VCEntry}
 	 */
-	protected static List<VCEntry> transform(List<VCEntryRawInfo> vce_info_list, Timestamp ts) {
+	static List<VCEntry> transform(List<VCEntryRawInfo> vce_info_list, Timestamp ts) {
 		return vce_info_list.stream()
 				.<VCEntry>map(vce_info -> new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoOrd(), ts, vce_info.getVceInfoBound()))
 				.collect(Collectors.toList());
 	}
 	
-	protected void setVceInfoList(List<VCEntryRawInfo> vce_info_list) { vceInfos = vce_info_list; }
+	void setVceInfoList(List<VCEntryRawInfo> vce_info_list) { vceInfos = vce_info_list; }
 }

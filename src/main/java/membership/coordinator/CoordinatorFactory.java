@@ -46,6 +46,7 @@ public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
     @Override
     public Abstract2PCCoordinator getRVSI2PCPhaserCoord(AbstractClientContext ctx)
             throws RemoteException {
+        LOGGER.debug("[{}] will return an RVSI2PCPhaserCoordinator.", this.getClass().getSimpleName());
         return new RVSI2PCPhaserCoordinator(ctx);
     }
 

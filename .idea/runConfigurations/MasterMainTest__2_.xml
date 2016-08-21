@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="MasterMainTest (2)" type="Application" factoryName="Application">
+  <configuration default="false" name="MasterMainTest (2)" type="Application" factoryName="Application" folderName="master">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
         <option name="PATTERN" value="main.*" />

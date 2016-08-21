@@ -20,7 +20,6 @@ import site.AbstractSite;
  * @date Created on Jan 10, 2016
  */
 public abstract class AbstractSlave extends AbstractSite implements IMessageConsumer {
-	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSlave.class);
 
 	/**

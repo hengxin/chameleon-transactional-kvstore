@@ -1,5 +1,7 @@
 package twopc.coordinator;
 
+import com.google.common.base.MoreObjects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,13 +13,15 @@ import client.clientlibrary.transaction.ToCommitTransaction;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 
+import static twopc.coordinator.phaser.CommitPhaser.Phase.COMMIT;
+import static twopc.coordinator.phaser.CommitPhaser.Phase.PREPARE;
+
 /**
  * {@link CommitPhaserTask} executes the 2PC protocols with a single participant.
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
 public final class CommitPhaserTask implements Callable<Boolean> {
-
 	private final static Logger LOGGER = LoggerFactory.getLogger(CommitPhaserTask.class);
 	
 	private final Abstract2PCCoordinator coord;
@@ -49,18 +53,21 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 
 	@Override
 	public Boolean call() throws Exception {
-		LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.PREPARE, participant);
-        LOGGER.debug("Prepare args: tx is [{}] and vcm is [{}]", tx, vcm);
+		LOGGER.info("The Coord [{}] begins the [{}] phase with participant [{}].",
+                coord, PREPARE, participant);
 
-        boolean prepared_decision = participant.prepare(tx, vcm);
-        coord.prepared_decisions.put(participant, prepared_decision);
+        boolean preparedDecision = participant.prepare(tx, vcm);
+        coord.preparedDecisions.put(participant, preparedDecision);
 
+        LOGGER.info("After receiving preparedDecisions.");
         phaser.arriveAndAwaitAdvance();
 
-        if (coord.to_commit_decision) { // commit case of the second phase of 2PC protocol
-            LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.COMMIT, participant);
-            boolean committed_decision = participant.commit(tx, coord.cts);
-            coord.committed_decisions.put(participant, committed_decision);
+        if (coord.toCommitDecision) { // commit case of the second phase of 2PC protocol
+            LOGGER.info("The Coord [{}] begins the [{}] phase with participant [{}].",
+                    coord, COMMIT, participant);
+
+            boolean committedDecision = participant.commit(tx, coord.cts);
+            coord.committedDecisions.put(participant, committedDecision);
         } else { // abort case of the second phase of 2PC protocol
             LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.ABORT, participant);
             participant.abort();
@@ -70,4 +77,13 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 
 		return true;
 	}
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .addValue(participant)
+                .addValue(tx)
+                .addValue(vcm)
+                .toString();
+    }
 }

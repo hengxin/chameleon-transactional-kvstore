@@ -22,9 +22,7 @@ import static java.util.stream.Collectors.toList;
  */
 public final class BVVersionConstraint extends AbstractVersionConstraint {
 
-	public BVVersionConstraint(List<VCEntry> vcEntries) {
-		super(vcEntries);
-	}
+	public BVVersionConstraint(List<VCEntry> vcEntries) { super(vcEntries); }
 
 	@Override
 	public boolean check() {

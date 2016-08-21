@@ -27,41 +27,41 @@ import twopc.participant.I2PCParticipant;
 public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializable {
 
 	/**
-	 * {@link #prepared_decisions} and {@link #committed_decisions}:
+	 * {@link #preparedDecisions} and {@link #committedDecisions}:
 	 * Shared states among the coordinator and the participants.
 	 * They collect the decisions of all the participants during the "PREPARE" phase 
 	 * and the "COMMIT" phase, respectively.
 	 * 
-	 * @see	#to_commit_decision
-	 * @see #is_committed
+	 * @see	#toCommitDecision
+	 * @see #isCommitted
 	 */
-	protected transient final Map<I2PCParticipant, Boolean> prepared_decisions = new ConcurrentHashMap<>();
-	protected transient final Map<I2PCParticipant, Boolean> committed_decisions = new ConcurrentHashMap<>();
+	protected final Map<I2PCParticipant, Boolean> preparedDecisions = new ConcurrentHashMap<>();
+	protected final Map<I2PCParticipant, Boolean> committedDecisions = new ConcurrentHashMap<>();
 
 	/**
-	 * {@link #to_commit_decision}: 
+	 * {@link #toCommitDecision}:
 	 * Shared state among the coordinator and the participants.
 	 * It indicates the commit/abort decision for the "COMMIT" phase, and is computed 
-	 * based on {@link #prepared_decisions}.
+	 * based on {@link #preparedDecisions}.
 	 * 
-	 * @see #prepared_decisions
+	 * @see #preparedDecisions
 	 */
-	protected transient volatile boolean to_commit_decision = false;
+	protected volatile boolean toCommitDecision = false;
 	
 	/**
-	 * {@link #is_committed}:
+	 * {@link #isCommitted}:
 	 * Shared state among the coordinator and the participants.
-	 * It indicates the final committed/aborted state of the transaction, 
-	 * and it is computed based on both {@link #to_commit_decision} 
-	 * and {@link #committed_decisions}.
+	 * It indicates the final committed/aborted state of the transaction,
+	 * and it is computed based on both {@link #toCommitDecision}
+	 * and {@link #committedDecisions}.
 	 * 
-	 * @see #to_commit_decision
-	 * @see #committed_decisions
+	 * @see #toCommitDecision
+	 * @see #committedDecisions
 	 */
-	protected transient volatile boolean is_committed = false;
+	protected volatile boolean isCommitted = false;
 	
 	protected final AbstractClientContext cctx;
-    protected transient Timestamp cts;  // commit timestamp
+    protected Timestamp cts;  // commit timestamp
 
     /**
 	 * @param ctx	context for this coordinator;
