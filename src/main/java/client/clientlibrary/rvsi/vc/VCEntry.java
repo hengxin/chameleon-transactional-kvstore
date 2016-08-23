@@ -45,10 +45,7 @@ public final class VCEntry implements Serializable {
 	public long getVceBound() { return bound; }
 	
 	@Override
-	public int hashCode()
-	{
-		return Objects.hashCode(ck, ord, ts, bound);
-	}
+	public int hashCode() { return Objects.hashCode(ck, ord, ts, bound); }
 	
 	@Override
 	public boolean equals(Object o) {

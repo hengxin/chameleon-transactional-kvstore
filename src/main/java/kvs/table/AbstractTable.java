@@ -3,17 +3,19 @@
  */
 package kvs.table;
 
+import com.google.common.collect.TreeBasedTable;
+
+import net.jcip.annotations.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.SortedMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.TreeBasedTable;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
@@ -23,7 +25,6 @@ import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
-import net.jcip.annotations.ThreadSafe;
 
 /**
  * @author hengxin
@@ -34,14 +35,13 @@ import net.jcip.annotations.ThreadSafe;
  */
 @ThreadSafe
 public abstract class AbstractTable {
-
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractTable.class);
 	
 	private final TreeBasedTable<Row, Column, ITimestampedCellStore> table = TreeBasedTable.create();
 	
 	private final ReadWriteLock lock = new ReentrantReadWriteLock();
-	private final Lock read_lock = this.lock.readLock();
-	private final Lock write_lock = this.lock.writeLock();
+	private final Lock readLock = lock.readLock();
+	private final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * get a row with a specific row key
@@ -60,7 +60,7 @@ public abstract class AbstractTable {
 	 * and a {@link Column} key (@param col)
 	 * 
 	 * <b>Note:</b> The result could be "NULL" (the initial value), 
-	 * represented by {@value TimestampedCell#TIMESTAMPED_CELL_INIT}.
+	 * represented by {@link TimestampedCell#TIMESTAMPED_CELL_INIT}.
 	 * 
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
@@ -70,13 +70,28 @@ public abstract class AbstractTable {
 		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
 		return ts_cell_store.isPresent() ? ts_cell_store.get().get() : TimestampedCell.TIMESTAMPED_CELL_INIT; 
 	}
-	
+
+    /**
+     * Gets the <em>latest</em> preceding {@link ITimestampedCell} with {@link Timestamp} smaller than @param ts,
+     * indexed by a {@link CompoundKey}.
+     *
+     * <b>Note:</b> The result could be "NULL" (the initial value),
+     * represented by {@link TimestampedCell#TIMESTAMPED_CELL_INIT}.
+     *
+     * @param ck {@link CompoundKey} to find
+     * @param ts {@link Timestamp} to compare
+     * @return an {@link Optional} wrapper of {@link ITimestampedCell}
+     */
+	public ITimestampedCell getTimestampedCell(CompoundKey ck, Timestamp ts) {
+	    return getTimestampedCell(ck.getRow(), ck.getCol(), ts);
+    }
+
 	/**
 	 * Gets the <em>latest</em> preceding {@link ITimestampedCell} with {@link Timestamp} smaller than @param ts, 
 	 * indexed by a {@link Row} key (@param row) and a {@link Column} key (@param col).
 	 * 
 	 * <b>Note:</b> The result could be "NULL" (the initial value), 
-	 * represented by {@value TimestampedCell#TIMESTAMPED_CELL_INIT}.
+	 * represented by {@link TimestampedCell#TIMESTAMPED_CELL_INIT}.
 	 * 
 	 * @param row {@link Row} key
 	 * @param col {@link Column} key
@@ -99,11 +114,11 @@ public abstract class AbstractTable {
 	 * @return an {@link Optional} wrapper of {@link ITimestampedCellStore}
 	 */
 	protected Optional<ITimestampedCellStore> getTimestampedCellStore(Row row, Column col) {
-		this.read_lock.lock();
+		readLock.lock();
 		try {
 			return Optional.ofNullable(table.get(row, col));
 		} finally {
-			this.read_lock.unlock();
+			readLock.unlock();
 		}
 	}
 	
@@ -158,31 +173,26 @@ public abstract class AbstractTable {
 	 * 
 	 * FIXME Using computeIfAbsent() to avoid initStore()???
 	 */
-	public void put(Row row, Column col, ITimestampedCell tc)
-	{
+	public void put(Row row, Column col, ITimestampedCell tc) {
 		LOGGER.info("Put data [{}, {}, {}] into table.", row, col, tc);
 		
 		Optional<ITimestampedCellStore> ts_cell_store = this.getTimestampedCellStore(row, col);
 	
 		if(ts_cell_store.isPresent()) 	// fast path
 			ts_cell_store.get().put(tc);
-		else 
-		{
-			this.write_lock.lock();
-			try
-			{
+		else {
+			writeLock.lock();
+			try {
 				Optional<ITimestampedCellStore> second_ts_cell_store = this.getTimestampedCellStore(row, col);	
 				if (second_ts_cell_store.isPresent())	// double check
 					second_ts_cell_store.get().put(tc);	// slow path
-				else
-				{
+				else {
 					ITimestampedCellStore cell_store = this.create();	// create an {@link ITimestampedCellStore}
 					cell_store.put(tc);
-					this.put(row, col, cell_store); 	
+					put(row, col, cell_store);
 				}
-			} finally
-			{
-				this.write_lock.unlock();
+			} finally {
+				writeLock.unlock();
 			}
 		}
 	}
@@ -196,16 +206,13 @@ public abstract class AbstractTable {
 	 * @param col {@link Column} key
 	 * @param ts_cell_store {@link ITimestampedCellStore}; this parameter cannot be null.
 	 */
-	protected void put(Row row, Column col, ITimestampedCellStore ts_cell_store)
-	{
+	protected void put(Row row, Column col, ITimestampedCellStore ts_cell_store) {
 //		Assert.assertNotNull("The parameter ITimestampedCellStore cannot be null.", ts_cell_store);
-		this.write_lock.lock();
-		try
-		{
-			this.table.put(row, col, ts_cell_store);
-		} finally
-		{
-			this.write_lock.unlock();
+		writeLock.lock();
+		try {
+			table.put(row, col, ts_cell_store);
+		} finally {
+			writeLock.unlock();
 		}
 	}
 }

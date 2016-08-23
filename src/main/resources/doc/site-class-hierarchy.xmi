@@ -57,7 +57,7 @@
          <UML:BehavioralFeature.parameter>
           <UML:Parameter visibility="private" isSpecification="false" xmi.id="EqDnCwwN4cji" type="tJwUbrOWBXP2" value="" name="r"/>
           <UML:Parameter visibility="private" isSpecification="false" xmi.id="e5yCaOOWxudC" type="iToVQHRHaLjB" value="" name="c"/>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="dcwhCdPrgM1G" type="0l8agZVtPigZ" value="" name="ts_cell"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="dcwhCdPrgM1G" type="0l8agZVtPigZ" value="" name="tsCell"/>
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
        </UML:Classifier.feature>

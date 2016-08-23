@@ -11,17 +11,12 @@ import kvs.table.ITimestampedCellStore;
  * @author hengxin
  * @date Created on Dec 19, 2015
  */
-public class Columns
-{
+public class Columns {
 	private final ConcurrentMap<Column, ITimestampedCellStore> columns;
 	
-	public Columns(Row row)
-	{
-		this.columns = new ConcurrentHashMap<>();
-	}
+	public Columns(Row row) { columns = new ConcurrentHashMap<>(); }
 	
-	public ITimestampedCellStore get(Column col)
-	{
+	public ITimestampedCellStore get(Column col) {
 //		return this.columns.computeIfAbsent(col -> )
 		return null;
 	}

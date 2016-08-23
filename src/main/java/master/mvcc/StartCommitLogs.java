@@ -32,18 +32,18 @@ import kvs.compound.CompoundKey;
  * 	The {@link IntervalTree} implementation used here is credited to gds12/IntervalTree
  *  (see <a href="https://github.com/gds12/IntervalTree">gds12/IntervalTree AT GitHub</a>).
  *
- * todo Using <a href="https://github.com/lowasser/intervaltree">lowasser/intervaltree@GitHub</a>.
+ * TODO Using <a href="https://github.com/lowasser/intervaltree">lowasser/intervaltree@GitHub</a>.
  */
 @ThreadSafe
 public class StartCommitLogs {
 	private final static Logger LOGGER = LoggerFactory.getLogger(StartCommitLogs.class);
 	
-	@GuardedBy("read_lock, writeLock")
-	private IntervalTree<Timestamp, BufferedUpdates> start_commit_logs = new IntervalTree<>();
+	@GuardedBy("readLock, writeLock")
+	private IntervalTree<Timestamp, BufferedUpdates> startCommitLogs = new IntervalTree<>();
 
 	private final ReadWriteLock lock = new ReentrantReadWriteLock();
-	public final Lock read_lock = this.lock.readLock();
-	public final Lock writeLock = this.lock.writeLock();
+	private final Lock readLock = lock.readLock();
+	public final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * Adding a new start-commit-log of a transaction
@@ -51,15 +51,22 @@ public class StartCommitLogs {
 	 * @param cts commit-timestamp
 	 * @param updates buffered updates
 	 */
-	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) 
-	{
-		this.writeLock.lock();
-		try
-		{
-			this.start_commit_logs.put(sts, cts, updates);
-		} finally
-		{
-			this.writeLock.unlock();
+	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) {
+/*		@modified: by hengxin; 2016-08-23;
+            reason: this method is called only in {@link SIMaster#commit(ToCommitTransaction, Timestamp)}
+                and writeLock.lock() has been called in
+                {@link SIMaster#prepare(ToCommitTransaction, VersionConstraintManager)}.
+                Removing writeLock.lock() in this method does not produce errors (due to concurrency).
+                Instead, using writeLock.lock() would block {@link SIMaster#commmit()} above
+                even if this lock is reentrant.
+                This is because threads allocation are controlled by the RMI mechanism.
+                */
+
+        writeLock.lock();
+		try {
+			startCommitLogs.put(sts, cts, updates);
+		} finally {
+			writeLock.unlock();
 		}
 	}
 	
@@ -71,13 +78,12 @@ public class StartCommitLogs {
 	 * <p>
 	 * <b>TODO</b> check the side-effects on the original underlying collections. 
 	 */
-	public boolean wcf(ToCommitTransaction tx)
-	{
-		Collection<BufferedUpdates> overlapping_tx_updates = this.containersOf(tx.getSts()); 
+	public boolean wcf(ToCommitTransaction tx) {
+		Collection<BufferedUpdates> overlapping_tx_updates = containersOf(tx.getSts());
 		
 		// collect all updated keys
 		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.parallelStream()
-				.map(update -> update.getUpdatedCKeys())
+				.map(BufferedUpdates::getUpdatedCKeys)
 				.flatMap(Set::stream)
 				.collect(Collectors.toSet());
 				
@@ -90,15 +96,12 @@ public class StartCommitLogs {
 	 * @param sts start-timestamp of a transaction
 	 * @return a collection of {@link BufferedUpdates} that contain @param sts
 	 */
-	protected Collection<BufferedUpdates> containersOf(Timestamp sts) 
-	{
-		this.read_lock.lock();
-		try
-		{
-			return this.start_commit_logs.searchContaining(sts, sts);
-		} finally
-		{
-			this.read_lock.unlock();
+    Collection<BufferedUpdates> containersOf(Timestamp sts) {
+		readLock.lock();
+		try {
+			return startCommitLogs.searchContaining(sts, sts);
+		} finally {
+			readLock.unlock();
 		}
 	}
 }

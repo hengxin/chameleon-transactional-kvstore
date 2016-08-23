@@ -11,9 +11,9 @@ import kvs.component.Ordinal;
  * @author hengxin
  * @date Created on Dec 11, 2015
  */
-public class CKeyToOrdinalIndexTest
+public class CKeyToOrdinalTest
 {
-	private CKeyToOrdinalIndex index = new CKeyToOrdinalIndex();
+	private CKeyToOrdinal index = new CKeyToOrdinal();
 	
 	@Before
 	public void setUp() throws Exception

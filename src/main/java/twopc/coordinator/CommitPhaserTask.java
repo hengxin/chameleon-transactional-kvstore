@@ -13,6 +13,8 @@ import client.clientlibrary.transaction.ToCommitTransaction;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 
+import static java.lang.Thread.currentThread;
+import static twopc.coordinator.phaser.CommitPhaser.Phase.ABORT;
 import static twopc.coordinator.phaser.CommitPhaser.Phase.COMMIT;
 import static twopc.coordinator.phaser.CommitPhaser.Phase.PREPARE;
 
@@ -56,20 +58,24 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 		LOGGER.info("The Coord [{}] begins the [{}] phase with participant [{}].",
                 coord, PREPARE, participant);
 
+        LOGGER.debug("Thread [{}] is to begin the [{}] phase.", currentThread(), PREPARE);
         boolean preparedDecision = participant.prepare(tx, vcm);
         coord.preparedDecisions.put(participant, preparedDecision);
 
-        LOGGER.info("After receiving preparedDecisions.");
         phaser.arriveAndAwaitAdvance();
 
         if (coord.toCommitDecision) { // commit case of the second phase of 2PC protocol
             LOGGER.info("The Coord [{}] begins the [{}] phase with participant [{}].",
                     coord, COMMIT, participant);
 
+            LOGGER.debug("Thread [{}] is to begin the [{}] phase.", currentThread(), COMMIT);
             boolean committedDecision = participant.commit(tx, coord.cts);
             coord.committedDecisions.put(participant, committedDecision);
         } else { // abort case of the second phase of 2PC protocol
-            LOGGER.info("Begin the [{}] phase with participant [{}].", CommitPhaser.Phase.ABORT, participant);
+            LOGGER.info("Begin the [{}] phase with participant [{}].",
+                    CommitPhaser.Phase.ABORT, participant);
+
+            LOGGER.debug("Thread [{}] is to begin the [{}] phase.", currentThread(), ABORT);
             participant.abort();
         }
 

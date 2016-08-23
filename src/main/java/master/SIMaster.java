@@ -19,7 +19,7 @@ import exception.transaction.TransactionCommunicationException;
 import exception.transaction.TransactionExecutionException;
 import jms.master.JMSPublisher;
 import kvs.component.Timestamp;
-import kvs.compound.CKeyToOrdinalIndex;
+import kvs.compound.CKeyToOrdinal;
 import kvs.table.MasterTable;
 import master.mvcc.StartCommitLogs;
 import site.ITransactional;
@@ -47,13 +47,12 @@ import static twopc.coordinator.phaser.CommitPhaser.Phase.PREPARE;
  * @date Created on 10-27-2015
  */
 public final class SIMaster extends AbstractMaster implements ITransactional, I2PCParticipant {
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
-	private final ExecutorService exec = Executors.newCachedThreadPool();
+	private final ExecutorService exec = Executors.newFixedThreadPool(1);
 	
 	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
 	private final StartCommitLogs logs = new StartCommitLogs();	// commit log: each entry is composed of start-timestamp, commit-timestamp, and buffered updates of a transaction
-	private final CKeyToOrdinalIndex ck_ord_index = new CKeyToOrdinalIndex();
+	private final CKeyToOrdinal ckOrdIndex = new CKeyToOrdinal();
 
 	/**
 	 * Constructor with {@link MasterTable} as the default underlying table
@@ -87,19 +86,9 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	public Timestamp start() throws TransactionExecutionException {
 	    LOGGER.debug("[{}] starts a transaction.", this.getClass().getSimpleName());
 
-        // Using implicit {@link Future} to get the result; also use Java 8 Lambda expression
-		try {
-			return new Timestamp(exec.submit( () -> ts.incrementAndGet()).get());
-		} catch (InterruptedException ie) {
-			String msg = "Failed to start a transaction due to unexpected thread interruption.";
-			LOGGER.warn(msg, ie.getCause());	// log at the master site side
-			throw new TransactionExecutionException(msg, ie);	// thrown to the client side
-		} catch (ExecutionException ee) {
-			String msg = "Failed to generate a new start-timestamp for a transaction to start.";
-			LOGGER.warn(msg, ee.getCause());	// log at the master site side
-			throw new TransactionExecutionException(msg, ee);	// thrown to the client side
-		}
-	}
+        // FIXME: ts is a Remote object.
+        return new Timestamp(ts.incrementAndGet());
+    }
 
 	/**
 	 * Try to commit a transaction:
@@ -129,15 +118,14 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	@Override
 	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vcm)
             throws TransactionExecutionException {
-		Future<Boolean> future_committed = exec.submit(() -> {
 			Timestamp cts = null;
 
 			/**
 			 * {@link VersionConstraintManager} is local to this method.
 			 * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free). 
 			 */
-			boolean vc_checked = vcm.check();
-			boolean wcf_checked = false;
+			boolean vc_checked = vcm.check(table);
+			boolean wcf_checked;
 			boolean can_committed = false;
 
 			logs.writeLock.lock();
@@ -147,7 +135,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 
 				if (can_committed) {	// (1) check 
 					cts = new Timestamp(ts.incrementAndGet());	// (2) commit-timestamp; commit in "commit order"
-					logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, ck_ord_index));	// (3) update start-commit-log
+					logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, ckOrdIndex));	// (3) update start-commit-log
 				}
 			} finally {
 				logs.writeLock.unlock();
@@ -168,15 +156,6 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 			}
 
 			return can_committed;
-		});
-		
-		try {
-			return future_committed.get();
-		} catch (InterruptedException | ExecutionException ieee) {
-			String msg = String.format("Transaction aborted due to unexpected causes: %s.", ieee.getMessage());
-			LOGGER.error(msg, ieee.getCause());	// log at the master side
-			throw new TransactionExecutionException(msg, ieee.getCause());		// thrown to the client side
-		}
 	}
 
     @Override
@@ -192,11 +171,11 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
              */
             logs.writeLock.lock();
 
-            LOGGER.debug("The result of checking vcm [{}] is [{}].", vcm, vcm.check());
+            LOGGER.debug("The result of checking vcm [{}] is [{}].", vcm, vcm.check(table));
             LOGGER.debug("The result of checking wcf against tx [{}] and logs [{}] is [{}].",
                     tx, logs, logs.wcf(tx));
 
-            return vcm.check() && logs.wcf(tx);
+            return vcm.check(table) && logs.wcf(tx);
         });
 
         try {
@@ -214,10 +193,14 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
         LOGGER.info("[{}] begins the [{}] phase with tx [{}] and cts [{}]",
                 this.getClass().getSimpleName(), COMMIT, tx, cts);
 
-        // update start-commit-log
-        logs.addStartCommitLog(tx.getSts(), cts,
-                tx.getBufferedUpdates().fillTsAndOrd(cts, ck_ord_index));
-        logs.writeLock.unlock();
+        exec.submit( () -> {
+            // update start-commit-log
+            logs.addStartCommitLog(tx.getSts(), cts,
+                    tx.getBufferedUpdates().fillTsAndOrd(cts, ckOrdIndex));
+            LOGGER.debug("[{}] updates the start-commit-log", this.getClass().getSimpleName());
+
+            logs.writeLock.unlock();
+        });
 
         /**
          * Chameleon does not require read operations of a transaction to
@@ -240,7 +223,9 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
         LOGGER.info("[{}] begins the [{}] phase.", this.getClass().getSimpleName(), ABORT);
 
         // TODO what else to do?
-        logs.writeLock.unlock();
+        exec.submit( () -> {
+            logs.writeLock.unlock();
+        });
     }
 
 }

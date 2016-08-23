@@ -13,14 +13,9 @@ import kvs.component.Timestamp;
  * @author hengxin
  * @date Created on 10-27-2015
  */
-public class FVSpecification extends AbstractRVSISpecification
-{
-	/**
-	 * Generate {@link FVVersionConstraint}.
-	 */
+public class FVSpecification extends AbstractRVSISpecification {
 	@Override
-	public AbstractVersionConstraint generateVersionConstraint(Timestamp ts)
-	{
+	public AbstractVersionConstraint generateVersionConstraint(Timestamp ts) {
 		return new FVVersionConstraint(AbstractRVSISpecification.transform(super.vceInfos, ts));
 	}
 

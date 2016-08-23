@@ -6,6 +6,8 @@ import java.util.Map;
 import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.transaction.QueryResults;
+import kvs.compound.ITimestampedCell;
+import kvs.table.AbstractTable;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.groupingBy;
@@ -21,15 +23,19 @@ import static java.util.stream.Collectors.toList;
  * @date Created on 11-16-2015
  */
 public final class FVVersionConstraint extends AbstractVersionConstraint {
+    private static final long serialVersionUID = 6243767991094395996L;
 
-	public FVVersionConstraint(List<VCEntry> vcEntries) {
-		super(vcEntries);
-	}
+    public FVVersionConstraint(List<VCEntry> vcEntries) { super(vcEntries); }
 
 	@Override
-	public boolean check() {
-        // TODO Auto-generated method stub
-		return false;
+	public boolean check(AbstractTable table) {
+        return vcEntries.stream()
+                .map(vce -> {
+                    ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
+                    long ord = tsCell.getOrdinal().getOrd();
+                    return (vce.getVceOrd().getOrd() - ord <= vce.getVceBound());
+                })
+                .allMatch(Boolean::booleanValue);
 	}
 
     @Override

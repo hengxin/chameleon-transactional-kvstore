@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import client.clientlibrary.partitioning.IPartitioner;
+import kvs.table.AbstractTable;
 
 /**
  * Each {@link AbstractVersionConstraint} consists of a list of {@link VCEntry}s.
@@ -23,8 +24,14 @@ public abstract class AbstractVersionConstraint implements Serializable {
     final List<VCEntry> vcEntries;
 	
 	public AbstractVersionConstraint(List<VCEntry> vcEntries) { this.vcEntries = vcEntries; }
-	
-	public abstract boolean check();
+
+    /**
+     * Check this {@link AbstractVersionConstraint}.
+     * @param table check against this {@code table}
+     * @return {@code true} if this {@link AbstractVersionConstraint} is satisfied against {@code table};
+     *  {@code false}, otherwise.
+     */
+	public abstract boolean check(AbstractTable table);
 
     /**
      * Partition a version constraint into multiple ones according to some

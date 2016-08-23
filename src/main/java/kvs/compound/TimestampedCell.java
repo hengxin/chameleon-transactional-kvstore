@@ -4,11 +4,12 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
+import net.jcip.annotations.Immutable;
+import net.jcip.annotations.ThreadSafe;
+
 import kvs.component.Cell;
 import kvs.component.Ordinal;
 import kvs.component.Timestamp;
-import net.jcip.annotations.Immutable;
-import net.jcip.annotations.ThreadSafe;
 
 /**
  * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp} (beside its {@link Ordinal}).
@@ -17,14 +18,13 @@ import net.jcip.annotations.ThreadSafe;
  * @date Created on 11-10-2015
  * 
  * @implNote
- * 	A {@link TimestampedCell} is uniquely identified by its {@value #ts} ({@link Timestamp}) field.
+ * 	A {@link TimestampedCell} is uniquely identified by its {@link #ts} ({@link Timestamp}) field.
  *  See its {@link #compareTo(ITimestampedCell)}, {@link #hashCode()}, and {@link #equals(Object)}.
  *  <p> Builder design pattern???
  */
 @Immutable
 @ThreadSafe
 public class TimestampedCell implements ITimestampedCell {
-
 	private static final long serialVersionUID = -764314996680845231L;
 
 	private final Timestamp ts; 
@@ -32,17 +32,18 @@ public class TimestampedCell implements ITimestampedCell {
 	private final Cell cell; 
 	
 	/**
-	 * Initial value: {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
+	 * Initial value: {@link Timestamp#TIMESTAMP_INIT}, {@link Ordinal#ORDINAL_INIT}, and {@link Cell#CELL_INIT}
 	 */
 	public final static TimestampedCell TIMESTAMPED_CELL_INIT = new TimestampedCell();
 	
 	/**
-	 * Default constructor with {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
+	 * Default constructor with {@link Timestamp#TIMESTAMP_INIT}, {@link Ordinal#ORDINAL_INIT},
+     * and {@link Cell#CELL_INIT}
 	 */
 	public TimestampedCell() {
-		this.ts = Timestamp.TIMESTAMP_INIT;
-		this.ord = Ordinal.ORDINAL_INIT;
-		this.cell = Cell.CELL_INIT;
+		ts = Timestamp.TIMESTAMP_INIT;
+		ord = Ordinal.ORDINAL_INIT;
+		cell = Cell.CELL_INIT;
 	}
 	
 	public TimestampedCell(Timestamp ts, Ordinal ord, Cell c) {
@@ -77,18 +78,11 @@ public class TimestampedCell implements ITimestampedCell {
 	}
 	
 	@Override
-	public Timestamp getTS() {
-		return this.ts;
-	}
-	
-	public Ordinal getOrdinal() {
-		return this.ord;
-	}
+	public Timestamp getTS() { return ts; }
+	public Ordinal getOrdinal() { return ord; }
 	
 	@Override
-	public Cell getCell() {
-		return this.cell;
-	}
+	public Cell getCell() { return cell; }
 	
 	/**
 	 * Compared by their {@link #ts} (of class {@link Timestamp}).

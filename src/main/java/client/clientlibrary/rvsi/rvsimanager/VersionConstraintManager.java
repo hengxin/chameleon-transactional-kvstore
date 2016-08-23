@@ -15,6 +15,7 @@ import java.util.Set;
 import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.vc.SVVersionConstraint;
+import kvs.table.AbstractTable;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.groupingBy;
@@ -41,8 +42,8 @@ public final class VersionConstraintManager implements Serializable {
 	 * Check whether all the {@link AbstractVersionConstraint} can be satisfied.
 	 * @return <code>true</code> if all can be satisfied; <code>false</code>, otherwise.
 	 */
-	public boolean check() {
-		return vcList.stream().allMatch(AbstractVersionConstraint::check);
+	public boolean check(AbstractTable table) {
+		return vcList.stream().allMatch(vc -> vc.check(table));
 	}
 
     /**

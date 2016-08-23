@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import kvs.component.OrdinalTest;
-import kvs.compound.CKeyToOrdinalIndexTest;
+import kvs.compound.CKeyToOrdinalTest;
 import kvs.compound.TimestampedCellTest;
 
 /**
@@ -15,7 +15,7 @@ import kvs.compound.TimestampedCellTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({OrdinalTest.class,
-	CKeyToOrdinalIndexTest.class,
+	CKeyToOrdinalTest.class,
 	TimestampedCellTest.class})
 public class KVSTestSuite {
 

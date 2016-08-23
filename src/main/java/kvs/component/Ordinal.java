@@ -23,37 +23,26 @@ import net.jcip.annotations.ThreadSafe;
  *  	Why are two AtomicIntegers never equal? @ StackOverflow</a>
  */
 @ThreadSafe
-public final class Ordinal implements Serializable
-{
+public final class Ordinal implements Serializable {
 	private static final long serialVersionUID = -8037347322531588752L;
 
-	public final static Ordinal ORDINAL_INIT = new Ordinal(0L);
+	public static final Ordinal ORDINAL_INIT = new Ordinal(0L);
+	private final AtomicLong ord;
 	
-	private final AtomicLong ord;	
-	
-	public Ordinal(long ord)
-	{
-		this.ord = new AtomicLong(ord);
-	}
+	public Ordinal(long ord) { this.ord = new AtomicLong(ord); }
 	
 	/**
 	 * Atomically increments by one the current ordinal.
 	 * @return
 	 * 	the <i>new</i> updated ordinal.
 	 */
-	public Ordinal incrementAndGet()
-	{
-		return new Ordinal(this.ord.incrementAndGet());
-	}
-	
+	public Ordinal incrementAndGet() { return new Ordinal(ord.incrementAndGet()); }
+
 	/**
 	 * @return
 	 * 	the {@link #ord} value
 	 */
-	public long getOrd()
-	{
-		return this.ord.get();
-	}
+	public long getOrd() { return ord.get(); }
 	
 	/**
 	 * Needed for possible equal-testing methods.
@@ -61,14 +50,12 @@ public final class Ordinal implements Serializable
 	 * of org.apache.commons.collections4 uses {@link Map} internally.
 	 */
 	@Override
-	public int hashCode()
-	{
-		return Objects.hashCode(this.ord.get());
+	public int hashCode() {
+		return Objects.hashCode(ord.get());
 	}
 	
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		if(o == this)
 			return true;
 		if(o == null)
@@ -82,10 +69,9 @@ public final class Ordinal implements Serializable
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.add("ord", this.ord)
+				.add("ord", ord)
 				.toString();
 	}
 }

@@ -33,9 +33,7 @@ public class ToCommitTransaction extends AbstractMessage {
 		this.updates = updates;
 	}
 
-	public Timestamp getSts() {
-		return sts;
-	}
+	public Timestamp getSts() { return sts; }
 
 	public BufferedUpdates getBufferedUpdates() {
 		return updates;
@@ -43,7 +41,7 @@ public class ToCommitTransaction extends AbstractMessage {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.sts, this.updates);
+		return Objects.hash(sts, updates);
 	}
 	
 	@Override
@@ -55,8 +53,8 @@ public class ToCommitTransaction extends AbstractMessage {
 
 		ToCommitTransaction that = (ToCommitTransaction) o;
 		
-		return Objects.equals(sts, that.sts)
-				&& Objects.equals(updates, that.updates);
+		return Objects.equals(this.sts, that.sts)
+				&& Objects.equals(this.updates, that.updates);
 	}
 
     /**
@@ -94,8 +92,9 @@ public class ToCommitTransaction extends AbstractMessage {
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.addValue(this.sts)
-				.addValue(this.updates)
+				.addValue(sts)
+				.addValue(updates)
 				.toString();
 	}
+
 }
