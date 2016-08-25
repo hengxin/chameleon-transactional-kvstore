@@ -58,7 +58,6 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 		List<Callable<Boolean>> tasks = siteTxMap.keySet().stream()
 				.map(index -> new CommitPhaserTask(this, (I2PCParticipant) cctx.getMaster(index),
                         siteTxMap.get(index), siteVcmMap.get(index)))
-                .peek(System.out::println)
                 .collect(toList());
 		
 		try {
@@ -69,7 +68,6 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
             throw new TransactionExecutionException(msg, ie);
 		}
 
-		// FIXME the return value
 		return isCommitted;
 	}
 

@@ -2,31 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ccc00351-abac-42ec-8adb-e4df30921258" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/kvs/compound/CKeyToOrdinalIndex.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/compound/CKeyToOrdinal.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/kvs/compound/CKeyToOrdinalIndexTest.java" afterPath="$PROJECT_DIR$/src/test/java/kvs/compound/CKeyToOrdinalTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/master/SIMaster.class" afterPath="$PROJECT_DIR$/target/classes/master/SIMaster.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/ClientMainTest.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/ClientMainTest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsimanager/VersionConstraintManager.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsimanager/VersionConstraintManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/FVSpecification.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/FVSpecification.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/AbstractRVSISpecification.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/AbstractRVSISpecification.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/SVSpecification.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/SVSpecification.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/AbstractVersionConstraint.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/AbstractVersionConstraint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntry.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/BufferedUpdates.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/BufferedUpdates.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/ToCommitTransaction.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/ToCommitTransaction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kvs/component/Ordinal.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/component/Ordinal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kvs/compound/KVItem.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/compound/KVItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kvs/compound/TimestampedCell.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/compound/TimestampedCell.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kvs/table/AbstractTable.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/table/AbstractTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kvs/table/table2/AbstractTable2.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/table/table2/AbstractTable2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kvs/table/table2/Columns.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/table/table2/Columns.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/master/SIMaster.java" afterPath="$PROJECT_DIR$/src/main/java/master/SIMaster.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntryRawInfo.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntryRawInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kvs/compound/ITimestampedCell.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/compound/ITimestampedCell.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/master/mvcc/StartCommitLogs.java" afterPath="$PROJECT_DIR$/src/main/java/master/mvcc/StartCommitLogs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java" afterPath="$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/doc/site-class-hierarchy.xmi" afterPath="$PROJECT_DIR$/src/main/resources/doc/site-class-hierarchy.xmi" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/kvs/KVSTestSuite.java" afterPath="$PROJECT_DIR$/src/test/java/kvs/KVSTestSuite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java" afterPath="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/rvsispec/SVSpecificationTest.java" afterPath="$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/rvsispec/SVSpecificationTest.java" />
     </list>
     <ignored path="chameleon-transactional-kvstore-maven.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -102,37 +90,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AbstractSite.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/site/AbstractSite.java">
+      <file leaf-file-name="SIMaster.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/master/SIMaster.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#1695#1696#0" expanded="false" />
-                <element signature="e#1714#1715#0" expanded="false" />
-                <element signature="e#1750#1751#0" expanded="false" />
-                <element signature="e#1845#1846#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VersionConstraintManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsimanager/VersionConstraintManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+            <state relative-caret-position="294">
+              <caret line="160" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SIMaster.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/master/SIMaster.java">
+      <file leaf-file-name="SVSpecification.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/SVSpecification.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+            <state relative-caret-position="504">
+              <caret line="151" column="4" selection-start-line="151" selection-start-column="4" selection-end-line="151" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -141,52 +113,31 @@
       <file leaf-file-name="StartCommitLogs.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/master/mvcc/StartCommitLogs.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+            <state relative-caret-position="588">
+              <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BufferedUpdates.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/BufferedUpdates.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ToCommitTransaction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/ToCommitTransaction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
-              <folding>
-                <element signature="e#1090#1091#0" expanded="true" />
-                <element signature="e#1111#1112#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RVSI2PCPhaserCoordinator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RVSI2PCPhaserCoordinator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="58" column="42" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
+            <state relative-caret-position="251">
+              <caret line="81" column="40" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommitPhaserTask.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java">
+      <file leaf-file-name="AbstractVersionConstraint.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/AbstractVersionConstraint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="60" column="89" selection-start-line="60" selection-start-column="89" selection-end-line="60" selection-end-column="89" />
-              <folding />
+            <state relative-caret-position="209">
+              <caret line="48" column="32" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -194,18 +145,8 @@
       <file leaf-file-name="BVVersionConstraint.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SVVersionConstraint.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="23" column="75" selection-start-line="23" selection-start-column="75" selection-end-line="23" selection-end-column="75" />
+            <state relative-caret-position="292">
+              <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -238,9 +179,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/main/SlaveMainTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main/MasterMainTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main/CoordinatorFactoryMainTest.java" />
         <option value="$PROJECT_DIR$/src/main/resources/client/site.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/slave/site.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/slave/site-slave20.properties" />
@@ -260,8 +198,6 @@
         <option value="$PROJECT_DIR$/src/main/java/slave/AbstractSlave.java" />
         <option value="$PROJECT_DIR$/src/main/java/site/AbstractSite.java" />
         <option value="$PROJECT_DIR$/src/main/java/membership/coordinator/CoordinatorFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntryRawInfo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/AbstractRVSISpecification.java" />
         <option value="$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/rvsimanager/VersionConstraintManagerTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/vc/VCEntryTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/vc/AbstractVersionConstraintTest.java" />
@@ -269,7 +205,6 @@
         <option value="$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/vc/BVVersionConstraintTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/Abstract2PCCoordinator.java" />
         <option value="$PROJECT_DIR$/src/main/java/main/ClientMainTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java" />
         <option value="$PROJECT_DIR$/src/main/java/kvs/component/Ordinal.java" />
         <option value="$PROJECT_DIR$/src/main/java/kvs/compound/CKeyToOrdinalIndex.java" />
         <option value="$PROJECT_DIR$/src/main/java/kvs/compound/KVItem.java" />
@@ -279,16 +214,22 @@
         <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/BufferedUpdates.java" />
         <option value="$PROJECT_DIR$/src/main/java/kvs/table/table2/AbstractTable2.java" />
         <option value="$PROJECT_DIR$/src/main/java/kvs/table/table2/Columns.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/AbstractVersionConstraint.java" />
         <option value="$PROJECT_DIR$/src/main/java/kvs/table/AbstractTable.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/FVSpecification.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsimanager/VersionConstraintManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java" />
-        <option value="$PROJECT_DIR$/src/main/java/master/mvcc/StartCommitLogs.java" />
         <option value="$PROJECT_DIR$/src/main/java/master/SIMaster.java" />
+        <option value="$PROJECT_DIR$/src/main/java/master/mvcc/StartCommitLogs.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntryRawInfo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/AbstractRVSISpecification.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/SVSpecification.java" />
+        <option value="$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/rvsispec/SVSpecificationTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kvs/compound/ITimestampedCell.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java" />
+        <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/AbstractVersionConstraint.java" />
       </list>
     </option>
   </component>
@@ -613,8 +554,8 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.splitter.proportion" value="0.1970696" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/doc" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
@@ -1094,32 +1035,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/membership/coordinator/cf.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/slave/site-slave11.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/context/AbstractClientContext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1365">
-          <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#5435#5436#0" expanded="false" />
-            <element signature="e#5480#5481#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/membership/coordinator/CoordinatorMembership.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="651">
@@ -1192,21 +1107,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntryRawInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/AbstractRVSISpecification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/vc/BVVersionConstraintTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -1219,6 +1119,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="427">
           <caret line="57" column="82" selection-start-line="57" selection-start-column="82" selection-end-line="57" selection-end-column="82" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1226,6 +1127,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
           <caret line="61" column="88" selection-start-line="61" selection-start-column="88" selection-end-line="61" selection-end-column="88" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1318,13 +1220,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kvs/compound/KVItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
@@ -1371,14 +1266,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/SVSpecification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/FVSpecification.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -1391,26 +1278,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
           <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/AbstractVersionConstraint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1428,30 +1296,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/ToCommitTransaction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
           <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
           <folding>
-            <element signature="e#1090#1091#0" expanded="true" />
-            <element signature="e#1111#1112#0" expanded="true" />
+            <element signature="e#1090#1091#0" expanded="false" />
+            <element signature="e#1111#1112#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/BufferedUpdates.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1463,10 +1315,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/BufferedUpdates.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="58" column="42" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
+        <state relative-caret-position="262">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/master/SIMaster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="160" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntryRawInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/org/junit/Assert.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="49" column="23" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/VCEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="34" column="11" selection-start-line="34" selection-start-column="11" selection-end-line="34" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/AbstractRVSISpecification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/client/clientlibrary/rvsi/rvsispec/SVSpecificationTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="178" column="8" selection-start-line="178" selection-start-column="8" selection-end-line="178" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/rvsispec/SVSpecification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="151" column="4" selection-start-line="151" selection-start-column="4" selection-end-line="151" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -1479,26 +1387,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/master/mvcc/StartCommitLogs.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kvs/compound/ITimestampedCell.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+        <state relative-caret-position="231">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/master/SIMaster.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+        <state relative-caret-position="229">
+          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="23" column="75" selection-start-line="23" selection-start-column="75" selection-end-line="23" selection-end-column="75" />
+        <state relative-caret-position="315">
+          <caret line="29" column="59" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/master/mvcc/StartCommitLogs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/AbstractVersionConstraint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="48" column="32" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="81" column="40" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
           <folding />
         </state>
       </provider>

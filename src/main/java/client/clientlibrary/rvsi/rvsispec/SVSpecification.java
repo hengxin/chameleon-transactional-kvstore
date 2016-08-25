@@ -1,6 +1,3 @@
-/**
- * 
- */
 package client.clientlibrary.rvsi.rvsispec;
 
 import java.util.ArrayList;
@@ -58,8 +55,8 @@ public class SVSpecification extends AbstractRVSISpecification {
 	@Override
 	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results) {
 		super.vceInfos = rvsiSpecMap.entrySet().stream()
-				.<VCEntryRawInfo>flatMap(rvsi_spec_entry ->
-						expand(join(rvsi_spec_entry.getKey(), query_results), rvsi_spec_entry.getValue()).stream()
+				.flatMap(rvsiSpecEntry ->
+						expand(join(rvsiSpecEntry.getKey(), query_results), rvsiSpecEntry.getValue()).stream()
 					)
 				.collect(Collectors.toList());
 		return super.vceInfos;
@@ -70,7 +67,7 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 * {@link CompoundKey} to {@link ITimestampedCell}, by their common {@link CompoundKey}.
 	 * 
 	 * @param ck_set a set of {@link CompoundKey}s
-	 * @param query_results {@link QueryResults} which is a map of 
+	 * @param queryResults {@link QueryResults} which is a map of
 	 *   {@link CompoundKey} to {@link ITimestampedCell}.
 	 * @return a </em>sorted</em> set of {@link KVItem}s, 
 	 *   each of which is a pair of {@link CompoundKey} and {@link ITimestampedCell}.
@@ -89,13 +86,13 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 *   { [x, Cell_x], [y, Cell_y], [z, Cell_z] }.
 	 * <p>
 	 */
-	protected SortedSet<KVItem> join(Set<CompoundKey> ck_set, QueryResults query_results) {
+    SortedSet<KVItem> join(Set<CompoundKey> ck_set, QueryResults queryResults) {
 		return ck_set.stream()
-			.<Optional<KVItem>>map(ck -> 
-				query_results.getTsCell(ck).map(ts_cell -> new KVItem(ck, ts_cell)))
+			.map(ck ->
+				queryResults.getTsCell(ck).map(tsCell -> new KVItem(ck, tsCell)))
 			.filter(Optional::isPresent)
 			.map(Optional::get)
-			.collect(Collectors.toCollection(() -> new TreeSet<KVItem>(KVItem.COMPARATOR_BY_TIMESTAMP)));
+			.collect(Collectors.toCollection(() -> new TreeSet<>(KVItem.COMPARATOR_BY_TIMESTAMP)));
 	}
 
 	/**
@@ -124,14 +121,14 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 * <li>[ vce_info_kv = {y, Cell_y}, vce_info_kv_optional = {z, Cell_z}, vce_info_bound = 2] 
 	 * <p>
 	 */
-	protected List<VCEntryRawInfo> expand(SortedSet<KVItem> kv_set, final int bound) {
+    List<VCEntryRawInfo> expand(SortedSet<KVItem> kv_set, final int bound) {
 		if (kv_set.size() < 2)
-			return new ArrayList<VCEntryRawInfo>();
+			return new ArrayList<>();
 
 		KVItem kv_optional = kv_set.last();
 		kv_set.remove(kv_optional);
 		return kv_set.stream()
-				.<VCEntryRawInfo>map(kv -> new VCEntryRawInfo(kv, kv_optional, bound))
+				.map(kv -> new VCEntryRawInfo(kv, kv_optional, bound))
 				.collect(Collectors.toList());
 	}
 	
@@ -144,11 +141,14 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 */
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts) {
-		List<VCEntry> vce_list =  super.vceInfos.stream()
-				.<VCEntry>map(vce_info -> 
-					new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoOrd(), vce_info.getVceInfoTsOptional(), vce_info.getVceInfoBound()))
+		List<VCEntry> vceList =  super.vceInfos.stream()
+				.map(vce ->
+					new VCEntry(vce.getVceInfoCk(),
+                            vce.getVceInfoOrd(),
+                            vce.getVceInfoTsOptional(),
+                            vce.getVceInfoBound()))
 				.collect(Collectors.toList());
-		return new SVVersionConstraint(vce_list);
+		return new SVVersionConstraint(vceList);
 	}
 
 }

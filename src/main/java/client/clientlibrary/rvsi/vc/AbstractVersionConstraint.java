@@ -30,8 +30,23 @@ public abstract class AbstractVersionConstraint implements Serializable {
      * @param table check against this {@code table}
      * @return {@code true} if this {@link AbstractVersionConstraint} is satisfied against {@code table};
      *  {@code false}, otherwise.
+     *
+     * @implNote Extract more common logic from subclasses
      */
-	public abstract boolean check(AbstractTable table);
+	public boolean check(AbstractTable table) {
+        return vcEntries.stream()
+                .map(vce -> check(table, vce))
+                .allMatch(Boolean::booleanValue);
+    }
+
+    /**
+     * Check an individual {@code vce} against {@code table}.
+     * @param table  check against this {@code table}
+     * @param vce  {@link VCEntry} to be checked
+     * @return {@code true} if this {@code vce} is satisfied against {@code table};
+     *   {@code false}, otherwise.
+     */
+    public abstract boolean check(AbstractTable table, VCEntry vce);
 
     /**
      * Partition a version constraint into multiple ones according to some

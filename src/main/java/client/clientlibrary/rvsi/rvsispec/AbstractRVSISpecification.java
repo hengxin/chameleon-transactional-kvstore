@@ -57,7 +57,7 @@ public abstract class AbstractRVSISpecification {
 	 * 
 	 * @return a <em>flatten</em> map representation of RVSI specifications.
 	 */
-	protected Map<CompoundKey, Integer> flattenRVSISpecMap() {
+    Map<CompoundKey, Integer> flattenRVSISpecMap() {
 		return rvsiSpecMap.entrySet().stream()
 		   .<Entry<CompoundKey, Integer>>flatMap(rvsi_spec_entry ->
 		       rvsi_spec_entry.getKey().stream()

@@ -52,16 +52,6 @@ public class StartCommitLogs {
 	 * @param updates buffered updates
 	 */
 	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) {
-/*		@modified: by hengxin; 2016-08-23;
-            reason: this method is called only in {@link SIMaster#commit(ToCommitTransaction, Timestamp)}
-                and writeLock.lock() has been called in
-                {@link SIMaster#prepare(ToCommitTransaction, VersionConstraintManager)}.
-                Removing writeLock.lock() in this method does not produce errors (due to concurrency).
-                Instead, using writeLock.lock() would block {@link SIMaster#commmit()} above
-                even if this lock is reentrant.
-                This is because threads allocation are controlled by the RMI mechanism.
-                */
-
         writeLock.lock();
 		try {
 			startCommitLogs.put(sts, cts, updates);

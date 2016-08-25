@@ -7,6 +7,7 @@ import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
 import client.clientlibrary.transaction.QueryResults;
+import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
 
 /**
@@ -23,11 +24,17 @@ public final class SVVersionConstraint extends AbstractVersionConstraint {
 
     public SVVersionConstraint(List<VCEntry> vcEntries) { super(vcEntries); }
 
-	@Override
-	public boolean check(AbstractTable table) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    /**
+     * @param table  check against this {@code table}
+     * @param vce  {@link VCEntry} to be checked
+     * @return O_x(T_l.cts) - ord(x_j) <= k3; see the paper.
+     */
+    @Override
+    public boolean check(AbstractTable table, VCEntry vce) {
+        ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
+        long ord = tsCell.getOrdinal().getOrd();
+        return (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
+    }
 
     /**
      * @throws UnsupportedOperationException

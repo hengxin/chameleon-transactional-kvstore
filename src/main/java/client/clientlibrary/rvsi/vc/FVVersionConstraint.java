@@ -27,16 +27,17 @@ public final class FVVersionConstraint extends AbstractVersionConstraint {
 
     public FVVersionConstraint(List<VCEntry> vcEntries) { super(vcEntries); }
 
-	@Override
-	public boolean check(AbstractTable table) {
-        return vcEntries.stream()
-                .map(vce -> {
-                    ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
-                    long ord = tsCell.getOrdinal().getOrd();
-                    return (vce.getVceOrd().getOrd() - ord <= vce.getVceBound());
-                })
-                .allMatch(Boolean::booleanValue);
-	}
+    /**
+     * @param table  check against this {@code table}
+     * @param vce  {@link VCEntry} to be checked
+     * @return ord(x_j) - O_x(T_i.sts) < k2; see the paper.
+     */
+    @Override
+    public boolean check(AbstractTable table, VCEntry vce) {
+        ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
+        long ord = tsCell.getOrdinal().getOrd();
+        return (vce.getVceOrd().getOrd() - ord < vce.getVceBound());
+    }
 
     @Override
     public Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets) {
