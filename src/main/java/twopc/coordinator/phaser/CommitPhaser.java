@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.concurrent.Phaser;
 
+import exception.transaction.TransactionEndException;
 import twopc.coordinator.Abstract2PCCoordinator;
 import twopc.coordinator.RVSI2PCPhaserCoordinator;
 
@@ -48,8 +49,14 @@ public final class CommitPhaser extends Phaser implements Serializable {
         switch (phase) {
             case 0:
                 LOGGER.info("All [{}] masters have finished the [{}] phase.", getArrivedParties(), Phase.PREPARE);
-                boolean toCommitDecision = coord.onPreparePhaseFinished();
+                boolean toCommitDecision = false;
+                try {
+                    toCommitDecision = coord.onPreparePhaseFinished();
+                } catch (TransactionEndException tee) {
+                    LOGGER.info(tee.getMessage());
+                }
                 LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, toCommitDecision);
+
                 return false;	// this phaser has not yet finished
 
             case 1:

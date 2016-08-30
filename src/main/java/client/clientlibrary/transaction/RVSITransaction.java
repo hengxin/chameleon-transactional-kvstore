@@ -25,7 +25,7 @@ import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import site.ISite;
-import twopc.timing.ITimestampOracle;
+import timing.ITimestampOracle;
 
 /**
  * {@link RVSITransaction} is a kind of transactions with rvsi semantics
@@ -53,7 +53,7 @@ public class RVSITransaction implements ITransaction {
 	}
 	
 	/**
-	 * To begin a transaction, the client contacts the {@link twopc.timing.ITimestampOracle}
+	 * To begin a transaction, the client contacts the {@link timing.ITimestampOracle}
 	 * to acquire a globally unique start timestamp.
      *
      * @throws TransactionBeginException thrown if errors occur when acquire a timestamp

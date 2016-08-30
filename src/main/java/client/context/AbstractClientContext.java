@@ -21,6 +21,7 @@ import membership.site.ReplicationGroup;
 import membership.site.StaticSiteMembershipFromProperties;
 import rmi.IRMI;
 import site.ISite;
+import timing.TimestampOracleMembership;
 import twopc.coordinator.Abstract2PCCoordinator;
 
 /**
@@ -42,6 +43,8 @@ public abstract class AbstractClientContext extends AbstractContext {
     public final static String DEFAULT_SITE_PROPERTIES_FILE = "client/site.properties";
     @Language("Properties")
     protected final static String DEFAULT_COORD_FACTORY_PROPERTIES_FILE = "client/cf.properties";
+    @Language("Properties")
+    public final static String DEFAULT_TO_PROPERTIES_FILE = "timing/to.properties";
 
 	protected IPartitioner partitioner;
 	protected transient Optional<ISite> cached_read_site = Optional.empty();
@@ -52,13 +55,17 @@ public abstract class AbstractClientContext extends AbstractContext {
 	 * or located via RMI, the whole system exits immediately.
 	 * @param siteProperties	path of the properties file; it cannot be {@code null}.
      * @param cfProperties  path of the cf properties file; it cannot be {@code null}
-     *    TODO default: on sites
+     * @param toProperties  path of the to properties file; it cannot be {@code null}
+     *    TODO: default files
 	 */
-	public AbstractClientContext(@NotNull String siteProperties, @NotNull String cfProperties) {
-		LOGGER.info("Using site properties file [{}] and cf properties for [{}].",
-                siteProperties, cfProperties, this.getClass().getSimpleName());
+	public AbstractClientContext(@NotNull String siteProperties,
+                                 @NotNull String cfProperties,
+                                 @NotNull String toProperties) {
+        LOGGER.info("Using site properties file [{}], cf properties file [{}], and to properties file [{}] for [{}].",
+                siteProperties, cfProperties, toProperties, this.getClass().getSimpleName());
         membership = new StaticSiteMembershipFromProperties(siteProperties);
         coordMembership = new CoordinatorMembership(cfProperties);
+        to = new TimestampOracleMembership(toProperties).locateTO();
 	}
 
     /**

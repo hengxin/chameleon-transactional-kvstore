@@ -1,5 +1,7 @@
 package client.context;
 
+import org.jetbrains.annotations.NotNull;
+
 import client.clientlibrary.partitioning.SingleMasterSettingPartitioner;
 import site.ISite;
 
@@ -10,13 +12,18 @@ import site.ISite;
  * @date Created on 12-04-2015
  */
 public class ClientContextSingleMaster extends AbstractClientContext {
+    private static final long serialVersionUID = -3909286327773778797L;
 
-	public ClientContextSingleMaster() {
-		this(DEFAULT_SITE_PROPERTIES_FILE, DEFAULT_COORD_FACTORY_PROPERTIES_FILE);
+    public ClientContextSingleMaster() {
+		this(DEFAULT_SITE_PROPERTIES_FILE,
+            DEFAULT_COORD_FACTORY_PROPERTIES_FILE,
+            DEFAULT_TO_PROPERTIES_FILE);
 	}
 
-	public ClientContextSingleMaster(String siteProperties, String cfProperties) {
-		super(siteProperties, cfProperties);
+	public ClientContextSingleMaster(@NotNull String siteProperties,
+                                     @NotNull String cfProperties,
+                                     @NotNull String toProperties) {
+		super(siteProperties, cfProperties, toProperties);
 		partitioner = new SingleMasterSettingPartitioner();
 	}
 	

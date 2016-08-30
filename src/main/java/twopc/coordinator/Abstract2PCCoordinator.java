@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
+import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
 import rmi.IRMI;
@@ -78,7 +79,8 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
 	public abstract boolean execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException;
 
-    public abstract boolean onPreparePhaseFinished();
+    public abstract boolean onPreparePhaseFinished()
+            throws TransactionEndException;
     public abstract boolean onCommitPhaseFinished();
 
     @Override

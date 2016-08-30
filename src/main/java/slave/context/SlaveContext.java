@@ -17,11 +17,11 @@ public class SlaveContext extends AbstractContext {
 
 	/**
 	 * Constructor using user-specified configuration file.
-	 * @param file	path of .properties file; it cannot be {@code null}.
+	 * @param siteProperties  path of site.properties file; it cannot be {@code null}
 	 */
-	public SlaveContext(@NotNull String file) {
-		LOGGER.info("Using the properties file [{}] for [{}].", file, this.getClass().getSimpleName());
-		membership = new StaticSiteMembershipFromProperties(file);
+	public SlaveContext(@NotNull String siteProperties) {
+        LOGGER.info("Using the properties file [{}] for [{}].", siteProperties, this.getClass().getSimpleName());
+		membership = new StaticSiteMembershipFromProperties(siteProperties);
 	}
 
 }

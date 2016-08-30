@@ -16,11 +16,11 @@ import java.util.concurrent.Phaser;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
+import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
-import twopc.timing.CentralizedTimestampOracle;
 
 import static java.util.stream.Collectors.toList;
 
@@ -77,11 +77,18 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
      * if all #prepared_decesions are true, then commit; otherwise, abort.
      */
     @Override
-    public boolean onPreparePhaseFinished() {
+    public boolean onPreparePhaseFinished() throws TransactionEndException {
         toCommitDecision = preparedDecisions.values().stream().allMatch(decision -> decision);
         // TODO check k3SI condition here
         if (toCommitDecision)
-            cts = new Timestamp(CentralizedTimestampOracle.INSTANCE.get());
+            try {
+                cts = new Timestamp(cctx.getTsOracle().get());
+            } catch (RemoteException re) {
+                toCommitDecision = false;
+                throw new TransactionEndException(String.format("Transaction [%s] failed to begin.", this),
+                        re.getCause());
+            }
+
         return toCommitDecision;
     }
 

@@ -26,6 +26,7 @@ import util.PropertiesUtil;
  * @date 16-8-17
  */
 public class CoordinatorMembership implements ICoordinatorMembership, Serializable {
+    private static final long serialVersionUID = -6310920185254879511L;
     private static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorMembership.class);
 
     private Map<Integer, ICoordinatorFactory> cfMap = new HashMap<>();
@@ -58,7 +59,6 @@ public class CoordinatorMembership implements ICoordinatorMembership, Serializab
         private ICoordinatorFactory cf;
 
         CFMember(String idStr, String memberStr) {
-            System.out.println(memberStr);
             id = Integer.parseInt(idStr);
             cf = (ICoordinatorFactory) RMIUtil.lookup(memberStr);
         }

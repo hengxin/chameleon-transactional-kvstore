@@ -6,17 +6,21 @@ import java.io.Serializable;
 
 import membership.coordinator.ICoordinatorMembership;
 import membership.site.ISiteMembership;
-import twopc.timing.CentralizedTimestampOracle;
-import twopc.timing.ITimestampOracle;
+import timing.ITimestampOracle;
 
 /**
  * @author hengxin
  * @date 16-8-9
  */
 public abstract class AbstractContext implements Serializable {
-    protected @NotNull ISiteMembership membership;
-    protected ICoordinatorMembership coordMembership;
+    private static final long serialVersionUID = 6213467098181726391L;
 
-    public @NotNull ISiteMembership getMembership() { return membership; }
-    public ITimestampOracle getTsOracle() { return CentralizedTimestampOracle.INSTANCE; }  // FIXME refactor it
+    @NotNull protected ISiteMembership membership;
+    protected ICoordinatorMembership coordMembership;
+    @NotNull protected ITimestampOracle to;
+
+    @NotNull
+    public ISiteMembership getMembership() { return membership; }
+    public ITimestampOracle getTsOracle() { return to; }
+
 }

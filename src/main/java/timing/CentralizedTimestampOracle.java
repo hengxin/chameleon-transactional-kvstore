@@ -1,4 +1,4 @@
-package membership.coordinator;
+package timing;
 
 import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
@@ -8,30 +8,30 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import client.context.AbstractClientContext;
 import membership.site.Member;
 import rmi.IRMI;
 import rmi.RMIUtil;
-import twopc.coordinator.Abstract2PCCoordinator;
-import twopc.coordinator.RVSI2PCPhaserCoordinator;
 import util.PropertiesUtil;
 
 /**
- * {@link CoordinatorFactory} creates {@link Abstract2PCCoordinator} instances.
+ * A simple centralized timestamp oracle.
+ * The timestamp sequence starts from 0.
  * @author hengxin
- * @date 16-8-16
+ * @date Created on Dec 27, 2015
  */
-public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorFactory.class);
+public class CentralizedTimestampOracle implements ITimestampOracle, IRMI {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CentralizedTimestampOracle.class);
     @Language("Properties")
-    private static final String DEFAULT_CF_PROPERTIES = "membership/coordinator/cf.properties";
+    private static final String DEFAULT_TO_PROPERTIES = "timing/to.properties";
 
+    private final AtomicInteger ts = new AtomicInteger();
     private Member self;
 
-    public CoordinatorFactory() { this(DEFAULT_CF_PROPERTIES); }
+    public CentralizedTimestampOracle() { this(DEFAULT_TO_PROPERTIES); }
 
-    public CoordinatorFactory(String cfProperties) {
+    public CentralizedTimestampOracle(String cfProperties) {
         try {
             Properties prop = PropertiesUtil.load(cfProperties);
             Set<String> idStrs = prop.stringPropertyNames();
@@ -43,12 +43,10 @@ public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
         }
     }
 
-    @Override
-    public Abstract2PCCoordinator getRVSI2PCPhaserCoord(AbstractClientContext ctx)
-            throws RemoteException {
-        LOGGER.debug("[{}] will return an RVSI2PCPhaserCoordinator.", this.getClass().getSimpleName());
-        return new RVSI2PCPhaserCoordinator(ctx);
-    }
+	@Override
+	public int get() throws RemoteException {
+	    return ts.getAndIncrement();
+	}
 
     @Override
     public void export() {
@@ -59,4 +57,5 @@ public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
     public void reclaim() {
 
     }
+
 }

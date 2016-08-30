@@ -1,9 +1,7 @@
-package twopc.timing;
+package timing;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
-import rmi.IRMI;
 
 /**
  * The timestamp oracle is a server that hands out 
@@ -11,6 +9,6 @@ import rmi.IRMI;
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
-public interface ITimestampOracle extends IRMI, Remote {
+public interface ITimestampOracle extends Remote {
 	int get() throws RemoteException;
 }
