@@ -1,14 +1,14 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="SlaveMainTest (10)" type="Application" factoryName="Application" folderName="slave">
+  <configuration default="false" name="CentralizedTimestampOracleMainTest" type="Application" factoryName="Application" folderName="to" nameIsGenerated="true">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
         <option name="PATTERN" value="main.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
-    <option name="MAIN_CLASS_NAME" value="main.SlaveMainTest" />
+    <option name="MAIN_CLASS_NAME" value="main.CentralizedTimestampOracleMainTest" />
     <option name="VM_PARAMETERS" value="" />
-    <option name="PROGRAM_PARAMETERS" value="slave/site-slave10.properties messaging/socket/sp10.properties" />
+    <option name="PROGRAM_PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />

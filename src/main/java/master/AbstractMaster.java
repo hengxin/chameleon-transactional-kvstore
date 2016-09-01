@@ -5,8 +5,8 @@ import com.sun.istack.Nullable;
 import java.util.Optional;
 
 import context.AbstractContext;
-import messages.IMessageConsumer;
-import messages.IMessageProducer;
+import messaging.IMessageConsumer;
+import messaging.IMessageProducer;
 import site.AbstractSite;
 
 /**
@@ -17,8 +17,7 @@ import site.AbstractSite;
  * @date Created on Jan 9, 2016
  */
 public abstract class AbstractMaster extends AbstractSite {
-
-	protected final Optional<IMessageProducer> messenger;
+	final Optional<IMessageProducer> messenger;
 
 	/**
 	 * @param context	context for the master site

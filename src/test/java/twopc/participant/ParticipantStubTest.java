@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import jms.master.JMSPublisher;
+import messaging.jms.master.JMSPublisher;
 import master.AbstractMaster;
 import master.context.MasterContext;
 

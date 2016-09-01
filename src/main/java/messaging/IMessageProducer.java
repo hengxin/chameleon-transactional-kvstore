@@ -1,4 +1,4 @@
-package messages;
+package messaging;
 
 import exception.transaction.TransactionCommunicationException;
 import master.AbstractMaster;
@@ -17,5 +17,5 @@ public interface IMessageProducer {
 	 * @param msg	{@link AbstractMessage} to send
 	 * @throws TransactionCommunicationException	if an error occurs during sending message 
 	 */
-	public abstract void send(AbstractMessage msg);
+    void send(AbstractMessage msg);
 }

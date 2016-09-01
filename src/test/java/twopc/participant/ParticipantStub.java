@@ -15,10 +15,11 @@ import context.AbstractContext;
 import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
 import master.AbstractMaster;
-import messages.IMessageProducer;
+import messaging.IMessageProducer;
 import twopc.coordinator.RVSI2PCPhaserCoordinatorStub;
 
 /**
+ * {@link ParticipantStub} is for test.
  * @author hengxin
  * @date 16-6-2
  */

@@ -1,5 +1,6 @@
 package conf;
 
+import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,11 +23,29 @@ import util.PropertiesUtil;
 public final class SiteConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(SiteConfig.class);
 
+    // the following is for timestamp oracle
+    @Language("Properties")
+    public static final String DEFAULT_TO_PROPERTIES = "timing/to.properties";
+
+    // the following are for site membership
+    @Language("Properties")
+    public static final String DEFAULT_MASTER_SITE_PROPERTIES = "master/site.properties";
+    @Language("Properties")
+    public final static String DEFAULT_SLAVE_SITE_PROPERTIES = "slave/site.properties";
+
+    // the following are for socket communication
+    @Language("Properties")
+    public static final String DEFAULT_SOCKET_ADDRESS_PROPERTIES = "messaging/socket/sa.properties";
+    @Language("Properties")
+    public static final String DEFAULT_SOCKET_PORT_PROPERTIES = "messaging/socket/sp.properties";
+    public static final int DEFAULT_SOCKET_PORT = 1111;
+
     public enum SiteConfigKey {
         HOST("host"),
         PORT("port"),
         RMI_REGISTRY_NAME("rmiRegistryName"),
-        RMI_REGISTRY_PORT("rmiRegistryPort");
+        RMI_REGISTRY_PORT("rmiRegistryPort"),
+        SOCKET_PORT("socket-port");
 
         private final String configKey;
         SiteConfigKey(final String configKey) {

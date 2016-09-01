@@ -1,4 +1,4 @@
-package jms.master;
+package messaging.jms.master;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -8,9 +8,9 @@ import java.util.concurrent.Future;
 import javax.jms.JMSException;
 
 import exception.transaction.TransactionCommunicationException;
-import jms.AbstractJMSParticipant;
-import messages.AbstractMessage;
-import messages.IMessageProducer;
+import messaging.jms.AbstractJMSParticipant;
+import messaging.AbstractMessage;
+import messaging.IMessageProducer;
 
 /**
  * {@link JMSPublisher} serves as a message publisher in JMS.
@@ -18,8 +18,7 @@ import messages.IMessageProducer;
  * @date Created on 11-12-2015
  */
 public final class JMSPublisher extends AbstractJMSParticipant implements IMessageProducer {
-	
-	private final ExecutorService exec = Executors.newCachedThreadPool(); 
+	private final ExecutorService exec = Executors.newCachedThreadPool();
 
 	/**
 	 * Send out an {@link AbstractMessage}.

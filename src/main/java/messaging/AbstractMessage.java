@@ -1,4 +1,4 @@
-package messages;
+package messaging;
 
 import java.io.Serializable;
 
@@ -8,6 +8,5 @@ import java.io.Serializable;
  * @date Created on Dec 11, 2015
  */
 public abstract class AbstractMessage implements Serializable {
-
 	private static final long serialVersionUID = -3239013342020968109L;
 }

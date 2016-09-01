@@ -2,12 +2,14 @@ package client.clientlibrary.transaction;
 
 import com.google.common.base.MoreObjects;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Map;
 import java.util.Objects;
 
 import client.clientlibrary.partitioning.IPartitioner;
 import kvs.component.Timestamp;
-import messages.AbstractMessage;
+import messaging.AbstractMessage;
 import site.ISite;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -25,19 +27,16 @@ import static org.junit.Assert.assertEquals;
 public class ToCommitTransaction extends AbstractMessage {
 	private static final long serialVersionUID = -137070517043340731L;
 
-	private final Timestamp sts;
-	private final BufferedUpdates updates;
+	@NotNull  private final Timestamp sts;
+	@NotNull private final BufferedUpdates updates;
 	
-	public ToCommitTransaction(Timestamp sts, BufferedUpdates updates) {
+	public ToCommitTransaction(@NotNull Timestamp sts, @NotNull BufferedUpdates updates) {
 		this.sts = sts;
 		this.updates = updates;
 	}
 
 	public Timestamp getSts() { return sts; }
-
-	public BufferedUpdates getBufferedUpdates() {
-		return updates;
-	}
+	public BufferedUpdates getBufferedUpdates() { return updates; }
 	
 	@Override
 	public int hashCode() {

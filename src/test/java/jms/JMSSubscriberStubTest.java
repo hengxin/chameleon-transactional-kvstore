@@ -12,8 +12,9 @@ import org.junit.Test;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import jms.master.JMSPublisher;
-import jms.slave.JMSSubscriber;
+import messaging.jms.AbstractJMSParticipant;
+import messaging.jms.master.JMSPublisher;
+import messaging.jms.slave.JMSSubscriber;
 import kvs.component.Cell;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
@@ -21,12 +22,12 @@ import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
 import kvs.table.AbstractTable;
 import kvs.table.SlaveTable;
-import messages.AbstractMessage;
-import messages.IMessageProducer;
+import messaging.AbstractMessage;
+import messaging.IMessageProducer;
 
 /**
  * Mock {@link JMSSubscriber} using {@link JMSSubscriberStub} 
- * and test it onMessage() method.
+ * and test it accept() method.
  * 
  * @author hengxin
  * @date Created on 11-25-2015
@@ -82,7 +83,7 @@ public class JMSSubscriberStubTest {
 	 * @author hengxin
 	 * @date 11-25-2015
 	 * 
-	 * Mock {@link JMSSubscriber}, then we can test its onMessage() behavior.
+	 * Mock {@link JMSSubscriber}, then we can test its accept() behavior.
 	 */
 	private final class JMSSubscriberStub extends JMSSubscriber {
 

@@ -1,6 +1,5 @@
 package timing;
 
-import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +9,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import conf.SiteConfig;
 import membership.site.Member;
 import rmi.IRMI;
 import rmi.RMIUtil;
@@ -23,13 +23,11 @@ import util.PropertiesUtil;
  */
 public class CentralizedTimestampOracle implements ITimestampOracle, IRMI {
     private static final Logger LOGGER = LoggerFactory.getLogger(CentralizedTimestampOracle.class);
-    @Language("Properties")
-    private static final String DEFAULT_TO_PROPERTIES = "timing/to.properties";
 
     private final AtomicInteger ts = new AtomicInteger();
     private Member self;
 
-    public CentralizedTimestampOracle() { this(DEFAULT_TO_PROPERTIES); }
+    public CentralizedTimestampOracle() { this(SiteConfig.DEFAULT_TO_PROPERTIES); }
 
     public CentralizedTimestampOracle(String cfProperties) {
         try {

@@ -104,7 +104,7 @@ public abstract class AbstractSite implements ISite, IRMI {
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.addValue(this.self)
+				.addValue(self)
 				.toString();
 	}
 

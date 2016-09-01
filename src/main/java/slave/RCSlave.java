@@ -1,11 +1,12 @@
 package slave;
 
-import com.sun.istack.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import context.AbstractContext;
-import jms.slave.JMSSubscriber;
 import kvs.table.SlaveTable;
-import messages.IMessageListener;
+import messaging.IMessageListener;
+import messaging.IMessageListener2;
+import messaging.jms.slave.JMSSubscriber;
 import site.ITransactional;
 
 /**
@@ -27,9 +28,14 @@ public final class RCSlave extends AbstractSlave {
 	 */
 	public RCSlave(AbstractContext context) {
 		super(context, new JMSSubscriber());
-		super.table = new SlaveTable();
+		table = new SlaveTable();
 	}
-	
+
+	public RCSlave(AbstractContext context, @Nullable IMessageListener2 listener2) {
+	    super(context, listener2);
+        table = new SlaveTable();
+    }
+
 	/**
 	 * Constructor with {@link SlaveTable} as the default underlying table
 	 * and with user-specified {@link IMessageListener} as the underlying
@@ -40,6 +46,7 @@ public final class RCSlave extends AbstractSlave {
 	 * @implNote
 	 *   FIXME removing the default {@link SlaveTable}; putting it into the parameters.
 	 */
+	@Deprecated
 	public RCSlave(AbstractContext context, @Nullable IMessageListener listener) {
 		super(context, listener);
 	}

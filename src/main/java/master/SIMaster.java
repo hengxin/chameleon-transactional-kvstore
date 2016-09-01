@@ -17,11 +17,12 @@ import client.clientlibrary.transaction.ToCommitTransaction;
 import context.AbstractContext;
 import exception.transaction.TransactionCommunicationException;
 import exception.transaction.TransactionExecutionException;
-import jms.master.JMSPublisher;
 import kvs.component.Timestamp;
 import kvs.compound.CKeyToOrdinal;
 import kvs.table.MasterTable;
 import master.mvcc.StartCommitLogs;
+import messaging.IMessageProducer;
+import messaging.jms.master.JMSPublisher;
 import site.ITransactional;
 import twopc.participant.I2PCParticipant;
 
@@ -61,7 +62,19 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	 * @param context	context for the master site
 	 */
 	public SIMaster(AbstractContext context) { this(context, new JMSPublisher()); }
-	
+
+    /**
+     * Constructor with {@link MasterTable} as the default underlying table
+     * and with an {@link IMessageProducer} for propagating messages.
+     *
+     * @param context context for the master site
+     * @param producer  the underlying mechanism of message propagation
+     */
+	public SIMaster(AbstractContext context, IMessageProducer producer) {
+	    super(context, producer);
+        table = new MasterTable();
+    }
+
 	/**
 	 * Constructor with {@link MasterTable} as the default underlying table
 	 * and with user-specified {@link JMSPublisher} as the underlying
@@ -72,9 +85,10 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	 * @implNote
 	 *   FIXME removing the default {@link MasterTable}; putting it into the parameters.
 	 */
+	@Deprecated
 	public SIMaster(AbstractContext context, @Nullable JMSPublisher jms_publisher) {
 		super(context, jms_publisher);
-		super.table = new MasterTable();	// the underlying database in the "table" form
+		table = new MasterTable();	// the underlying database in the "table" form
 	}
 	
 	/**
@@ -223,9 +237,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
         LOGGER.info("[{}] begins the [{}] phase.", this.getClass().getSimpleName(), ABORT);
 
         // TODO what else to do?
-        exec.submit( () -> {
-            logs.writeLock.unlock();
-        });
+        exec.submit(logs.writeLock::unlock);
     }
 
 }

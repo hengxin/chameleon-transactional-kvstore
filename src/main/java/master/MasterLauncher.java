@@ -1,11 +1,12 @@
 package master;
 
-import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import conf.SiteConfig;
 import exception.SiteException;
 import master.context.MasterContext;
+import messaging.socket.SocketMsgBroadcastProducer;
 import site.AbstractSite;
 
 /**
@@ -17,27 +18,28 @@ import site.AbstractSite;
 public class MasterLauncher {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterLauncher.class);
-	@Language("Properties")
-    private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "master/site.properties";
 
 	/**
-	 * Launch with default properties file, which is
-	 * {@value #MASTER_MEMBERSHIP_PROPERTIES_FILE}.
-	 * @throws SiteException 
+     * Constructor with default site.properties ({@value SiteConfig#DEFAULT_MASTER_SITE_PROPERTIES})
+     * and default sa.properties ({@value SiteConfig#DEFAULT_SOCKET_ADDRESS_PROPERTIES}).
+	 * @throws SiteException
 	 */
 	public MasterLauncher() {
-		this(MASTER_MEMBERSHIP_PROPERTIES_FILE);
+		this(SiteConfig.DEFAULT_MASTER_SITE_PROPERTIES, SiteConfig.DEFAULT_SOCKET_ADDRESS_PROPERTIES);
 	}
 	
 	/**
 	 * Launch with user-specified properties file.
-	 * @param file path of the properties file.
+	 * @param siteProperties path of the site.properties file for site memebership
+     * @param saProperties  path of the sa.properties file for socket addresses
 	 * @throws SiteException 
 	 */
-	public MasterLauncher(String file) {
-		MasterContext context = new MasterContext(file);
-		AbstractSite siMaster = new SIMaster(context);
+	public MasterLauncher(String siteProperties, String saProperties) {
+		MasterContext context = new MasterContext(siteProperties);
+//		AbstractSite siMaster = new SIMaster(context);  // this constructor is with JMS communication
 
+        AbstractSite siMaster = new SIMaster(context,
+                new SocketMsgBroadcastProducer(saProperties));
 		LOGGER.info("SIMaster [{}] has been successfully launched.", siMaster);
 	}
 

@@ -1,7 +1,10 @@
 /**
  * 
  */
-package jms;
+package messaging.jms;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,23 +23,19 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jms.master.JMSPublisher;
-import jms.slave.JMSSubscriber;
+import messaging.jms.master.JMSPublisher;
+import messaging.jms.slave.JMSSubscriber;
 import master.AbstractMaster;
 import site.AbstractSite;
 
 /**
- * {@link AbstractJMSParticipant} can be a {@link JMSPublisher} 
+ * {@link AbstractJMSParticipant} can be a {@link JMSPublisher}
  * (such as an {@link AbstractMaster}) or a {@link JMSSubscriber}
  * (such as an {@link AbstractSite}).
  * @author hengxin
  * @date 11-13-2015
  */
 public abstract class AbstractJMSParticipant {
-
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractJMSParticipant.class);
 	
 	private static final String JMS_CONFIG_PROPERTIES_FILE = "jms/jms-config.properties";

@@ -21,8 +21,11 @@ public final class PropertiesUtil {
 
         Properties props = new Properties();
         try (InputStream is = classLoader.getResourceAsStream(properties)) {
-            props.load(is);
-            LOGGER.info("Load the properties file [{}] successfully.", properties);
+            if (is != null) {
+                props.load(is);
+                LOGGER.info("Load the properties file [{}] successfully.", properties);
+            } else
+                LOGGER.error("Failed to load the resource [{}].", properties);
         } catch (IOException ioe) {
             throw new IOException(ioe);
         }

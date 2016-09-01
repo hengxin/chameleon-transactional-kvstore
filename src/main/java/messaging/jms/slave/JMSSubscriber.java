@@ -1,22 +1,22 @@
 /**
  * 
  */
-package jms.slave;
+package messaging.jms.slave;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jms.AbstractJMSParticipant;
-import jms.master.JMSPublisher;
-import messages.AbstractMessage;
-import messages.IMessageConsumer;
-import messages.IMessageListener;
+import messaging.AbstractMessage;
+import messaging.IMessageConsumer;
+import messaging.IMessageListener;
+import messaging.jms.AbstractJMSParticipant;
+import messaging.jms.master.JMSPublisher;
 
 /**
  * {@link JMSSubscriber} serves as a subscriber of messages in JMS. 
@@ -28,36 +28,35 @@ import messages.IMessageListener;
  * @see	{@link JMSPublisher}
  */
 public class JMSSubscriber extends AbstractJMSParticipant implements MessageListener, IMessageListener {
-	
 	private static final Logger LOGGER = LoggerFactory.getLogger(JMSSubscriber.class);
 
-	@Nonnull private IMessageConsumer consumer;
+	@NotNull private IMessageConsumer consumer;
 
 	/**
 	 * Overridden method from {@link MessageListener} required by JMS:
 	 * Receives {@link Message} from {@link JMSPublisher},
 	 * casts it into application-specific {@link AbstractMessage},
 	 * and then directs it to the application-specific
-	 * {@link IMessageListener#onMessage(AbstractMessage)}.
+	 * {@link IMessageListener#accept(AbstractMessage)}.
 	 */
 	@Override
 	public void onMessage(Message msg) {
 		ObjectMessage obj_msg = (ObjectMessage) msg;
 		try {
 			AbstractMessage a_msg = (AbstractMessage) obj_msg.getObject();
-			this.onMessage(a_msg);
+			this.accept(a_msg);
 		} catch (JMSException jmse) {
 			LOGGER.warn("Failed to handle messages. \\n [{}]", jmse);
 		}
 	}
 
 	@Override
-	public void onMessage(AbstractMessage msg) {
+	public void accept(AbstractMessage msg) {
 		this.consumer.consume(msg);
 	}
 
 	@Override
-	public void bind(IMessageConsumer consumer) {
+	public void register(IMessageConsumer consumer) {
 		this.consumer = consumer;
 	}
 

@@ -1,4 +1,4 @@
-package messages;
+package messaging;
 
 /**
  * Interface {@link IMessageConsumer} exposes an 
@@ -13,5 +13,5 @@ public interface IMessageConsumer {
 	 * Handles with @param msg.
 	 * @param msg	{@link AbstractMessage} to consume.
 	 */
-	public abstract void consume(AbstractMessage msg);
+    void consume(AbstractMessage msg);
 }

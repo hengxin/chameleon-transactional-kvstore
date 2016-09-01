@@ -8,6 +8,9 @@ import timing.CentralizedTimestampOracle;
  */
 public class CentralizedTimestampOracleMainTest {
     public static void main(String[] args) {
-        new CentralizedTimestampOracle(args[0]);
+        if (args.length == 1)
+            new CentralizedTimestampOracle(args[0]);
+        else
+            new CentralizedTimestampOracle();
     }
 }

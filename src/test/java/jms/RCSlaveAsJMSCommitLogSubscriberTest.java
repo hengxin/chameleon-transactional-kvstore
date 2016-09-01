@@ -7,14 +7,14 @@ import org.junit.Test;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import jms.master.JMSPublisher;
+import messaging.jms.master.JMSPublisher;
 import kvs.component.Cell;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
-import messages.AbstractMessage;
-import messages.IMessageProducer;
+import messaging.AbstractMessage;
+import messaging.IMessageProducer;
 import slave.RCSlave;
 
 public class RCSlaveAsJMSCommitLogSubscriberTest {
