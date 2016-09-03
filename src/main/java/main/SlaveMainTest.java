@@ -22,11 +22,11 @@ public class SlaveMainTest {
             else if (args.length == 2)
                 new SlaveLauncher(args[0], args[1]);
             else {
-                LOGGER.error("Parameters for site.properties and sa.properties.");
+                LOGGER.error("Need parameters for site.properties and sa.properties.");
                 System.exit(1);
             }
-		} catch (SiteException e) {
-			e.printStackTrace();
+		} catch (SiteException se) {
+			se.printStackTrace();
 			System.exit(1);
 		}
 	}

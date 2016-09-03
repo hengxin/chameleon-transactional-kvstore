@@ -39,6 +39,407 @@
 							<goal>single</goal>
 						</goals>
 					</execution>
+
+                    <!-- for clients: client -->
+                    <execution>
+                        <id>client</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.ClientLauncher</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>client</finalName>
+                            <finalName>aliyun/client</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for clients on aliyun -->
+                    <execution>
+                        <id>client-aliyun</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.ClientLauncher</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/client</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for masters: master -->
+                    <execution>
+                        <id>master</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.MasterMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>master</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for masters on aliyun: master-ec1 -->
+                    <execution>
+                        <id>master-ec1</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.MasterMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/master-ec1</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for masters on aliyun: master-nc1 -->
+                    <execution>
+                        <id>master-nc1</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.MasterMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/master-nc1</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for masters on aliyun: master-sc1 -->
+                    <execution>
+                        <id>master-sc1</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.MasterMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/master-sc1</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for slaves -->
+                    <execution>
+                        <id>slave</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.SlaveMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>slave</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for slaves on aliyun: slave-ec2 -->
+                    <execution>
+                        <id>slave-ec2</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.SlaveMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/slave-ec2</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for slaves on aliyun: slave-ec3 -->
+                    <execution>
+                        <id>slave-ec3</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.SlaveMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/slave-ec3</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for slaves on aliyun: slave-nc2 -->
+                    <execution>
+                        <id>slave-nc2</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.SlaveMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/slave-nc2</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for slaves on aliyun: slave-nc3 -->
+                    <execution>
+                        <id>slave-nc3</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.SlaveMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/slave-nc3</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for slaves on aliyun: slave-sc2 -->
+                    <execution>
+                        <id>slave-sc2</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.SlaveMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/slave-sc2</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for slaves on aliyun: slave-sc3 -->
+                    <execution>
+                        <id>slave-sc3</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.SlaveMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/slave-sc3</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for coordinator factory: cf -->
+                    <execution>
+                        <id>cf</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.CoordinatorFactoryMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>cf</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for coordinator factory on aliyun: cf-master-ec1 -->
+                    <execution>
+                        <id>cf-master-ec1</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.CoordinatorFactoryMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/cf-master-ec1</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for coordinator factory on aliyun: cf-master-nc1 -->
+                    <execution>
+                        <id>cf-master-nc1</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.CoordinatorFactoryMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/cf-master-nc1</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for coordinator factory on aliyun: cf-master-sc1 -->
+                    <execution>
+                        <id>cf-master-sc1</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.CoordinatorFactoryMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/cf-master-sc1</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for timestamp oracle: to -->
+                    <execution>
+                        <id>to</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.CentralizedTimestampOracleMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>to</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- for timestamp oracle: to-master-ec1 -->
+                    <execution>
+                        <id>to-master-ec1</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.CentralizedTimestampOracleMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>aliyun/to-master-ec1</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
 				</executions>
 			</plugin>
 			<plugin>
@@ -93,6 +494,7 @@
 			<version>0.1</version>
 		</dependency>
 		-->
+
 		<!-- for unit test -->
 		<dependency>
 			<groupId>junit</groupId>

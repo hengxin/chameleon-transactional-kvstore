@@ -26,8 +26,9 @@ public class ClientContextMultiMaster extends AbstractClientContext {
 	
 	/**
 	 * Constructor with user-specified .properties files and {@link IPartitioner}.
-     * @param siteProperties
-     * @param cfProperties
+     * @param siteProperties properties file for sites
+     * @param cfProperties  properties file for coordinator factory
+     * @param toProperties  properties file for timestamp oracle
 	 * @param partitioner	{@link IPartitioner} for keyspace partition strategy
 	 */
 	public ClientContextMultiMaster(String siteProperties, String cfProperties, String toProperties,

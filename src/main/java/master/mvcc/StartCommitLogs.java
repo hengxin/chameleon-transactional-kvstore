@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import intervaltree.IntervalTree;
+import util.intervaltree.IntervalTree;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
 
