@@ -5,21 +5,27 @@
 # 
 #         USAGE: ./aliean.sh 
 # 
-#   DESCRIPTION: 
+#   DESCRIPTION: Clean Chameleon-related processes on Aliyun.
 # 
-#       OPTIONS: ---
+#       OPTIONS: not implemented yet.
 #  REQUIREMENTS: ---
+# 		   TODO: to provide options
 #          BUGS: ---
 #         NOTES: ---
-#        AUTHOR: YOUR NAME (), 
-#  ORGANIZATION: 
-#       CREATED: 2016年09月03日 20:13
+#        AUTHOR: Hengfeng Wei (ant-hengxin), 
+#  ORGANIZATION: ICS, NJU
+#       CREATED: 09-03-2016 20:13
 #      REVISION:  ---
 #===============================================================================
 
-# SERVICES=(to-master-ec1 slave-ec2 slave-ec3 slave-nc2 slave-nc3 slave-sc2 slave-sc3 master-ec1 master-nc1 master-sc1 cf-master-ec1 cf-master-nc1 cf-master-sc1)
+#################### For Test #################### 
+#SERVICES=(to-master-ec1) 
+# SERVICES=(cf-master-ec1 cf-master-nc1 cf-master-sc1)
+# SERVICES=(slave-ec2 slave-ec3 master-ec1)
+# SERVICES=(slave-ec2 slave-ec3 slave-nc2 slave-nc3 slave-sc2 slave-sc3 master-ec1 master-nc1 master-sc1 cf-master-ec1 cf-master-nc1 cf-master-sc1)
+#################### For Test #################### 
 
-SERVICES=(slave-nc2 slave-nc3 master-nc1)
+SERVICES=(to-master-ec1 slave-ec2 slave-ec3 slave-nc2 slave-nc3 slave-sc2 slave-sc3 master-ec1 master-nc1 master-sc1 cf-master-ec1 cf-master-nc1 cf-master-sc1)
 
 ALISH="/usr/local/bin/alish"
 

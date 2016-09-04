@@ -1,5 +1,11 @@
+/**
+ * @copyright See {@link util.intervaltree#package-info.java}.
+ */
 package util.intervaltree;
 
+/**
+ * @param <K>
+ */
 public class Interval<K extends Comparable<? super K>> {
 	
 	private K low, high;

@@ -1,6 +1,6 @@
 package master;
 
-import com.sun.istack.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 

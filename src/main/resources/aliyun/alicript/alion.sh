@@ -21,9 +21,14 @@ ALIPLOY="./aliploy.sh"
 ALIYUN_SERVICE_FULL_DIR="/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/target/aliyun"
 JAR_EXTENSION=".jar"
 
-# SERVICES=(to-master-ec1 slave-ec2 slave-ec3 slave-nc2 slave-nc3 slave-sc2 slave-sc3 master-ec1 master-nc1 master-sc1 cf-master-ec1 cf-master-nc1 cf-master-sc1)
+#################### For Test #################### 
+# SERVICES=(to-master-ec1) 
+# SERVICES=(cf-master-ec1 cf-master-nc1 cf-master-sc1)
+# SERVICES=(slave-ec2 slave-ec3 master-ec1)
+# SERVICES=(slave-ec2 slave-ec3 slave-nc2 slave-nc3 slave-sc2 slave-sc3 master-ec1 master-nc1 master-sc1 cf-master-ec1 cf-master-nc1 cf-master-sc1)
+#################### For Test #################### 
 
-SERVICES=(slave-nc2 slave-nc3 master-nc1)
+SERVICES=(to-master-ec1 slave-ec2 slave-ec3 slave-nc2 slave-nc3 slave-sc2 slave-sc3 master-ec1 master-nc1 master-sc1 cf-master-ec1 cf-master-nc1 cf-master-sc1)
 
 for service in "${SERVICES[@]}"; do
 	echo "############################################################"

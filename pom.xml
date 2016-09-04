@@ -483,10 +483,7 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.0</version>
 		</dependency>
-		<!-- nmdp-bioinformatics/ngs-range; use its RangeTree (an implementation 
-			of IntervalTree) -->
-		<!-- <dependency> <groupId>org.nmdp.ngs</groupId> <artifactId>ngs-range</artifactId> 
-			<version>1.8.3</version> </dependency> -->
+
 		<!-- not found any more
 		<dependency>
 			<groupId>intervaltree-master</groupId>
@@ -522,12 +519,14 @@
 			<artifactId>groovy-all</artifactId>
 			<version>2.4.5</version>
 		</dependency>
+
 		<!-- The next group is for JMS and ActiveMQ -->
 		<dependency>
 			<groupId>javax.jms</groupId>
 			<artifactId>jms</artifactId>
 			<version>1.1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
@@ -547,6 +546,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<!-- Annotations intensively used by the authors in their book "Java Concurrency 
 			in Practice" -->
 		<dependency>
@@ -554,16 +554,22 @@
 			<artifactId>jcip-annotations</artifactId>
 			<version>1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.beust</groupId>
-			<artifactId>jcommander</artifactId>
-			<version>1.48</version>
-		</dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>15.0</version>
         </dependency>
+
+        <!-- Utils -->
+        <!-- [cbeust/jcommander: Command line parsing framework for Java](https://github.com/cbeust/jcommander) -->
+        <!-- (not used yet)
+		<dependency>
+			<groupId>com.beust</groupId>
+			<artifactId>jcommander</artifactId>
+			<version>1.48</version>
+		</dependency>
+		-->
     </dependencies>
 	<!-- use these repositories for searching dependencies -->
 	<repositories>

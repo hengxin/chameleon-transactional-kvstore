@@ -102,11 +102,11 @@ case $service in
 		;;
 
 	cf)
-		ARGS=("")
+		ARGS=(cf)
 		;;
 
 	to)
-		ARGS=("")
+		ARGS=(to)
 		;;
 
 	*)
@@ -120,6 +120,7 @@ echo "The parameters in order for ($jarBase) is (${ARGS[*]})."
 
 args=""
 SPACE=" "
+
 for arg in "${ARGS[@]}"; do
 	args+=$PROPERTIES_DIR/$arg-$jar.properties$SPACE 
 done

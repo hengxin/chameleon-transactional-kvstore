@@ -3,14 +3,15 @@
  */
 package kvs.table;
 
+import com.google.common.base.MoreObjects;
+
+import org.junit.Assert;
+
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import org.junit.Assert;
-
-import com.google.common.base.MoreObjects;
+import java.util.stream.IntStream;
 
 import kvs.component.Cell;
 import kvs.component.Timestamp;
@@ -34,7 +35,7 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 		    return thread;});
 	
 	// TODO consider other data structures (how do real databases implement this?)
-	private final ConcurrentSkipListSet<ITimestampedCell> ts_cells = new ConcurrentSkipListSet<>();
+	private final ConcurrentSkipListSet<ITimestampedCell> tsCells = new ConcurrentSkipListSet<>();
 	
 	public MultiTimestampedCellsStore() {}
 	
@@ -47,21 +48,21 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 	@Override
 	public void put(ITimestampedCell ts_cell)
 	{
-		Assert.assertTrue("It is not intended to replace an existing data.", ! this.ts_cells.contains(ts_cell));
-		this.ts_cells.add(ts_cell);
+		Assert.assertTrue("It is not intended to replace an existing data.", ! this.tsCells.contains(ts_cell));
+		this.tsCells.add(ts_cell);
 	}
 
 	@Override
 	public ITimestampedCell get(Timestamp ts)
 	{
 		// TODO floor (<=) or lower (<)?
-		return this.ts_cells.floor(new TimestampedCell(ts, Cell.CELL_INIT));
+		return this.tsCells.floor(new TimestampedCell(ts, Cell.CELL_INIT));
 	}
 
 	@Override
 	public ITimestampedCell get()
 	{
-		return this.ts_cells.last();
+		return this.tsCells.last();
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 	public String toString()
 	{
 		return MoreObjects.toStringHelper(this)
-				.add("TimestampedCells", this.ts_cells)
+				.add("TimestampedCells", this.tsCells)
 				.toString();
 	}
 
@@ -79,24 +80,17 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore
 	 * GC to avoid OOM.
 	 * 
 	 * @implNote
-	 * It only guarantees that the size of {@link #ts_cells} is greater than
-	 * or equal to {@value MasterConfig#TABLE_CAPACITY}, in the use cases where
-	 * no other methods would explicitly remove elements from {@link #ts_cells}.
+	 * It only guarantees that the size of {@link #tsCells} is less than
+	 * {@value MasterConfig#TABLE_CAPACITY}, in the use cases where
+	 * no other methods would explicitly remove elements from {@link #tsCells}.
 	 */
 	@Override
-	public void startGCDaemon()
-	{
-		if(MasterConfig.TABLE_CAPACITY < Integer.MAX_VALUE)
-		{	
-			exec.scheduleWithFixedDelay(
-				() -> {
-					int surplus = this.ts_cells.size() - MasterConfig.TABLE_CAPACITY;
-					for(int i = 0; i < surplus; i++)
-						this.ts_cells.pollFirst();
-					}, 
-				5, 
-				5, 
-				TimeUnit.SECONDS);
-		}
+	public void startGCDaemon() {
+        exec.scheduleWithFixedDelay(
+                () -> IntStream.range(0, tsCells.size() - MasterConfig.TABLE_CAPACITY)
+                        .forEach(i -> tsCells.pollFirst()),
+                5,
+                5,
+                TimeUnit.SECONDS);
 	}
 }

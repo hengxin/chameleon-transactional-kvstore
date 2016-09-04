@@ -1,3 +1,6 @@
+/**
+ * @copyright See {@link util.intervaltree#package-info.java}.
+ */
 package util.intervaltree;
 
 import java.util.Collection;
