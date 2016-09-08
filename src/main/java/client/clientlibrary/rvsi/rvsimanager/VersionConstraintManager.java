@@ -14,7 +14,6 @@ import java.util.Set;
 
 import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
-import client.clientlibrary.rvsi.vc.SVVersionConstraint;
 import kvs.table.AbstractTable;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -55,7 +54,7 @@ public final class VersionConstraintManager implements Serializable {
      */
     public Map<Integer, VersionConstraintManager> partition(IPartitioner partitioner, int buckets) {
         return vcList.stream()
-                .filter(vc -> ! (vc instanceof SVVersionConstraint))
+//                .filter(vc -> ! (vc instanceof SVVersionConstraint))  % commented out by hengxin (2016-09-06)
                 .map(vc -> vc.partition(partitioner, buckets))
                 .map(Map::entrySet)
                 .flatMap(Set::stream)
@@ -87,4 +86,5 @@ public final class VersionConstraintManager implements Serializable {
                 .addValue(vcList)
                 .toString();
     }
+
 }

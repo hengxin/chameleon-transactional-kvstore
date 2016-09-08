@@ -33,8 +33,8 @@ import kvs.compound.CompoundKey;
  */
 public abstract class AbstractRVSISpecification {
 	// FIXME replace HashSet by Set???
-	protected final Map<HashSet<CompoundKey>, Integer> rvsiSpecMap = new HashMap<>();
-	protected List<VCEntryRawInfo> vceInfos;
+	final Map<HashSet<CompoundKey>, Integer> rvsiSpecMap = new HashMap<>();
+	List<VCEntryRawInfo> vceInfos;
 	
 	public void addSpec(HashSet<CompoundKey> ckSet, int bound)
 	{
@@ -102,6 +102,7 @@ public abstract class AbstractRVSISpecification {
 		extractVCEntryRawInfo(query_results);
 		return generateVersionConstraint(ts);
 	}
+
 	/**
 	 * @param ts {@link Timestamp} to be checked against
 	 * @return {@link AbstractVersionConstraint}
@@ -122,4 +123,5 @@ public abstract class AbstractRVSISpecification {
 	}
 	
 	void setVceInfoList(List<VCEntryRawInfo> vce_info_list) { vceInfos = vce_info_list; }
+
 }

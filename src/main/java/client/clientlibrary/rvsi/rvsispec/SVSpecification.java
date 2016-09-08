@@ -141,7 +141,7 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 */
 	@Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts) {
-		List<VCEntry> vceList =  super.vceInfos.stream()
+		List<VCEntry> vceList =  vceInfos.stream()
 				.map(vce ->
 					new VCEntry(vce.getVceInfoCk(),
                             vce.getVceInfoOrd(),

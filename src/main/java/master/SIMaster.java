@@ -137,16 +137,16 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 			 * {@link VersionConstraintManager} is local to this method.
 			 * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free). 
 			 */
-			boolean vc_checked = vcm.check(table);
-			boolean wcf_checked;
-			boolean can_committed = false;
+			boolean vcChecked = vcm.check(table);
+			boolean wcfChecked;
+			boolean canCommitted = false;
 
 			logs.writeLock.lock();
 			try {
-				wcf_checked = logs.wcf(tx);
-				can_committed = vc_checked && wcf_checked;
+				wcfChecked = logs.wcf(tx);
+				canCommitted = vcChecked && wcfChecked;
 
-				if (can_committed) {	// (1) check 
+				if (canCommitted) {	// (1) check
 					cts = new Timestamp(ts.incrementAndGet());	// (2) commit-timestamp; commit in "commit order"
 					logs.addStartCommitLog(tx.getSts(), cts, tx.getBufferedUpdates().fillTsAndOrd(cts, ckOrdIndex));	// (3) update start-commit-log
 				}
@@ -154,7 +154,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 				logs.writeLock.unlock();
 			}
 
-			if(can_committed) {
+			if(canCommitted) {
 				/**
 				 * Chameleon does not require read operations of a transaction to get the <i>latest</i> version 
 				 * before the sts of that transaction. Thus it is not necessary for the master to synchronize the 
@@ -168,7 +168,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 				}		
 			}
 
-			return can_committed;
+			return canCommitted;
 	}
 
     @Override
@@ -184,11 +184,16 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
              */
             logs.writeLock.lock();
 
-            LOGGER.debug("The result of checking vcm [{}] is [{}].", vcm, vcm.check(table));
-            LOGGER.debug("The result of checking wcf against tx [{}] and logs [{}] is [{}].",
-                    tx, logs, logs.wcf(tx));
+            boolean vcChecked = true;
+            if (vcm != null)  // FIXME: ensuring vcm not null
+                vcChecked = vcm.check(table);
+            LOGGER.debug("The result of checking vcm [{}] is [{}].", vcm, vcChecked);
 
-            return vcm.check(table) && logs.wcf(tx);
+            boolean wcfChecked = logs.wcf(tx);
+            LOGGER.debug("The result of checking wcf against tx [{}] and logs [{}] is [{}].",
+                    tx, logs, wcfChecked);
+
+            return vcChecked && wcfChecked;
         });
 
         try {

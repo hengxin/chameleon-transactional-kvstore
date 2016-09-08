@@ -5,7 +5,7 @@
 	<artifactId>chameleon-transactional-kvstore-maven</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>chameleon-transactional-kvstore-maven</name>
-	<description>A distributed, partitioned, replicated, transactional key-value store.</description>
+	<description>A distributed, partitioned, replicated, transactional key-val store.</description>
 
 	<properties>
 		<skipTests>true</skipTests>		<!-- skipping tests by default -->
@@ -483,6 +483,12 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.0</version>
 		</dependency>
+        <!-- Apache Commons Math3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
 
 		<!-- not found any more
 		<dependency>

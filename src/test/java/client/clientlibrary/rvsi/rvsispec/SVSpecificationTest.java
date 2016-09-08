@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public final class SVSpecificationTest {
-	private final SVSpecification sv_rvsi_spec = new SVSpecification();
+	private final SVSpecification svRvsiSpec = new SVSpecification();
 	
 	private final CompoundKey ck_rt_ct = new CompoundKey("Rt", "Ct");
 	private final CompoundKey ck_rs_cs = new CompoundKey("Rs", "Cs");
@@ -128,18 +128,18 @@ public final class SVSpecificationTest {
 		sv_vc = new SVVersionConstraint(vce_xyzuv_list);
 		
 		/**
-		 * Initialize #sv_rvsi_spec as:
+		 * Initialize #svRvsiSpec as:
 	     * { {t, s} -> 1, {w, x, y, z} -> 2, {u, v} -> 3 }
 		 */
-		sv_rvsi_spec.addSpec(ck_set_ts, bound_ts);
-		sv_rvsi_spec.addSpec(ck_set_wxyz, bound_wxyz);
-		sv_rvsi_spec.addSpec(ck_set_uv, bound_uv);
+		svRvsiSpec.addSpec(ck_set_ts, bound_ts);
+		svRvsiSpec.addSpec(ck_set_wxyz, bound_wxyz);
+		svRvsiSpec.addSpec(ck_set_uv, bound_uv);
 	}
 
 	@Test
 	public void testExtractVCEntryRawInfo() {
 		List<VCEntryRawInfo> expected_vce_info_list = vce_info_xyzuv_list;
-		List<VCEntryRawInfo> actual_vce_info_list = sv_rvsi_spec.extractVCEntryRawInfo(query_results);
+		List<VCEntryRawInfo> actual_vce_info_list = svRvsiSpec.extractVCEntryRawInfo(query_results);
 		
 		assertTrue("Fails to extract three VCEntryRawInfo.", CollectionUtils.isEqualCollection(expected_vce_info_list, actual_vce_info_list));
 	}
@@ -149,8 +149,8 @@ public final class SVSpecificationTest {
 	 */
 	@Test
 	public void testGenerateVersionConstraintTimestamp() {
-		sv_rvsi_spec.setVceInfoList(vce_info_xyzuv_list);
-		AbstractVersionConstraint actual_sv_vc = sv_rvsi_spec.generateVersionConstraint(Timestamp.TIMESTAMP_INIT);	// the parameter #sts for generating {@link SVSpecification} is not used.
+		svRvsiSpec.setVceInfoList(vce_info_xyzuv_list);
+		AbstractVersionConstraint actual_sv_vc = svRvsiSpec.generateVersionConstraint(Timestamp.TIMESTAMP_INIT);	// the parameter #sts for generating {@link SVSpecification} is not used.
 		
 		assertEquals("Fails to generate SV version constraint.", sv_vc, actual_sv_vc);
 	}
@@ -160,21 +160,21 @@ public final class SVSpecificationTest {
 	 */
 	@Test
 	public void testSuperGenerateVersionConstraintQueryResultsTimestamp() {
-		AbstractVersionConstraint actual_sv_vc = sv_rvsi_spec.generateVersionConstraint(query_results, Timestamp.TIMESTAMP_INIT);	// the parameter #sts for generating {@link SVSpecification} is not used.
+		AbstractVersionConstraint actual_sv_vc = svRvsiSpec.generateVersionConstraint(query_results, Timestamp.TIMESTAMP_INIT);	// the parameter #sts for generating {@link SVSpecification} is not used.
 
 		assertEquals("Fails to generate SV version constraint.", sv_vc, actual_sv_vc);
 	}
 	
 	@Test
 	public void testJoin() {
-        SortedSet<KVItem> actual_kv_set = sv_rvsi_spec.join(ck_set_wxyz, query_results);
+        SortedSet<KVItem> actual_kv_set = svRvsiSpec.join(ck_set_wxyz, query_results);
 		
 		assertEquals("Join fails.", kv_set, actual_kv_set);
 	}
 
 	@Test
 	public void testExpand() {
-        List<VCEntryRawInfo> actual_vce_info_list = sv_rvsi_spec.expand(kv_set, 2);
+        List<VCEntryRawInfo> actual_vce_info_list = svRvsiSpec.expand(kv_set, 2);
 		
 		assertEquals("Expand() ensures the order-preserving equality.", vce_info_xyz_list, actual_vce_info_list);
 	}

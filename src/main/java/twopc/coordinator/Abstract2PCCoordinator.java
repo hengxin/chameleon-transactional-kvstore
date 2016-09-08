@@ -26,8 +26,9 @@ import twopc.participant.I2PCParticipant;
  * @date Created on Jan 7, 2016
  */
 public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializable {
+    private static final long serialVersionUID = 5668849074919622759L;
 
-	/**
+    /**
 	 * {@link #preparedDecisions} and {@link #committedDecisions}:
 	 * Shared states among the coordinator and the participants.
 	 * They collect the decisions of all the participants during the "PREPARE" phase 
@@ -36,8 +37,8 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
 	 * @see	#toCommitDecision
 	 * @see #isCommitted
 	 */
-	protected final Map<I2PCParticipant, Boolean> preparedDecisions = new ConcurrentHashMap<>();
-	protected final Map<I2PCParticipant, Boolean> committedDecisions = new ConcurrentHashMap<>();
+	final Map<I2PCParticipant, Boolean> preparedDecisions = new ConcurrentHashMap<>();
+	final Map<I2PCParticipant, Boolean> committedDecisions = new ConcurrentHashMap<>();
 
 	/**
 	 * {@link #toCommitDecision}:
@@ -47,7 +48,7 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
 	 * 
 	 * @see #preparedDecisions
 	 */
-	protected volatile boolean toCommitDecision = false;
+	volatile boolean toCommitDecision = false;
 	
 	/**
 	 * {@link #isCommitted}:
@@ -59,9 +60,9 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
 	 * @see #toCommitDecision
 	 * @see #committedDecisions
 	 */
-	protected volatile boolean isCommitted = false;
+	volatile boolean isCommitted = false;
 	
-	protected final AbstractClientContext cctx;
+	final AbstractClientContext cctx;
     protected Timestamp cts;  // commit timestamp
 
     /**
@@ -92,4 +93,5 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
     public void reclaim() {
 
     }
+
 }

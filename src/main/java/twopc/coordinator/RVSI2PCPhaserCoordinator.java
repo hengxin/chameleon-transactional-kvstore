@@ -56,8 +56,8 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
         final Map<Integer, VersionConstraintManager> siteVcmMap = cctx.partition(vcm);
 
 		List<Callable<Boolean>> tasks = siteTxMap.keySet().stream()
-				.map(index -> new CommitPhaserTask(this, (I2PCParticipant) cctx.getMaster(index),
-                        siteTxMap.get(index), siteVcmMap.get(index)))
+				.map(masterId -> new CommitPhaserTask(this, (I2PCParticipant) cctx.getMaster(masterId),
+                        siteTxMap.get(masterId), siteVcmMap.get(masterId)))
                 .collect(toList());
 		
 		try {
@@ -79,7 +79,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
     @Override
     public boolean onPreparePhaseFinished() throws TransactionEndException {
         toCommitDecision = preparedDecisions.values().stream().allMatch(decision -> decision);
-        // TODO check k3SI condition here
+
         if (toCommitDecision)
             try {
                 cts = new Timestamp(cctx.getTsOracle().get());
@@ -110,4 +110,5 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
         ois.defaultReadObject();
         phaser = new CommitPhaser(this);
     }
+
 }

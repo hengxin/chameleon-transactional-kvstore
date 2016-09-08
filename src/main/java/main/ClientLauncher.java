@@ -11,6 +11,7 @@ import client.clientlibrary.partitioning.ConsistentHashingDynamicPartitioner;
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
+import client.clientlibrary.rvsi.rvsispec.SVSpecification;
 import client.clientlibrary.transaction.ITransaction;
 import client.clientlibrary.transaction.RVSITransaction;
 import client.context.AbstractClientContext;
@@ -70,6 +71,10 @@ public class ClientLauncher {
         Column c1 = new Column("C1");
         CompoundKey ck1 = new CompoundKey(r1, c1);
 
+        Row r2 = new Row("R2");
+        Column c2 = new Column("C2");
+        CompoundKey ck2 = new CompoundKey(r2, c2);
+
 		try {
 			ITimestampedCell tsCell = tx.read(r, c);
 			LOGGER.info("Read {} from {} + {}.", tsCell, r, c);
@@ -78,10 +83,24 @@ public class ClientLauncher {
             LOGGER.info("Read {} from {} + {}.", tsCell1, r1, c1);
 		} catch (TransactionReadException tre) {
 			LOGGER.error(tre.getMessage(), tre.getCause());
+            tre.printStackTrace();
 			System.exit(1);
 		}
 
 		// write
+        tx.write(r2, c2, new Cell("R2C2"));
+
+        // read again
+        try {
+            ITimestampedCell tsCell2 = tx.read(r2, c2);
+            LOGGER.info("Read [{}] from [{}] + [{}].", tsCell2, r2, c2);
+        } catch (TransactionReadException tre) {
+            LOGGER.error(tre.getMessage(), tre.getCause());
+            tre.printStackTrace();
+            System.exit(1);
+        }
+
+		// write again
 		tx.write(r, c, new Cell("RC"));
 		LOGGER.info("Write {} to {} + {}.", "RC", r, c);
 
@@ -101,7 +120,7 @@ public class ClientLauncher {
                 .collect(Collectors.toCollection(HashSet::new));
         fv.addSpec(ckSet4FV, 2);
 
-//        AbstractRVSISpecification sv = new SVSpecification();
+        AbstractRVSISpecification sv = new SVSpecification();
         ((RVSITransaction) tx).collectRVSISpecification(bv);
         ((RVSITransaction) tx).collectRVSISpecification(fv);
 

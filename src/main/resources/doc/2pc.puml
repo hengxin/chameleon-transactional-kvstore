@@ -17,7 +17,7 @@ TimeOracle -> Client: sts
 
 == Read/Write ==
 Client -> Part_1: read()
-Part_1 -> Client: return value
+Part_1 -> Client: return val
 |||
 Client -> Client: write()
 

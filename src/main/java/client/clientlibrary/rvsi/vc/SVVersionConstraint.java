@@ -10,6 +10,10 @@ import client.clientlibrary.transaction.QueryResults;
 import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+
 /**
  * Snapshot-view version constraint generated according to {@link FVSpecification}
  * and {@link QueryResults}.
@@ -36,13 +40,11 @@ public final class SVVersionConstraint extends AbstractVersionConstraint {
         return (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
     }
 
-    /**
-     * @throws UnsupportedOperationException
-     */
     @Override
-    public Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets)
-            throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("No partition method supported for SVVersionConstraint.");
+    public Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets) {
+        return vcEntries.stream()
+                .collect(groupingBy(vce -> partitioner.locateSiteIndexFor(vce.getVceCk(), buckets),
+                        collectingAndThen(toList(), SVVersionConstraint::new)));
     }
 
 }

@@ -49,15 +49,15 @@
        <UML:Classifier.feature>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="true" isLeaf="false" isRoot="false" xmi.id="alZIs2tnnwTy" name="get">
          <UML:BehavioralFeature.parameter>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="dTBBjR9JAia2" type="tJwUbrOWBXP2" value="" name="r"/>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="D8fMf4MGXXSE" type="iToVQHRHaLjB" value="" name="c"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="dTBBjR9JAia2" type="tJwUbrOWBXP2" val="" name="r"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="D8fMf4MGXXSE" type="iToVQHRHaLjB" val="" name="c"/>
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="wZW7F69xZxRx" name="put">
          <UML:BehavioralFeature.parameter>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="EqDnCwwN4cji" type="tJwUbrOWBXP2" value="" name="r"/>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="e5yCaOOWxudC" type="iToVQHRHaLjB" value="" name="c"/>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="dcwhCdPrgM1G" type="0l8agZVtPigZ" value="" name="tsCell"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="EqDnCwwN4cji" type="tJwUbrOWBXP2" val="" name="r"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="e5yCaOOWxudC" type="iToVQHRHaLjB" val="" name="c"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="dcwhCdPrgM1G" type="0l8agZVtPigZ" val="" name="tsCell"/>
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
        </UML:Classifier.feature>
@@ -82,7 +82,7 @@
        <UML:Classifier.feature>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="U2wQCAbfz4i2" name="send">
          <UML:BehavioralFeature.parameter>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="v8X4bEU2kCxD" type="UoT33tSX9TgS" value="" name="msg"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="v8X4bEU2kCxD" type="UoT33tSX9TgS" val="" name="msg"/>
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
        </UML:Classifier.feature>
@@ -91,7 +91,7 @@
        <UML:Classifier.feature>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Lms8gO5OyAGB" name="onMessage">
          <UML:BehavioralFeature.parameter>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="RYiwT8Dos5wY" type="UoT33tSX9TgS" value="" name="msg"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="RYiwT8Dos5wY" type="UoT33tSX9TgS" val="" name="msg"/>
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
        </UML:Classifier.feature>
@@ -185,7 +185,7 @@
        <UML:Classifier.feature>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ZnDeavobPTRt" name="onMessage">
          <UML:BehavioralFeature.parameter>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="b1z6nvDKhOyH" type="fOUJmRG1nJl7" value="" name="msg"/>
+          <UML:Parameter visibility="private" isSpecification="false" xmi.id="b1z6nvDKhOyH" type="fOUJmRG1nJl7" val="" name="msg"/>
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
        </UML:Classifier.feature>
