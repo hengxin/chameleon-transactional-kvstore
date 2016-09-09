@@ -11,26 +11,14 @@ import org.slf4j.LoggerFactory;
 public class UniformTransactionSizeGenerator implements ITransactionSizeGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(UniformTransactionSizeGenerator.class);
 
-    private final int maxSize;
     private final UniformIntegerDistribution uniformDist;
 
     public UniformTransactionSizeGenerator(int maxSize) {
-        this.maxSize = maxSize;
         uniformDist = new UniformIntegerDistribution(0, maxSize - 1);
     }
 
-    /**
-     * @implSpec It always return {@code true}.
-     * Therefore don't use {@code while (hasNext())}.
-     * @return {@code true} (always)
-     */
     @Override
-    public boolean hasNext() {
-        return true;
-    }
-
-    @Override
-    public Integer next() {
+    public int generate() {
         return uniformDist.sample();
     }
 

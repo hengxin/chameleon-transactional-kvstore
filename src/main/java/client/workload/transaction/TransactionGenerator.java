@@ -14,19 +14,19 @@ import client.workload.operation.IOperationGenerator;
 public class TransactionGenerator implements ITransactionGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionGenerator.class);
 
-    private final int numberOfOperations;
+    private final ITransactionSizeGenerator transactionSizeGenerator;
     private final IOperationGenerator opGenerator;
 
-    private int index;
-
-    public TransactionGenerator(final int numberOfOperations,
+    public TransactionGenerator(final ITransactionSizeGenerator transactionSizeGenerator,
                                 final IOperationGenerator opGenerator) {
-        this.numberOfOperations = numberOfOperations;
+        this.transactionSizeGenerator = transactionSizeGenerator;
         this.opGenerator = opGenerator;
     }
 
     @Override
     public Transaction generate() {
+        int numberOfOperations = transactionSizeGenerator.generate();
+
         Transaction tx = new Transaction(numberOfOperations);
         IntStream.range(0, numberOfOperations).forEach(index -> {
             tx.addOp(opGenerator.generate());

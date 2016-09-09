@@ -12,6 +12,7 @@ import client.workload.keyspace.IdentityKeySpace;
 import client.workload.operation.OperationGenerator;
 import client.workload.operation.RWRatioOperationTypeGenerator;
 import client.workload.operation.ZipfKeyGenerator;
+import client.workload.transaction.BinomialTransactionSizeGenerator;
 import client.workload.transaction.TransactionGenerator;
 import util.PropertiesUtil;
 
@@ -19,6 +20,7 @@ import static client.workload.WorkloadUtil.WorkloadParams.MAX_NUMBER_OF_OPERATIO
 import static client.workload.WorkloadUtil.WorkloadParams.MEAN_TIME_INTER_TRANSACTIONS;
 import static client.workload.WorkloadUtil.WorkloadParams.MPL;
 import static client.workload.WorkloadUtil.WorkloadParams.NUMBER_OF_TRANSACTIONS;
+import static client.workload.WorkloadUtil.WorkloadParams.PROB_BINOMIAL;
 import static client.workload.WorkloadUtil.WorkloadParams.RW_RATIO;
 import static client.workload.WorkloadUtil.WorkloadParams.SIZE_OF_KEYSPACE;
 import static client.workload.WorkloadUtil.WorkloadParams.ZIPF_EXPONENT;
@@ -51,24 +53,24 @@ public class WorkloadGeneratorFromProperties implements IWorkloadGenerator {
 
     @Override
     public Workload generate() {
-        int sizeOfKeyspace = Integer.parseInt(
-                prop.getProperty(SIZE_OF_KEYSPACE.getParam()));
-        int mpl = Integer.parseInt(
-                prop.getProperty(MPL.getParam()));
-        int numberOfTransactions = Integer.parseInt(
-                prop.getProperty(NUMBER_OF_TRANSACTIONS.getParam()));
+        int sizeOfKeyspace = Integer.parseInt(prop.getProperty(SIZE_OF_KEYSPACE.getParam()));
+        int mpl = Integer.parseInt(prop.getProperty(MPL.getParam()));
+
+        int numberOfTransactions = Integer.parseInt(prop.getProperty(NUMBER_OF_TRANSACTIONS.getParam()));
+
         int maxNumberOfOperationsPerTransaction = Integer.parseInt(
                 prop.getProperty(MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION.getParam()));
-        int rwRatio = Integer.parseInt(
-                prop.getProperty(RW_RATIO.getParam()));
-        int zipfExponent = Integer.parseInt(
-                prop.getProperty(ZIPF_EXPONENT.getParam()));
-        int meanTimeInterTransactions = Integer.parseInt(
-                prop.getProperty(MEAN_TIME_INTER_TRANSACTIONS.getParam()));
+        int probBinomial = Integer.parseInt(prop.getProperty(PROB_BINOMIAL.getParam()));
+
+        int rwRatio = Integer.parseInt(prop.getProperty(RW_RATIO.getParam()));
+        int zipfExponent = Integer.parseInt(prop.getProperty(ZIPF_EXPONENT.getParam()));
+
+        int meanTimeInterTransactions = Integer.parseInt(prop.getProperty(MEAN_TIME_INTER_TRANSACTIONS.getParam()));
 
         IWorkloadGenerator workloadGenerator = new WorkloadGenerator(mpl,
                 new ClientWorkloadGenerator(numberOfTransactions,
-                        new TransactionGenerator(maxNumberOfOperationsPerTransaction,
+                        new TransactionGenerator(new BinomialTransactionSizeGenerator
+                                (maxNumberOfOperationsPerTransaction, probBinomial),
                                 new OperationGenerator(new IdentityKeySpace(sizeOfKeyspace),
                                         new RWRatioOperationTypeGenerator(rwRatio),
                                         new ZipfKeyGenerator(sizeOfKeyspace, zipfExponent),

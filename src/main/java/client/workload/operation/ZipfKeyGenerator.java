@@ -14,13 +14,9 @@ import org.slf4j.LoggerFactory;
 public class ZipfKeyGenerator implements IKeyGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ZipfKeyGenerator.class);
 
-    private final int sizeOfKeyspace;
-    private final int exponent;
     private final ZipfDistribution zipfDist;
 
     public ZipfKeyGenerator(int sizeOfKeyspace, int exponent) {
-        this.sizeOfKeyspace = sizeOfKeyspace;
-        this.exponent = exponent;
         zipfDist = new ZipfDistribution(sizeOfKeyspace, exponent);
     }
 

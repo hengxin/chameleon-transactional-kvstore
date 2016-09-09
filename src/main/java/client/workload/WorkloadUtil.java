@@ -28,6 +28,7 @@ public class WorkloadUtil {
         MPL("mpl", "5"),
         NUMBER_OF_TRANSACTIONS("numberOfTransactions", "1000"),
         MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION("maxNumberOfOperations", "4"),
+        PROB_BINOMIAL("probBinomial", "0.50"),
         RW_RATIO("rwRatio", "4"),
         ZIPF_EXPONENT("zipfExponent", "1"),
         MEAN_TIME_INTER_TRANSACTIONS("meanTimeInterTransactions", "500");

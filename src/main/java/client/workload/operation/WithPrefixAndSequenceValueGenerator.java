@@ -20,8 +20,10 @@ public class WithPrefixAndSequenceValueGenerator {
 
     public static String next(final String row, final String col) {
         String prefix = row + '-' + col;
-        valueMap.computeIfAbsent(prefix, k -> 0);
-        return String.valueOf(valueMap.computeIfPresent(prefix, (k, v) -> v++));
+
+        if (valueMap.get(prefix) != null)
+            return String.valueOf(valueMap.computeIfPresent(prefix, (k, v) -> v + 1));
+        else return String.valueOf(valueMap.compute(prefix, (k, v) -> 0));
     }
 
 }

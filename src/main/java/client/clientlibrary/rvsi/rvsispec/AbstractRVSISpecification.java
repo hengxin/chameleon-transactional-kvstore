@@ -36,8 +36,7 @@ public abstract class AbstractRVSISpecification {
 	final Map<HashSet<CompoundKey>, Integer> rvsiSpecMap = new HashMap<>();
 	List<VCEntryRawInfo> vceInfos;
 	
-	public void addSpec(HashSet<CompoundKey> ckSet, int bound)
-	{
+	public void addSpec(HashSet<CompoundKey> ckSet, int bound) {
 		rvsiSpecMap.put(ckSet, bound);
 	}
 

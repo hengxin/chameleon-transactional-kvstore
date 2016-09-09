@@ -15,21 +15,20 @@ import org.slf4j.LoggerFactory;
 public class RWRatioOperationTypeGenerator implements IOperationTypeGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(RWRatioOperationTypeGenerator.class);
 
-    private final int rwRatio;
+    private final EnumeratedIntegerDistribution eiDist;
 
     public RWRatioOperationTypeGenerator(int rwRatio) {
-        this.rwRatio = rwRatio;
-    }
-
-    @Override
-    public OpType generate() {
         double writeProb = 1.0 / (rwRatio + 1);
         double readProb = 1.0 - writeProb;
 
         int[] types = new int[] {0, 1};
         double[] probs = new double[] {readProb, writeProb};
-        EnumeratedIntegerDistribution dist = new EnumeratedIntegerDistribution(types, probs);
-        return dist.sample() == 0 ? OpType.READ : OpType.WRITE;
+        eiDist = new EnumeratedIntegerDistribution(types, probs);
+    }
+
+    @Override
+    public OpType generate() {
+        return eiDist.sample() == 0 ? OpType.READ : OpType.WRITE;
     }
 
 }

@@ -17,14 +17,11 @@ public class ClientWorkloadGenerator implements IClientWorkloadGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientWorkloadGenerator.class);
 
     private final int numberOfTransactions;
-//    private final ITransactionSizeGenerator transactionSizeGenerator;
     private final ITransactionGenerator transactionGenerator;
 
     public ClientWorkloadGenerator(final int numberOfTransactions,
-//                                   final ITransactionSizeGenerator transactionSizeGenerator,
                                    final ITransactionGenerator transactionGenerator) {
         this.numberOfTransactions = numberOfTransactions;
-//        this.transactionSizeGenerator = transactionSizeGenerator;
         this.transactionGenerator = transactionGenerator;
     }
 
