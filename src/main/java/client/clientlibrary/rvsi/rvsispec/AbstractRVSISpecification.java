@@ -3,6 +3,8 @@
  */
 package client.clientlibrary.rvsi.rvsispec;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -122,5 +124,12 @@ public abstract class AbstractRVSISpecification {
 	}
 	
 	void setVceInfoList(List<VCEntryRawInfo> vce_info_list) { vceInfos = vce_info_list; }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("rvsiSpecMap", rvsiSpecMap)
+                .toString();
+    }
 
 }

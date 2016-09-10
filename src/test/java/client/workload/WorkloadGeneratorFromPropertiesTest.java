@@ -4,9 +4,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import client.workload.overall.IWorkloadGenerator;
-import client.workload.overall.Workload;
-import client.workload.overall.WorkloadGeneratorFromProperties;
+import benchmarking.workload.overall.IWorkloadGenerator;
+import benchmarking.workload.overall.Workload;
+import benchmarking.workload.overall.WorkloadGeneratorFromProperties;
 
 /**
  * @author hengxin

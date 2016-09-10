@@ -1,5 +1,7 @@
 package client.clientlibrary.rvsi.rvsimanager;
 
+import com.google.common.base.MoreObjects;
+
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -25,8 +27,9 @@ public final class RVSISpecificationManager {
     // FIXME try {@link Stream} in Java 8 directly.
 	private final List<AbstractRVSISpecification> rvsiSpecs = new ArrayList<>();
 
-	public void collectRVSISpecification(AbstractRVSISpecification rvsiSpec) {
+	public RVSISpecificationManager collectRVSISpecification(AbstractRVSISpecification rvsiSpec) {
 		rvsiSpecs.add(rvsiSpec);
+        return this;
 	}
 
 	/**
@@ -42,4 +45,12 @@ public final class RVSISpecificationManager {
 
 		return new VersionConstraintManager(vcList);
 	}
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("rvsiSpecs", rvsiSpecs)
+                .toString();
+    }
+
 }

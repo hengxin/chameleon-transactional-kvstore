@@ -3,11 +3,11 @@
  */
 package kvs.component;
 
-import java.io.Serializable;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
+
+import java.io.Serializable;
 
 import kvs.table.AbstractTable;
 
@@ -46,8 +46,7 @@ public class Row implements Comparable<Row>, Serializable
 	}
 	
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		if(o == this)
 			return true;
 		if(o == null)
