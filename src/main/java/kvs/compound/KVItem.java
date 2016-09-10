@@ -3,6 +3,9 @@ package kvs.compound;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -20,6 +23,7 @@ import kvs.component.Timestamp;
  */
 public final class KVItem implements Serializable {
 	private static final long serialVersionUID = 2520894384542543711L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(KVItem.class);
 
 	private final CompoundKey ck;
 	private final ITimestampedCell tsCell;
@@ -78,4 +82,5 @@ public final class KVItem implements Serializable {
 				.addValue(tsCell)
 				.toString();
 	}
+
 }

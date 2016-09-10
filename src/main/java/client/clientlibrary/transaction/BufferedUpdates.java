@@ -4,9 +4,13 @@ import com.google.common.base.MoreObjects;
 
 import net.jcip.annotations.NotThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,13 +38,15 @@ import kvs.compound.TimestampedCell;
  * @implNote
  * 	It uses {@link ArrayList}, which is not thread-safe.
  *  At the <i>client</i> side, it is only accessed by the single client thread.
- *  At the <i>master</i> side, it is also only accessed by a single thread, when 
- *  its transaction is to commit.
+ *  At the <i>master</i> side, it is also only accessed by a single thread,
+ *  when its transaction is to commit.
  */
 @NotThreadSafe
 public final class BufferedUpdates implements Serializable {
 	private static final long serialVersionUID = 8322087463777227998L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(BufferedUpdates.class);
 
+    // TODO: refactor to Map<CompoundKey, Cell> ???
 	private final List<KVItem> itemList;
 	
 	public BufferedUpdates() { itemList = new ArrayList<>(); }
@@ -63,10 +69,41 @@ public final class BufferedUpdates implements Serializable {
 	
 	/**
 	 * Buffer the update represented by a {@link KVItem}.
-	 * @param kv_item	{@link KVItem} representing an update
+	 * @param kvItem	{@link KVItem} representing an update
 	 */
-	public void intoBuffer(KVItem kv_item) { itemList.add(kv_item); }
-	
+	public void intoBuffer(KVItem kvItem) { itemList.add(kvItem); }
+
+    /**
+     * Look up the last update on {@code r} + {@code c} in the same transaction.
+     * @param r {@link Row} to look up
+     * @param c {@link Column} to look up
+     * @return  the last update {@link ITimestampedCell} on {@code r} + {@code c};
+     *  it may be {@code null} if no such updates at all.
+     */
+	public ITimestampedCell lookup(Row r, Column c) {
+	    return lookup(new CompoundKey(r, c));
+    }
+
+    /**
+     * Look up the last update on {@code ck} in the same transaction.
+     * @param ck  {@link CompoundKey} to look up
+     * @return  the last update {@link ITimestampedCell} on {@code ck};
+     *  it may be {@code null} if no such updates at all.
+     */
+	public ITimestampedCell lookup(CompoundKey ck) {
+        KVItem kvItem;
+
+	    // reverse iteration
+        ListIterator<KVItem> iter = itemList.listIterator(itemList.size());
+        while (iter.hasPrevious()) {
+            kvItem = iter.previous();
+            if (ck.equals(kvItem.getCK()))
+                return kvItem.getTsCell();
+        }
+
+        return null;
+    }
+
 	/**
 	 * Return a new {@link BufferedUpdates} which fills {@link #itemList}
 	 * by assigning {@link Timestamp} and {@link Ordinal} to the {@link Cell}s.
@@ -105,15 +142,15 @@ public final class BufferedUpdates implements Serializable {
 	
 	/**
 	 * Merges two {@link BufferedUpdates} and returns a new one. It does not modify the original ones. 
-	 * @param first_updates		{@link BufferedUpdates} to merge
-	 * @param second_updates	{@link BufferedUpdates} to merge
+	 * @param firstUpdates		{@link BufferedUpdates} to merge
+	 * @param secondUpdates	{@link BufferedUpdates} to merge
 	 * @return	a new {@link BufferedUpdates} which merges the two original ones
 	 */
-	public static BufferedUpdates merge(BufferedUpdates first_updates, BufferedUpdates second_updates) {
+	public static BufferedUpdates merge(BufferedUpdates firstUpdates, BufferedUpdates secondUpdates) {
 		List<KVItem> item_list = new ArrayList<>();
 
-		item_list.addAll(first_updates.itemList);
-		item_list.addAll(second_updates.itemList);
+		item_list.addAll(firstUpdates.itemList);
+		item_list.addAll(secondUpdates.itemList);
 
 		return new BufferedUpdates(item_list);
 	}
@@ -143,4 +180,5 @@ public final class BufferedUpdates implements Serializable {
 				.add("BufferedUpdates", this.itemList)
 				.toString();
 	}
+
 }

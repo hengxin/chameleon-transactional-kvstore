@@ -77,15 +77,20 @@ public class RVSITransaction implements ITransaction {
 
 	@Override
 	public ITimestampedCell read(Row r, Column c) throws TransactionReadException {
+	    // first look up the last update on (r + c) in the same transaction
+	    ITimestampedCell tsCell = bufferedUpdates.lookup(r, c);
+	    if (tsCell != null)
+	        return tsCell;  // FIXME: no need to put it into the queryResults?
+
+        // then contact the remote site
 		ISite site = cctx.getReadSite(new CompoundKey(r, c));
-		
-		ITimestampedCell tsCell;
-		try { 
+		try {
 			tsCell = site.get(r, c);
 			queryResults.put(new CompoundKey(r, c), tsCell);
 			LOGGER.info("Transaction [{}] read {} from [{}+{}] at site {}", this, tsCell, r, c, site);
 		} catch (RemoteException re) {
-			throw new TransactionReadException(String.format("The transaction [%s] failed to read [%s+%s] at site [%s].", this, r, c, site), re.getCause());
+			throw new TransactionReadException(String.format("The transaction [%s] failed to read [%s+%s] at site [%s].",
+                    this, r, c, site), re.getCause());
 		}
 
 		return tsCell;
