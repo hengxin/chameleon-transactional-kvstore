@@ -46,7 +46,7 @@ public class RVSITransaction implements ITransaction {
 	private final BufferedUpdates bufferedUpdates = new BufferedUpdates();
 	private final QueryResults queryResults = new QueryResults();
 	
-	private final RVSISpecificationManager rvsiSpecManager = new RVSISpecificationManager();
+	private RVSISpecificationManager rvsiSpecManager = new RVSISpecificationManager();
 
 	public RVSITransaction(AbstractClientContext ctx) {
 		this.cctx = ctx;
@@ -134,7 +134,9 @@ public class RVSITransaction implements ITransaction {
         }
     }
 
-	/**
+    public void setRvsiSpecManager(RVSISpecificationManager rvsiSpecManager) { this.rvsiSpecManager = rvsiSpecManager; }
+
+    /**
 	 * Collect {@link AbstractRVSISpecification} whose type could be {@link BVSpecification}, 
 	 * {@link FVSpecification}, or {@link SVSpecification}.
 	 * 
@@ -146,8 +148,7 @@ public class RVSITransaction implements ITransaction {
 	}
 	
 	private VersionConstraintManager generateVCManager() { return rvsiSpecManager.generateVCManager(this); }
-	
 	public Timestamp getSts() { return sts; }
-	
 	public QueryResults getQueryResults() { return queryResults; }
+
 }

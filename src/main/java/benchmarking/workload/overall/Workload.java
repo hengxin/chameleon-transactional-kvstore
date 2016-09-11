@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import benchmarking.workload.clientworkload.ClientWorkload;
+import benchmarking.workload.client.ClientWorkload;
 
 /**
  * {@link Workload} is a collection of {@link ClientWorkload}.
@@ -29,6 +29,10 @@ public class Workload {
 
     public void add(ClientWorkload clientWorkload) {
         clientWorkloads.add(clientWorkload);
+    }
+
+    public List<ClientWorkload> getClientWorkloads() {
+       return clientWorkloads;
     }
 
     public int getNumberOfClients() { return numberOfClients; }

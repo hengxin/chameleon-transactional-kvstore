@@ -1,4 +1,4 @@
-package benchmarking.workload.clientworkload;
+package benchmarking.workload.client;
 
 /**
  * @author hengxin

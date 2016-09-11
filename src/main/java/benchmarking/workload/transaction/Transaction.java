@@ -29,6 +29,9 @@ public class Transaction {
 
     void addOp(Operation op) { ops.add(op); }
 
+    public List<Operation> getOps() { return ops; }
+    public RVSISpecificationManager getRvsiSpecManager() { return rvsiSpecManager; }
+
     Set<Operation> getReadOps() {
         return ops.stream()
                 .filter(op -> op instanceof ReadOperation)

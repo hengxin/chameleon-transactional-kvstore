@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import benchmarking.workload.WorkloadUtil;
-import benchmarking.workload.clientworkload.ClientWorkloadGenerator;
+import benchmarking.workload.client.ClientWorkloadGenerator;
 import benchmarking.workload.keyspace.IdentityKeySpace;
 import benchmarking.workload.operation.OperationGenerator;
 import benchmarking.workload.operation.StatisticalRWRatioOperationTypeGenerator;

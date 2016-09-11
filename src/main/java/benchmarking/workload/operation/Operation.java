@@ -28,8 +28,10 @@ public class Operation {
         this.ck = new CompoundKey(new Row(row), new Column(col));
     }
 
-    public CompoundKey getCK() {
-        return ck;
-    }
+    public String getRow() { return row; }
+    public String getCol() { return col; }
+    public String getVal() { return val; }
+
+    public CompoundKey getCK() { return ck; }
 
 }

@@ -1,7 +1,7 @@
 package exception.transaction;
 
 /**
- * {@link TransactionExecutionException} is a checked {@link Exception}
+ * {@link TransactionExecutionException} is an unchecked {@link RuntimeException}
  * indicating failures occurred during normal transaction execution, 
  * including read, start, and commit.
  * 
@@ -10,12 +10,9 @@ package exception.transaction;
  * 
  * @see {@link TransactionCommunicationException}
  */
-public class TransactionExecutionException extends Exception {
-
+public class TransactionExecutionException extends RuntimeException {
 	private static final long serialVersionUID = 9065339122312266555L;
 
-	public TransactionExecutionException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+	public TransactionExecutionException(String msg, Throwable cause) { super(msg, cause); }
 
 }

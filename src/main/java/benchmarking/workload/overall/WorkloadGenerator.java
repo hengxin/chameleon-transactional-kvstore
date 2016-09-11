@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.stream.IntStream;
 
-import benchmarking.workload.clientworkload.IClientWorkloadGenerator;
+import benchmarking.workload.client.IClientWorkloadGenerator;
 
 /**
  * @author hengxin

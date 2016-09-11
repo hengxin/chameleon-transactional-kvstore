@@ -45,16 +45,16 @@ public class ClientLauncher {
 
     private final AbstractClientContext cctx;
 
-    public ClientLauncher() {
+    ClientLauncher() {
         cctx = new ClientContextMultiMaster(ConsistentHashingDynamicPartitioner.INSTANCE);
     }
 
-    public ClientLauncher(String siteProperties, String cfProperties, String toProperties) {
+    ClientLauncher(String siteProperties, String cfProperties, String toProperties) {
         cctx = new ClientContextMultiMaster(siteProperties, cfProperties, toProperties,
                 ConsistentHashingDynamicPartitioner.INSTANCE);
     }
 
-    public void testTx() throws TransactionBeginException {
+    void testTx() throws TransactionBeginException {
 		// create transaction
 		ITransaction tx = new RVSITransaction(cctx);
 
@@ -120,7 +120,9 @@ public class ClientLauncher {
                 .collect(Collectors.toCollection(HashSet::new));
         fv.addSpec(ckSet4FV, 2);
 
+        // TODO: construct {@link SVSpecification}
         AbstractRVSISpecification sv = new SVSpecification();
+
         ((RVSITransaction) tx).collectRVSISpecification(bv);
         ((RVSITransaction) tx).collectRVSISpecification(fv);
 

@@ -1,4 +1,4 @@
-package benchmarking.workload.clientworkload;
+package benchmarking.workload.client;
 
 import com.google.common.base.MoreObjects;
 
@@ -28,10 +28,13 @@ public class ClientWorkload {
 
     public void addTransaction(Transaction tx) { txs.add(tx); }
 
+    public List<Transaction> getTxs() { return txs; }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("list of transactions", txs)
                 .toString();
     }
+
 }
