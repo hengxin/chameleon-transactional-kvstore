@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class ReadOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReadOperation.class);
 
-    ReadOperation(String row, String col) {
+    public ReadOperation(String row, String col) {
         super(row, col, null);
     }
 

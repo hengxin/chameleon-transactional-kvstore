@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class WriteOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(WriteOperation.class);
 
-    WriteOperation(String row, String col, String val) {
+    public WriteOperation(String row, String col, String val) {
         super(row, col, val);
     }
 

@@ -62,7 +62,8 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
 	 */
 	volatile boolean isCommitted = false;
 	
-	final AbstractClientContext cctx;
+	@NotNull
+    final AbstractClientContext cctx;
     protected Timestamp cts;  // commit timestamp
 
     /**

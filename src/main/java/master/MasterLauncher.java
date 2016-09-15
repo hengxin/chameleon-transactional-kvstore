@@ -1,5 +1,6 @@
 package master;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ public class MasterLauncher {
      * @param saProperties  path of the sa.properties file for socket addresses
 	 * @throws SiteException 
 	 */
-	public MasterLauncher(String siteProperties, String saProperties) {
+	public MasterLauncher(@NotNull String siteProperties, @NotNull String saProperties) {
 		MasterContext context = new MasterContext(siteProperties);
 //		AbstractSite siMaster = new SIMaster(context);  // this constructor is with JMS communication
 

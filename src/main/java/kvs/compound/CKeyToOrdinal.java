@@ -1,16 +1,21 @@
 package kvs.compound;
 
+import com.google.common.base.MoreObjects;
+
+import net.jcip.annotations.ThreadSafe;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import client.clientlibrary.transaction.RVSITransaction;
 import kvs.component.Ordinal;
-import net.jcip.annotations.ThreadSafe;
 
 /**
  * An index from {@link CompoundKey} to {@link Ordinal}.
  * <p>
- * (For now, it is only accessed in {@link RVSITransaction#commit()}.
+ * (For now, it is only accessed in {@link RVSITransaction}.
  * If it is used elsewhere later, pay attention to the synchronization issues.)
  * 
  * @author hengxin
@@ -26,13 +31,20 @@ public final class CKeyToOrdinal {
 	 * value to it and then return the default {@link Ordinal#ORDINAL_INIT} if {@link #ckeytsOrdMap}
 	 * contains no mapping for the specified {@link CompoundKey}.
 	 * 
-	 * @param ck
-	 * 	{@link CompoundKey} specified to search for
-	 * @return
-	 * 	The already existing {@link Ordinal} associated with the specified key, or {@link Ordinal#ORDINAL_INIT}.
+	 * @param ck {@link CompoundKey} to look up
+	 * @return	the {@link Ordinal} associated with {@code ck}, or {@link Ordinal#ORDINAL_INIT}
 	 */
-	public Ordinal get(CompoundKey ck) {
-		return this.ckeytsOrdMap.computeIfAbsent(ck, k -> Ordinal.ORDINAL_INIT);
+	@NotNull
+	public Ordinal lookup(CompoundKey ck) {
+		return ckeytsOrdMap.computeIfAbsent(ck, k -> Ordinal.ORDINAL_INIT());
 	}
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("ckeytsOrdMap", ckeytsOrdMap)
+                .toString();
+    }
+
 }
 

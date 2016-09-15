@@ -56,7 +56,7 @@ public class JMSSubscriber extends AbstractJMSParticipant implements MessageList
 	}
 
 	@Override
-	public void register(IMessageConsumer consumer) {
+	public void register(@NotNull IMessageConsumer consumer) {
 		this.consumer = consumer;
 	}
 

@@ -3,6 +3,7 @@ package kvs.compound;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +64,7 @@ public final class KVItem implements Serializable {
 	 * Only check {@link #ck}.
 	 */
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if(o == this)
 			return true;
 		if(o == null)

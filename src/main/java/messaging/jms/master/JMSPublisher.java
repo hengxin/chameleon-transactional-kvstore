@@ -1,5 +1,7 @@
 package messaging.jms.master;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,7 +44,7 @@ public final class JMSPublisher extends AbstractJMSParticipant implements IMessa
 		
 		try {
 			dummy_future.get();	// FIXME To test if this is necessary???
-		} catch (InterruptedException | ExecutionException e) {
+		} catch (@NotNull InterruptedException | ExecutionException e) {
 			throw new TransactionCommunicationException(String.format("Failded to publish the commit log [{}].", msg), e);	
 		}
 	}

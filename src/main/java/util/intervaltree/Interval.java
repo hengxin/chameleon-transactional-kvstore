@@ -3,6 +3,8 @@
  */
 package util.intervaltree;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @param <K>
  */
@@ -31,27 +33,28 @@ public class Interval<K extends Comparable<? super K>> {
 		this.low = low;
 	}
 	
-	boolean contains(K p){
+	boolean contains(@NotNull K p){
 		return low.compareTo(p) <= 0 && high.compareTo(p) > 0;
 	}
 	
 	/**
 	 * Returns true if this Interval wholly contains i.
 	 */
-	boolean contains(Interval<K> i){
+	boolean contains(@NotNull Interval<K> i){
 		return contains(i.low) && contains(i.high);
 	}
 	
-	boolean overlaps(K low, K high){
+	boolean overlaps(@NotNull K low, @NotNull K high){
 		boolean res = this.low.compareTo(high) <= 0 && this.high.compareTo(low) > 0;
 		return res;
 	}
 	
-	boolean overlaps(Interval<K> i){
+	boolean overlaps(@NotNull Interval<K> i){
 		return overlaps(i.low,i.high);
 	}
 	
-	@Override
+	@NotNull
+    @Override
 	public String toString() {
 		return "Interval["+low+"-"+high+"]";
 	}

@@ -15,6 +15,8 @@ import site.ISite;
  * @date 16-6-8
  */
 public final class RuntimeMember implements Serializable {
+    private static final long serialVersionUID = -7201538049600486994L;
+
     @NotNull private final Member literalMember;
     @Nullable private final ISite rmiSite;
 
@@ -23,7 +25,9 @@ public final class RuntimeMember implements Serializable {
         this.rmiSite = rmiSite;
     }
 
+    @NotNull
     public Member getLiteralMember() { return literalMember; }
+    @Nullable
     public ISite getRmiSite() { return rmiSite; }
 
 }

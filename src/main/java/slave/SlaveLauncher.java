@@ -1,5 +1,6 @@
 package slave;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class SlaveLauncher {
 	 * @param siteProperties path of the properties file.
 	 * @throws SiteException 
 	 */
-	public SlaveLauncher(String siteProperties, String spProperties) throws SiteException {
+	public SlaveLauncher(@NotNull String siteProperties, String spProperties) throws SiteException {
 		SlaveContext context = new SlaveContext(siteProperties);
 //		AbstractSite slave = new RCSlave(context);  // the default constructor uses JMS by default
         AbstractSite slave = new RCSlave(context, new SocketMsgListener2(spProperties));

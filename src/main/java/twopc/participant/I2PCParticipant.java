@@ -43,9 +43,10 @@ public interface I2PCParticipant extends Remote {
 
     /**
      * The second phase of 2PC protocol: the abort case
+     * @param tx  {@link ToCommitTransaction} aborted
      * @throws RemoteException
      * @throws TransactionExecutionException
      */
-    void abort()
+    void abort(ToCommitTransaction tx)
             throws RemoteException, TransactionExecutionException;
 }

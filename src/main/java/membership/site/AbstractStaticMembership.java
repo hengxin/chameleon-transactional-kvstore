@@ -1,5 +1,6 @@
 package membership.site;
 
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +50,8 @@ public abstract class AbstractStaticMembership {
 //		}
 //	}
 
-	public Member self() {
+	@Nullable
+    public Member self() {
 		return this.self;
 	}
 	

@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="MasterMainTest (2)" type="Application" factoryName="Application" folderName="master">
+  <configuration default="false" name="MasterMainTest (2)" type="Application" factoryName="Application" folderName="master" show_console_on_std_out="true" show_console_on_std_err="true">
+    <output_file path="$PROJECT_DIR$/logs/MasterMainTest2.log" is_save="true" />
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
         <option name="PATTERN" value="main.*" />

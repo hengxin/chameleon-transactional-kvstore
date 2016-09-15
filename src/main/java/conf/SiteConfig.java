@@ -1,6 +1,7 @@
 package conf;
 
 import org.intellij.lang.annotations.Language;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,7 +73,7 @@ public final class SiteConfig {
      * @param configKey enum {@link SiteConfigKey}
      * @return  configuration value; possibly <code>null</code>  // TODO handle with null
      */
-    public String getConfigValue(final SiteConfigKey configKey) {
+    public String getConfigValue(@NotNull final SiteConfigKey configKey) {
         return props.getProperty(configKey.getConfigKey());
     }
 }

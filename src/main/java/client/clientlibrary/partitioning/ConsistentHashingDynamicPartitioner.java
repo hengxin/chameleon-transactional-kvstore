@@ -8,6 +8,8 @@ import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
 import com.sun.istack.NotNull;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
@@ -61,7 +63,7 @@ public enum  ConsistentHashingDynamicPartitioner implements IPartitioner {
 	 * @param hr	{@link HashingRequest} to locate
 	 * @return	the index of the (master) site responsible for the {@link HashingRequest} 
 	 */
-	private int locateSiteIndexFor(HashingRequest hr) {
+	private int locateSiteIndexFor(@org.jetbrains.annotations.NotNull HashingRequest hr) {
 		return locateSiteIndexFor(hr.getCK().getRow(), hr.getCK().getCol(), hr.getBuckets());
 	}
 	
@@ -72,10 +74,10 @@ public enum  ConsistentHashingDynamicPartitioner implements IPartitioner {
 	 * @param buckets		number of buckets (i.e., master nodes)
 	 * @return		the index of the site who is responsible for the key
 	 */
-	private int locateSiteIndexFor(Row r, Column c, int buckets) {
+	private int locateSiteIndexFor(@org.jetbrains.annotations.NotNull Row r, @org.jetbrains.annotations.NotNull Column c, int buckets) {
 		HashCode hash_code = Hashing.murmur3_32().newHasher()
-				.putString(r.getRowKey(), StandardCharsets.UTF_8)
-				.putString(c.getColumnKey(), StandardCharsets.UTF_8)
+				.putString(r.getRow(), StandardCharsets.UTF_8)
+				.putString(c.getCol(), StandardCharsets.UTF_8)
 				.hash();
 		
 		return Hashing.consistentHash(hash_code, buckets);
@@ -111,7 +113,7 @@ public enum  ConsistentHashingDynamicPartitioner implements IPartitioner {
 		}
 		
 		@Override
-		public boolean equals(Object o) {
+		public boolean equals(@Nullable Object o) {
 			if(o == this)
 				return true;
 			if(o == null)

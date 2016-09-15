@@ -2,6 +2,7 @@ package client.clientlibrary.partitioning;
 
 import com.google.common.collect.ImmutableMap;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,23 +20,24 @@ import static org.junit.Assert.assertEquals;
 
 public class ConsistentHashingDynamicPartitionerTest {
 
-	private IPartitioner partitioner = ConsistentHashingDynamicPartitioner.INSTANCE;
+	@NotNull
+    private IPartitioner partitioner = ConsistentHashingDynamicPartitioner.INSTANCE;
 	
 	int buckets = 5;
-	CompoundKey ck1 = new CompoundKey("R1", "C1");
-	CompoundKey ck2 = new CompoundKey("R2", "C2");
-	CompoundKey ck3 = new CompoundKey("R3", "C3");
+	@NotNull CompoundKey ck1 = new CompoundKey("R1", "C1");
+	@NotNull CompoundKey ck2 = new CompoundKey("R2", "C2");
+	@NotNull CompoundKey ck3 = new CompoundKey("R3", "C3");
 	
-	KVItem item1 = new KVItem(ck1, TimestampedCell.TIMESTAMPED_CELL_INIT);
-	KVItem item2 = new KVItem(ck2, TimestampedCell.TIMESTAMPED_CELL_INIT);
-	KVItem item3 = new KVItem(ck3, TimestampedCell.TIMESTAMPED_CELL_INIT);
+	@NotNull KVItem item1 = new KVItem(ck1, TimestampedCell.TIMESTAMPED_CELL_INIT);
+	@NotNull KVItem item2 = new KVItem(ck2, TimestampedCell.TIMESTAMPED_CELL_INIT);
+	@NotNull KVItem item3 = new KVItem(ck3, TimestampedCell.TIMESTAMPED_CELL_INIT);
 
-	BufferedUpdates updates = new BufferedUpdates();
+	@NotNull BufferedUpdates updates = new BufferedUpdates();
 	ToCommitTransaction tx;
 	
-	BufferedUpdates updates1 = new BufferedUpdates();
-	BufferedUpdates updates2 = new BufferedUpdates();
-	BufferedUpdates updates3 = new BufferedUpdates();
+	@NotNull BufferedUpdates updates1 = new BufferedUpdates();
+	@NotNull BufferedUpdates updates2 = new BufferedUpdates();
+	@NotNull BufferedUpdates updates3 = new BufferedUpdates();
 	
 	ToCommitTransaction tx1, tx2, tx3;
 	

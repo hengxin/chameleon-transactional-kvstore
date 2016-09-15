@@ -2,6 +2,7 @@ package twopc.participant;
 
 import com.sun.istack.Nullable;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ public class ParticipantStub extends AbstractMaster implements I2PCParticipant {
      * @param messenger the underlying mechanism of message propagation;
      *                  it can be {@code null} if this master site does not need to propagate messages.
      */
-    public ParticipantStub(AbstractContext context, @Nullable IMessageProducer messenger) {
+    public ParticipantStub(@NotNull AbstractContext context, @Nullable IMessageProducer messenger) {
         super(context, messenger);
     }
 
@@ -60,7 +61,7 @@ public class ParticipantStub extends AbstractMaster implements I2PCParticipant {
     }
 
     @Override
-    public void abort() {
+    public void abort(ToCommitTransaction tx) {
 
     }
 

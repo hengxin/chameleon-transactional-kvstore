@@ -2,6 +2,7 @@ package messaging.socket;
 
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,14 +27,11 @@ public class SocketMsgListener2 implements IMessageListener2 {
     private static final Logger LOGGER = getLogger(SocketMsgListener2.class);
     private static final ExecutorService exec = Executors.newCachedThreadPool();
 
-    private final int port;
-    @NotNull private IMessageConsumer consumer;
+    @NotNull private final int port;
+    private IMessageConsumer consumer;
 
     public SocketMsgListener2(int port) { this.port = port; }
-
-    public SocketMsgListener2(String spProperties) {
-        this.port = SocketPortPropertiesUtil.getPort(spProperties);
-    }
+    public SocketMsgListener2(String spProperties) { port = SocketPortPropertiesUtil.getPort(spProperties); }
 
     @Override
     public void accept() {
@@ -41,14 +39,16 @@ public class SocketMsgListener2 implements IMessageListener2 {
             while (true) {
                 try {
                     Socket connection = server.accept();
-                    LOGGER.info("Create connection [{}].", connection);
+                    LOGGER.debug("Create connection [{}].", connection);
                     exec.submit(new CommitMsgTask(connection, consumer));
                 } catch (IOException ioe) {
                     LOGGER.error("Failed to accept connections due to [{}].", ioe);
+                    ioe.printStackTrace();
                 }
             }
         } catch (IOException ioe) {
             LOGGER.error("Failed to create ServerSocket on port [{}] due to [{}].", port, ioe);
+            ioe.printStackTrace();
         }
     }
 
@@ -60,7 +60,7 @@ public class SocketMsgListener2 implements IMessageListener2 {
 }
 
 class CommitMsgTask implements Runnable {
-    private static final Logger LOGGER = getLogger(CommitMsgTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommitMsgTask.class);
 
     @NotNull private final Socket connection;
     @NotNull private final IMessageConsumer consumer;
@@ -72,20 +72,22 @@ class CommitMsgTask implements Runnable {
 
     @Override
     public void run() {
-        LOGGER.info("Processing this connection [{}].", connection);
-
         try (ObjectInputStream ois = new ObjectInputStream(connection.getInputStream())) {
+            LOGGER.debug("Get ObjectInputStream: [{}].", ois);
             AbstractMessage msg = (AbstractMessage) ois.readObject();
+            LOGGER.debug("Get msg: [{}]. The consumer is [{}].", msg, consumer);
             consumer.consume(msg);
         } catch (IOException ioe) {
             LOGGER.error("Failed to getInputStream() due to [{}].", ioe);
+            ioe.printStackTrace();
         } catch (ClassNotFoundException cnfe) {
             LOGGER.error("Failed to receive message due to [{}].", cnfe);
+            cnfe.printStackTrace();
         } finally {
             try {
                 connection.close();
             } catch (IOException e) {
-                LOGGER.info("Failed to close connection [{}].", connection);
+                LOGGER.warn("Failed to close connection [{}].", connection);
             }
         }
     }

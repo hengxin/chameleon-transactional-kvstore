@@ -1,5 +1,7 @@
 package client.clientlibrary.rvsi.rvsispec;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +55,7 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 * 
 	 */
 	@Override
-	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results) {
+	public List<VCEntryRawInfo> extractVCEntryRawInfo(@NotNull QueryResults query_results) {
 		super.vceInfos = rvsiSpecMap.entrySet().stream()
 				.flatMap(rvsiSpecEntry ->
 						expand(join(rvsiSpecEntry.getKey(), query_results), rvsiSpecEntry.getValue()).stream()
@@ -86,7 +88,7 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 *   { [x, Cell_x], [y, Cell_y], [z, Cell_z] }.
 	 * <p>
 	 */
-    SortedSet<KVItem> join(Set<CompoundKey> ck_set, QueryResults queryResults) {
+    SortedSet<KVItem> join(@NotNull Set<CompoundKey> ck_set, @NotNull QueryResults queryResults) {
 		return ck_set.stream()
 			.map(ck ->
 				queryResults.getTsCell(ck).map(tsCell -> new KVItem(ck, tsCell)))
@@ -121,7 +123,7 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 * <li>[ vce_info_kv = {y, Cell_y}, vce_info_kv_optional = {z, Cell_z}, vce_info_bound = 2] 
 	 * <p>
 	 */
-    List<VCEntryRawInfo> expand(SortedSet<KVItem> kv_set, final int bound) {
+    List<VCEntryRawInfo> expand(@NotNull SortedSet<KVItem> kv_set, final int bound) {
 		if (kv_set.size() < 2)
 			return new ArrayList<>();
 
@@ -139,7 +141,8 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 * 
 	 * @param sts This parameter is not used.
 	 */
-	@Override
+	@NotNull
+    @Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp sts) {
 		List<VCEntry> vceList =  vceInfos.stream()
 				.map(vce ->

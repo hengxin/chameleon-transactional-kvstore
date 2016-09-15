@@ -1,5 +1,7 @@
 package client.clientlibrary.transaction;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,12 +37,12 @@ import timing.ITimestampOracle;
  * @date Created on 10-27-2015
  */
 public class RVSITransaction implements ITransaction {
-
 	private final static Logger LOGGER = LoggerFactory.getLogger(RVSITransaction.class);
 	
 	private final AbstractClientContext cctx;
 	
-	private Timestamp sts = Timestamp.TIMESTAMP_INIT;	// start-timestamp
+	@NotNull
+    private Timestamp sts = Timestamp.TIMESTAMP_INIT;	// start-timestamp
 //	private Timestamp cts = Timestamp.TIMESTAMP_INIT_ZERO;	// commit-timestamp
 
 	private final BufferedUpdates bufferedUpdates = new BufferedUpdates();
@@ -48,9 +50,7 @@ public class RVSITransaction implements ITransaction {
 	
 	private RVSISpecificationManager rvsiSpecManager = new RVSISpecificationManager();
 
-	public RVSITransaction(AbstractClientContext ctx) {
-		this.cctx = ctx;
-	}
+	public RVSITransaction(AbstractClientContext ctx) { this.cctx = ctx; }
 	
 	/**
 	 * To begin a transaction, the client contacts the {@link timing.ITimestampOracle}
@@ -63,11 +63,10 @@ public class RVSITransaction implements ITransaction {
 	 */
 	@Override
 	public boolean begin() throws TransactionBeginException {
-
         ITimestampOracle tsOracle = cctx.getTsOracle();
 		try {
             sts = new Timestamp(tsOracle.get());
-			LOGGER.info("The transaction (ID TBD) has successfully obtained a start-timestamp ({}).", sts);
+			LOGGER.debug("The transaction (ID TBD) has successfully obtained a start-timestamp ({}).", sts);
 			return true;
 		} catch (RemoteException re) {
             throw new TransactionBeginException(String.format("Transaction [%s] failed to begin.", this),
@@ -75,7 +74,8 @@ public class RVSITransaction implements ITransaction {
 		}
 	}
 
-	@Override
+	@Nullable
+    @Override
 	public ITimestampedCell read(Row r, Column c) throws TransactionReadException {
 	    // first look up the last update on (r + c) in the same transaction
 	    ITimestampedCell tsCell = bufferedUpdates.lookup(r, c);
@@ -87,7 +87,8 @@ public class RVSITransaction implements ITransaction {
 		try {
 			tsCell = site.get(r, c);
 			queryResults.put(new CompoundKey(r, c), tsCell);
-			LOGGER.info("Transaction [{}] read {} from [{}+{}] at site {}", this, tsCell, r, c, site);
+			LOGGER.debug("Transaction [sts: {}] read {} from [{}+{}] at site [{}].",
+                    getSts(), tsCell, r, c, site);
 		} catch (RemoteException re) {
 			throw new TransactionReadException(String.format("The transaction [%s] failed to read [%s+%s] at site [%s].",
                     this, r, c, site), re.getCause());
@@ -104,6 +105,7 @@ public class RVSITransaction implements ITransaction {
      */
 	@Override
 	public void write(Row r, Column c, Cell data) {
+        LOGGER.debug("Transaction [{}] write [{}] to [{}+{}].", this, data, r, c);
 		bufferedUpdates.intoBuffer(r, c, data);
 	}
 
@@ -122,7 +124,9 @@ public class RVSITransaction implements ITransaction {
 		ToCommitTransaction tx = new ToCommitTransaction(sts, bufferedUpdates);
 		
 		try {
-            return cctx.getCoord(tx).execute2PC(tx, vcm);
+            boolean isCommitted = cctx.getCoord(tx, vcm).execute2PC(tx, vcm);
+            LOGGER.info("Tx [sts: {}] is committed: [{}].", tx.getSts(), isCommitted);
+            return isCommitted;
 		} catch (RemoteException re) {
 			throw new TransactionEndException(
 			        String.format("Transaction [%s] failed to commit due to RMI-related issues.", this),
@@ -147,8 +151,11 @@ public class RVSITransaction implements ITransaction {
 		rvsiSpecManager.collectRVSISpecification(rvsiSpec);
 	}
 	
-	private VersionConstraintManager generateVCManager() { return rvsiSpecManager.generateVCManager(this); }
-	public Timestamp getSts() { return sts; }
-	public QueryResults getQueryResults() { return queryResults; }
+	@NotNull
+    private VersionConstraintManager generateVCManager() { return rvsiSpecManager.generateVCManager(this); }
+	@NotNull
+    public Timestamp getSts() { return sts; }
+	@NotNull
+    public QueryResults getQueryResults() { return queryResults; }
 
 }

@@ -1,5 +1,7 @@
 package membership.coordinator;
 
+import org.jetbrains.annotations.Nullable;
+
 import client.context.AbstractClientContext;
 import twopc.coordinator.Abstract2PCCoordinator;
 
@@ -8,5 +10,5 @@ import twopc.coordinator.Abstract2PCCoordinator;
  * @date 16-8-17
  */
 public interface ICoordinatorMembership {
-    Abstract2PCCoordinator getCoord(int coordId, AbstractClientContext ctx);
+    @Nullable Abstract2PCCoordinator getCoord(int coordId, AbstractClientContext ctx);
 }

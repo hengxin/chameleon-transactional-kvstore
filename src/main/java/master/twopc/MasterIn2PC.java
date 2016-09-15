@@ -1,5 +1,6 @@
 package master.twopc;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ public final class MasterIn2PC implements I2PCParticipant {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MasterIn2PC.class);
 	
 	@Override
-	public boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm) {
+	public boolean prepare(@NotNull ToCommitTransaction tx, @NotNull VersionConstraintManager vcm) {
 		// TODO Auto-generated method stub
         LOGGER.debug("Master [{}] receives ToCommitTransaction [{}] and associated VersionConstraintManager [{}] " +
                 "at the PREPARE phase", toString(), tx.toString(), vcm.toString());
@@ -37,7 +38,7 @@ public final class MasterIn2PC implements I2PCParticipant {
     }
 
     @Override
-    public void abort() {
+    public void abort(ToCommitTransaction tx) {
 
     }
 

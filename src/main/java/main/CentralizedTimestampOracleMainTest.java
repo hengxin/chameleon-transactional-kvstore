@@ -1,5 +1,7 @@
 package main;
 
+import org.jetbrains.annotations.NotNull;
+
 import timing.CentralizedTimestampOracle;
 
 /**
@@ -7,7 +9,7 @@ import timing.CentralizedTimestampOracle;
  * @date 16-8-29
  */
 public class CentralizedTimestampOracleMainTest {
-    public static void main(String[] args) {
+    public static void main(@NotNull String[] args) {
         if (args.length == 1)
             new CentralizedTimestampOracle(args[0]);
         else

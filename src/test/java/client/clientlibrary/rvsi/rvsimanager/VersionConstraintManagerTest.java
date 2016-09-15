@@ -1,5 +1,6 @@
 package client.clientlibrary.rvsi.rvsimanager;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,24 +33,37 @@ public class VersionConstraintManagerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(VersionConstraintManagerTest.class);
 
     private static final int BUCKETS = 10;
+    @NotNull
     private IPartitioner partitioner = ConsistentHashingDynamicPartitioner.INSTANCE;
 
+    @NotNull
     private CompoundKey ckR1C1 = new CompoundKey("R1", "C1");
+    @NotNull
     private CompoundKey ckR2C2 = new CompoundKey("R2", "C2");
 
+    @NotNull
     private Timestamp sts = new Timestamp(5L);
 
+    @NotNull
     private VCEntry bvVceR1C1 = new VCEntry(ckR1C1, new Ordinal(1), sts, 1);
+    @NotNull
     private VCEntry bvVceR2C2 = new VCEntry(ckR2C2, new Ordinal(2), sts, 2);
+    @NotNull
     private VCEntry fvVceR1C1 = new VCEntry(ckR1C1, new Ordinal(11), sts, 1);
+    @NotNull
     private VCEntry fvVceR2C2 = new VCEntry(ckR2C2, new Ordinal(22), sts, 2);
 
+    @NotNull
     private List<VCEntry> bvVcEntries = asList(bvVceR1C1, bvVceR2C2);
+    @NotNull
     private List<VCEntry> fvVcEntries = asList(fvVceR1C1, fvVceR2C2);
 
+    @NotNull
     private AbstractVersionConstraint bvVc = new BVVersionConstraint(bvVcEntries);
+    @NotNull
     private AbstractVersionConstraint fvVc = new FVVersionConstraint(fvVcEntries);
 
+    @NotNull
     private VersionConstraintManager vcm = new VersionConstraintManager(asList(bvVc, fvVc));
 
     @Before

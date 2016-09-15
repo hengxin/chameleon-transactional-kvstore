@@ -1,12 +1,15 @@
 package kvs.component;
 
-import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicLong;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import net.jcip.annotations.ThreadSafe;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * We denote the position of some version of a data item <code>x</code> in its 
@@ -26,22 +29,23 @@ import net.jcip.annotations.ThreadSafe;
 public final class Ordinal implements Serializable {
 	private static final long serialVersionUID = -8037347322531588752L;
 
-	public static final Ordinal ORDINAL_INIT = new Ordinal(0L);
-	private final AtomicLong ord;
+	@NotNull
+    private final AtomicLong ord;
 	
 	public Ordinal(long ord) { this.ord = new AtomicLong(ord); }
-	
-	/**
-	 * Atomically increments by one the current ordinal.
-	 * @return
-	 * 	the <i>new</i> updated ordinal.
-	 */
-	public Ordinal incrementAndGet() { return new Ordinal(ord.incrementAndGet()); }
+
+    /**
+     * @return a <it>new</it> initial ordinal with value of 0L
+     */
+	public static Ordinal ORDINAL_INIT() { return new Ordinal(0L); }
 
 	/**
-	 * @return
-	 * 	the {@link #ord} value
+	 * Atomically increments by one the current ordinal.
+	 * @return 	the <i>new</i> updated ordinal.
 	 */
+	@NotNull
+    public Ordinal incrementAndGet() { return new Ordinal(ord.incrementAndGet()); }
+
 	public long getOrd() { return ord.get(); }
 	
 	/**
@@ -50,21 +54,16 @@ public final class Ordinal implements Serializable {
 	 * of org.apache.commons.collections4 uses {@link Map} internally.
 	 */
 	@Override
-	public int hashCode() {
-		return Objects.hashCode(ord.get());
-	}
+	public int hashCode() { return Objects.hashCode(ord.get()); }
 	
 	@Override
 	public boolean equals(Object o) {
 		if(o == this)
 			return true;
-		if(o == null)
-			return false;
-		if(! (this.getClass() == o.getClass()))
-			return false;
-		
-		Ordinal that = (Ordinal) o;
+        if (o == null || !(this.getClass() == o.getClass()))
+            return false;
 
+        Ordinal that = (Ordinal) o;
 		return this.getOrd() == that.getOrd();
 	}
 	
@@ -74,4 +73,5 @@ public final class Ordinal implements Serializable {
 				.add("ord", ord)
 				.toString();
 	}
+
 }

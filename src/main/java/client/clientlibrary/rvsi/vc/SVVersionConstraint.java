@@ -1,5 +1,9 @@
 package client.clientlibrary.rvsi.vc;
 
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +29,7 @@ import static java.util.stream.Collectors.toList;
  */
 public final class SVVersionConstraint extends AbstractVersionConstraint {
     private static final long serialVersionUID = 6110803493107237501L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SVVersionConstraint.class);
 
     public SVVersionConstraint(List<VCEntry> vcEntries) { super(vcEntries); }
 
@@ -34,16 +39,22 @@ public final class SVVersionConstraint extends AbstractVersionConstraint {
      * @return O_x(T_l.cts) - ord(x_j) <= k3; see the paper.
      */
     @Override
-    public boolean check(AbstractTable table, VCEntry vce) {
+    public boolean check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
         ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
+
         long ord = tsCell.getOrdinal().getOrd();
-        return (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
+        boolean checked = (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
+
+        LOGGER.debug("Checking SVVersionConstraint: [{}] - [{}] <= [{}] with result [{}].",
+                ord, vce.getVceOrd().getOrd(), vce.getVceBound(), checked);
+
+        return checked;
     }
 
     @Override
-    public Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets) {
+    public Map<Integer, AbstractVersionConstraint> partition(@NotNull IPartitioner partitioner, int numberOfBuckets) {
         return vcEntries.stream()
-                .collect(groupingBy(vce -> partitioner.locateSiteIndexFor(vce.getVceCk(), buckets),
+                .collect(groupingBy(vce -> partitioner.locateSiteIndexFor(vce.getVceCk(), numberOfBuckets),
                         collectingAndThen(toList(), SVVersionConstraint::new)));
     }
 

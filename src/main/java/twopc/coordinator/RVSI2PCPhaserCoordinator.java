@@ -1,13 +1,16 @@
 package twopc.coordinator;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.rmi.RemoteException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,7 +47,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
     /**
 	 * @param ctx	client context 
 	 */
-	public RVSI2PCPhaserCoordinator(final AbstractClientContext ctx)  {
+	public RVSI2PCPhaserCoordinator(@NotNull final AbstractClientContext ctx)  {
 		super(ctx);
         phaser = new CommitPhaser(this);   // TODO Is it safe to pass {@code this} reference?
 	}
@@ -55,7 +58,11 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 		final Map<Integer, ToCommitTransaction> siteTxMap = cctx.partition(tx);
         final Map<Integer, VersionConstraintManager> siteVcmMap = cctx.partition(vcm);
 
-		List<Callable<Boolean>> tasks = siteTxMap.keySet().stream()
+        Set<Integer> sites = new HashSet<>();
+        sites.addAll(siteTxMap.keySet());
+        sites.addAll(siteVcmMap.keySet());
+
+		List<Callable<Boolean>> tasks = sites.stream() // FIXME: sites or siteTxMap.keySet()?
 				.map(masterId -> new CommitPhaserTask(this, (I2PCParticipant) cctx.getMaster(masterId),
                         siteTxMap.get(masterId), siteVcmMap.get(masterId)))
                 .collect(toList());
@@ -106,7 +113,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
         return isCommitted;
     }
 
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+    private void readObject(@NotNull ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         phaser = new CommitPhaser(this);
     }

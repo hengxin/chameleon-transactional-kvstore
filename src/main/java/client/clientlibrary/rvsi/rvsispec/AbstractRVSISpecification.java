@@ -5,6 +5,8 @@ package client.clientlibrary.rvsi.rvsispec;
 
 import com.google.common.base.MoreObjects;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -85,7 +87,7 @@ public abstract class AbstractRVSISpecification {
 	 * @param query_results {@link QueryResults}
 	 * @return 
 	 */
-	public List<VCEntryRawInfo> extractVCEntryRawInfo(QueryResults query_results) {
+	public List<VCEntryRawInfo> extractVCEntryRawInfo(@NotNull QueryResults query_results) {
 		vceInfos = flattenRVSISpecMap().entrySet().stream()
 			.<Optional<VCEntryRawInfo>> map(flatten_rvsi_spec_entry -> {
 					CompoundKey ck = flatten_rvsi_spec_entry.getKey();
@@ -99,7 +101,8 @@ public abstract class AbstractRVSISpecification {
 		return vceInfos;
 	}
 
-	public AbstractVersionConstraint generateVersionConstraint(QueryResults query_results, Timestamp ts) {
+	@NotNull
+    public AbstractVersionConstraint generateVersionConstraint(@NotNull QueryResults query_results, Timestamp ts) {
 		extractVCEntryRawInfo(query_results);
 		return generateVersionConstraint(ts);
 	}
@@ -108,7 +111,8 @@ public abstract class AbstractRVSISpecification {
 	 * @param ts {@link Timestamp} to be checked against
 	 * @return {@link AbstractVersionConstraint}
 	 */
-	public abstract AbstractVersionConstraint generateVersionConstraint(Timestamp ts);
+	@NotNull
+    public abstract AbstractVersionConstraint generateVersionConstraint(Timestamp ts);
 	
 	/**
 	 * Utility method for both {@link BVSpecification} and {@link FVSpecification} to transform 
@@ -117,7 +121,7 @@ public abstract class AbstractRVSISpecification {
 	 * @param ts an additional {@link Timestamp} for constructing {@link VCEntry}
 	 * @return a list of {@link VCEntry}
 	 */
-	static List<VCEntry> transform(List<VCEntryRawInfo> vce_info_list, Timestamp ts) {
+	static List<VCEntry> transform(@NotNull List<VCEntryRawInfo> vce_info_list, Timestamp ts) {
 		return vce_info_list.stream()
 				.<VCEntry>map(vce_info -> new VCEntry(vce_info.getVceInfoCk(), vce_info.getVceInfoOrd(), ts, vce_info.getVceInfoBound()))
 				.collect(Collectors.toList());
@@ -125,6 +129,7 @@ public abstract class AbstractRVSISpecification {
 	
 	void setVceInfoList(List<VCEntryRawInfo> vce_info_list) { vceInfos = vce_info_list; }
 
+    @NotNull
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)

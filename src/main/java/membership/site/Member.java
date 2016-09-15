@@ -2,6 +2,8 @@ package membership.site;
 
 import com.google.common.base.MoreObjects;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +52,7 @@ public final class Member implements Serializable {
 	 * @return		an {@link Optional}-wrapped {@link Member} instance; it may be {@code Optional.empty()}
 	 * 	if an error occurs during parseReplGrps.
 	 */
-	public static Optional<Member> parseMember(String member) {
+	public static Optional<Member> parseMember(@NotNull String member) {
 		String[] parts = member.replaceAll("\\s", "").split("@|;");		// FIXME remove hard-wired code here
 
 		try {
@@ -60,7 +62,7 @@ public final class Member implements Serializable {
 			final int rmi_registry_port = Integer.parseInt(parts[3]);
 
 			return Optional.of(new Member(addr_ip, addr_port, rmi_registry_name, rmi_registry_port));
-		} catch (NullPointerException | NumberFormatException e) {	// FIXME catch NullPointerException or not?
+		} catch (@NotNull NullPointerException | NumberFormatException e) {	// FIXME catch NullPointerException or not?
 			LOGGER.error("Failed to parseReplGrps [{}] to a Member because it is ill-formated. \\n {}", member, e.getCause());
 			return Optional.empty();
 		}
@@ -73,7 +75,7 @@ public final class Member implements Serializable {
 	 * @return a list of {@link Member}; Note that only the {@link Member}s that are successfully
 	 * 	parsed are returned; therefore, the list may be empty.
 	 */
-	public static List<Member> parseMembers(String members) {
+	public static List<Member> parseMembers(@NotNull String members) {
 		return Pattern.compile(",").splitAsStream(members.replaceAll("\\s", ""))
 								   .map(Member::parseMember)
 								   .filter(Optional::isPresent)
@@ -104,7 +106,7 @@ public final class Member implements Serializable {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if(o == this)
 			return true;
 		if(o == null || o.getClass() != this.getClass())

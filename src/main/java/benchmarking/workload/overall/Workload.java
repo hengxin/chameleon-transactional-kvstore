@@ -2,6 +2,7 @@ package benchmarking.workload.overall;
 
 import com.google.common.base.MoreObjects;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,7 @@ public class Workload {
     private static final Logger LOGGER = LoggerFactory.getLogger(Workload.class);
 
     private final int numberOfClients;
+    @NotNull
     private final List<ClientWorkload> clientWorkloads;
 
     public Workload(final int numberOfClients) {
@@ -31,12 +33,14 @@ public class Workload {
         clientWorkloads.add(clientWorkload);
     }
 
+    @NotNull
     public List<ClientWorkload> getClientWorkloads() {
        return clientWorkloads;
     }
 
     public int getNumberOfClients() { return numberOfClients; }
 
+    @NotNull
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)

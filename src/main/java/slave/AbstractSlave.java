@@ -1,5 +1,6 @@
 package slave;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ import site.AbstractSite;
  */
 public abstract class AbstractSlave extends AbstractSite implements IMessageConsumer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSlave.class);
+    @NotNull
     private static ExecutorService exec = Executors.newCachedThreadPool();
 
     /**
@@ -34,7 +36,7 @@ public abstract class AbstractSlave extends AbstractSite implements IMessageCons
      * @param listener2  the underlying mechanism for accepting messages;
      *                   it may be {@code null}.
      */
-    public AbstractSlave(AbstractContext context, @Nullable IMessageListener2 listener2) {
+    public AbstractSlave(@NotNull AbstractContext context, @Nullable IMessageListener2 listener2) {
         super(context);
         if (listener2 != null) {
             listener2.register(this);
@@ -48,7 +50,7 @@ public abstract class AbstractSlave extends AbstractSite implements IMessageCons
 	 * 	it can be {@code null} if this slave site does not receive messages. 
 	 */
 	@Deprecated
-	public AbstractSlave(AbstractContext context, @Nullable IMessageListener listener) {
+	public AbstractSlave(@NotNull AbstractContext context, @Nullable IMessageListener listener) {
 		super(context);
 		if (listener != null)
 			listener.register(this);

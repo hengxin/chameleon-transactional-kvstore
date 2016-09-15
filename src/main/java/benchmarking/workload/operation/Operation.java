@@ -1,5 +1,6 @@
 package benchmarking.workload.operation;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,7 @@ public class Operation {
     protected final String col;
     String val;
 
+    @NotNull
     private final CompoundKey ck;
 
     Operation(String row, String col, String val) {
@@ -32,6 +34,7 @@ public class Operation {
     public String getCol() { return col; }
     public String getVal() { return val; }
 
+    @NotNull
     public CompoundKey getCK() { return ck; }
 
 }

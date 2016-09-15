@@ -1,5 +1,7 @@
 package kvs.table;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,12 +16,14 @@ import static org.junit.Assert.assertEquals;
 
 public class TableTest {
 
-	private AbstractTable master_table = new MasterTable(); // using {@link MultiTimestampedCellsStore}
-	private AbstractTable slave_table = new SlaveTable(); // using {@link SingleTimestampedCellStore}
+	@NotNull
+    private AbstractTable master_table = new MasterTable(); // using {@link MultiTimestampedCellsStore}
+	@NotNull
+    private AbstractTable slave_table = new SlaveTable(); // using {@link SingleTimestampedCellStore}
 
-	ITimestampedCell ts_cell_0L = null;
-	ITimestampedCell ts_cell_2L = null;
-	ITimestampedCell ts_cell_4L = null;
+	@Nullable ITimestampedCell ts_cell_0L = null;
+	@Nullable ITimestampedCell ts_cell_2L = null;
+	@Nullable ITimestampedCell ts_cell_4L = null;
 
 	@Before
 	public void setUp() throws Exception {

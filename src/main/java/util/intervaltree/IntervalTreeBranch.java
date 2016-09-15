@@ -3,13 +3,17 @@
  */
 package util.intervaltree;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.Set;
 
 public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements IntervalTreeNode<K, V> {
 	
-	private IntervalTreeNode<K, V> left,right;
+	@Nullable
+    private IntervalTreeNode<K, V> left,right;
 	private Interval<K> key;
 	
 	public IntervalTreeBranch(IntervalTreeNode<K, V> left,IntervalTreeNode<K, V> right){
@@ -35,12 +39,14 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 		return false;
 	}
 
-	@Override
+	@Nullable
+    @Override
 	public IntervalTreeNode<K, V> getLeft() {
 		return left;
 	}
 
-	@Override
+	@Nullable
+    @Override
 	public IntervalTreeNode<K, V> getRight() {
 		return right;
 	}
@@ -54,22 +60,22 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 	}
 
 	@Override
-	public boolean contains(K point) {
+	public boolean contains(@NotNull K point) {
 		return key.contains(point);
 	}
 	
 	@Override
-	public boolean contains(Interval<K> interval) {
+	public boolean contains(@NotNull Interval<K> interval) {
 		return key.contains(interval);
 	}
 
 	@Override
-	public boolean overlaps(K low, K high) {
+	public boolean overlaps(@NotNull K low, @NotNull K high) {
 		return key.overlaps(low, high);
 	}
 
 	@Override
-	public boolean overlaps(Interval<K> interval) {
+	public boolean overlaps(@NotNull Interval<K> interval) {
 		return key.overlaps(interval);
 	}
 
@@ -83,13 +89,15 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 		return key.getHigh();
 	}
 
-	@Override
+	@NotNull
+    @Override
 	public V getValue() {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public IntervalTreeNode<K, V> put(Interval<K> key, V value) {
+	@NotNull
+    @Override
+	public IntervalTreeNode<K, V> put(@NotNull Interval<K> key, V value) {
 		if(right == null){
 			if(left.getLow().compareTo(key.getLow()) < 0){
 				right = left;
@@ -147,7 +155,8 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 		}
 	}
 
-	@Override
+	@Nullable
+    @Override
 	public IntervalTreeNode<K, V> remove(V value) {
 		if(left != null){
 			left = left.remove(value);
@@ -198,7 +207,7 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 	}
 
 	@Override
-	public boolean containedBy(Interval<K> interval) {
+	public boolean containedBy(@NotNull Interval<K> interval) {
 		return interval.contains(key);
 	}
 
@@ -240,7 +249,8 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 		}
 	}
 
-	@Override
+	@Nullable
+    @Override
 	public IntervalTreeNode<K, V> removeAll(Collection<V> values) {
 		if(left != null){
 			left = left.removeAll(values);
@@ -255,7 +265,8 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 		return this;
 	}
 
-	@Override
+	@Nullable
+    @Override
 	public IntervalTreeNode<K, V> removeOverlapping(Interval<K> range) {
 		if(left != null && left.overlaps(range)){
 			left = left.removeOverlapping(range);
@@ -266,7 +277,8 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 		return removeCleanup();
 	}
 
-	@Override
+	@Nullable
+    @Override
 	public IntervalTreeNode<K, V> removeContaining(Interval<K> range) {
 		if(left != null && left.contains(range)){
 			left = left.removeContaining(range);
@@ -277,7 +289,8 @@ public class IntervalTreeBranch<K extends Comparable<? super K>, V> implements I
 		return removeCleanup();
 	}
 
-	@Override
+	@Nullable
+    @Override
 	public IntervalTreeNode<K, V> removeContainedBy(Interval<K> range) {
 		if(left != null && left.overlaps(range)){
 			left = left.removeContainedBy(range);

@@ -1,5 +1,6 @@
 package main;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +44,7 @@ import static org.junit.Assert.assertTrue;
 public class ClientLauncher {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ClientLauncher.class);
 
+    @NotNull
     private final AbstractClientContext cctx;
 
     ClientLauncher() {
@@ -107,8 +109,8 @@ public class ClientLauncher {
         tx.write(r1, c1, new Cell("R1C1"));
         LOGGER.info("Write {} to {} + {}.", "R1C1", r1, c1);
 
-        /**
-         * Specifying {@link AbstractRVSISpecification}
+        /*
+          Specifying {@link AbstractRVSISpecification}
          */
         AbstractRVSISpecification bv = new BVSpecification();
         HashSet<CompoundKey> ckSet4BV = Stream.of(ck, ck1)

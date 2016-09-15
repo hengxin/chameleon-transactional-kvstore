@@ -1,5 +1,6 @@
 package messaging.socket;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +26,7 @@ import messaging.IMessageProducer;
  */
 public class SocketMsgBroadcastProducerTest {
     private static final String HOST = "localhost";
+    @NotNull
     private static ExecutorService exec = Executors.newCachedThreadPool();
 
     private static final int PORT_1111 = 1111;
@@ -33,8 +35,11 @@ public class SocketMsgBroadcastProducerTest {
 
     private IMessageProducer broadcaster;
 
+    @NotNull
     private IMessageListener2 listener1111 = new SocketMsgListener2(PORT_1111);
+    @NotNull
     private IMessageListener2 listener2222 = new SocketMsgListener2(PORT_2222);
+    @NotNull
     private IMessageListener2 listener3333 = new SocketMsgListener2(PORT_3333);
 
     @Before

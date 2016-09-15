@@ -2,6 +2,7 @@ package client.clientlibrary.rvsi.rvsimanager;
 
 import com.google.common.base.MoreObjects;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public final class RVSISpecificationManager {
     // FIXME try {@link Stream} in Java 8 directly.
 	private final List<AbstractRVSISpecification> rvsiSpecs = new ArrayList<>();
 
-	public RVSISpecificationManager collectRVSISpecification(AbstractRVSISpecification rvsiSpec) {
+	@NotNull
+    public RVSISpecificationManager collectRVSISpecification(AbstractRVSISpecification rvsiSpec) {
 		rvsiSpecs.add(rvsiSpec);
         return this;
 	}
@@ -38,7 +40,8 @@ public final class RVSISpecificationManager {
 	 * {@link AbstractRVSISpecification}) collected in {@link #rvsiSpecs}.
      * FIXME: static method???
 	 */
-	public VersionConstraintManager generateVCManager(RVSITransaction tx) {
+	@NotNull
+    public VersionConstraintManager generateVCManager(@NotNull RVSITransaction tx) {
 		List<AbstractVersionConstraint> vcList = rvsiSpecs.stream()
 				.map(rvsiSpec -> rvsiSpec.generateVersionConstraint(tx.getQueryResults(), tx.getSts()))
 				.collect(Collectors.toList());

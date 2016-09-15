@@ -1,6 +1,7 @@
 package membership.site;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +42,7 @@ public final class StaticSiteMembershipFromProperties implements ISiteMembership
      * Constructor with properties file.
      * @param properties  membership properties file
      */
-    public StaticSiteMembershipFromProperties(final String properties) {
+    public StaticSiteMembershipFromProperties(@NotNull final String properties) {
         MembershipPropertiesParser parser = new MembershipPropertiesParser(properties);
         self = parser.parseSelf();
         replGrps = parser.parseReplGrps();
@@ -52,6 +53,7 @@ public final class StaticSiteMembershipFromProperties implements ISiteMembership
         return replGrps.get(replGrpId);
     }
 
+    @NotNull
     @Override
     public Member getSelf() {
         return self;
@@ -60,6 +62,7 @@ public final class StaticSiteMembershipFromProperties implements ISiteMembership
     @Override
     public int getReplGrpNo() { return replGrps.size(); }
 
+    @Nullable
     @Override
     public ISite getMaster(int replGrpId) { return replGrps.get(replGrpId).getMaster().getRmiSite(); }
 

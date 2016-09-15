@@ -3,6 +3,8 @@ package client.clientlibrary.rvsi.vc;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 import kvs.component.Ordinal;
@@ -48,7 +50,7 @@ public final class VCEntry implements Serializable {
 	public int hashCode() { return Objects.hashCode(ck, ord, ts, bound); }
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if(o == this)
 			return true;
 		if(o == null)

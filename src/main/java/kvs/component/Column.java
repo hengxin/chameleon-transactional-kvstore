@@ -1,10 +1,12 @@
 package kvs.component;
 
-import java.io.Serializable;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
 
 import kvs.table.AbstractTable;
 
@@ -14,37 +16,28 @@ import kvs.table.AbstractTable;
  * 
  * Column keys of the {@link AbstractTable}.
  */
-public class Column implements Comparable<Column>, Serializable
-{
+public class Column implements Comparable<Column>, Serializable {
 	private static final long serialVersionUID = -1528275933592207808L;
 
-	private final String col_key;
+	private final String col;
 	
-	public Column(String key)
-	{
-		this.col_key = key;
-	}
-
-	public String getColumnKey()
-	{
-		return this.col_key;
-	}
+	public Column(String key) { this.col = key; }
+	public String getCol() { return col; }
 
 	@Override
-	public int compareTo(Column that)
+	public int compareTo(@NotNull Column that)
 	{
-		return ComparisonChain.start().compare(this.col_key, that.col_key).result();
+		return ComparisonChain.start().compare(this.col, that.col).result();
 	}
 
 	@Override
 	public int hashCode() 
 	{
-		return Objects.hashCode(this.col_key);
+		return Objects.hashCode(this.col);
 	}
 	
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		if(o == this)
 			return true;
 		if(o == null)
@@ -53,12 +46,14 @@ public class Column implements Comparable<Column>, Serializable
 			return false;
 		
 		Column that = (Column) o;
-		return Objects.equal(this.col_key, that.col_key);
+		return Objects.equal(this.col, that.col);
 	}
 	
-	@Override
-	public String toString()
-	{
-		return MoreObjects.toStringHelper(this).add("col_key", this.col_key).toString();
+    @Override
+	public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("col", col)
+                .toString();
 	}
+
 }

@@ -1,5 +1,6 @@
 package benchmarking.workload.operation;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 public class WithPrefixAndSequenceValueGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WithPrefixAndSequenceValueGenerator.class);
 
+    @NotNull
     private static Map<String, Integer> valueMap = new HashMap<>();
 
     public static String next(final String row, final String col) {

@@ -33,7 +33,7 @@ public class RVSITransactionExecutor implements ITransactionExecutor {
     }
 
     @Override
-    public void execute(Transaction tx)
+    public boolean execute(Transaction tx)
             throws TransactionBeginException, TransactionReadException, TransactionEndException {
         ITransaction rvsiTx = new RVSITransaction(cctx);
 
@@ -45,7 +45,7 @@ public class RVSITransactionExecutor implements ITransactionExecutor {
 
         ((RVSITransaction) rvsiTx).setRvsiSpecManager(tx.getRvsiSpecManager());
 
-        rvsiTx.end();
+        return rvsiTx.end();
     }
 
     private void executeOp(ITransaction tx, Operation op) {

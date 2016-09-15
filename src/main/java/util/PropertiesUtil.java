@@ -1,5 +1,6 @@
 package util;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,7 @@ import java.util.Properties;
 public final class PropertiesUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
 
+    @NotNull
     public static Properties load(final String properties)
             throws IOException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();

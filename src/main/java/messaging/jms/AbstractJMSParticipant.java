@@ -3,6 +3,7 @@
  */
 package messaging.jms;
 
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,12 +43,17 @@ public abstract class AbstractJMSParticipant {
 	private static String TOPIC;
 	private static String CONNECTION_FACTORY;
 
-	protected Topic cl_topic = null;
-	private TopicConnection connection = null;
-	protected TopicSession session = null;
+	@Nullable
+    protected Topic cl_topic = null;
+	@Nullable
+    private TopicConnection connection = null;
+	@Nullable
+    protected TopicSession session = null;
 
-	protected TopicPublisher publisher = null;
-	protected TopicSubscriber subscriber = null;
+	@Nullable
+    protected TopicPublisher publisher = null;
+	@Nullable
+    protected TopicSubscriber subscriber = null;
 	
 	/**
 	 * Load JMS configuration, initialize context, create connection factory, create top connection,

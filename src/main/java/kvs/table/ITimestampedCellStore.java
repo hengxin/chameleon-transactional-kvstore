@@ -9,29 +9,28 @@ import kvs.compound.ITimestampedCell;
  * 
  * <p> Interface for data stores at sites (including the master and the slaves)
  */
-public interface ITimestampedCellStore
-{
+public interface ITimestampedCellStore {
 	/**
 	 * put an {@ITimestampedCell} into this {@link ITimestampedCellStore}
-	 * @param ts_cell an {@link ITimestampedCell} to put
+	 * @param tsCell an {@link ITimestampedCell} to put
 	 */
-	public void put(ITimestampedCell ts_cell);
+    void put(ITimestampedCell tsCell);
 
 	/**
-	 * get the latest preceding {@link ITimestampedCell} with smaller or equal {@link Timestamp} than @param ts 
+	 * lookup the latest preceding {@link ITimestampedCell} with smaller or equal {@link Timestamp} than @param ts
 	 * @param ts {@link Timestamp}
 	 * @return a {@link ITimestampedCell}
 	 */
-	public ITimestampedCell get(Timestamp ts);
+    ITimestampedCell get(Timestamp ts);
 	
 	/**
-	 * get the <em>latest</em> {@link ITimestampedCell}
+	 * lookup the <em>latest</em> {@link ITimestampedCell}
 	 * @return a {@link ITimestampedCell}
 	 */
-	public ITimestampedCell get();
+    ITimestampedCell get();
 	
 	/**
 	 * Start the garbage collector daemon thread.
 	 */
-	public void startGCDaemon();
+    void startGCDaemon();
 }

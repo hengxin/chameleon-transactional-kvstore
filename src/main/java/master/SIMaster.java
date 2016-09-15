@@ -1,5 +1,6 @@
 package master;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
@@ -48,9 +50,11 @@ import static twopc.coordinator.phaser.CommitPhaser.Phase.PREPARE;
  */
 public final class SIMaster extends AbstractMaster implements ITransactional, I2PCParticipant {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SIMaster.class);
-	private final ExecutorService exec = Executors.newFixedThreadPool(1);
-	
-	private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
+	private final ExecutorService exec = Executors.newSingleThreadExecutor();
+
+    @Deprecated
+	@NotNull
+    private AtomicLong ts = new AtomicLong(0);	// for generating start-timestamps and commit-timestamps; will be accessed concurrently
 	private final StartCommitLogs logs = new StartCommitLogs();	// commit log: each entry is composed of start-timestamp, commit-timestamp, and buffered updates of a transaction
 	private final CKeyToOrdinal ckOrdIndex = new CKeyToOrdinal();
 
@@ -95,11 +99,10 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	 * @return A start-timestamp 
 	 * @throws TransactionExecutionException 
 	 */
-	@Override
+	@NotNull
+    @Override
 	public Timestamp start() throws TransactionExecutionException {
 	    LOGGER.debug("[{}] starts a transaction.", this.getClass().getSimpleName());
-
-        // FIXME: ts is a Remote object.
         return new Timestamp(ts.incrementAndGet());
     }
 
@@ -129,13 +132,13 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	 */
 	@Deprecated
 	@Override
-	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vcm)
+	public boolean commit(@NotNull ToCommitTransaction tx, @NotNull VersionConstraintManager vcm)
             throws TransactionExecutionException {
 			Timestamp cts = null;
 
-			/**
-			 * {@link VersionConstraintManager} is local to this method.
-			 * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free). 
+			/*
+			  {@link VersionConstraintManager} is local to this method.
+			  Thus vc (version-constraint) can be checked separately from wcf (write-conflict free).
 			 */
 			boolean vcChecked = vcm.check(table);
 			boolean wcfChecked;
@@ -155,10 +158,10 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 			}
 
 			if(canCommitted) {
-				/**
-				 * Chameleon does not require read operations of a transaction to get the <i>latest</i> version 
-				 * before the sts of that transaction. Thus it is not necessary for the master to synchronize the 
-				 * updates to the underlying table with read operations, both guarded by the lock on #logs. 
+				/*
+				  Chameleon does not require read operations of a transaction to lookup the <i>latest</i> version
+				  before the sts of that transaction. Thus it is not necessary for the master to synchronize the
+				  updates to the underlying table with read operations, both guarded by the lock on #logs.
 				 */
 				table.apply(cts, tx.getBufferedUpdates());	// (4) apply buffered-updates to the in-memory table
 				try {
@@ -172,29 +175,42 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	}
 
     @Override
-    public boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm)
+    public boolean prepare(@Nullable ToCommitTransaction tx, @Nullable VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException {
-        LOGGER.info("[{}] begins the [{}] phase with tx [{}] and vcm [{}]",
+        LOGGER.info("[{}] begins the [{}] phase with tx [{}] and vcm [{}].",
                 this.getClass().getSimpleName(), PREPARE, tx, vcm);
 
+        /*
+         * {@link VersionConstraintManager} is local to this method.
+         * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free).
+         */
         Future<Boolean> prepareFuture = exec.submit(() -> {
-            /**
-             * {@link VersionConstraintManager} is local to this method.
-             * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free).
-             */
-            logs.writeLock.lock();
-
             boolean vcChecked = true;
             if (vcm != null)  // FIXME: ensuring vcm not null
                 vcChecked = vcm.check(table);
-            LOGGER.debug("The result of checking vcm [{}] is [{}].", vcm, vcChecked);
+            LOGGER.info("Checking vcm [{}] is [{}].", vcm, vcChecked);
 
-            boolean wcfChecked = logs.wcf(tx);
-            LOGGER.debug("The result of checking wcf against tx [{}] and logs [{}] is [{}].",
-                    tx, logs, wcfChecked);
+            boolean wcfChecked = true;  // TODO: Putting wcf-checking before vc-checking?
+            if (tx != null) {
+                try {
+                    LOGGER.debug("The logs.lock is [{}].", logs.lock);
+                    logs.writeLock.tryLock(2, TimeUnit.SECONDS);
+                    LOGGER.debug("After writeLock.tryLock(): the logs.lock is [{}].", logs.lock);
+                } catch (InterruptedException ie) {
+                    return false;
+                }
+
+                wcfChecked = logs.wcf(tx);
+
+                LOGGER.info("Checking wcf against tx [sts: {}, cts: {}] is [{}].",
+                        tx.getSts(), tx.getCts(), wcfChecked);
+            }
 
             return vcChecked && wcfChecked;
         });
+
+        LOGGER.info("[{}] ends the [{}] phase with tx [{}] and vcm [{}].",
+                this.getClass().getSimpleName(), PREPARE, tx, vcm);
 
         try {
             return prepareFuture.get();
@@ -206,42 +222,63 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
     }
 
     @Override
-    public boolean commit(ToCommitTransaction tx, Timestamp cts)
+    public boolean commit(@Nullable final ToCommitTransaction tx, @NotNull final Timestamp cts)
             throws RemoteException, TransactionExecutionException {
-        LOGGER.info("[{}] begins the [{}] phase with tx [{}] and cts [{}]",
+        LOGGER.info("[{}] begins the [{}] phase with tx [{}] and cts [{}].",
                 this.getClass().getSimpleName(), COMMIT, tx, cts);
 
-        exec.submit( () -> {
-            // update start-commit-log
-            logs.addStartCommitLog(tx.getSts(), cts,
-                    tx.getBufferedUpdates().fillTsAndOrd(cts, ckOrdIndex));
-            LOGGER.debug("[{}] updates the start-commit-log", this.getClass().getSimpleName());
+        if (tx != null) {
+            tx.setCts(cts);
 
-            logs.writeLock.unlock();
-        });
+            Future<Boolean> dummyFuture = exec.submit(() -> {
+                logs.addStartCommitLog(tx.getSts(), cts,
+                        tx.getBufferedUpdates().fillTsAndOrd(cts, ckOrdIndex));
+                LOGGER.debug("[{}] updates the start-commit-log", this.getClass().getSimpleName());
 
-        /**
-         * Chameleon does not require read operations of a transaction to
-         * get the <i>latest</i> version before the sts of that transaction.
-         * Thus it is not necessary for the master to synchronize the updates
-         * to the underlying table with read operations, both guarded by the lock on #logs.
-         */
-        table.apply(cts, tx.getBufferedUpdates());	// apply buffered-updates to the in-memory table
-        try {
-            super.messenger.ifPresent(messenger -> messenger.send(tx));	// propagate
-        } catch (TransactionCommunicationException tae) {
-            LOGGER.warn(tae.getMessage(), tae.getCause());
+                LOGGER.debug("The logs.lock is [{}].", logs.lock);
+                logs.writeLock.unlock();
+                LOGGER.debug("After writeLock.unlock(): the logs.lock is [{}].", logs.lock);
+                return true;
+            });
+
+            try {
+                dummyFuture.get();
+            } catch (InterruptedException | ExecutionException ieee) {
+                ieee.printStackTrace();
+            }
+
+            /*
+              Chameleon does not require read operations of a transaction to
+              lookup the <i>latest</i> version before the sts of that transaction.
+              Thus it is not necessary for the master to synchronize the updates
+              to the underlying table with read operations, both guarded by the lock on #logs.
+             */
+//            LOGGER.debug("tx.getBufferedUpdates(): [{}].", tx.getBufferedUpdates());
+            table.apply(tx);    // apply buffered-updates to the in-memory table
+
+            LOGGER.debug("Propagate this transaction with cts: [{}].", cts);
+            try {
+                super.messenger.ifPresent(messenger -> messenger.send(tx));    // propagate
+            } catch (TransactionCommunicationException tae) {
+                LOGGER.warn(tae.getMessage(), tae.getCause());
+            }
         }
+
+        LOGGER.info("[{}] ends the [{}] phase with tx [{}] and cts [{}].",
+                this.getClass().getSimpleName(), COMMIT, tx, cts);
 
         return true;
     }
 
     @Override
-    public void abort() {
-        LOGGER.info("[{}] begins the [{}] phase.", this.getClass().getSimpleName(), ABORT);
+    public void abort(ToCommitTransaction tx) {
+        LOGGER.debug("[{}] begins the [{}] phase.", this.getClass().getSimpleName(), ABORT);
 
         // TODO what else to do?
-        exec.submit(logs.writeLock::unlock);
+        if (tx != null)
+            exec.submit(logs.writeLock::unlock);
+
+        LOGGER.debug("[{}] ends the [{}] phase.", this.getClass().getSimpleName(), ABORT);
     }
 
 }

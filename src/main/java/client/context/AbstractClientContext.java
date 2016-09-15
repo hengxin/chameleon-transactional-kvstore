@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
@@ -38,7 +38,9 @@ import twopc.coordinator.Abstract2PCCoordinator;
  * @date Created on 10-28-2015
  */
 public abstract class AbstractClientContext extends AbstractContext {
+    private static final long serialVersionUID = 3378039247164492259L;
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractClientContext.class);
+
     @Language("Properties")
     public final static String DEFAULT_SITE_PROPERTIES_FILE = "client/site.properties";
     @Language("Properties")
@@ -46,9 +48,8 @@ public abstract class AbstractClientContext extends AbstractContext {
     @Language("Properties")
     public final static String DEFAULT_TO_PROPERTIES_FILE = "timing/to.properties";
 
-	protected IPartitioner partitioner;
-	protected transient Optional<ISite> cached_read_site = Optional.empty();
-	
+    protected IPartitioner partitioner;
+
 	/**
 	 * Constructor with user-specified properties file.
 	 * <p> If some master site cannot be parsed from .properties file 
@@ -74,23 +75,30 @@ public abstract class AbstractClientContext extends AbstractContext {
      * @param tx  {@link ToCommitTransaction} to partition
      * @return a map from site index to {@link ToCommitTransaction}
      */
-    public Map<Integer, ToCommitTransaction> partition(ToCommitTransaction tx) {
+    public Map<Integer, ToCommitTransaction> partition(@NotNull ToCommitTransaction tx) {
         return tx.partition(partitioner, membership.getReplGrpNo());
     }
 
-    public Map<Integer, VersionConstraintManager> partition(VersionConstraintManager vcm) {
+    public Map<Integer, VersionConstraintManager> partition(@NotNull VersionConstraintManager vcm) {
         return vcm.partition(partitioner, membership.getReplGrpNo());
     }
 
     /**
      * Get the coordinator for committing the transaction {@code tx}
      * @param tx {@link ToCommitTransaction} to commit
+     * @param vcm {@link VersionConstraintManager} associated with {@code tx}
      * @return an {@link Abstract2PCCoordinator}
      */
-    public Abstract2PCCoordinator getCoord(ToCommitTransaction tx) {
-        Set<Integer> masterIds = partition(tx).keySet();
-        int size = masterIds.size();
-        int coordId = masterIds.toArray(new Integer[size])[new Random().nextInt(size)];
+    public Abstract2PCCoordinator getCoord(@NotNull ToCommitTransaction tx, @NotNull VersionConstraintManager vcm) {
+        Set<Integer> txIds = partition(tx).keySet();
+        Set<Integer> rvsiIds = partition(vcm).keySet();
+
+        HashSet<Integer> ids = new HashSet<>();
+        ids.addAll(txIds);
+        ids.addAll(rvsiIds);
+
+        int size = ids.size();
+        int coordId = ids.toArray(new Integer[size])[new Random().nextInt(size)];
         return coordMembership.getCoord(coordId, this);  // FIXME "this" contains too much stuff
     }
 
@@ -111,20 +119,14 @@ public abstract class AbstractClientContext extends AbstractContext {
 	 * Return a site who holds value(s) of the specified key.
 	 * @param ck	{@link CompoundKey} key
 	 * @return		an {@link IRMI} holding @param ck
-	 * @implNote	In principle, the client is free to contact <i>any</i> site to read.
-	 * 	In this particular implementation, it prefers an already cached slave. 
-	 * 
+	 *
 	 *  <p>This implementation requires and utilizes the {@link #partitioner} 
-	 * 	specified by subclasses of this {@link AbstractClientContext}. If you don't want
-	 *  to rely on {@link IPartitioner}, you can override this method.
+	 * 	specified by subclasses of this {@link AbstractClientContext}.
+     * 	If you don't want to rely on {@link IPartitioner}, you can override this method.
 	 */
 	public ISite getReadSite(CompoundKey ck) {
-		return cached_read_site.orElseGet(() -> {
-			int index = partitioner.locateSiteIndexFor(ck, membership.getReplGrpNo());
-			ISite read_site = membership.getReplGrp(index).getSiteForRead();
-			cached_read_site = Optional.of(read_site);
-			return read_site;
-		});
+        int index = partitioner.locateSiteIndexFor(ck, membership.getReplGrpNo());
+        return membership.getReplGrp(index).getSiteForRead();
 	}
 	
 	/**

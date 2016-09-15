@@ -45,6 +45,7 @@ public class SocketMsgProducer implements IMessageProducer {
         try ( ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())) {
             oos.writeObject(msg);
         } catch (IOException ioe) {
+            ioe.printStackTrace();
             LOGGER.error("Failed to write due to [{}].", ioe);
         }
     }

@@ -2,6 +2,7 @@ package benchmarking.workload.transaction;
 
 import com.google.common.base.MoreObjects;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ import client.clientlibrary.rvsi.rvsimanager.RVSISpecificationManager;
 public class Transaction {
     private static final Logger LOGGER = LoggerFactory.getLogger(Transaction.class);
 
+    @NotNull
     private final List<Operation> ops;
     private RVSISpecificationManager rvsiSpecManager;
 
@@ -29,6 +31,7 @@ public class Transaction {
 
     void addOp(Operation op) { ops.add(op); }
 
+    @NotNull
     public List<Operation> getOps() { return ops; }
     public RVSISpecificationManager getRvsiSpecManager() { return rvsiSpecManager; }
 
@@ -40,6 +43,7 @@ public class Transaction {
 
     public void setRvsiSpecManager(RVSISpecificationManager rvsiSpecManager) { this.rvsiSpecManager = rvsiSpecManager; }
 
+    @NotNull
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)

@@ -3,6 +3,8 @@
  */
 package client.clientlibrary.rvsi.rvsispec;
 
+import org.jetbrains.annotations.NotNull;
+
 import client.clientlibrary.rvsi.vc.AbstractVersionConstraint;
 import client.clientlibrary.rvsi.vc.BVVersionConstraint;
 import kvs.component.Timestamp;
@@ -14,7 +16,8 @@ import kvs.component.Timestamp;
  * @date Created on 10-27-2015
  */
 public class BVSpecification extends AbstractRVSISpecification {
-	@Override
+	@NotNull
+    @Override
 	public AbstractVersionConstraint generateVersionConstraint(Timestamp ts) {
 		return new BVVersionConstraint(AbstractRVSISpecification.transform(super.vceInfos, ts));
 	}

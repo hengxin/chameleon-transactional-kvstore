@@ -1,5 +1,7 @@
 package messaging.socket;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -36,7 +38,8 @@ public class SocketAddressPropertiesUtil {
         return addresses;
     }
 
-    private static SocketAddress parse(String hostIp) {
+    @NotNull
+    private static SocketAddress parse(@NotNull String hostIp) {
         String[] parts = hostIp.split(":");
         return new InetSocketAddress(parts[0], Integer.parseInt(parts[1]));
     }

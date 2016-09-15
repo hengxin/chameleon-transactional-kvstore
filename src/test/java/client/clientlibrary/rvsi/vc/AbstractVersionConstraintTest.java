@@ -1,5 +1,6 @@
 package client.clientlibrary.rvsi.vc;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,16 +24,24 @@ import static org.junit.Assert.assertNotEquals;
 
 public class AbstractVersionConstraintTest {
 
-	private AbstractRVSISpecification rvsiSpec = new BVSpecification();
-	private QueryResults queryResults = new QueryResults();
+	@NotNull
+    private AbstractRVSISpecification rvsiSpec = new BVSpecification();
+	@NotNull
+    private QueryResults queryResults = new QueryResults();
 
-	private CompoundKey ck_r1_c1 = new CompoundKey("R1", "C1");
-	private CompoundKey ck_r1_c2 = new CompoundKey("R1", "C2");
-	private CompoundKey ck_r2_c1 = new CompoundKey("R2", "C1");
-	private CompoundKey ck_r2_c2 = new CompoundKey("R2", "C2");
+	@NotNull
+    private CompoundKey ck_r1_c1 = new CompoundKey("R1", "C1");
+	@NotNull
+    private CompoundKey ck_r1_c2 = new CompoundKey("R1", "C2");
+	@NotNull
+    private CompoundKey ck_r2_c1 = new CompoundKey("R2", "C1");
+	@NotNull
+    private CompoundKey ck_r2_c2 = new CompoundKey("R2", "C2");
 	
-	private TimestampedCell tc1 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, Ordinal.ORDINAL_INIT, new Cell("R1C1"));
-	private TimestampedCell tc2 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, Ordinal.ORDINAL_INIT, new Cell("R2C2"));
+	@NotNull
+    private TimestampedCell tc1 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, Ordinal.ORDINAL_INIT(), new Cell("R1C1"));
+	@NotNull
+    private TimestampedCell tc2 = new TimestampedCell(Timestamp.TIMESTAMP_INIT, Ordinal.ORDINAL_INIT(), new Cell("R2C2"));
 	
 	@Before
 	public void setUp() throws Exception {

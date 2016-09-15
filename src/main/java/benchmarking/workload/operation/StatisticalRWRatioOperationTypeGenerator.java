@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * {@link StatisticalRWRatioOperationTypeGenerator}
- * generates a sequence of operation types (read (0) or write (1))
- * based on the r/w ratio.
+ * generates a sequence of {@link OpType}s
+ * based on the r/w ratio and using {@link EnumeratedIntegerDistribution}.
  *
  * @author hengxin
  * @date 16-9-8

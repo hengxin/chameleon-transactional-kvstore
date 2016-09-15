@@ -21,6 +21,7 @@ public abstract class AbstractContext implements Serializable {
 
     @NotNull
     public ISiteMembership getMembership() { return membership; }
+    @NotNull
     public ITimestampOracle getTsOracle() { return to; }
 
 }

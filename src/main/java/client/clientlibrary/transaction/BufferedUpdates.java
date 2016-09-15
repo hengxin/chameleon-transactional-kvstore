@@ -4,6 +4,8 @@ import com.google.common.base.MoreObjects;
 
 import net.jcip.annotations.NotThreadSafe;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,7 +82,8 @@ public final class BufferedUpdates implements Serializable {
      * @return  the last update {@link ITimestampedCell} on {@code r} + {@code c};
      *  it may be {@code null} if no such updates at all.
      */
-	public ITimestampedCell lookup(Row r, Column c) {
+	@Nullable
+    public ITimestampedCell lookup(Row r, Column c) {
 	    return lookup(new CompoundKey(r, c));
     }
 
@@ -90,7 +93,7 @@ public final class BufferedUpdates implements Serializable {
      * @return  the last update {@link ITimestampedCell} on {@code ck};
      *  it may be {@code null} if no such updates at all.
      */
-	public ITimestampedCell lookup(CompoundKey ck) {
+	public ITimestampedCell lookup(@NotNull CompoundKey ck) {
         KVItem kvItem;
 
 	    // reverse iteration
@@ -111,25 +114,28 @@ public final class BufferedUpdates implements Serializable {
 	 * @param cts 
 	 * 	{@link Timestamp} (commit-timestamp of the transaction of the buffered updates) to assign 
 	 * @param ckOrdIndex
-	 * 	Index of {@link Ordinal} for each {@link CompoundKey}; used to get the next ordinal. 
+	 * 	Index of {@link Ordinal} for each {@link CompoundKey}; used to lookup the next ordinal.
 	 *
-     * @implNote This method will modify the parameter {@code ckOrdIndex}
-     *
-	 * FIXME check the lambda expression
+     * @implNote
+     *  (1) This method will modify the parameter {@code ckOrdIndex};
+     *  (2) This method will modify the underlying {@link #itemList} of this {@link BufferedUpdates}.
 	 */
-	public BufferedUpdates fillTsAndOrd(Timestamp cts, CKeyToOrdinal ckOrdIndex) {
-		return new BufferedUpdates( 
-			itemList.stream()
-				.map(kvItem -> {
-						CompoundKey ck = kvItem.getCK();
-						ITimestampedCell tsCell = kvItem.getTsCell();
-						
-						Ordinal currentOrd = ckOrdIndex.get(ck);
-						Ordinal nextOrd = currentOrd.incrementAndGet();
-						
-						return new KVItem(ck, new TimestampedCell(cts, nextOrd, tsCell.getCell()));
-					})
-				.collect(Collectors.toList()));
+	@NotNull
+    public BufferedUpdates fillTsAndOrd(@NotNull final Timestamp cts, @NotNull CKeyToOrdinal ckOrdIndex) {
+	    itemList.replaceAll(kvItem -> {
+            CompoundKey ck = kvItem.getCK();
+            ITimestampedCell tsCell = kvItem.getTsCell();
+
+            Ordinal currentOrd = ckOrdIndex.lookup(ck);
+            Ordinal nextOrd = currentOrd.incrementAndGet();
+
+            LOGGER.debug("In BufferedUpdates, cts is [{}], ck is [{}], and ord is [{}]",
+                    cts, ck, nextOrd);
+
+            return new KVItem(ck, new TimestampedCell(cts, nextOrd, tsCell.getCell()));
+        });
+
+        return this;
 	}
 	
 	public Stream<KVItem> stream() { return itemList.stream(); }
@@ -141,18 +147,21 @@ public final class BufferedUpdates implements Serializable {
 	}
 	
 	/**
-	 * Merges two {@link BufferedUpdates} and returns a new one. It does not modify the original ones. 
+	 * Merges two {@link BufferedUpdates} and returns a new one.
+     * It does not modify the original ones.
+     *
 	 * @param firstUpdates		{@link BufferedUpdates} to merge
 	 * @param secondUpdates	{@link BufferedUpdates} to merge
 	 * @return	a new {@link BufferedUpdates} which merges the two original ones
 	 */
-	public static BufferedUpdates merge(BufferedUpdates firstUpdates, BufferedUpdates secondUpdates) {
-		List<KVItem> item_list = new ArrayList<>();
+	@NotNull
+    public static BufferedUpdates merge(@NotNull BufferedUpdates firstUpdates, @NotNull BufferedUpdates secondUpdates) {
+		List<KVItem> items = new ArrayList<>();
 
-		item_list.addAll(firstUpdates.itemList);
-		item_list.addAll(secondUpdates.itemList);
+		items.addAll(firstUpdates.itemList);
+		items.addAll(secondUpdates.itemList);
 
-		return new BufferedUpdates(item_list);
+		return new BufferedUpdates(items);
 	}
 	
 	@Override
@@ -161,7 +170,7 @@ public final class BufferedUpdates implements Serializable {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if(o == this)
 			return true;
 		if(o == null)

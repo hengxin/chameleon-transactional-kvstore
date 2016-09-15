@@ -1,5 +1,7 @@
 package client.context;
 
+import org.jetbrains.annotations.NotNull;
+
 import client.clientlibrary.partitioning.IPartitioner;
 
 /**
@@ -31,7 +33,7 @@ public class ClientContextMultiMaster extends AbstractClientContext {
      * @param toProperties  properties file for timestamp oracle
 	 * @param partitioner	{@link IPartitioner} for keyspace partition strategy
 	 */
-	public ClientContextMultiMaster(String siteProperties, String cfProperties, String toProperties,
+	public ClientContextMultiMaster(@NotNull String siteProperties, @NotNull String cfProperties, @NotNull String toProperties,
                                     IPartitioner partitioner) {
 		super(siteProperties, cfProperties, toProperties);
 		super.partitioner = partitioner;

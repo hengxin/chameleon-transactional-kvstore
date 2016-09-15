@@ -2,6 +2,7 @@ package site;
 
 import com.google.common.base.MoreObjects;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,23 +22,24 @@ import rmi.RMIUtil;
 
 /**
  * An {@link AbstractSite} holds an {@link AbstractTable}, upon which
- * it provides remotely available {@code get/put} operations (by implementing {@link ISite}).
+ * it provides remotely available {@code lookup/put} operations (by implementing {@link ISite}).
  *
  * An {@link AbstractSite} exports itself for RMI calls by implementing {@link IRMI}.
  *
  * @author hengxin
  * @date Created on 11-25-2015
  *
- * FIXME separate the rmi logic (export/unexport) from the table logic (get/put)???
+ * FIXME separate the rmi logic (export/unexport) from the table logic (lookup/put)???
  */
 public abstract class AbstractSite implements ISite, IRMI {
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSite.class);
 
     private final Member self;
-	protected final AbstractContext context;
+	@NotNull
+    protected final AbstractContext context;
 	protected AbstractTable table;
 	
-	public AbstractSite(AbstractContext context) {
+	public AbstractSite(@NotNull AbstractContext context) {
 		this.context = context;
 		self = context.getMembership().getSelf();
         export();
@@ -48,8 +50,10 @@ public abstract class AbstractSite implements ISite, IRMI {
 	 */
 	@Override
 	public ITimestampedCell get(Row r, Column c) {
-	    LOGGER.debug("Site [{}] return value for [{}] and [{}].", this, r, c);
-		return table.getTimestampedCell(r, c);
+	    ITimestampedCell tsCell = table.getTimestampedCell(r, c);
+	    LOGGER.debug("Site [{}] return value [{}] for [{}] and [{}].", this, tsCell, r, c);
+
+		return tsCell;
 	}
 	
 	/**
@@ -85,7 +89,8 @@ public abstract class AbstractSite implements ISite, IRMI {
      *
      * FIXME refactor: extract from this class
 	 */
-    public static RuntimeMember locateRuntimeMember(Member member) {
+    @NotNull
+    public static RuntimeMember locateRuntimeMember(@NotNull Member member) {
         Remote obj = RMIUtil.lookup(member.getHost(), member.getRmiRegistryPort(), member.getRmiRegistryName());
         return new RuntimeMember(member, (ISite) obj);
     }
@@ -95,13 +100,14 @@ public abstract class AbstractSite implements ISite, IRMI {
 	 * @param members a list of {@link Member}s to be located.
 	 * @return 	a list of {@link RuntimeMember}
 	 */
-    public static List<RuntimeMember> locateRuntimeMembers(List<Member> members) {
+    public static List<RuntimeMember> locateRuntimeMembers(@NotNull List<Member> members) {
         return members.stream()
                 .map(AbstractSite::locateRuntimeMember)
                 .collect(Collectors.toList());
     }
 
-	@Override
+	@NotNull
+    @Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.addValue(self)

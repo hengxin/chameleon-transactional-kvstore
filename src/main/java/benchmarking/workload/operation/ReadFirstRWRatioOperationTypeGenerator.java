@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 import java.util.stream.IntStream;
 
 /**
- * {@link ReadFirstRWRatioOperationTypeGenerator}
+ * {@link ReadFirstRWRatioOperationTypeGenerator} generates a sequence of
+ * {@link OpType}s in which all reads come before all writes.
+ *
  * @author hengxin
  * @date 16-9-10
  */
@@ -16,7 +18,11 @@ public class ReadFirstRWRatioOperationTypeGenerator implements IOperationTypeGen
     private final OpType[] opTypeSequence;
     private int index = 0;
 
-    public ReadFirstRWRatioOperationTypeGenerator(final int numberOfOperations, final int rwRatio) {
+    /**
+     * @param numberOfOperations    total number of operation types to generate
+     * @param rwRatio   ratio of #Reads/#Writes
+     */
+    public ReadFirstRWRatioOperationTypeGenerator(final int numberOfOperations, final double rwRatio) {
         double writeProb = 1.0 / (rwRatio + 1);
         double readProb = 1.0 - writeProb;
 

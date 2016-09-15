@@ -25,7 +25,7 @@ public interface ISite extends Remote {
 	 * @return		an {@link ITimestampedCell} corresponding to @param r and @param c
 	 * @throws RemoteException	if an error occurs during the RMI call
 	 */
-	public ITimestampedCell get(Row r, Column c) throws RemoteException;
+    ITimestampedCell get(Row r, Column c) throws RemoteException;
 	
 	/**
 	 * Writes into this data provider.
@@ -35,5 +35,6 @@ public interface ISite extends Remote {
 	 * @return		{@code true} if write successfully; {@code false}, otherwise.
 	 * @throws RemoteException	if an error occurs during the RMI call
 	 */
-	public boolean put(Row r, Column c, ITimestampedCell ts_cell) throws RemoteException;
+    boolean put(Row r, Column c, ITimestampedCell ts_cell) throws RemoteException;
+
 }

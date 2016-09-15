@@ -1,5 +1,6 @@
 package master;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -17,14 +18,15 @@ import site.AbstractSite;
  * @date Created on Jan 9, 2016
  */
 public abstract class AbstractMaster extends AbstractSite {
-	final Optional<IMessageProducer> messenger;
+	@NotNull
+    final Optional<IMessageProducer> messenger;
 
 	/**
 	 * @param context	context for the master site
 	 * @param messenger		the underlying mechanism of message propagation; 
 	 * 	it can be {@code null} if this master site does not need to propagate messages. 
 	 */
-	public AbstractMaster(AbstractContext context, @Nullable IMessageProducer messenger) {
+	public AbstractMaster(@NotNull AbstractContext context, @Nullable IMessageProducer messenger) {
 		super(context);
 		this.messenger = Optional.of(messenger);
 	}

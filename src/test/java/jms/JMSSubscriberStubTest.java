@@ -6,6 +6,8 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,17 +39,25 @@ public class JMSSubscriberStubTest {
 	private final IMessageProducer publisher = new JMSPublisher();
 	
 	private Timestamp sts; 
-	private CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
-	private CompoundKey ck_ry_cy = new CompoundKey("Ry", "Cy");
-	private Cell cell_rx_cx = new Cell("RxCx");
-	private Cell cell_ry_cy = new Cell("RyCy");
+	@NotNull
+    private CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
+	@NotNull
+    private CompoundKey ck_ry_cy = new CompoundKey("Ry", "Cy");
+	@NotNull
+    private Cell cell_rx_cx = new Cell("RxCx");
+	@NotNull
+    private Cell cell_ry_cy = new Cell("RyCy");
 	
-	private BufferedUpdates buffered_updates = new BufferedUpdates();
+	@NotNull
+    private BufferedUpdates buffered_updates = new BufferedUpdates();
 
-	private AbstractMessage commit_log_message = null;
+	@Nullable
+    private AbstractMessage commit_log_message = null;
 	
-	private AbstractTable table = new SlaveTable();
-	@SuppressWarnings("unused")
+	@NotNull
+    private AbstractTable table = new SlaveTable();
+	@Nullable
+    @SuppressWarnings("unused")
 	private AbstractJMSParticipant subscriber = null;
 
 	@Before
@@ -70,13 +80,13 @@ public class JMSSubscriberStubTest {
 		Thread.sleep(2000);
 
 		ITimestampedCell ts_cell_rx_cx = this.table.getTimestampedCell(this.ck_rx_cx.getRow(), this.ck_rx_cx.getCol());
-		assertEquals("Should get the updated cell: RxCx.", this.cell_rx_cx, ts_cell_rx_cx.getCell());
+		assertEquals("Should lookup the updated cell: RxCx.", this.cell_rx_cx, ts_cell_rx_cx.getCell());
 		
 		ITimestampedCell ts_cell_ry_cy = this.table.getTimestampedCell(this.ck_ry_cy.getRow(), this.ck_ry_cy.getCol());
-		assertEquals("Should get the updated cell: RyCy.", this.cell_ry_cy, ts_cell_ry_cy.getCell());
+		assertEquals("Should lookup the updated cell: RyCy.", this.cell_ry_cy, ts_cell_ry_cy.getCell());
 		
 		ITimestampedCell ts_cell_no_such_data = this.table.getTimestampedCell(this.ck_rx_cx.getRow(), this.ck_ry_cy.getCol());
-		assertEquals("Should get the initial cell.", TimestampedCell.TIMESTAMPED_CELL_INIT, ts_cell_no_such_data);
+		assertEquals("Should lookup the initial cell.", TimestampedCell.TIMESTAMPED_CELL_INIT, ts_cell_no_such_data);
 	}
 	
 	/**
@@ -87,7 +97,8 @@ public class JMSSubscriberStubTest {
 	 */
 	private final class JMSSubscriberStub extends JMSSubscriber {
 
-		private AbstractTable table = null;
+		@Nullable
+        private AbstractTable table = null;
 		
 		public JMSSubscriberStub(AbstractTable table) {
 			this.table = table;

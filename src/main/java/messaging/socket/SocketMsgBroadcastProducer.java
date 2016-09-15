@@ -22,9 +22,7 @@ public class SocketMsgBroadcastProducer implements IMessageProducer {
         this.addresses = SocketAddressPropertiesUtil.getAddresses(saProperties);
     }
 
-    public SocketMsgBroadcastProducer(List<SocketAddress> addresses) {
-        this.addresses = addresses;
-    }
+    public SocketMsgBroadcastProducer(List<SocketAddress> addresses) { this.addresses = addresses; }
 
     @Override
     public void send(AbstractMessage msg) {

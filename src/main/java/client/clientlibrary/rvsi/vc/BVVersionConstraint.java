@@ -1,5 +1,9 @@
 package client.clientlibrary.rvsi.vc;
 
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +28,7 @@ import static java.util.stream.Collectors.toList;
  */
 public final class BVVersionConstraint extends AbstractVersionConstraint {
     private static final long serialVersionUID = -4535031435746279370L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(BVVersionConstraint.class);
 
     public BVVersionConstraint(List<VCEntry> vcEntries) { super(vcEntries); }
 
@@ -33,16 +38,23 @@ public final class BVVersionConstraint extends AbstractVersionConstraint {
      * @return O_x(T_i.sts) - ord(x_j) <= k1; see the paper.
      */
     @Override
-    public boolean check(AbstractTable table, VCEntry vce) {
+    public boolean check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
         ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
+        LOGGER.info("TsCell to check is : [{}].", tsCell);
+
         long ord = tsCell.getOrdinal().getOrd();
-        return (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
+        boolean checked = (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
+
+        LOGGER.debug("Checking BVVersionConstraint: [{}] - [{}] <= [{}] with result [{}].",
+                ord, vce.getVceOrd().getOrd(), vce.getVceBound(), checked);
+
+        return checked;
     }
 
     @Override
-    public Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets) {
+    public Map<Integer, AbstractVersionConstraint> partition(@NotNull IPartitioner partitioner, int numberOfBuckets) {
         return vcEntries.stream()
-                .collect(groupingBy(vce -> partitioner.locateSiteIndexFor(vce.getVceCk(), buckets),
+                .collect(groupingBy(vce -> partitioner.locateSiteIndexFor(vce.getVceCk(), numberOfBuckets),
                         collectingAndThen(toList(), BVVersionConstraint::new)));
     }
 

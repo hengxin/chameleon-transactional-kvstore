@@ -3,6 +3,9 @@
  */
 package util.intervaltree;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -12,9 +15,11 @@ import java.util.Set;
 
 public class IntervalTree<K extends Comparable<? super K>, V> {
 	
-	private IntervalTreeNode<K, V> root = null;
+	@Nullable
+    private IntervalTreeNode<K, V> root = null;
 
-	public Collection<V> searchOverlapping(Interval<K> range){
+	@NotNull
+    public Collection<V> searchOverlapping(Interval<K> range){
 		Collection<V> c = new LinkedList<V>();
 		if(root != null){
 			root.searchOverlapping(range, c);
@@ -22,14 +27,16 @@ public class IntervalTree<K extends Comparable<? super K>, V> {
 		return c;
 	}
 	
-	public Collection<V> searchOverlapping(K low, K high){
+	@NotNull
+    public Collection<V> searchOverlapping(K low, K high){
 		return searchOverlapping(new Interval<K>(low, high));
 	}
 	
 	/**
 	 * Returns a collection of values that wholly contain the range specified.
 	 */
-	public Collection<V> searchContaining(Interval<K> range){
+	@NotNull
+    public Collection<V> searchContaining(Interval<K> range){
 		Collection<V> c = new LinkedList<V>();
 		if(root != null){
 			root.searchContaining(range, c);
@@ -40,14 +47,16 @@ public class IntervalTree<K extends Comparable<? super K>, V> {
 	/**
 	 * Returns a collection of values that wholly contain the range specified.
 	 */
-	public Collection<V> searchContaining(K low, K high){
+	@NotNull
+    public Collection<V> searchContaining(K low, K high){
 		return searchContaining(new Interval<K>(low, high));
 	}
 	
 	/**
 	 * Returns a collection of values that are wholly contained by the range specified.
 	 */
-	public Collection<V> searchContainedBy(Interval<K> range){
+	@NotNull
+    public Collection<V> searchContainedBy(Interval<K> range){
 		Collection<V> c = new LinkedList<V>();
 		if(root != null){
 			root.searchContainedBy(range, c);
@@ -58,7 +67,8 @@ public class IntervalTree<K extends Comparable<? super K>, V> {
 	/**
 	 * Returns a collection of values that are wholly contained by the range specified.
 	 */
-	public Collection<V> searchContainedBy(K low, K high){
+	@NotNull
+    public Collection<V> searchContainedBy(K low, K high){
 		return searchContainedBy(new Interval<K>(low, high));
 	}
 	
@@ -125,7 +135,8 @@ public class IntervalTree<K extends Comparable<? super K>, V> {
 		return values().size();
 	}
 
-	public Collection<V> values() {
+	@NotNull
+    public Collection<V> values() {
 		Collection<V> c = new LinkedList<V>();
 		if(root != null){
 			root.values(c);
@@ -133,7 +144,8 @@ public class IntervalTree<K extends Comparable<? super K>, V> {
 		return c;
 	}
 
-	public Set<Interval<K>> keySet() {
+	@NotNull
+    public Set<Interval<K>> keySet() {
 		Set<Interval<K>> s = new HashSet<Interval<K>>();
 		if(root != null){
 			root.keySet(s);
@@ -141,7 +153,7 @@ public class IntervalTree<K extends Comparable<? super K>, V> {
 		return s;
 	}
 
-	public void putAll(Map<Interval<K>, V> m) {
+	public void putAll(@NotNull Map<Interval<K>, V> m) {
 		for(Interval<K> i : m.keySet()){
 			put(i, m.get(i));
 		}
@@ -155,7 +167,8 @@ public class IntervalTree<K extends Comparable<? super K>, V> {
 		return root != null && root.containsValue(value);
 	}
 
-	public Set<Entry<Interval<K>, V>> entrySet() {
+	@NotNull
+    public Set<Entry<Interval<K>, V>> entrySet() {
 		Set<Entry<Interval<K>, V>> s = new HashSet<Entry<Interval<K>, V>>();
 		if(root != null){
 			root.entrySet(s);

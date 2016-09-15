@@ -4,12 +4,15 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
-import net.jcip.annotations.Immutable;
 import net.jcip.annotations.ThreadSafe;
+
+import org.jetbrains.annotations.NotNull;
 
 import kvs.component.Cell;
 import kvs.component.Ordinal;
 import kvs.component.Timestamp;
+
+import static kvs.component.Ordinal.ORDINAL_INIT;
 
 /**
  * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp} (beside its {@link Ordinal}).
@@ -22,7 +25,6 @@ import kvs.component.Timestamp;
  *  See its {@link #compareTo(ITimestampedCell)}, {@link #hashCode()}, and {@link #equals(Object)}.
  *  <p> Builder design pattern???
  */
-@Immutable
 @ThreadSafe
 public class TimestampedCell implements ITimestampedCell {
 	private static final long serialVersionUID = -764314996680845231L;
@@ -42,7 +44,7 @@ public class TimestampedCell implements ITimestampedCell {
 	 */
 	public TimestampedCell() {
 		ts = Timestamp.TIMESTAMP_INIT;
-		ord = Ordinal.ORDINAL_INIT;
+		ord = ORDINAL_INIT();
 		cell = Cell.CELL_INIT;
 	}
 	
@@ -60,7 +62,7 @@ public class TimestampedCell implements ITimestampedCell {
 	public TimestampedCell(Timestamp ts, Cell c) {
 		this.ts = ts;
 		this.cell = c;
-		this.ord = Ordinal.ORDINAL_INIT;
+		this.ord = ORDINAL_INIT();
 	}
 	
 	/**
@@ -70,11 +72,12 @@ public class TimestampedCell implements ITimestampedCell {
 	public TimestampedCell(Cell cell) {
 		this.cell = cell;
 		this.ts = Timestamp.TIMESTAMP_INIT;
-		this.ord = Ordinal.ORDINAL_INIT;
+		this.ord = ORDINAL_INIT();
 	}
 
-	public static TimestampedCell replaceTimestamp(Timestamp ts, ITimestampedCell ts_cell) {
-		return new TimestampedCell(ts, ts_cell.getOrdinal(), ts_cell.getCell());
+	@NotNull
+    public static TimestampedCell replaceTimestamp(Timestamp ts, @NotNull ITimestampedCell tsCell) {
+		return new TimestampedCell(ts, tsCell.getOrdinal(), tsCell.getCell());
 	}
 	
 	@Override
@@ -88,7 +91,7 @@ public class TimestampedCell implements ITimestampedCell {
 	 * Compared by their {@link #ts} (of class {@link Timestamp}).
 	 */
 	@Override
-	public int compareTo(ITimestampedCell that) {
+	public int compareTo(@NotNull ITimestampedCell that) {
 		return ComparisonChain.start().compare(this.ts, ((TimestampedCell) that).ts).result();
 	}
 
@@ -118,7 +121,8 @@ public class TimestampedCell implements ITimestampedCell {
 		return Objects.equal(this.ts, that.ts);
 	}
 
-	@Override
+	@NotNull
+    @Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.addValue(this.ts).addValue(this.ord).addValue(this.cell)

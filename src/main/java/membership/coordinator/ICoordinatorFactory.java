@@ -1,5 +1,7 @@
 package membership.coordinator;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -17,6 +19,6 @@ public interface ICoordinatorFactory extends Remote {
      * @return an instance of {@link RVSI2PCPhaserCoordinator}
      * @throws RemoteException
      */
-    Abstract2PCCoordinator getRVSI2PCPhaserCoord(AbstractClientContext ctx)
+    @NotNull Abstract2PCCoordinator getRVSI2PCPhaserCoord(AbstractClientContext ctx)
             throws RemoteException;
 }

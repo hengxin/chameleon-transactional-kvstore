@@ -6,5 +6,5 @@ package master;
  * @date Created on Dec 26, 2015
  */
 public class MasterConfig {
-	public static final int TABLE_CAPACITY = 10;
+	public static final int TABLE_CAPACITY = 100;
 }

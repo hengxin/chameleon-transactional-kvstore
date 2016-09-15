@@ -7,5 +7,5 @@ import benchmarking.workload.transaction.Transaction;
  * @date 16-9-11
  */
 public interface ITransactionExecutor {
-    void execute(Transaction tx);
+    boolean execute(Transaction tx);
 }

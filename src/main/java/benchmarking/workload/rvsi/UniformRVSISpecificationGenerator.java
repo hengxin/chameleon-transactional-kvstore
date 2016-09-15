@@ -1,5 +1,6 @@
 package benchmarking.workload.rvsi;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,9 @@ public class UniformRVSISpecificationGenerator implements IRVSISpecificationGene
         this.k3 = k3;
     }
 
+    @NotNull
     @Override
-    public RVSISpecificationManager generateRVSISpecManager(final Set<Operation> ops) {
+    public RVSISpecificationManager generateRVSISpecManager(@NotNull final Set<Operation> ops) {
         HashSet<CompoundKey> cks = ops2cks(ops);
 
         AbstractRVSISpecification bvSpec = new BVSpecification();
@@ -58,7 +60,7 @@ public class UniformRVSISpecificationGenerator implements IRVSISpecificationGene
      *
      * @implNote FIXME: using more general Set to replace HashSet
      */
-    private HashSet<CompoundKey> ops2cks(Set<Operation> ops) {
+    private HashSet<CompoundKey> ops2cks(@NotNull Set<Operation> ops) {
         return ops.stream()
                 .map(Operation::getCK)
                 .collect(Collectors.toCollection(HashSet::new));

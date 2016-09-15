@@ -3,6 +3,8 @@ package client.clientlibrary.rvsi.vc;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+import org.jetbrains.annotations.Nullable;
+
 import kvs.component.Ordinal;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
@@ -26,7 +28,8 @@ import kvs.compound.KVItem;
  */
 public final class VCEntryRawInfo {
 	private final KVItem vceInfoKV;
-	private final KVItem vceInfoKvOptional;
+	@Nullable
+    private final KVItem vceInfoKvOptional;
 	private final int vceInfoBound;
 	
 	public VCEntryRawInfo(final KVItem kv, final KVItem kv_optional, final int bound) {
@@ -68,7 +71,7 @@ public final class VCEntryRawInfo {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (o == this)
 			return true;
 		if (o == null)

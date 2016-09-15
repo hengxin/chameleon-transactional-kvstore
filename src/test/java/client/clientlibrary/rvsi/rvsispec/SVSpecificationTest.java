@@ -1,6 +1,8 @@
 package client.clientlibrary.rvsi.rvsispec;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,21 +48,28 @@ public final class SVSpecificationTest {
 	private final HashSet<CompoundKey> ck_set_uv = new HashSet<>(); 
 	private int bound_uv = 3;
 	
-	private ITimestampedCell ts_cell_t = new TimestampedCell(new Timestamp(1), new Ordinal(1), new Cell("Cell_t"));
+	@NotNull
+    private ITimestampedCell ts_cell_t = new TimestampedCell(new Timestamp(1), new Ordinal(1), new Cell("Cell_t"));
 
-	private ITimestampedCell ts_cell_x = new TimestampedCell(new Timestamp(2), new Ordinal(2), new Cell("Cell_x"));
-	private ITimestampedCell ts_cell_y = new TimestampedCell(new Timestamp(3), new Ordinal(3), new Cell("Cell_y"));
-	private ITimestampedCell ts_cell_z = new TimestampedCell(new Timestamp(4), new Ordinal(4), new Cell("Cell_z"));
+	@NotNull
+    private ITimestampedCell ts_cell_x = new TimestampedCell(new Timestamp(2), new Ordinal(2), new Cell("Cell_x"));
+	@NotNull
+    private ITimestampedCell ts_cell_y = new TimestampedCell(new Timestamp(3), new Ordinal(3), new Cell("Cell_y"));
+	@NotNull
+    private ITimestampedCell ts_cell_z = new TimestampedCell(new Timestamp(4), new Ordinal(4), new Cell("Cell_z"));
 
-	private ITimestampedCell ts_cell_u = new TimestampedCell(new Timestamp(5), new Ordinal(5), new Cell("Cell_u"));
-	private ITimestampedCell ts_cell_v = new TimestampedCell(new Timestamp(6), new Ordinal(6), new Cell("Cell_v"));
+	@NotNull
+    private ITimestampedCell ts_cell_u = new TimestampedCell(new Timestamp(5), new Ordinal(5), new Cell("Cell_u"));
+	@NotNull
+    private ITimestampedCell ts_cell_v = new TimestampedCell(new Timestamp(6), new Ordinal(6), new Cell("Cell_v"));
 
 	private final QueryResults query_results = new QueryResults();
 	private final SortedSet<KVItem> kv_set = new TreeSet<>(KVItem.COMPARATOR_BY_TIMESTAMP);
 	private final List<VCEntryRawInfo> vce_info_xyz_list = new ArrayList<>();
 	private final List<VCEntryRawInfo> vce_info_xyzuv_list = new ArrayList<>();
 	private final List<VCEntry> vce_xyzuv_list = new ArrayList<>();
-	private AbstractVersionConstraint sv_vc = null;
+	@Nullable
+    private AbstractVersionConstraint sv_vc = null;
 	
 	@Before
 	public void setUp() throws Exception {

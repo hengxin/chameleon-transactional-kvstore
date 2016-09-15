@@ -1,6 +1,7 @@
 package benchmarking.workload.transaction;
 
 import org.apache.commons.math3.distribution.BinomialDistribution;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,7 @@ public class BinomialTransactionSizeGenerator implements ITransactionSizeGenerat
     private static final Logger LOGGER = LoggerFactory.getLogger(BinomialTransactionSizeGenerator.class);
     private static final double HUNDRED = 100.0;
 
+    @NotNull
     private final BinomialDistribution biDist;
 
     /**

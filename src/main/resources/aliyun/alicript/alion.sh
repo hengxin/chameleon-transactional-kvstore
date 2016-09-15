@@ -34,8 +34,8 @@ for service in "${SERVICES[@]}"; do
 	echo "############################################################"
 	echo "########## Deploy and Run $service ##########"
 	$ALIPLOY -j="$ALIYUN_SERVICE_FULL_DIR/$service$JAR_EXTENSION" &
-	echo "########## Wait for one minute. ##########"
-	sleep 60s
+	echo "########## Wait for 45 seconds. ##########"
+	sleep 45s
 done
 
 echo "#################### DONE! ####################"

@@ -1,5 +1,6 @@
 package twopc.coordinator;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ public class RVSI2PCPhaserCoordinatorStub extends RVSI2PCPhaserCoordinator {
      * @param ctx client context
      * @param sites specify the participant sites directly (for test)
      */
-    public RVSI2PCPhaserCoordinatorStub(AbstractClientContext ctx,
+    public RVSI2PCPhaserCoordinatorStub(@NotNull AbstractClientContext ctx,
                                         Stream<ISite> sites) {
         super(ctx);
         this.rmiSites = sites;

@@ -1,5 +1,6 @@
 package rmi;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ public final class RMIUtil {
     private static Registry rmiRegistry;
 
     /**
-     * The following "create-exception-get" pattern avoids creating registry twice
+     * The following "create-exception-lookup" pattern avoids creating registry twice
      * on the same port in a single host.
      *
      * @see <a ref="https://community.oracle.com/thread/2082536?start=0&tstart=0">
@@ -41,13 +42,13 @@ public final class RMIUtil {
             try {
                 rmiRegistry = getRegistry(RMI_REGISTRY_PORT);
             } catch (RemoteException re) {
-                LOGGER.error("Failed to create/get RMI Registry on port [{}].", RMI_REGISTRY_PORT);
+                LOGGER.error("Failed to create/lookup RMI Registry on port [{}].", RMI_REGISTRY_PORT);
                 re.printStackTrace();
             }
         }
     }
 
-    public static void export(Remote obj, String host, int port, String name) {
+    public static void export(Remote obj, @NotNull String host, int port, String name) {
         System.setProperty("java.rmi.server.hostname", host);
 
         try {
@@ -69,7 +70,7 @@ public final class RMIUtil {
     }
 
     @Nullable
-    public static Remote lookup(Member member) {
+    public static Remote lookup(@NotNull Member member) {
         return lookup(member.getHost(), member.getRmiRegistryPort(), member.getRmiRegistryName());
     }
 
@@ -86,7 +87,7 @@ public final class RMIUtil {
             Remote obj = getRegistry(host, port).lookup(name);
             LOGGER.info("Successfully locate [{}] via RMI.", obj);
             return obj;
-        } catch (RemoteException | NotBoundException renbe) {
+        } catch (@NotNull RemoteException | NotBoundException renbe) {
             LOGGER.warn("Cannot locate [{}] via RMI.", name);
             return null;
         }

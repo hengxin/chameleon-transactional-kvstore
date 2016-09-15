@@ -2,6 +2,8 @@ package membership.coordinator;
 
 import com.google.common.base.MoreObjects;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,12 +45,13 @@ public class CoordinatorMembership implements ICoordinatorMembership, Serializab
         }
     }
 
+    @Nullable
     @Override
     public Abstract2PCCoordinator getCoord(int coordId, AbstractClientContext ctx) {
         try {
             return cfMap.get(coordId).getRVSI2PCPhaserCoord(ctx);
         } catch (RemoteException re) {
-            LOGGER.error("Failed to get Coordinator due to \n[{}]", re.getMessage());
+            LOGGER.error("Failed to lookup Coordinator due to \n[{}]", re.getMessage());
             System.exit(1);  // FIXME
             return null;
         }
@@ -56,16 +59,18 @@ public class CoordinatorMembership implements ICoordinatorMembership, Serializab
 
     private class CFMember {
         private int id;
+        @Nullable
         private ICoordinatorFactory cf;
 
-        CFMember(String idStr, String memberStr) {
+        CFMember(@NotNull String idStr, String memberStr) {
             id = Integer.parseInt(idStr);
             cf = (ICoordinatorFactory) RMIUtil.lookup(memberStr);
         }
 
         int getId() { return id; }
-        ICoordinatorFactory getCf() { return cf; }
+        @Nullable ICoordinatorFactory getCf() { return cf; }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)

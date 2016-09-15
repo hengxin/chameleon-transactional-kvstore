@@ -1,5 +1,6 @@
 package benchmarking.workload;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +33,11 @@ public class WorkloadUtil {
         RW_RATIO("rwRatio", "4"),
         ZIPF_EXPONENT("zipfExponent", "1"),
         MEAN_TIME_INTER_TRANSACTIONS("meanTimeInterTransactions", "500"),
+        MIN_TIME_INTER_TRANSACTIONS("minTimeInterTransactions", "2000"),
         K1BV("k1", "1"),
         K2FV("k2", "0"),
-        K3SV("k3", "2");
+        K3SV("k3", "2"),
+        RVSI("rvsi", "(1,0,1)");
 
         private final String param;
         private final String val;
@@ -47,7 +50,7 @@ public class WorkloadUtil {
         public String getParam() { return param; }
     }
 
-    private static void setProperty(WorkloadParams param) {
+    private static void setProperty(@NotNull WorkloadParams param) {
         DEFAULT_WORKLOAD_PROPERTIES.setProperty(param.param, param.val);
     }
 

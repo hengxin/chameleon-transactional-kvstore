@@ -1,5 +1,7 @@
 package twopc.coordinator;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.rmi.RemoteException;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
@@ -18,7 +20,7 @@ public final class RVSI2PCSequentialLockingCoordinator extends Abstract2PCCoordi
 	
 	private final VersionConstraintManager vcm;
 
-	public RVSI2PCSequentialLockingCoordinator(AbstractClientContext ctx, VersionConstraintManager vcm) {
+	public RVSI2PCSequentialLockingCoordinator(@NotNull AbstractClientContext ctx, VersionConstraintManager vcm) {
 		super(ctx);
 		this.vcm = vcm;
 	}

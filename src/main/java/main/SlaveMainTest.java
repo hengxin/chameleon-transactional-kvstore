@@ -1,5 +1,6 @@
 package main;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import slave.SlaveLauncher;
 public class SlaveMainTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SlaveMainTest.class);
 
-	public static void main(String[] args) {
+	public static void main(@NotNull String[] args) {
         try {
             if (args.length == 0)
                 new SlaveLauncher();

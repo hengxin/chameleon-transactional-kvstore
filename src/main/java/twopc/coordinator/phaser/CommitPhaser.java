@@ -48,21 +48,21 @@ public final class CommitPhaser extends Phaser implements Serializable {
     protected boolean onAdvance(int phase, int registeredParties) {
         switch (phase) {
             case 0:
-                LOGGER.info("All [{}] masters have finished the [{}] phase.", getArrivedParties(), Phase.PREPARE);
+                LOGGER.debug("All [{}] masters have finished the [{}] phase.", getArrivedParties(), Phase.PREPARE);
                 boolean toCommitDecision = false;
                 try {
                     toCommitDecision = coord.onPreparePhaseFinished();
                 } catch (TransactionEndException tee) {
                     LOGGER.info(tee.getMessage());
                 }
-                LOGGER.info("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, toCommitDecision);
+                LOGGER.debug("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, toCommitDecision);
 
                 return false;	// this phaser has not yet finished
 
             case 1:
-                LOGGER.info("All [{}] masters have finished the [{}] phase.", getArrivedParties(), Phase.COMMIT);
+                LOGGER.debug("All [{}] masters have finished the [{}] phase.", getArrivedParties(), Phase.COMMIT);
                 boolean isCommitted = coord.onCommitPhaseFinished();
-                LOGGER.info("This 2PC protocol ends with [{}].", isCommitted);
+                LOGGER.debug("This 2PC protocol ends with [{}].", isCommitted);
                 return true;	// this phaser has finished its job.
 
             default:

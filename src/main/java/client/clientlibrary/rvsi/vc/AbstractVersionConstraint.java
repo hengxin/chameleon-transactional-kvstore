@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.List;
@@ -52,15 +53,13 @@ public abstract class AbstractVersionConstraint implements Serializable {
      * Partition a version constraint into multiple ones according to some
      * {@link client.clientlibrary.partitioning.IPartitioner} mechanism.
      * @param partitioner instance of {@link IPartitioner} to use
-     * @param buckets
+     * @param numberOfBuckets   number of buckets to put into
      * @return a map from index of {@link site.ISite} to {@link AbstractVersionConstraint}
      */
-    public abstract Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int buckets);
+    public abstract Map<Integer, AbstractVersionConstraint> partition(IPartitioner partitioner, int numberOfBuckets);
 	
 	@Override
-	public int hashCode() {
-		return Objects.hashCode(vcEntries);
-	}
+	public int hashCode() { return Objects.hashCode(vcEntries); }
 
     @Override
 	public boolean equals(Object o) {
@@ -74,10 +73,12 @@ public abstract class AbstractVersionConstraint implements Serializable {
 		return CollectionUtils.isEqualCollection(vcEntries, that.vcEntries);
 	}
 	
-	@Override
+	@NotNull
+    @Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.add("VC_Entry_List", vcEntries)
 				.toString();
 	}
+
 }

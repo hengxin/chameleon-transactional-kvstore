@@ -1,5 +1,6 @@
 package timing;
 
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,7 @@ public class TimestampOracleMembership {
         this.toProperties = toProperties;
     }
 
+    @Nullable
     public ITimestampOracle locateTO() {
         try {
             Properties prop = PropertiesUtil.load(toProperties);

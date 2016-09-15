@@ -2,6 +2,7 @@ package kvs.component;
 
 import static org.junit.Assert.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,9 +12,12 @@ import org.junit.Test;
  */
 public class OrdinalTest
 {
-	private Ordinal original_ord0 = new Ordinal(0);
-	private Ordinal original_ord1 = new Ordinal(0);
-	private Ordinal original_ord2 = original_ord1;
+	@NotNull
+    private Ordinal original_ord0 = new Ordinal(0);
+	@NotNull
+    private Ordinal original_ord1 = new Ordinal(0);
+	@NotNull
+    private Ordinal original_ord2 = original_ord1;
 
 	@Before
 	public void setUp() throws Exception

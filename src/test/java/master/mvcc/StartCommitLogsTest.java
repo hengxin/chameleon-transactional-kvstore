@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,34 +23,35 @@ import kvs.compound.CompoundKey;
  */
 public class StartCommitLogsTest
 {
-	private StartCommitLogs logs = new StartCommitLogs();
+	@NotNull
+    private StartCommitLogs logs = new StartCommitLogs();
 	
 	// keys
-	CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
-	CompoundKey ck_rx_cy = new CompoundKey("Rx", "Cy");
-	CompoundKey ck_rx_cz = new CompoundKey("Rx", "Cz");
-	CompoundKey ck_ry_cy = new CompoundKey("Ry", "Cy");
+    @NotNull CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
+	@NotNull CompoundKey ck_rx_cy = new CompoundKey("Rx", "Cy");
+	@NotNull CompoundKey ck_rx_cz = new CompoundKey("Rx", "Cz");
+	@NotNull CompoundKey ck_ry_cy = new CompoundKey("Ry", "Cy");
 	
 	// start-timestamps and commit-timestamps
-	Timestamp sts_1 = new Timestamp(1);
-	Timestamp sts_4 = new Timestamp(4);
-	Timestamp sts_6 = new Timestamp(6);
-	Timestamp sts_12 = new Timestamp(12);
+    @NotNull Timestamp sts_1 = new Timestamp(1);
+	@NotNull Timestamp sts_4 = new Timestamp(4);
+	@NotNull Timestamp sts_6 = new Timestamp(6);
+	@NotNull Timestamp sts_12 = new Timestamp(12);
 
-	Timestamp cts_10 = new Timestamp(10);
-	Timestamp cts_15 = new Timestamp(15);
-	Timestamp cts_16 = new Timestamp(16);
-	Timestamp cts_20 = new Timestamp(20);
+	@NotNull Timestamp cts_10 = new Timestamp(10);
+	@NotNull Timestamp cts_15 = new Timestamp(15);
+	@NotNull Timestamp cts_16 = new Timestamp(16);
+	@NotNull Timestamp cts_20 = new Timestamp(20);
 	
 	// buffered updates
-	BufferedUpdates updates_1_10 = new BufferedUpdates();
-	BufferedUpdates updates_4_16 = new BufferedUpdates();
-	BufferedUpdates updates_6_20 = new BufferedUpdates();
-	BufferedUpdates updates_12_15 = new BufferedUpdates();
+    @NotNull BufferedUpdates updates_1_10 = new BufferedUpdates();
+	@NotNull BufferedUpdates updates_4_16 = new BufferedUpdates();
+	@NotNull BufferedUpdates updates_6_20 = new BufferedUpdates();
+	@NotNull BufferedUpdates updates_12_15 = new BufferedUpdates();
 
-	Timestamp sts_7_to_commit = new Timestamp(7);
-	BufferedUpdates updates_to_commit_wc = new BufferedUpdates();
-	BufferedUpdates updates_to_commit_wcf = new BufferedUpdates();
+	@NotNull Timestamp sts_7_to_commit = new Timestamp(7);
+	@NotNull BufferedUpdates updates_to_commit_wc = new BufferedUpdates();
+	@NotNull BufferedUpdates updates_to_commit_wcf = new BufferedUpdates();
 
 	@Before
 	public void setUp() throws Exception

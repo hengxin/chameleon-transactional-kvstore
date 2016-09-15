@@ -2,6 +2,8 @@ package jms;
 
 import static org.junit.Assert.assertEquals;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,15 +23,22 @@ public class RCSlaveAsJMSCommitLogSubscriberTest {
 	private final IMessageProducer publisher = new JMSPublisher();
 	
 	private Timestamp sts; 
-	private CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
-	private CompoundKey ck_ry_cy = new CompoundKey("Ry", "Cy");
-	private Cell cell_rx_cx = new Cell("RxCx");
-	private Cell cell_ry_cy = new Cell("RyCy");
+	@NotNull
+    private CompoundKey ck_rx_cx = new CompoundKey("Rx", "Cx");
+	@NotNull
+    private CompoundKey ck_ry_cy = new CompoundKey("Ry", "Cy");
+	@NotNull
+    private Cell cell_rx_cx = new Cell("RxCx");
+	@NotNull
+    private Cell cell_ry_cy = new Cell("RyCy");
 	
-	private BufferedUpdates buffered_updates = new BufferedUpdates();
-	private AbstractMessage commit_log_message = null;
+	@NotNull
+    private BufferedUpdates buffered_updates = new BufferedUpdates();
+	@Nullable
+    private AbstractMessage commit_log_message = null;
 	
-	private RCSlave slave = null;
+	@Nullable
+    private RCSlave slave = null;
 
 	@Before
 	public void setUp() throws Exception {
@@ -49,12 +58,12 @@ public class RCSlaveAsJMSCommitLogSubscriberTest {
 		Thread.sleep(2000);
 
 		ITimestampedCell ts_cell_rx_cx = this.slave.get(this.ck_rx_cx.getRow(), this.ck_rx_cx.getCol());
-		assertEquals("Should get the updated cell: RxCx.", this.cell_rx_cx, ts_cell_rx_cx.getCell());
+		assertEquals("Should lookup the updated cell: RxCx.", this.cell_rx_cx, ts_cell_rx_cx.getCell());
 		
 		ITimestampedCell ts_cell_ry_cy = this.slave.get(this.ck_ry_cy.getRow(), this.ck_ry_cy.getCol());
-		assertEquals("Should get the updated cell: RyCy.", this.cell_ry_cy, ts_cell_ry_cy.getCell());
+		assertEquals("Should lookup the updated cell: RyCy.", this.cell_ry_cy, ts_cell_ry_cy.getCell());
 		
 		ITimestampedCell ts_cell_no_such_data = this.slave.get(this.ck_rx_cx.getRow(), this.ck_ry_cy.getCol());
-		assertEquals("Should get the initial cell.", TimestampedCell.TIMESTAMPED_CELL_INIT, ts_cell_no_such_data);
+		assertEquals("Should lookup the initial cell.", TimestampedCell.TIMESTAMPED_CELL_INIT, ts_cell_no_such_data);
 	}
 }

@@ -1,5 +1,6 @@
 package context;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,7 @@ public class ClusterInHibernate {
 	@Nonnull protected final Member master;
 	@Nonnull protected final List<Member> slaves;
 	
-	public ClusterInHibernate(int cno, @Nonnull Member master, List<Member> slaves) {
+	public ClusterInHibernate(int cno, @Nonnull Member master, @NotNull List<Member> slaves) {
 		this.cno = cno;
 		this.master = master;
 		this.slaves = slaves;
@@ -42,7 +43,8 @@ public class ClusterInHibernate {
 	 * @return	an instance of {@link ClusterInHibernate}; If the master of this cluster
 	 * 	cannot be parsed, the system exits.
 	 */
-	public static ClusterInHibernate parse(String cluster_no_str, String cluster_str) {
+	@NotNull
+    public static ClusterInHibernate parse(@NotNull String cluster_no_str, @NotNull String cluster_str) {
 				int cno = Integer.parseInt(cluster_no_str);
 				
 				// master and slaves in string format

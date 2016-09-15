@@ -3,6 +3,8 @@
  */
 package util.intervaltree;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -40,16 +42,16 @@ public interface IntervalTreeNode<K extends Comparable<? super K>,V> {
 	 */
 	void searchContainedBy(Interval<K> range, Collection<V> accumulator);
 	
-	IntervalTreeNode<K, V> removeOverlapping(Interval<K> range);
-	IntervalTreeNode<K, V> removeContaining(Interval<K> range);
-	IntervalTreeNode<K, V> removeContainedBy(Interval<K> range);
+	@Nullable IntervalTreeNode<K, V> removeOverlapping(Interval<K> range);
+	@Nullable IntervalTreeNode<K, V> removeContaining(Interval<K> range);
+	@Nullable IntervalTreeNode<K, V> removeContainedBy(Interval<K> range);
 	
 	void values(Collection<V> accumulator);
 	void entrySet(Set<Entry<Interval<K>, V>> accumulator);
 	void keySet(Set<Interval<K>> accumulator);
 	
-	IntervalTreeNode<K, V> remove(V value);
-	IntervalTreeNode<K, V> removeAll(Collection<V> values);
+	@Nullable IntervalTreeNode<K, V> remove(V value);
+	@Nullable IntervalTreeNode<K, V> removeAll(Collection<V> values);
 
 	int size();
 	int maxHeight();

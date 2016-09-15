@@ -1,6 +1,7 @@
 package messaging.socket;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class SocketAddressPropertiesUtilTest {
 
     private static final String SA_PROPERTIES = "messaging/socket/sa.properties";
 
+    @NotNull
     private List<SocketAddress> expectedAddresses = new ArrayList<>();
 
     @Before

@@ -8,9 +8,6 @@ import java.util.Properties;
 
 import benchmarking.workload.WorkloadUtil;
 import benchmarking.workload.client.ClientWorkloadGenerator;
-import benchmarking.workload.keyspace.IdentityKeySpace;
-import benchmarking.workload.operation.OperationGenerator;
-import benchmarking.workload.operation.StatisticalRWRatioOperationTypeGenerator;
 import benchmarking.workload.operation.ZipfKeyGenerator;
 import benchmarking.workload.rvsi.UniformRVSISpecificationGenerator;
 import benchmarking.workload.transaction.BinomialTransactionSizeGenerator;
@@ -21,7 +18,6 @@ import static benchmarking.workload.WorkloadUtil.WorkloadParams.K1BV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K2FV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K3SV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION;
-import static benchmarking.workload.WorkloadUtil.WorkloadParams.MEAN_TIME_INTER_TRANSACTIONS;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.MPL;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.NUMBER_OF_TRANSACTIONS;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.PROB_BINOMIAL;
@@ -37,6 +33,8 @@ public class WorkloadGeneratorFromProperties implements IWorkloadGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkloadGeneratorFromProperties.class);
 
     private Properties prop;
+    private int meanTimeInterTransactions;
+    private int minTimeInterTransactions;
 
     /**
      *  Constructor which uses {@link WorkloadUtil#DEFAULT_WORKLOAD_PROPERTIES}
@@ -66,24 +64,22 @@ public class WorkloadGeneratorFromProperties implements IWorkloadGenerator {
                 prop.getProperty(MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION.getParam()));
         int probBinomial = Integer.parseInt(prop.getProperty(PROB_BINOMIAL.getParam()));
 
-        int rwRatio = Integer.parseInt(prop.getProperty(RW_RATIO.getParam()));
+        double rwRatio = Double.parseDouble(prop.getProperty(RW_RATIO.getParam()));
         int zipfExponent = Integer.parseInt(prop.getProperty(ZIPF_EXPONENT.getParam()));
 
         int k1 = Integer.parseInt(prop.getProperty(K1BV.getParam()));
         int k2 = Integer.parseInt(prop.getProperty(K2FV.getParam()));
         int k3 = Integer.parseInt(prop.getProperty(K3SV.getParam()));
 
-        int meanTimeInterTransactions = Integer.parseInt(prop.getProperty(MEAN_TIME_INTER_TRANSACTIONS.getParam()));
-
-        IWorkloadGenerator workloadGenerator = new WorkloadGenerator(mpl,
-                new ClientWorkloadGenerator(numberOfTransactions,
-                        new TransactionGenerator(new BinomialTransactionSizeGenerator
-                                (maxNumberOfOperationsPerTransaction, probBinomial),
-                                new OperationGenerator(new IdentityKeySpace(sizeOfKeyspace),
-                                        new StatisticalRWRatioOperationTypeGenerator(rwRatio),
+        IWorkloadGenerator workloadGenerator =
+                new WorkloadGenerator(mpl,
+                        new ClientWorkloadGenerator(numberOfTransactions,
+                                new TransactionGenerator(new BinomialTransactionSizeGenerator(
+                                            maxNumberOfOperationsPerTransaction, probBinomial),
+                                        rwRatio,
                                         new ZipfKeyGenerator(sizeOfKeyspace, zipfExponent),
-                                        new ZipfKeyGenerator(sizeOfKeyspace, zipfExponent)),
-                                new UniformRVSISpecificationGenerator(k1, k2, k3))));
+                                        new ZipfKeyGenerator(sizeOfKeyspace, zipfExponent),
+                                        new UniformRVSISpecificationGenerator(k1, k2, k3))));
 
         return workloadGenerator.generate();
     }

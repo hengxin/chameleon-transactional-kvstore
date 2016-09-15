@@ -3,6 +3,7 @@ package master.mvcc;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,9 +16,9 @@ import java.util.stream.Collectors;
 
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import util.intervaltree.IntervalTree;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
+import util.intervaltree.IntervalTree;
 
 /**
  * @author hengxin
@@ -38,10 +39,11 @@ import kvs.compound.CompoundKey;
 public class StartCommitLogs {
 	private final static Logger LOGGER = LoggerFactory.getLogger(StartCommitLogs.class);
 	
-	@GuardedBy("readLock, writeLock")
+	@NotNull
+    @GuardedBy("readLock, writeLock")
 	private IntervalTree<Timestamp, BufferedUpdates> startCommitLogs = new IntervalTree<>();
 
-	private final ReadWriteLock lock = new ReentrantReadWriteLock();
+	public final ReadWriteLock lock = new ReentrantReadWriteLock();
 	private final Lock readLock = lock.readLock();
 	public final Lock writeLock = lock.writeLock();
 	
@@ -61,32 +63,35 @@ public class StartCommitLogs {
 	}
 	
 	/**
-	 * Check whether the {@link ToCommitTransaction} is write-conflict-free w.r.t already committed transactions.
-	 * @param tx the transaction to commit
-	 * @return {@code true} if tx is write-conflict-free w.r.t committed transactions. {@code false}, otherwise.
+	 * Check whether the {@link ToCommitTransaction} is write-conflict-free
+     * w.r.t already committed transactions.
+     *
+	 * @param tx the transaction to commit; it cannot be {@code null}
+	 * @return {@code true} if tx is write-conflict-free w.r.t committed transactions;
+     *  {@code false}, otherwise.
 	 * 
 	 * <p>
 	 * <b>TODO</b> check the side-effects on the original underlying collections. 
 	 */
-	public boolean wcf(ToCommitTransaction tx) {
-		Collection<BufferedUpdates> overlapping_tx_updates = containersOf(tx.getSts());
-		
-		// collect all updated keys
-		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.parallelStream()
-				.map(BufferedUpdates::getUpdatedCKeys)
-				.flatMap(Set::stream)
-				.collect(Collectors.toSet());
-				
-		overlapping_updated_cks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());
-		
-		return overlapping_updated_cks.isEmpty();
+	public boolean wcf(@NotNull ToCommitTransaction tx) {
+        Collection<BufferedUpdates> overlapping_tx_updates = containersOf(tx.getSts());
+
+        // collect all updated keys
+        Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.parallelStream()
+                .map(BufferedUpdates::getUpdatedCKeys)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+
+        overlapping_updated_cks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());
+
+        return overlapping_updated_cks.isEmpty();
 	}
 
 	/**
 	 * @param sts start-timestamp of a transaction
 	 * @return a collection of {@link BufferedUpdates} that contain @param sts
 	 */
-    Collection<BufferedUpdates> containersOf(Timestamp sts) {
+    @NotNull Collection<BufferedUpdates> containersOf(Timestamp sts) {
 		readLock.lock();
 		try {
 			return startCommitLogs.searchContaining(sts, sts);
