@@ -29,7 +29,6 @@ public class SlaveLauncher {
 	 */
 	public SlaveLauncher(@NotNull String siteProperties, String spProperties) throws SiteException {
 		SlaveContext context = new SlaveContext(siteProperties);
-//		AbstractSite slave = new RCSlave(context);  // the default constructor uses JMS by default
         AbstractSite slave = new RCSlave(context, new SocketMsgListener2(spProperties));
 
 		LOGGER.info("Slave [{}] has been successfully launched.", slave);

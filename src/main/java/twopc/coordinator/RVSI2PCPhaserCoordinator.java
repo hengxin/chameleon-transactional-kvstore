@@ -10,24 +10,27 @@ import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
-import java.util.concurrent.TimeUnit;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
-import conf.SiteConfig;
 import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
+import membership.site.Member;
+import rmi.RMIUtil;
+import timing.ITimestampOracle;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
+import util.PropertiesUtil;
 
-import static conf.SiteConfig.IS_IN_SIMULATION_MODE;
+import static conf.SiteConfig.simulateInterDCComm;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -46,13 +49,25 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 	private transient static final ExecutorService exec = Executors.newCachedThreadPool();
 
     Phaser phaser;  // TODO put it in {@link Abstract2PCCoordinator}
+    private ITimestampOracle tsOracle;
 
     /**
 	 * @param ctx	client context 
 	 */
-	public RVSI2PCPhaserCoordinator(@NotNull final AbstractClientContext ctx)  {
+	public RVSI2PCPhaserCoordinator(@NotNull final AbstractClientContext ctx, String toProperties)  {
 		super(ctx);
         phaser = new CommitPhaser(this);   // TODO Is it safe to pass {@code this} reference?
+
+        Properties toProp = null;
+        try {
+            toProp = PropertiesUtil.load(toProperties);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        Set<String> toStrs = toProp.stringPropertyNames();
+        String toStr = toStrs.toArray(new String[toStrs.size()])[0];
+        Member toMember = Member.parseMember(toProp.getProperty(toStr)).get();
+        tsOracle = (ITimestampOracle) RMIUtil.lookup(toMember);
 	}
 
 	@Override
@@ -92,16 +107,17 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
         if (toCommitDecision)
             try {
-                if (IS_IN_SIMULATION_MODE)
-                    TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
+                simulateInterDCComm();
 
-                cts = new Timestamp(cctx.getTsOracle().get());
+//                ITimestampOracle tsOracle = cctx.getTsOracle();
+//                LOGGER.info("The tsOracle for generating cts is [{}].", tsOracle);
+
+//                cts = new Timestamp(cctx.getTsOracle().get());
+                cts = new Timestamp(tsOracle.get());
             } catch (RemoteException re) {
                 toCommitDecision = false;
                 throw new TransactionEndException(String.format("Transaction [%s] failed to begin.", this),
                         re.getCause());
-            } catch (InterruptedException ie) {
-                ie.printStackTrace();
             }
 
         return toCommitDecision;

@@ -29,6 +29,8 @@ import kvs.compound.ITimestampedCell;
 import site.ISite;
 import timing.ITimestampOracle;
 
+import static conf.SiteConfig.simulateInterDCComm;
+
 /**
  * {@link RVSITransaction} is a kind of transactions with rvsi semantics
  * (i.e., allowed to specify {@link AbstractRVSISpecification}).
@@ -63,10 +65,14 @@ public class RVSITransaction implements ITransaction {
 	 */
 	@Override
 	public boolean begin() throws TransactionBeginException {
+        simulateInterDCComm();
+
         ITimestampOracle tsOracle = cctx.getTsOracle();
+        LOGGER.debug("The tsOracle for generating sts is [{}].", tsOracle);
+
 		try {
             sts = new Timestamp(tsOracle.get());
-			LOGGER.debug("The transaction (ID TBD) has successfully obtained a start-timestamp ({}).", sts);
+			LOGGER.debug("The transaction has successfully obtained a start-timestamp ({}).", sts);
 			return true;
 		} catch (RemoteException re) {
             throw new TransactionBeginException(String.format("Transaction [%s] failed to begin.", this),
@@ -85,6 +91,8 @@ public class RVSITransaction implements ITransaction {
         // then contact the remote site
 		ISite site = cctx.getReadSite(new CompoundKey(r, c));
 		try {
+            simulateInterDCComm();
+
 			tsCell = site.get(r, c);
 			queryResults.put(new CompoundKey(r, c), tsCell);
 			LOGGER.debug("Transaction [sts: {}] read {} from [{}+{}] at site [{}].",
@@ -124,6 +132,8 @@ public class RVSITransaction implements ITransaction {
 		ToCommitTransaction tx = new ToCommitTransaction(sts, bufferedUpdates);
 		
 		try {
+            simulateInterDCComm();
+
             boolean isCommitted = cctx.getCoord(tx, vcm).execute2PC(tx, vcm);
             LOGGER.debug("Tx [sts: {}] is committed: [{}].", tx.getSts(), isCommitted);
             return isCommitted;

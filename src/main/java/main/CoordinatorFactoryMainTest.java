@@ -8,6 +8,8 @@ import membership.coordinator.CoordinatorFactory;
  */
 public class CoordinatorFactoryMainTest {
     public static void main(String[] args) {
-        new CoordinatorFactory(args[0]);
+        String cfProperties = args[0];
+        String toProperties = args[1];
+        new CoordinatorFactory(cfProperties, toProperties);
     }
 }

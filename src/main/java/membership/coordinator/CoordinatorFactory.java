@@ -26,18 +26,23 @@ public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
     private static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorFactory.class);
     @Language("Properties")
     private static final String DEFAULT_CF_PROPERTIES = "membership/coordinator/cf.properties";
+    private static final String DEFAULT_TO_PROPERTIES = "timing/to.properties";
 
     private Member self;
+    private final String toProperties;
 
-    public CoordinatorFactory() { this(DEFAULT_CF_PROPERTIES); }
+    public CoordinatorFactory() { this(DEFAULT_CF_PROPERTIES, DEFAULT_TO_PROPERTIES); }
 
-    public CoordinatorFactory(String cfProperties) {
+    public CoordinatorFactory(String cfProperties, String toProperties) {
+        this.toProperties = toProperties;
+
         try {
             Properties prop = PropertiesUtil.load(cfProperties);
             Set<String> idStrs = prop.stringPropertyNames();
             String idStr = idStrs.toArray(new String[idStrs.size()])[0];
             self = Member.parseMember(prop.getProperty(idStr)).get();
             export();
+
         } catch (IOException ioe) {
             LOGGER.error("Failed to parse [{}] from properties [{}]", this.getClass().getSimpleName(), cfProperties);
         }
@@ -46,7 +51,7 @@ public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
     @Override
     public Abstract2PCCoordinator getRVSI2PCPhaserCoord(AbstractClientContext ctx)
             throws RemoteException {
-        return new RVSI2PCPhaserCoordinator(ctx);
+        return new RVSI2PCPhaserCoordinator(ctx, toProperties);
     }
 
     @Override

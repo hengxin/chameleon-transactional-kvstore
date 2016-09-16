@@ -102,7 +102,7 @@ case $service in
 		;;
 
 	cf)
-		ARGS=(cf)
+		ARGS=(cf to)
 		;;
 
 	to)

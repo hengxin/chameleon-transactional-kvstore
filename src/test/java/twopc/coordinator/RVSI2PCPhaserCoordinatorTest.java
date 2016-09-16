@@ -19,7 +19,8 @@ public class RVSI2PCPhaserCoordinatorTest {
 
     @Before
     public void setUp() throws Exception {
-        coord = new RVSI2PCPhaserCoordinator(new ClientContextSingleMaster(PARTICIPANTS_MEMBERSHIP_FILE, "", ""));
+        coord = new RVSI2PCPhaserCoordinator(new ClientContextSingleMaster(PARTICIPANTS_MEMBERSHIP_FILE, "", ""),
+                "timing/to.properties");
     }
 
     @After

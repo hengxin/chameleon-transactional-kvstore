@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import util.PropertiesUtil;
 
@@ -43,7 +44,7 @@ public final class SiteConfig {
     public static final int DEFAULT_SOCKET_PORT = 1111;
 
     // for simulation
-    public static final boolean IS_IN_SIMULATION_MODE = true;
+    public static boolean IS_IN_SIMULATION_MODE = false;
     private static int intraDCDelay = 5;
     private static int interDCDelay = 30;
     public static final NormalDistribution INTRA_DC_NORMAL_DIST = new NormalDistribution(intraDCDelay, 1);
@@ -84,4 +85,23 @@ public final class SiteConfig {
     public String getConfigValue(@NotNull final SiteConfigKey configKey) {
         return props.getProperty(configKey.getConfigKey());
     }
+
+    public static void simulateInterDCComm() {
+        if (SiteConfig.IS_IN_SIMULATION_MODE)
+            try {
+                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
+    }
+
+    public static void simulateIntraDCComm() {
+        if (SiteConfig.IS_IN_SIMULATION_MODE)
+            try {
+                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTRA_DC_NORMAL_DIST.sample()));
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
+    }
+
 }

@@ -34,8 +34,8 @@ public class RVSI2PCPhaserCoordinatorStub extends RVSI2PCPhaserCoordinator {
      * @param sites specify the participant sites directly (for test)
      */
     public RVSI2PCPhaserCoordinatorStub(@NotNull AbstractClientContext ctx,
-                                        Stream<ISite> sites) {
-        super(ctx);
+                                        Stream<ISite> sites, String toProperties) {
+        super(ctx, toProperties);
         this.rmiSites = sites;
     }
 

@@ -29,6 +29,21 @@ appender("FILE", FileAppender) {
     encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
 }
 
+
+appender("TO", FileAppender) {
+    file = "./logs/chameleon-test-to.log"
+    append = false
+//    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
+    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
+}
+
+appender("COORD", FileAppender) {
+    file = "./logs/chameleon-test-coord.log"
+    append = false
+//    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
+    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
+}
+
 /*appender("FILE", RollingFileAppender) {
 	file = "./logs/chameleon.log"
 	encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
@@ -64,11 +79,11 @@ logger("master.SIMaster", WARN)
 // slave
 
 // coordinator
-logger("twopc.coordinator", WARN)
 logger("twopc.coordinator.phaser.CommitPhaser", INFO)
+logger("twopc.coordinator.phaser.RVSI2PCPhaserCoordinator", INFO, ["COORD"])
 
 // timestamp oracle
-logger("timing.CentralizedTimestampOracle", INFO)
+logger("timing.CentralizedTimestampOracle", INFO, ["TO"])
 
 // socket
 logger("messaging.socket", INFO)
@@ -79,4 +94,4 @@ logger("rmi", ERROR)
 // util
 logger("util", ERROR)
 
-root(INFO, ["STDOUT", "FILE"])
+root(INFO, ["STDOUT", "FILE", "TO", "COORD"])

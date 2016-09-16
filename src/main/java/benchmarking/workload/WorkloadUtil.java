@@ -36,7 +36,7 @@ public class WorkloadUtil {
         MIN_TIME_INTER_TRANSACTIONS("minTimeInterTransactions", "0"),
         K1BV("k1", "1"),
         K2FV("k2", "0"),
-        K3SV("k3", "2"),
+        K3SV("k3", "1"),
         RVSI("rvsi", "(1,0,1)");
 
         private final String param;

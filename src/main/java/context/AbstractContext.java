@@ -15,9 +15,9 @@ import timing.ITimestampOracle;
 public abstract class AbstractContext implements Serializable {
     private static final long serialVersionUID = 6213467098181726391L;
 
-    @NotNull protected ISiteMembership membership;
+    protected ISiteMembership membership;
     protected ICoordinatorMembership coordMembership;
-    @NotNull protected ITimestampOracle to;
+    protected ITimestampOracle to;
 
     @NotNull
     public ISiteMembership getMembership() { return membership; }

@@ -36,6 +36,9 @@ public class CentralizedTimestampOracle implements ITimestampOracle, IRMI {
             String idStr = idStrs.toArray(new String[idStrs.size()])[0];
             self = Member.parseMember(prop.getProperty(idStr)).get();
             export();
+
+            LOGGER.info("[{}:{}] successfully launched.",
+                    CentralizedTimestampOracle.class.getSimpleName(), self);
         } catch (IOException ioe) {
             LOGGER.error("Failed to parse [{}] from properties [{}]", this.getClass().getSimpleName(), cfProperties);
         }
