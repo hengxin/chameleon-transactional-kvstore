@@ -15,16 +15,19 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
+import java.util.concurrent.TimeUnit;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
+import conf.SiteConfig;
 import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 
+import static conf.SiteConfig.IS_IN_SIMULATION_MODE;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -89,11 +92,16 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
         if (toCommitDecision)
             try {
+                if (IS_IN_SIMULATION_MODE)
+                    TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
+
                 cts = new Timestamp(cctx.getTsOracle().get());
             } catch (RemoteException re) {
                 toCommitDecision = false;
                 throw new TransactionEndException(String.format("Transaction [%s] failed to begin.", this),
                         re.getCause());
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
             }
 
         return toCommitDecision;

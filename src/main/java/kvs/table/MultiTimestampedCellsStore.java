@@ -52,7 +52,7 @@ public class MultiTimestampedCellsStore implements ITimestampedCellStore {
 	public void put(ITimestampedCell tsCell) {
 //		Assert.assertTrue("It is not intended to replace an existing data.", ! tsCells.contains(tsCell));
         LOGGER.debug("Begin: MultiTimestampedCellsStore adds tsCell [{}].", tsCell);
-        LOGGER.info("MultiTimestampedCellsStore adds tsCell [{}].", tsCell);
+        LOGGER.debug("MultiTimestampedCellsStore adds tsCell [{}].", tsCell);
 		tsCells.add(tsCell);
         LOGGER.debug("End: MultiTimestampedCellsStore adds tsCell [{}].", tsCell);
 	}

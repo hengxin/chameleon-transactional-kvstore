@@ -58,7 +58,5 @@ public class WorkloadExecutor implements IWorkloadExecutor {
     }
 
     @Override
-    public @Nullable IWorkloadStatistics getWorkloadStat() {
-        return workloadStat;
-    }
+    public @Nullable IWorkloadStatistics getWorkloadStat() { return workloadStat; }
 }

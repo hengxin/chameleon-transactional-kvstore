@@ -31,6 +31,11 @@ public class ClientStatistics implements IClientStatistics {
     public int countAll() { return numberOfTransactions; }
 
     @Override
+    public String briefReport() {
+        return summaryReport();
+    }
+
+    @Override
     public String summaryReport() {
         return MoreObjects.toStringHelper(this)
                 .add("#C", numberOfCommittedTransactions)

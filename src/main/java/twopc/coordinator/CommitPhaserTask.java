@@ -8,11 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Phaser;
+import java.util.concurrent.TimeUnit;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
+import conf.SiteConfig;
 import twopc.participant.I2PCParticipant;
 
+import static conf.SiteConfig.IS_IN_SIMULATION_MODE;
 import static twopc.coordinator.phaser.CommitPhaser.Phase.ABORT;
 import static twopc.coordinator.phaser.CommitPhaser.Phase.COMMIT;
 import static twopc.coordinator.phaser.CommitPhaser.Phase.PREPARE;
@@ -58,6 +61,9 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 		LOGGER.info("The Coord [{}] begins the [{}] phase with participant [{}].",
                 coord, PREPARE, participant);
 
+        if (IS_IN_SIMULATION_MODE)
+            TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
+
         boolean preparedDecision = participant.prepare(tx, vcm);
         coord.preparedDecisions.put(participant, preparedDecision);
 
@@ -66,6 +72,9 @@ public final class CommitPhaserTask implements Callable<Boolean> {
         if (coord.toCommitDecision) { // commit case of the second phase of 2PC protocol
             LOGGER.info("The Coord [{}] begins the [{}] phase with participant [{}].",
                     coord, COMMIT, participant);
+
+            if (IS_IN_SIMULATION_MODE)
+                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
 
             boolean committedDecision = participant.commit(tx, coord.cts);
             coord.committedDecisions.put(participant, committedDecision);

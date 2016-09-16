@@ -58,7 +58,7 @@ public abstract class AbstractSlave extends AbstractSite implements IMessageCons
 
 	@Override
 	public void consume(AbstractMessage msg) {
-		LOGGER.info("Receiving commit log [{}].", msg);
+		LOGGER.debug("Receiving commit log [{}].", msg);
 		super.table.apply((ToCommitTransaction) msg);
 	}
 

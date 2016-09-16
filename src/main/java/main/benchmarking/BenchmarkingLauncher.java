@@ -1,6 +1,7 @@
 package main.benchmarking;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,7 @@ public class BenchmarkingLauncher {
 
     private Properties prop;
 
-    BenchmarkingLauncher(final String workloadProperties,
+    public BenchmarkingLauncher(final String workloadProperties,
                          final String siteProperties, final String cfProperties, final String toProperties) {
         cctx = new ClientContextMultiMaster(siteProperties, cfProperties, toProperties,
                 ConsistentHashingDynamicPartitioner.INSTANCE);
@@ -56,15 +57,23 @@ public class BenchmarkingLauncher {
         }
     }
 
-    public void run() {
+    public BenchmarkingLauncher(final Properties workloadProperties,
+                         final String siteProperties, final String cfProperties, final String toProperties) {
+        cctx = new ClientContextMultiMaster(siteProperties, cfProperties, toProperties,
+                ConsistentHashingDynamicPartitioner.INSTANCE);
+        prop = workloadProperties;
+        workloadGenerator = new WorkloadGeneratorFromProperties(prop);
+    }
+
+    public @Nullable IWorkloadStatistics run() {
         Workload workload = workloadGenerator.generate();
 
         final int numberOfClients = workload.getNumberOfClients();
         List<IClientExecutor> clientExecutors = new ArrayList<>(numberOfClients);
 
         // FIXME: move to the upper-level class
-        int meanTimeInterTransactions = Integer.parseInt(prop.getProperty(WorkloadParams.MEAN_TIME_INTER_TRANSACTIONS.getParam()));
-        int minTimeInterTransactions = Integer.parseInt(prop.getProperty(WorkloadParams .MIN_TIME_INTER_TRANSACTIONS.getParam()));
+        int meanTimeInterTransactions = Integer.parseInt(prop.getProperty(WorkloadParams.MEAN_TIME_INTER_TRANSACTIONS.param()));
+        int minTimeInterTransactions = Integer.parseInt(prop.getProperty(WorkloadParams .MIN_TIME_INTER_TRANSACTIONS.param()));
         IInterIssueTimeGenerator interIssueTimeGenerator = new ExponentialInterIssueTimeGenerator
                 (minTimeInterTransactions, meanTimeInterTransactions);
 
@@ -81,9 +90,7 @@ public class BenchmarkingLauncher {
 
         workloadExecutor.execute();
 
-        IWorkloadStatistics workloadStat = workloadExecutor.getWorkloadStat();
-        if (workloadStat != null)
-            LOGGER.info(workloadStat.summaryReport());
+        return workloadExecutor.getWorkloadStat();
     }
 
 }

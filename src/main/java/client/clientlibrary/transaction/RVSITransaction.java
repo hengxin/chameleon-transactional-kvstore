@@ -125,7 +125,7 @@ public class RVSITransaction implements ITransaction {
 		
 		try {
             boolean isCommitted = cctx.getCoord(tx, vcm).execute2PC(tx, vcm);
-            LOGGER.info("Tx [sts: {}] is committed: [{}].", tx.getSts(), isCommitted);
+            LOGGER.debug("Tx [sts: {}] is committed: [{}].", tx.getSts(), isCommitted);
             return isCommitted;
 		} catch (RemoteException re) {
 			throw new TransactionEndException(

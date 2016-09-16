@@ -44,8 +44,12 @@ public class Batch {
         parseRVSI();
     }
 
+    public int[] getMpls() { return mpls; }
+    public double[] getRwRatios() { return rwRatios; }
+    public RVSITriple[] getRvsiTriples() { return rvsiTriples; }
+
     private void parseMPL() {
-        mpls = stream(prop.getProperty(MPL.getParam())
+        mpls = stream(prop.getProperty(MPL.param())
                         .split(";"))
                 .map(String::trim)
                 .mapToInt(Integer::parseInt)
@@ -53,7 +57,7 @@ public class Batch {
     }
 
     private void parseRWRatio() {
-        rwRatios = Arrays.stream(prop.getProperty(RW_RATIO.getParam())
+        rwRatios = Arrays.stream(prop.getProperty(RW_RATIO.param())
                         .split(";"))
                 .map(String::trim)
                 .mapToDouble(Double::parseDouble)
@@ -61,7 +65,7 @@ public class Batch {
     }
 
     private void parseRVSI() {
-        rvsiTriples = Arrays.stream(prop.getProperty(RVSI.getParam()).split(";"))
+        rvsiTriples = Arrays.stream(prop.getProperty(RVSI.param()).split(";"))
                 .map(String::trim)
                 .map(this::parseRVSITriple)
                 .toArray(RVSITriple[]::new);

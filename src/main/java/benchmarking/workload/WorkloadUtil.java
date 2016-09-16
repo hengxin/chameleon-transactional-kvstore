@@ -25,15 +25,15 @@ public class WorkloadUtil {
     }
 
     public enum WorkloadParams {
-        SIZE_OF_KEYSPACE("sizeOfKeyspace", "1000"),
+        SIZE_OF_KEYSPACE("sizeOfKeyspace", "5"),
         MPL("mpl", "5"),
         NUMBER_OF_TRANSACTIONS("numberOfTransactions", "1000"),
-        MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION("maxNumberOfOperations", "4"),
-        PROB_BINOMIAL("probBinomial", "0.50"),
-        RW_RATIO("rwRatio", "4"),
+        MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION("maxNumberOfOperations", "25"),
+        PROB_BINOMIAL("probBinomial", "50"),
+        RW_RATIO("rwRatio", "2"),
         ZIPF_EXPONENT("zipfExponent", "1"),
         MEAN_TIME_INTER_TRANSACTIONS("meanTimeInterTransactions", "500"),
-        MIN_TIME_INTER_TRANSACTIONS("minTimeInterTransactions", "2000"),
+        MIN_TIME_INTER_TRANSACTIONS("minTimeInterTransactions", "0"),
         K1BV("k1", "1"),
         K2FV("k2", "0"),
         K3SV("k3", "2"),
@@ -47,11 +47,18 @@ public class WorkloadUtil {
             this.val = val;
         }
 
-        public String getParam() { return param; }
+        public String param() { return param; }
+        public String val() { return val; }
+
     }
 
     private static void setProperty(@NotNull WorkloadParams param) {
         DEFAULT_WORKLOAD_PROPERTIES.setProperty(param.param, param.val);
+    }
+
+    @Override
+    public String toString() {
+        return DEFAULT_WORKLOAD_PROPERTIES.toString();
     }
 
 }

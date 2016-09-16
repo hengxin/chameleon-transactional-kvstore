@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
@@ -192,13 +191,15 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 
             boolean wcfChecked = true;  // TODO: Putting wcf-checking before vc-checking?
             if (tx != null) {
-                try {
-                    LOGGER.debug("The logs.lock is [{}].", logs.lock);
-                    logs.writeLock.tryLock(2, TimeUnit.SECONDS);
-                    LOGGER.debug("After writeLock.tryLock(): the logs.lock is [{}].", logs.lock);
-                } catch (InterruptedException ie) {
-                    return false;
-                }
+//                try {
+//                    LOGGER.debug("The logs.lock is [{}].", logs.lock);
+//                    logs.writeLock.tryLock(2, TimeUnit.SECONDS);
+//                    LOGGER.debug("After writeLock.tryLock(): the logs.lock is [{}].", logs.lock);
+//                } catch (InterruptedException ie) {
+//                    return false;
+//                }
+
+                logs.writeLock.lock();
 
                 wcfChecked = logs.wcf(tx);
 

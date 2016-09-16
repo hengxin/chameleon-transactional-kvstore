@@ -15,6 +15,23 @@ public class RVSITriple {
         this.k3 = k3;
     }
 
+    public int getK1() { return k1; }
+    public int getK2() { return k2; }
+    public int getK3() { return k3; }
+
+    /**
+     * @return "(k1, k2, k3)"
+     */
+    public String rvsiParamVal() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('(')
+                .append(k1).append(',')
+                .append(k2).append(',')
+                .append(k3)
+                .append(')');
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)

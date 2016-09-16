@@ -26,7 +26,7 @@ appender("FILE", FileAppender) {
 	file = "./logs/chameleon-test.log"
     append = false
 //    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
-    encoder(PatternLayoutEncoder) { pattern = "%-5level %logger{36} - %msg%n" }
+    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
 }
 
 /*appender("FILE", RollingFileAppender) {
@@ -42,6 +42,7 @@ appender("FILE", FileAppender) {
 
 // benchmarking
 logger("benchmarking.workload.transaction", INFO)
+logger("benchmarking.executor.client.ClientExecutor", INFO)
 
 // context
 logger("client.context", WARN)
@@ -53,15 +54,14 @@ logger("kvs.table.AbstractTable", WARN)
 logger("kvs.table.MultiTimestampedCellsStore", INFO)
 
 // client
-logger("client.clientlibrary.rvsi.vc", DEBUG)
+logger("client.clientlibrary.rvsi.vc", INFO)
 logger("client.clientlibrary.transaction.RVSITransaction", INFO)
-logger("client.clientlibrary.transaction.BufferedUpdates", DEBUG)
+logger("client.clientlibrary.transaction.BufferedUpdates", INFO)
 
 // master
 logger("master.SIMaster", WARN)
 
 // slave
-
 
 // coordinator
 logger("twopc.coordinator", WARN)
@@ -79,4 +79,4 @@ logger("rmi", ERROR)
 // util
 logger("util", ERROR)
 
-root(DEBUG, ["STDOUT", "FILE"])
+root(INFO, ["STDOUT", "FILE"])

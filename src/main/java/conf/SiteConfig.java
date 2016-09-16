@@ -1,5 +1,6 @@
 package conf;
 
+import org.apache.commons.math3.distribution.NormalDistribution;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -40,6 +41,13 @@ public final class SiteConfig {
     @Language("Properties")
     public static final String DEFAULT_SOCKET_PORT_PROPERTIES = "messaging/socket/sp.properties";
     public static final int DEFAULT_SOCKET_PORT = 1111;
+
+    // for simulation
+    public static final boolean IS_IN_SIMULATION_MODE = true;
+    private static int intraDCDelay = 5;
+    private static int interDCDelay = 30;
+    public static final NormalDistribution INTRA_DC_NORMAL_DIST = new NormalDistribution(intraDCDelay, 1);
+    public static final NormalDistribution INTER_DC_NORMAL_DIST = new NormalDistribution(interDCDelay, 1);
 
     public enum SiteConfigKey {
         HOST("host"),

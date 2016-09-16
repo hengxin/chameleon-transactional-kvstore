@@ -40,7 +40,7 @@ public final class BVVersionConstraint extends AbstractVersionConstraint {
     @Override
     public boolean check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
         ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
-        LOGGER.info("TsCell to check is : [{}].", tsCell);
+        LOGGER.debug("TsCell to check is : [{}].", tsCell);
 
         long ord = tsCell.getOrdinal().getOrd();
         boolean checked = (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());

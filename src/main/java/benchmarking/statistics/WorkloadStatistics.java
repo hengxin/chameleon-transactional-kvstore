@@ -42,23 +42,25 @@ public class WorkloadStatistics implements IWorkloadStatistics {
                 .sum();
     }
 
-    @Override
-    public String summaryReport() {
+    public String briefReport() {
         int numberOfCommitted = countCommitted();
         int numberOfAborted = countAborted();
         int numberOfAll = countAll();
 
-        String overviewReport = MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("#C", numberOfCommitted)
                 .add("#A", numberOfAborted)
                 .add("#T", numberOfAll)
                 .add("#C/#T", (numberOfCommitted * 1.0) / numberOfAll)
                 .add("#A/#T", (numberOfAborted * 1.0)/ numberOfAll)
                 .toString();
+    }
 
+    @Override
+    public String summaryReport() {
         return clientStats.stream()
                 .map(IClientStatistics::summaryReport)
-                .collect(Collectors.joining("; ", overviewReport, "."));
+                .collect(Collectors.joining("; ", briefReport(), "."));
     }
 
 }
