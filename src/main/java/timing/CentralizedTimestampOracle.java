@@ -47,7 +47,7 @@ public class CentralizedTimestampOracle implements ITimestampOracle, IRMI {
 	@Override
 	public int get() throws RemoteException {
 	    int time = ts.getAndIncrement();
-        LOGGER.debug("Timeoracle returns timestamp [{}].", time);
+        LOGGER.info("Timeoracle returns timestamp [{}].", time);
         return time;
 //	    return ts.getAndIncrement();
 	}

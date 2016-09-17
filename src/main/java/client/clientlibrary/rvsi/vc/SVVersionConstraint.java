@@ -45,8 +45,8 @@ public final class SVVersionConstraint extends AbstractVersionConstraint {
         long ord = tsCell.getOrdinal().getOrd();
         boolean checked = (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
 
-        LOGGER.debug("Checking SVVersionConstraint: [{}] - [{}] <= [{}] with result [{}].",
-                ord, vce.getVceOrd().getOrd(), vce.getVceBound(), checked);
+        LOGGER.info("Checking SVVersionConstraint [{} vs. {}]: [{}] - [{}] <= [{}] with result [{}].",
+                tsCell, vce, ord, vce.getVceOrd().getOrd(), vce.getVceBound(), checked);
 
         return checked;
     }

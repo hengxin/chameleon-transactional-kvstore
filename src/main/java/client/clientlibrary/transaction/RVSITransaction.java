@@ -95,7 +95,7 @@ public class RVSITransaction implements ITransaction {
 
 			tsCell = site.get(r, c);
 			queryResults.put(new CompoundKey(r, c), tsCell);
-			LOGGER.debug("Transaction [sts: {}] read {} from [{}+{}] at site [{}].",
+			LOGGER.info("Transaction [sts: {}] read {} from [{}+{}] at site [{}].",
                     getSts(), tsCell, r, c, site);
 		} catch (RemoteException re) {
 			throw new TransactionReadException(String.format("The transaction [%s] failed to read [%s+%s] at site [%s].",

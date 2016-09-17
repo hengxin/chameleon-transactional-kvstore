@@ -3,9 +3,9 @@ package benchmarking.batch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import benchmarking.statistics.BenchmarkingStatistics;
 import benchmarking.statistics.IWorkloadStatistics;
@@ -25,6 +25,8 @@ import static benchmarking.workload.WorkloadUtil.WorkloadParams.RW_RATIO;
  */
 public class BatchRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(BatchRunner.class);
+    private static final String ALION_SCRIPT = "aliyun/alicript/alion.sh";
+    private static final String ALIEAN_SCRIPT = "aliyun/alicript/aliean.sh";
 
     private final Batch batch;
     private final String siteProperties;
@@ -55,25 +57,39 @@ public class BatchRunner {
                     Properties prop = fillWorkloadProperties(rwRatio, mpl, rvsiTriple);
                     LOGGER.debug("BatchRunner: [{}]", prop.toString());
 
-                    try {
-                        TimeUnit.SECONDS.sleep(2);
-                    } catch (InterruptedException ie) {
-                        ie.printStackTrace();
-                    }
+                    LOGGER.info("#####################################################");
+                    LOGGER.info("Batch for [{}:{}:{}] starts.", rwRatio, mpl, rvsiTriple);
 
-                    IWorkloadStatistics workloadStat = new BenchmarkingLauncher(prop, siteProperties, cfProperties,
-                            toProperties).run();
+                    LOGGER.info("[{}] starts.", ALION_SCRIPT);
+                    try {
+                        Process alionProc = new ProcessBuilder(ALION_SCRIPT).start();
+                        alionProc.waitFor();
+                    } catch (IOException | InterruptedException ioie) {
+                        ioie.printStackTrace();
+                    }
+                    LOGGER.info("[{}] ends.", ALION_SCRIPT);
+
+                    LOGGER.info("BenchmarkingLauncher starts.");
+                    IWorkloadStatistics workloadStat = new BenchmarkingLauncher(prop,
+                            siteProperties, cfProperties, toProperties)
+                            .run();
+                    LOGGER.info("BenchmarkingLauncher ends.");
 
                     BenchmarkingStatistics benchmarkingStat = new BenchmarkingStatistics(rwRatio, mpl, rvsiTriple,
                             workloadStat);
-                    LOGGER.info("##########################################");
                     LOGGER.info("BatchRunner: [{}].", benchmarkingStat.briefReport());
 
+                    LOGGER.info("[{}] starts.", ALIEAN_SCRIPT);
                     try {
-                        TimeUnit.SECONDS.sleep(2);
-                    } catch (InterruptedException ie) {
-                        ie.printStackTrace();
+                        Process alieanProc = new ProcessBuilder(ALIEAN_SCRIPT).start();
+                        alieanProc.waitFor();
+                    } catch (IOException | InterruptedException ioie) {
+                        ioie.printStackTrace();
                     }
+                    LOGGER.info("[{}] ends.", ALIEAN_SCRIPT);
+
+                    LOGGER.info("Batch for [{}:{}:{}] ends.", rwRatio, mpl, rvsiTriple);
+                    LOGGER.info("#####################################################");
                 });
             });
         });

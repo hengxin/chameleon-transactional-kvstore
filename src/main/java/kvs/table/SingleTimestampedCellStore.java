@@ -52,7 +52,7 @@ public class SingleTimestampedCellStore implements ITimestampedCellStore {
 	 */
 	@Override
 	public void put(@NotNull ITimestampedCell tsCell) {
-        LOGGER.debug("Slave receives [{}]. Is it newer than [{}]: [{}].",
+        LOGGER.info("Slave receives [{}]. Is it newer than [{}]: [{}].",
                 tsCell,
                 singleTsCell.get(),
                 singleTsCell.get().compareTo(tsCell) < 0);

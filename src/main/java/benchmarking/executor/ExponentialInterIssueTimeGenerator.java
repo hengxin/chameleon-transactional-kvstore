@@ -13,20 +13,24 @@ public class ExponentialInterIssueTimeGenerator implements IInterIssueTimeGenera
     private static final Logger LOGGER = LoggerFactory.getLogger(ExponentialInterIssueTimeGenerator.class);
 
     @NotNull private final ExponentialDistribution expDist;
-    @NotNull private final double minInterval;
+    private final int minInterval;
+    private final int maxInterval;
 
     /**
      * @param meanInterval parameter for the exponential distribution;
      *                     in "double"; in milliseconds.
      */
-    public ExponentialInterIssueTimeGenerator(final double minInterval, final double meanInterval) {
+    public ExponentialInterIssueTimeGenerator(final int minInterval, final int maxInterval,
+                                              final int meanInterval) {
         this.minInterval = minInterval;
+        this.maxInterval = maxInterval;
         expDist = new ExponentialDistribution(meanInterval);
     }
 
     @Override
     public long generate() {
-        return Math.round(expDist.sample() + minInterval);
+        long interval = Math.round(expDist.sample()) + minInterval;
+        return interval > maxInterval ? maxInterval : interval;
     }
 
 }

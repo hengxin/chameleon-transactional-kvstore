@@ -26,7 +26,8 @@ public class BinomialTransactionSizeGenerator implements ITransactionSizeGenerat
 
     @Override
     public int generate() {
-        return biDist.sample();
+        int size = biDist.sample();
+        return size == 0 ? (int) biDist.getNumericalMean() : size;
     }
 
 }

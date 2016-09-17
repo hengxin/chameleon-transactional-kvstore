@@ -40,7 +40,7 @@
 						</goals>
 					</execution>
 
-                    <!-- for clients: client -->
+                    <!-- for client: client -->
                     <execution>
                         <id>client</id>
                         <configuration>
@@ -62,7 +62,7 @@
                         </goals>
                     </execution>
 
-                    <!-- for clients on aliyun -->
+                    <!-- for client on aliyun -->
                     <execution>
                         <id>client-aliyun</id>
                         <configuration>
@@ -83,7 +83,7 @@
                         </goals>
                     </execution>
 
-                    <!-- for masters: master -->
+                    <!-- for master: master -->
                     <execution>
                         <id>master</id>
                         <configuration>
@@ -125,9 +125,9 @@
                         </goals>
                     </execution>
 
-                    <!-- for masters on aliyun: master-nc1 -->
+                    <!-- for masters on aliyun: master-nc2 -->
                     <execution>
-                        <id>master-nc1</id>
+                        <id>master-nc2</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
@@ -138,7 +138,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>aliyun/master-nc1</finalName>
+                            <finalName>aliyun/master-nc2</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>
@@ -146,9 +146,9 @@
                         </goals>
                     </execution>
 
-                    <!-- for masters on aliyun: master-sc1 -->
+                    <!-- for masters on aliyun: master-sc3 -->
                     <execution>
-                        <id>master-sc1</id>
+                        <id>master-sc3</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
@@ -159,7 +159,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>aliyun/master-sc1</finalName>
+                            <finalName>aliyun/master-sc3</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>
@@ -230,9 +230,9 @@
                         </goals>
                     </execution>
 
-                    <!-- for slaves on aliyun: slave-nc2 -->
+                    <!-- for slaves on aliyun: slave-nc1 -->
                     <execution>
-                        <id>slave-nc2</id>
+                        <id>slave-nc1</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
@@ -243,7 +243,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>aliyun/slave-nc2</finalName>
+                            <finalName>aliyun/slave-nc1</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>
@@ -272,9 +272,9 @@
                         </goals>
                     </execution>
 
-                    <!-- for slaves on aliyun: slave-sc2 -->
+                    <!-- for slaves on aliyun: slave-sc1 -->
                     <execution>
-                        <id>slave-sc2</id>
+                        <id>slave-sc1</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
@@ -285,7 +285,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>aliyun/slave-sc2</finalName>
+                            <finalName>aliyun/slave-sc1</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>
@@ -293,9 +293,9 @@
                         </goals>
                     </execution>
 
-                    <!-- for slaves on aliyun: slave-sc3 -->
+                    <!-- for slaves on aliyun: slave-nc2 -->
                     <execution>
-                        <id>slave-sc3</id>
+                        <id>slave-nc2</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
@@ -306,7 +306,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>aliyun/slave-sc3</finalName>
+                            <finalName>aliyun/slave-nc2</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>
@@ -356,9 +356,9 @@
                         </goals>
                     </execution>
 
-                    <!-- for coordinator factory on aliyun: cf-master-nc1 -->
+                    <!-- for coordinator factory on aliyun: cf-master-nc2 -->
                     <execution>
-                        <id>cf-master-nc1</id>
+                        <id>cf-master-nc2</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
@@ -369,7 +369,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>aliyun/cf-master-nc1</finalName>
+                            <finalName>aliyun/cf-master-nc2</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>
@@ -377,9 +377,9 @@
                         </goals>
                     </execution>
 
-                    <!-- for coordinator factory on aliyun: cf-master-sc1 -->
+                    <!-- for coordinator factory on aliyun: cf-master-sc3 -->
                     <execution>
-                        <id>cf-master-sc1</id>
+                        <id>cf-master-sc3</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
@@ -390,7 +390,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>aliyun/cf-master-sc1</finalName>
+                            <finalName>aliyun/cf-master-sc3</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>

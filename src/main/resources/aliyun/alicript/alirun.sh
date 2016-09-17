@@ -1,22 +1,22 @@
 #!/bin/bash - 
 #===============================================================================
 #
-#          FILE: aliploy.sh
+#          FILE: alirun.sh
 # 
-#         USAGE: ./aliploy.sh -j='jar file'
+#         USAGE: ./alirun.sh -j='jar file'
 # 
-#   DESCRIPTION: Deploy the jar file onto an aliyun host.
+#   DESCRIPTION: Run the jar file on the appropriate aliyun host.
 # 
 #       OPTIONS: 
-#			-j | --jar: the jar file to deploy
+#			-j | --jar: the jar file to run
 #			-h | --help: help
 #  REQUIREMENTS: The jar file should following the naming convention.
 #		   TODO: full path or relative path of the jar file
 #          BUGS: ---
-#         NOTES: --- 
+#         NOTES: ---
 #        AUTHOR: Hengfeng Wei (ant-hengxin)
 #  ORGANIZATION: ICS, NJU
-#       CREATED: 09-03-2016
+#       CREATED: 09-17-2016 15:17
 #      REVISION:  ---
 #===============================================================================
 
@@ -24,9 +24,9 @@ JAR=""
 
 function usage() {
 	echo ""
-    echo "aliploy -j='jar file'"
+    echo "alirun -j='jar file'"
     echo ""
-    echo "This script deploys the jar file on appropriate site in Aliyun ECS."
+    echo "This script runs the jar file on appropriate site in Aliyun ECS."
     echo "It requires that the name of the jar file follows the naming convention."
 	echo ""
     echo "-h --help"
@@ -56,7 +56,6 @@ while [ "$1" != "" ]; do
 done
 
 ########## The Main Body ##########
-
 CHAMELEON_DIR="~/chameleon-aliyun"	# chameleon directory on aliyun
 
 ########## parse the name of the input jar file ########## 
@@ -71,10 +70,53 @@ service="${jarInfo[0]}"	# the first is the service type: client, master, slave, 
 host="${jarInfo[-1]}"	# the last is the host
 
 echo "The host on aliyun involved is '$host'."
+########## run the jar file on the remote host ########## 
+JAR_FILE="$CHAMELEON_DIR/$jarBase"
+echo "The jar file on the remote host is in: $JAR_FILE."
 
-########## deploy the jar file onto the remote host ########## 
-/usr/local/bin/alicp.sh -l="$JAR" -r="$CHAMELEON_DIR" -t="$host"
+# select command line arguments
+ALIYUN_DIR="aliyun"
+PROPERTIES_DIR="$ALIYUN_DIR/$jar"
+ALISH="/usr/local/bin/alish"
+declare -a ARGS
 
-echo "Wait for deploying $jarBase onto the remote host $host."
-wait
-echo "Deployed! You can run $jarBase on the remote host $host by executing [./alirun.sh  $JAR]."
+case $service in
+	client)
+		ARGS=(site cf to)
+		;;
+
+	master)
+		ARGS=(site sa)
+		;;
+
+	slave)
+		ARGS=(site sp)
+		;;
+
+	cf)
+		ARGS=(cf to)
+		;;
+
+	to)
+		ARGS=(to)
+		;;
+
+	*)
+		echo "No such service: $service."
+		usage
+		exit 1
+		;;
+esac    # --- end of case ---
+
+echo "The parameters in order for ($jarBase) is (${ARGS[*]})."
+
+args=""
+SPACE=" "
+
+for arg in "${ARGS[@]}"; do
+	args+=$PROPERTIES_DIR/$arg-$jar.properties$SPACE 
+done
+
+echo "The parameters for ($jarBase) is ($args)."
+
+$ALISH -r="cd $CHAMELEON_DIR && java -jar $jarBase $args" -t="$host"

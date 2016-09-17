@@ -176,7 +176,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
     @Override
     public boolean prepare(@Nullable ToCommitTransaction tx, @Nullable VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException {
-        LOGGER.info("[{}] begins the [{}] phase with tx [{}] and vcm [{}].",
+        LOGGER.debug("[{}] begins the [{}] phase with tx [{}] and vcm [{}].",
                 this.getClass().getSimpleName(), PREPARE, tx, vcm);
 
         /*
@@ -187,7 +187,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
             boolean vcChecked = true;
             if (vcm != null)  // FIXME: ensuring vcm not null
                 vcChecked = vcm.check(table);
-            LOGGER.info("Checking vcm [{}] is [{}].", vcm, vcChecked);
+            LOGGER.debug("Checking vcm [{}] is [{}].", vcm, vcChecked);
 
             boolean wcfChecked = true;  // TODO: Putting wcf-checking before vc-checking?
             if (tx != null) {
@@ -203,14 +203,14 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 
                 wcfChecked = logs.wcf(tx);
 
-                LOGGER.info("Checking wcf against tx [sts: {}, cts: {}] is [{}].",
+                LOGGER.debug("Checking wcf against tx [sts: {}, cts: {}] is [{}].",
                         tx.getSts(), tx.getCts(), wcfChecked);
             }
 
             return vcChecked && wcfChecked;
         });
 
-        LOGGER.info("[{}] ends the [{}] phase with tx [{}] and vcm [{}].",
+        LOGGER.debug("[{}] ends the [{}] phase with tx [{}] and vcm [{}].",
                 this.getClass().getSimpleName(), PREPARE, tx, vcm);
 
         try {
@@ -225,7 +225,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
     @Override
     public boolean commit(@Nullable final ToCommitTransaction tx, @NotNull final Timestamp cts)
             throws RemoteException, TransactionExecutionException {
-        LOGGER.info("[{}] begins the [{}] phase with tx [{}] and cts [{}].",
+        LOGGER.debug("[{}] begins the [{}] phase with tx [{}] and cts [{}].",
                 this.getClass().getSimpleName(), COMMIT, tx, cts);
 
         if (tx != null) {

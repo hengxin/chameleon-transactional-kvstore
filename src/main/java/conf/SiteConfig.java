@@ -43,10 +43,11 @@ public final class SiteConfig {
     public static final String DEFAULT_SOCKET_PORT_PROPERTIES = "messaging/socket/sp.properties";
     public static final int DEFAULT_SOCKET_PORT = 1111;
 
+    // FIXME move this functionality to a new package: simulation
     // for simulation
     public static boolean IS_IN_SIMULATION_MODE = false;
-    private static int intraDCDelay = 5;
-    private static int interDCDelay = 30;
+    private static int intraDCDelay = 40;
+    private static int interDCDelay = 3;
     public static final NormalDistribution INTRA_DC_NORMAL_DIST = new NormalDistribution(intraDCDelay, 1);
     public static final NormalDistribution INTER_DC_NORMAL_DIST = new NormalDistribution(interDCDelay, 1);
 
@@ -89,7 +90,8 @@ public final class SiteConfig {
     public static void simulateInterDCComm() {
         if (SiteConfig.IS_IN_SIMULATION_MODE)
             try {
-                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
+//                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
+                TimeUnit.MILLISECONDS.sleep(interDCDelay);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }
@@ -98,7 +100,8 @@ public final class SiteConfig {
     public static void simulateIntraDCComm() {
         if (SiteConfig.IS_IN_SIMULATION_MODE)
             try {
-                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTRA_DC_NORMAL_DIST.sample()));
+//                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTRA_DC_NORMAL_DIST.sample()));
+                TimeUnit.MILLISECONDS.sleep(intraDCDelay);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }

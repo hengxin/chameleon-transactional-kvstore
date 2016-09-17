@@ -1,6 +1,7 @@
 package membership.coordinator;
 
 import org.intellij.lang.annotations.Language;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,12 +43,13 @@ public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
             String idStr = idStrs.toArray(new String[idStrs.size()])[0];
             self = Member.parseMember(prop.getProperty(idStr)).get();
             export();
-
+            LOGGER.info("[{}:{}] has been successfully launched.", CoordinatorFactory.class.getSimpleName(), self);
         } catch (IOException ioe) {
             LOGGER.error("Failed to parse [{}] from properties [{}]", this.getClass().getSimpleName(), cfProperties);
         }
     }
 
+    @NotNull
     @Override
     public Abstract2PCCoordinator getRVSI2PCPhaserCoord(AbstractClientContext ctx)
             throws RemoteException {
