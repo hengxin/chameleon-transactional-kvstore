@@ -62,7 +62,7 @@ public abstract class AbstractClientContext extends AbstractContext {
 	public AbstractClientContext(@NotNull String siteProperties,
                                  @NotNull String cfProperties,
                                  @NotNull String toProperties) {
-        LOGGER.info("Using site properties file [{}], cf properties file [{}], and to properties file [{}] for [{}].",
+        LOGGER.debug("Using site properties file [{}], cf properties file [{}], and to properties file [{}] for [{}].",
                 siteProperties, cfProperties, toProperties, this.getClass().getSimpleName());
         membership = new StaticSiteMembershipFromProperties(siteProperties);
         coordMembership = new CoordinatorMembership(cfProperties);

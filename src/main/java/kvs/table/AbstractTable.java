@@ -188,9 +188,9 @@ public abstract class AbstractTable {
 		Optional<ITimestampedCellStore> tsCellStore = this.getTimestampedCellStore(row, col);
 	
 		if(tsCellStore.isPresent()) {    // fast path
-            LOGGER.info("Begin fast path: [ItsCellStore {}; tc {}].", tsCellStore.get(), tc);
+            LOGGER.debug("Begin fast path: [ItsCellStore {}; tc {}].", tsCellStore.get(), tc);
             tsCellStore.get().put(tc);
-            LOGGER.info("End fast path: [ItsCellStore {}; tc {}].", tsCellStore.get(), tc);
+            LOGGER.debug("End fast path: [ItsCellStore {}; tc {}].", tsCellStore.get(), tc);
         }
 		else {
 			writeLock.lock();

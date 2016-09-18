@@ -13,8 +13,14 @@
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.core.ConsoleAppender
 import ch.qos.logback.core.FileAppender
+import ch.qos.logback.core.rolling.FixedWindowRollingPolicy
+import ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy
 
-import static ch.qos.logback.classic.Level.*
+import static ch.qos.logback.classic.Level.ERROR
+import static ch.qos.logback.classic.Level.INFO
+
+// for back up
+//    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
 
 appender("STDOUT", ConsoleAppender) {
     withJansi = true
@@ -25,42 +31,39 @@ appender("STDOUT", ConsoleAppender) {
 appender("FILE", FileAppender) {
 	file = "./logs/chameleon-test.log"
     append = false
-//    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
     encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
 }
 
 
-//appender("TO", FileAppender) {
-//    file = "./logs/chameleon-test-to.log"
-//    append = false
-////    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
-//    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
-//}
+appender("TO", FileAppender) {
+    file = "./logs/chameleon-test-to.log"
+    append = false
+    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
+}
 
-//appender("COORD", FileAppender) {
-//    file = "./logs/chameleon-test-coord.log"
-//    append = false
-////    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
-//    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
-//}
+appender("COORD", FileAppender) {
+    file = "./logs/chameleon-test-coord.log"
+    append = false
+    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
+}
 
 appender("MASTER", FileAppender) {
     file = "./logs/chameleon-test-master.log"
     append = false
-//    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
     encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
 }
 
-/*appender("FILE", RollingFileAppender) {
-	file = "./logs/chameleon.log"
-	encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
+appender("FILE", RollingFileAppender) {
+	file = "./logs/chameleon-aliyun-batch.log"
+    append = true
+    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
 	rollingPolicy(FixedWindowRollingPolicy) {
-		fileNamePattern = "./logs/chameleon.%i.log.zip"
+		fileNamePattern = "./logs/chameleon-aliyun-batch.%i.log.zip"
 		minIndex = 1
-		maxIndex = 10
+		maxIndex = 100
 	}
 	triggeringPolicy(SizeBasedTriggeringPolicy) { maxFileSize = "2MB" }
-}*/
+}
 
 // benchmarking
 logger("benchmarking.workload.transaction", INFO)

@@ -17,11 +17,12 @@
 #      REVISION:  ---
 #===============================================================================
 
-ALIPLOY="./aliploy.sh"
-ALIRUN="./alirun.sh"
+ALIPLOY="/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main/resources/aliyun/alicript/aliploy.sh"
+ALIRUN="/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main/resources/aliyun/alicript/alirun.sh"
 ALIYUN_SERVICE_FULL_DIR="/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/target/aliyun"
 JAR_EXTENSION=".jar"
 
+# SERVICES=(to-master-ec1)
 SERVICES=(to-master-ec1 slave-ec2 slave-ec3 slave-nc1 slave-nc3 slave-sc1 slave-sc2 master-ec1 master-nc2 master-sc3 cf-master-ec1 cf-master-nc2 cf-master-sc3)
 
 echo "#################### Deploy and Run: Begin! ####################"

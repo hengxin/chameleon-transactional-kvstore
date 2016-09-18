@@ -3,14 +3,16 @@ package benchmarking.batch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import benchmarking.statistics.BenchmarkingStatistics;
 import benchmarking.statistics.IWorkloadStatistics;
 import benchmarking.workload.WorkloadUtil;
 import main.benchmarking.BenchmarkingLauncher;
+import util.ScriptUtil;
 
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K1BV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K2FV;
@@ -26,12 +28,13 @@ import static conf.SiteConfig.IS_IN_SIMULATION_MODE;
  */
 public class BatchRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(BatchRunner.class);
+    private static ExecutorService exec = Executors.newCachedThreadPool();
+
     private static final String ALION_SCRIPT =
-            "/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main/resources/aliyun/alicript" +
-                    "/alion.sh";
+    "/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main/resources/aliyun/alicript/alion.sh";
+
     private static final String ALIEAN_SCRIPT =
-            "/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main/resources/aliyun/alicript" +
-            "/aliean.sh";
+    "/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main/resources/aliyun/alicript/aliean.sh";
 
     private final Batch batch;
     private final String siteProperties;
@@ -56,14 +59,18 @@ public class BatchRunner {
     }
 
     public void run() {
-        Arrays.stream(batch.getRwRatios()).forEach(rwRatio -> {
-            Arrays.stream(batch.getMpls()).forEach(mpl -> {
-                Arrays.stream(batch.getRvsiTriples()).forEach(rvsiTriple -> {
+//        Arrays.stream(batch.getRwRatios()).forEachOrdered(rwRatio -> {
+//            Arrays.stream(batch.getMpls()).forEachOrdered(mpl -> {
+//                Arrays.stream(batch.getRvsiTriples()).forEachOrdered(rvsiTriple -> {
+        for (double rwRatio : batch.getRwRatios()) {
+            for (int mpl : batch.getMpls()) {
+                for (RVSITriple rvsiTriple : batch.getRvsiTriples()) {
                     Properties prop = fillWorkloadProperties(rwRatio, mpl, rvsiTriple);
-                    LOGGER.debug("BatchRunner: [{}]", prop.toString());
 
                     LOGGER.info("#####################################################");
                     LOGGER.info("Batch for [{}:{}:{}] starts.", rwRatio, mpl, rvsiTriple);
+
+                    destroy();
 
                     if (! IS_IN_SIMULATION_MODE)
                         setUp();
@@ -83,9 +90,9 @@ public class BatchRunner {
 
                     LOGGER.info("Batch for [{}:{}:{}] ends.", rwRatio, mpl, rvsiTriple);
                     LOGGER.info("#####################################################");
-                });
-            });
-        });
+                }
+            }
+        }
     }
 
     private Properties fillWorkloadProperties(double rwRatio, int mpl, RVSITriple rvsiTriple) {
@@ -102,25 +109,33 @@ public class BatchRunner {
         return prop;
     }
 
+    // Process alionProc = new ProcessBuilder().inheritIO().command(ALION_SCRIPT).start();
     private void setUp() {
         LOGGER.info("[{}] starts.", ALION_SCRIPT);
+
+        ScriptUtil.exec(new String[] { ALION_SCRIPT } );
+
         try {
-            Process alionProc = new ProcessBuilder(ALION_SCRIPT).start();
-            alionProc.waitFor();
-        } catch (IOException | InterruptedException ioie) {
-            ioie.printStackTrace();
+            TimeUnit.MINUTES.sleep(12);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
         }
+
         LOGGER.info("[{}] ends.", ALION_SCRIPT);
     }
 
     private void destroy() {
         LOGGER.info("[{}] starts.", ALIEAN_SCRIPT);
+
+        ScriptUtil.exec(new String[] { ALIEAN_SCRIPT} );
+
+        LOGGER.info("Pass the alieanProc.");
         try {
-            Process alieanProc = new ProcessBuilder(ALIEAN_SCRIPT).start();
-            alieanProc.waitFor();
-        } catch (IOException | InterruptedException ioie) {
-            ioie.printStackTrace();
+            TimeUnit.MINUTES.sleep(2);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
         }
+
         LOGGER.info("[{}] ends.", ALIEAN_SCRIPT);
     }
 
