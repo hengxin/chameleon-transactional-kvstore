@@ -14,6 +14,7 @@ import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
 import site.ISite;
+import twopc.TwoPCResult;
 import twopc.participant.I2PCParticipant;
 
 import static java.util.stream.Collectors.toList;
@@ -40,7 +41,7 @@ public class RVSI2PCPhaserCoordinatorStub extends RVSI2PCPhaserCoordinator {
     }
 
     @Override
-    public boolean execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm) {
+    public TwoPCResult execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm) {
         List<Callable<Boolean>> task_list = rmiSites
                 .map(site -> new CommitPhaserTask(this, (I2PCParticipant) site, null, null))
                 .collect(toList());
@@ -53,6 +54,6 @@ public class RVSI2PCPhaserCoordinatorStub extends RVSI2PCPhaserCoordinator {
 
         LOGGER.info("2PC protocol has been finished.");
 
-        return true;
+        return null;
     }
 }

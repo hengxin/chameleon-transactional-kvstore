@@ -36,6 +36,20 @@ public class WorkloadStatistics implements IWorkloadStatistics {
     }
 
     @Override
+    public int countFalseVcChecked() {
+        return clientStats.stream()
+                .mapToInt(IClientStatistics::countFalseVcChecked)
+                .sum();
+    }
+
+    @Override
+    public int countFalseWcfChecked() {
+        return clientStats.stream()
+                .mapToInt(IClientStatistics::countFalseWcfChecked)
+                .sum();
+    }
+
+    @Override
     public int countAll() {
         return clientStats.stream()
                 .mapToInt(IClientStatistics::countAll)
@@ -45,14 +59,20 @@ public class WorkloadStatistics implements IWorkloadStatistics {
     public String briefReport() {
         int numberOfCommitted = countCommitted();
         int numberOfAborted = countAborted();
+        int numberOfFalseVcChecked = countFalseVcChecked();
+        int numberOfFalseWcfChecked = countFalseWcfChecked();
         int numberOfAll = countAll();
 
         return MoreObjects.toStringHelper(this)
                 .add("#C", numberOfCommitted)
                 .add("#A", numberOfAborted)
+                .add("#!VC", numberOfFalseVcChecked)
+                .add("#!WCF", numberOfFalseWcfChecked)
                 .add("#T", numberOfAll)
                 .add("#C/#T", (numberOfCommitted * 1.0) / numberOfAll)
                 .add("#A/#T", (numberOfAborted * 1.0)/ numberOfAll)
+                .add("#!VC/#T", (numberOfFalseVcChecked * 1.0) / numberOfAll)
+                .add("#!WCF/#T", (numberOfFalseWcfChecked * 1.0) / numberOfAll)
                 .toString();
     }
 

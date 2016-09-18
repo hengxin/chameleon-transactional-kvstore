@@ -10,6 +10,9 @@ public class ClientStatistics implements IClientStatistics {
     private int numberOfCommittedTransactions = 0;
     private int numberOfAbortedTransactions = 0;
     private int numberOfTransactions = 0;
+    // more details
+    private int numberOfFalseVcChecked = 0;
+    private int numberOfFalseWcfChecked = 0;
 
     public void incCommitted() {
         numberOfCommittedTransactions++;
@@ -21,11 +24,25 @@ public class ClientStatistics implements IClientStatistics {
         numberOfTransactions++;
     }
 
+    public void incFalseVcChecked() {
+        numberOfFalseVcChecked++;
+    }
+
+    public void incFalseWcfChecked() {
+        numberOfFalseWcfChecked++;
+    }
+
     @Override
     public int countCommitted() { return numberOfCommittedTransactions; }
 
     @Override
     public int countAborted() { return numberOfAbortedTransactions; }
+
+    @Override
+    public int countFalseVcChecked() { return numberOfFalseVcChecked; }
+
+    @Override
+    public int countFalseWcfChecked() { return numberOfFalseWcfChecked; }
 
     @Override
     public int countAll() { return numberOfTransactions; }
@@ -43,6 +60,8 @@ public class ClientStatistics implements IClientStatistics {
                 .add("#T", numberOfTransactions)
                 .add("#C/#T", (numberOfCommittedTransactions * 1.0) / numberOfTransactions)
                 .add("#A/#T", (numberOfAbortedTransactions * 1.0) / numberOfTransactions)
+                .add("#!VC", numberOfFalseVcChecked)
+                .add("#!WCF", numberOfFalseWcfChecked)
                 .toString();
     }
 

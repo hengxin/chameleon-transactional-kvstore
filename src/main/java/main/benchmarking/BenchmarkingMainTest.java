@@ -18,6 +18,7 @@ public class BenchmarkingMainTest {
         String cfProperties = args[2];
         String toProperties = args[3];
 
+        LOGGER.info("Benchmarking Main Test Begins!!!");
         IWorkloadStatistics workloadStat =
                 new BenchmarkingLauncher(workloadProperties, siteProperties, cfProperties, toProperties)
                         .run();

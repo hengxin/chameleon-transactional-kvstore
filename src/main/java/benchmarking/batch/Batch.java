@@ -44,9 +44,9 @@ public class Batch {
         parseRVSI();
     }
 
-    public int[] getMpls() { return mpls; }
-    public double[] getRwRatios() { return rwRatios; }
-    public RVSITriple[] getRvsiTriples() { return rvsiTriples; }
+    int[] getMpls() { return mpls; }
+    double[] getRwRatios() { return rwRatios; }
+    RVSITriple[] getRvsiTriples() { return rvsiTriples; }
 
     private void parseMPL() {
         mpls = stream(prop.getProperty(MPL.param())
@@ -88,6 +88,8 @@ public class Batch {
     }
 
     public static void main(String[] args) {
+        Batch batch = new Batch("benchmarking/batch/batch.properties");
+        LOGGER.info("rwRatios: [{}].", batch.getRwRatios());
         LOGGER.info(new Batch("benchmarking/batch/batch.properties").toString());
     }
 }

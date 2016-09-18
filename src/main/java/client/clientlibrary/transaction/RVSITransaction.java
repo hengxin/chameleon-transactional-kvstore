@@ -28,6 +28,7 @@ import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import site.ISite;
 import timing.ITimestampOracle;
+import twopc.TwoPCResult;
 
 import static conf.SiteConfig.simulateInterDCComm;
 
@@ -95,7 +96,7 @@ public class RVSITransaction implements ITransaction {
 
 			tsCell = site.get(r, c);
 			queryResults.put(new CompoundKey(r, c), tsCell);
-			LOGGER.info("Transaction [sts: {}] read {} from [{}+{}] at site [{}].",
+			LOGGER.debug("Transaction [sts: {}] read {} from [{}+{}] at site [{}].",
                     getSts(), tsCell, r, c, site);
 		} catch (RemoteException re) {
 			throw new TransactionReadException(String.format("The transaction [%s] failed to read [%s+%s] at site [%s].",
@@ -127,16 +128,18 @@ public class RVSITransaction implements ITransaction {
 	 *  to the application.
 	 */
 	@Override
-	public boolean end() throws TransactionEndException {
+	public TwoPCResult end() throws TransactionEndException {
 		VersionConstraintManager vcm = generateVCManager();
 		ToCommitTransaction tx = new ToCommitTransaction(sts, bufferedUpdates);
 		
 		try {
             simulateInterDCComm();
 
-            boolean isCommitted = cctx.getCoord(tx, vcm).execute2PC(tx, vcm);
+            TwoPCResult twoPCResult = cctx.getCoord(tx, vcm).execute2PC(tx, vcm);
+
+            boolean isCommitted = twoPCResult.isCommitted();
             LOGGER.debug("Tx [sts: {}] is committed: [{}].", tx.getSts(), isCommitted);
-            return isCommitted;
+            return twoPCResult;
 		} catch (RemoteException re) {
 			throw new TransactionEndException(
 			        String.format("Transaction [%s] failed to commit due to RMI-related issues.", this),

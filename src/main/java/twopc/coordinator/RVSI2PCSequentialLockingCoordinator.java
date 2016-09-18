@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import client.context.AbstractClientContext;
+import twopc.TwoPCResult;
 
 /**
  * {@link RVSI2PCSequentialLockingCoordinator} is a 2PC coordinator for committing
@@ -26,8 +27,8 @@ public final class RVSI2PCSequentialLockingCoordinator extends Abstract2PCCoordi
 	}
 
     @Override
-    public boolean execute2PC(ToCommitTransaction tx, VersionConstraintManager vcm) throws RemoteException {
-        return false;
+    public TwoPCResult execute2PC(ToCommitTransaction tx, VersionConstraintManager vcm) throws RemoteException {
+        return null;
     }
 
     @Override

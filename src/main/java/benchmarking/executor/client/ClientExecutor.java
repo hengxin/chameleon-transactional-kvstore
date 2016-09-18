@@ -11,6 +11,7 @@ import benchmarking.executor.transaction.ITransactionExecutor;
 import benchmarking.statistics.IClientStatistics;
 import benchmarking.workload.client.ClientWorkload;
 import benchmarking.workload.transaction.Transaction;
+import twopc.TwoPCResult;
 
 /**
  * @author hengxin
@@ -52,12 +53,19 @@ public class ClientExecutor implements IClientExecutor {
                         ie.printStackTrace();
                     }
 
-                    boolean committed = transactionExecutor.execute(tx);
+                    TwoPCResult twoPCResult = transactionExecutor.execute(tx);
 
-                    if (clientStat != null)
-                        if (committed)
+                    if (clientStat != null) {
+                        if (twoPCResult.isCommitted())
                             clientStat.incCommitted();
                         else clientStat.incAborted();
+
+                        // more details
+                        if (! twoPCResult.isVcChecked())
+                            clientStat.incFalseVcChecked();
+                        if (! twoPCResult.isWcfChecked())
+                            clientStat.incFalseWcfChecked();
+                    }
                 });
     }
 

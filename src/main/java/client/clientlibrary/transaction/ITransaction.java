@@ -10,6 +10,7 @@ import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.compound.ITimestampedCell;
+import twopc.TwoPCResult;
 
 /**
  * Transactional operations issued at the client side, 
@@ -22,5 +23,5 @@ public interface ITransaction {
 	boolean begin() throws TransactionBeginException;
 	ITimestampedCell read(Row r, Column c) throws TransactionReadException;
 	void write(Row r, Column c, Cell data);
-	boolean end() throws TransactionEndException;
+	TwoPCResult end() throws TransactionEndException;
 }

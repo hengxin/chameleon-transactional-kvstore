@@ -293,9 +293,9 @@
                         </goals>
                     </execution>
 
-                    <!-- for slaves on aliyun: slave-nc2 -->
+                    <!-- for slaves on aliyun: slave-sc2 -->
                     <execution>
-                        <id>slave-nc2</id>
+                        <id>slave-sc2</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
@@ -306,7 +306,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>aliyun/slave-nc2</finalName>
+                            <finalName>aliyun/slave-sc2</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>

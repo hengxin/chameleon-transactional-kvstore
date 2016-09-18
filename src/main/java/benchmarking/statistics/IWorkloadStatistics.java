@@ -10,6 +10,8 @@ public interface IWorkloadStatistics extends IStatistics {
     void collect(@Nullable final IClientStatistics clientStat);
     int countCommitted();
     int countAborted();
+    int countFalseWcfChecked();
+    int countFalseVcChecked();
 
     int countAll();
 }

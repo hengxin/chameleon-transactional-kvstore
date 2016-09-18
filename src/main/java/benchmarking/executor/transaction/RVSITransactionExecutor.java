@@ -15,6 +15,7 @@ import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
+import twopc.TwoPCResult;
 
 /**
  * {@link RVSITransactionExecutor} wraps {@link Transaction}
@@ -33,7 +34,7 @@ public class RVSITransactionExecutor implements ITransactionExecutor {
     }
 
     @Override
-    public boolean execute(Transaction tx)
+    public TwoPCResult execute(Transaction tx)
             throws TransactionBeginException, TransactionReadException, TransactionEndException {
         ITransaction rvsiTx = new RVSITransaction(cctx);
 
@@ -55,5 +56,4 @@ public class RVSITransactionExecutor implements ITransactionExecutor {
             tx.write(new Row(op.getRow()), new Column(op.getCol()), new Cell(op.getVal()));
     }
 
-//    private final int interval; // inter-transaction interval
 }

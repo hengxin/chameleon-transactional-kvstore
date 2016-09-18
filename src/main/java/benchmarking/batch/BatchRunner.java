@@ -18,6 +18,7 @@ import static benchmarking.workload.WorkloadUtil.WorkloadParams.K3SV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.MPL;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.RVSI;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.RW_RATIO;
+import static conf.SiteConfig.IS_IN_SIMULATION_MODE;
 
 /**
  * @author hengxin
@@ -25,8 +26,12 @@ import static benchmarking.workload.WorkloadUtil.WorkloadParams.RW_RATIO;
  */
 public class BatchRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(BatchRunner.class);
-    private static final String ALION_SCRIPT = "aliyun/alicript/alion.sh";
-    private static final String ALIEAN_SCRIPT = "aliyun/alicript/aliean.sh";
+    private static final String ALION_SCRIPT =
+            "/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main/resources/aliyun/alicript" +
+                    "/alion.sh";
+    private static final String ALIEAN_SCRIPT =
+            "/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main/resources/aliyun/alicript" +
+            "/aliean.sh";
 
     private final Batch batch;
     private final String siteProperties;
@@ -60,14 +65,8 @@ public class BatchRunner {
                     LOGGER.info("#####################################################");
                     LOGGER.info("Batch for [{}:{}:{}] starts.", rwRatio, mpl, rvsiTriple);
 
-                    LOGGER.info("[{}] starts.", ALION_SCRIPT);
-                    try {
-                        Process alionProc = new ProcessBuilder(ALION_SCRIPT).start();
-                        alionProc.waitFor();
-                    } catch (IOException | InterruptedException ioie) {
-                        ioie.printStackTrace();
-                    }
-                    LOGGER.info("[{}] ends.", ALION_SCRIPT);
+                    if (! IS_IN_SIMULATION_MODE)
+                        setUp();
 
                     LOGGER.info("BenchmarkingLauncher starts.");
                     IWorkloadStatistics workloadStat = new BenchmarkingLauncher(prop,
@@ -79,14 +78,8 @@ public class BatchRunner {
                             workloadStat);
                     LOGGER.info("BatchRunner: [{}].", benchmarkingStat.briefReport());
 
-                    LOGGER.info("[{}] starts.", ALIEAN_SCRIPT);
-                    try {
-                        Process alieanProc = new ProcessBuilder(ALIEAN_SCRIPT).start();
-                        alieanProc.waitFor();
-                    } catch (IOException | InterruptedException ioie) {
-                        ioie.printStackTrace();
-                    }
-                    LOGGER.info("[{}] ends.", ALIEAN_SCRIPT);
+                    if (! IS_IN_SIMULATION_MODE)
+                        destroy();
 
                     LOGGER.info("Batch for [{}:{}:{}] ends.", rwRatio, mpl, rvsiTriple);
                     LOGGER.info("#####################################################");
@@ -107,6 +100,28 @@ public class BatchRunner {
         prop.setProperty(K3SV.param(), String .valueOf(rvsiTriple.getK3()));
 
         return prop;
+    }
+
+    private void setUp() {
+        LOGGER.info("[{}] starts.", ALION_SCRIPT);
+        try {
+            Process alionProc = new ProcessBuilder(ALION_SCRIPT).start();
+            alionProc.waitFor();
+        } catch (IOException | InterruptedException ioie) {
+            ioie.printStackTrace();
+        }
+        LOGGER.info("[{}] ends.", ALION_SCRIPT);
+    }
+
+    private void destroy() {
+        LOGGER.info("[{}] starts.", ALIEAN_SCRIPT);
+        try {
+            Process alieanProc = new ProcessBuilder(ALIEAN_SCRIPT).start();
+            alieanProc.waitFor();
+        } catch (IOException | InterruptedException ioie) {
+            ioie.printStackTrace();
+        }
+        LOGGER.info("[{}] ends.", ALIEAN_SCRIPT);
     }
 
 }

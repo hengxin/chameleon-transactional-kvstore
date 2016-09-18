@@ -15,6 +15,8 @@ import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
 import rmi.IRMI;
+import twopc.PreparedResult;
+import twopc.TwoPCResult;
 import twopc.participant.I2PCParticipant;
 
 /**
@@ -37,8 +39,13 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
 	 * @see	#toCommitDecision
 	 * @see #isCommitted
 	 */
+    // brief 2pc decisions
 	final Map<I2PCParticipant, Boolean> preparedDecisions = new ConcurrentHashMap<>();
 	final Map<I2PCParticipant, Boolean> committedDecisions = new ConcurrentHashMap<>();
+    // more details about 2pc decisions
+    final Map<I2PCParticipant, PreparedResult> preparedResults = new ConcurrentHashMap<>();
+    PreparedResult preparedResult;
+
 
 	/**
 	 * {@link #toCommitDecision}:
@@ -74,11 +81,11 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
 
 	/**
 	 * The coordinator executes 2PC protocol.
-	 * @param tx	transaction to commit
+	 * @param tx    transaction to commit
 	 * @return {@code true} if 2PC protocol succeeds in committing; {@code false}, otherwise.
      * @throws RemoteException thrown if errors occur in remote accesses
 	 */
-	public abstract boolean execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
+	public abstract TwoPCResult execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException;
 
     public abstract boolean onPreparePhaseFinished()

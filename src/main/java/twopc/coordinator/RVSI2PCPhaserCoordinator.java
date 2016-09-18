@@ -26,6 +26,8 @@ import kvs.component.Timestamp;
 import membership.site.Member;
 import rmi.RMIUtil;
 import timing.ITimestampOracle;
+import twopc.PreparedResult;
+import twopc.TwoPCResult;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 import util.PropertiesUtil;
@@ -71,7 +73,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 	}
 
 	@Override
-	public boolean execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
+	public TwoPCResult execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException {
 		final Map<Integer, ToCommitTransaction> siteTxMap = cctx.partition(tx);
         final Map<Integer, VersionConstraintManager> siteVcmMap = cctx.partition(vcm);
@@ -93,7 +95,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
             throw new TransactionExecutionException(msg, ie);
 		}
 
-		return isCommitted;
+		return new TwoPCResult(preparedResult, isCommitted);
 	}
 
     /**
@@ -109,16 +111,16 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
             try {
                 simulateInterDCComm();
 
-//                ITimestampOracle tsOracle = cctx.getTsOracle();
-//                LOGGER.info("The tsOracle for generating cts is [{}].", tsOracle);
-
-//                cts = new Timestamp(cctx.getTsOracle().get());
                 cts = new Timestamp(tsOracle.get());
             } catch (RemoteException re) {
                 toCommitDecision = false;
                 throw new TransactionEndException(String.format("Transaction [%s] failed to begin.", this),
                         re.getCause());
             }
+
+        // more details about prepared results
+        preparedResult = preparedResults.values().stream()
+                .reduce(PreparedResult.IDENTITY, PreparedResult::accumulate);
 
         return toCommitDecision;
     }

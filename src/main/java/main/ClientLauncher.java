@@ -130,7 +130,7 @@ public class ClientLauncher {
 
 		// end
 		try {
-			if (tx.end())
+			if (tx.end().isCommitted())
                 LOGGER.info("Committed.");
             else
                 LOGGER.info("Aborted.");

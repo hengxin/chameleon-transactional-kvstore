@@ -51,7 +51,7 @@ public abstract class AbstractSite implements ISite, IRMI {
 	@Override
 	public ITimestampedCell get(Row r, Column c) {
 	    ITimestampedCell tsCell = table.getTimestampedCell(r, c);
-	    LOGGER.info("Site [{}] returns value [{}:{}:{}].", self, r, c, tsCell);
+	    LOGGER.debug("Site [{}] returns value [{}:{}:{}].", self, r, c, tsCell);
 
 		return tsCell;
 	}

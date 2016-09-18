@@ -30,19 +30,19 @@ appender("FILE", FileAppender) {
 }
 
 
-appender("TO", FileAppender) {
-    file = "./logs/chameleon-test-to.log"
-    append = false
-//    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
-    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
-}
+//appender("TO", FileAppender) {
+//    file = "./logs/chameleon-test-to.log"
+//    append = false
+////    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
+//    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
+//}
 
-appender("COORD", FileAppender) {
-    file = "./logs/chameleon-test-coord.log"
-    append = false
-//    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
-    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
-}
+//appender("COORD", FileAppender) {
+//    file = "./logs/chameleon-test-coord.log"
+//    append = false
+////    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" }
+//    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
+//}
 
 appender("MASTER", FileAppender) {
     file = "./logs/chameleon-test-master.log"
@@ -67,9 +67,9 @@ logger("benchmarking.workload.transaction", INFO)
 logger("benchmarking.executor.client.ClientExecutor", INFO)
 
 // context
-logger("client.context", WARN)
-logger("slave.context", WARN)
-logger("master.context", WARN)
+logger("client.context", INFO)
+logger("slave.context", INFO)
+logger("master.context", INFO)
 
 // table
 logger("kvs.table.AbstractTable", INFO)
@@ -87,10 +87,10 @@ logger("master.SIMaster", INFO, ["FILE", "MASTER"])
 
 // coordinator
 logger("twopc.coordinator.phaser.CommitPhaser", INFO)
-logger("twopc.coordinator.phaser.RVSI2PCPhaserCoordinator", INFO, ["COORD"])
+//logger("twopc.coordinator.phaser.RVSI2PCPhaserCoordinator", INFO, ["COORD"])
 
 // timestamp oracle
-logger("timing.CentralizedTimestampOracle", INFO, ["TO"])
+//logger("timing.CentralizedTimestampOracle", INFO, ["TO"])
 
 // socket
 logger("messaging.socket", INFO)
@@ -101,4 +101,4 @@ logger("rmi", ERROR)
 // util
 logger("util", ERROR)
 
-root(INFO, ["STDOUT", "FILE", "TO", "COORD"])
+root(INFO, ["STDOUT", "FILE"])

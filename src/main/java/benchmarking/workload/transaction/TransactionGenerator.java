@@ -89,7 +89,6 @@ public class TransactionGenerator implements ITransactionGenerator {
         RVSISpecificationManager rvsiSpecManager = rvsiSpecGenerator.generateRVSISpecManager(tx.getReadOps());
         tx.setRvsiSpecManager(rvsiSpecManager);
 
-        LOGGER.debug("Tx is [{}].", tx);
         return tx;
     }
 

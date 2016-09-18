@@ -45,7 +45,7 @@ public final class SiteConfig {
 
     // FIXME move this functionality to a new package: simulation
     // for simulation
-    public static boolean IS_IN_SIMULATION_MODE = false;
+    public static boolean IS_IN_SIMULATION_MODE = true;
     private static int intraDCDelay = 40;
     private static int interDCDelay = 3;
     public static final NormalDistribution INTRA_DC_NORMAL_DIST = new NormalDistribution(intraDCDelay, 1);

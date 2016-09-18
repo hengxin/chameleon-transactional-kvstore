@@ -10,6 +10,7 @@ import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
+import twopc.PreparedResult;
 import twopc.participant.I2PCParticipant;
 
 /**
@@ -24,11 +25,11 @@ public final class MasterIn2PC implements I2PCParticipant {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MasterIn2PC.class);
 	
 	@Override
-	public boolean prepare(@NotNull ToCommitTransaction tx, @NotNull VersionConstraintManager vcm) {
+	public PreparedResult prepare(@NotNull ToCommitTransaction tx, @NotNull VersionConstraintManager vcm) {
 		// TODO Auto-generated method stub
         LOGGER.debug("Master [{}] receives ToCommitTransaction [{}] and associated VersionConstraintManager [{}] " +
                 "at the PREPARE phase", toString(), tx.toString(), vcm.toString());
-		return false;
+		return null;
 	}
 
     @Override

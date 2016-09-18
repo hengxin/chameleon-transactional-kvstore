@@ -22,14 +22,7 @@ ALIRUN="./alirun.sh"
 ALIYUN_SERVICE_FULL_DIR="/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/target/aliyun"
 JAR_EXTENSION=".jar"
 
-#################### For Test #################### 
-# SERVICES=(to-master-ec1) 
-# SERVICES=(cf-master-ec1 cf-slave-nc1 cf-slave-sc1)
-# SERVICES=(slave-ec2 slave-ec3 master-ec1)
-# SERVICES=(slave-ec2 slave-ec3 master-nc2 slave-nc3 slave-sc2 slave-sc3 master-ec1 slave-nc1 slave-sc1 cf-master-ec1 cf-slave-nc1 cf-slave-sc1)
-#################### For Test #################### 
-
-SERVICES=(to-master-ec1 slave-ec2 slave-ec3 slave-nc2 slave-nc3 slave-sc2 slave-sc3 master-ec1 master-nc1 master-sc1 cf-master-ec1 cf-master-nc1 cf-master-sc1)
+SERVICES=(to-master-ec1 slave-ec2 slave-ec3 slave-nc1 slave-nc3 slave-sc1 slave-sc2 master-ec1 master-nc2 master-sc3 cf-master-ec1 cf-master-nc2 cf-master-sc3)
 
 echo "#################### Deploy and Run: Begin! ####################"
 

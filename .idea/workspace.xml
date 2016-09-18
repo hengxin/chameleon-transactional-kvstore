@@ -5,59 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ccc00351-abac-42ec-8adb-e4df30921258" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/batch/AbstractBatchRunner.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/batch/BenchmarkingGeneratorFromProperties.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/batch/IBenchmarkingGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/executor/ExeBenchmarking.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/master-nc2/sa-master-nc2.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/master-sc3/sa-master-sc3.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/slave-sc1/site-slave-sc1.properties" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/master-sc1/site-master-sc1.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/slave-nc2/sp-slave-nc2.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/slave-sc3/sp-slave-sc3.properties" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-nc1/cf-cf-master-nc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-nc2/cf-cf-master-nc2.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-nc1/to-cf-master-nc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-nc2/to-cf-master-nc2.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc1/cf-cf-master-sc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/cf-cf-master-sc1.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc1/to-cf-master-sc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/to-cf-master-sc1.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/master-nc1/sa-master-nc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/slave-nc1/sp-slave-nc1.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/master-nc1/site-master-nc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/slave-nc1/site-slave-nc1.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/master-sc1/sa-master-sc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/slave-sc1/sp-slave-sc1.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/slave-nc2/site-slave-nc2.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/master-nc2/site-master-nc2.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/slave-sc3/site-slave-sc3.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/master-sc3/site-master-sc3.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.aliean.sh.swp" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.aliean.sh.swp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.alion.sh.swp" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.alion.sh.swp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.aliploy.sh.swp" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.aliploy.sh.swp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/AliBenchmarkingMainTest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/AliClientMainTest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/BenchmarkingMainTest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/twopc/PreparedResult.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/twopc/TwoPCResult.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.aliean.sh.swp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.alion.sh.swp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/.aliploy.sh.swp" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/cf-cf-master-sc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/cf-cf-master-sc3.properties" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/to-cf-master-sc1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/to-cf-master-sc3.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/master/SIMaster.class" afterPath="$PROJECT_DIR$/target/classes/master/SIMaster.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/batch/Batch.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/batch/Batch.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/batch/BatchRunner.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/batch/BatchRunner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/executor/ExponentialInterIssueTimeGenerator.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/executor/ExponentialInterIssueTimeGenerator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/executor/client/ClientExecutor.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/executor/client/ClientExecutor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/executor/transaction/ITransactionExecutor.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/executor/transaction/ITransactionExecutor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/executor/transaction/RVSITransactionExecutor.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/executor/transaction/RVSITransactionExecutor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/statistics/ClientStatistics.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/statistics/ClientStatistics.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/statistics/IClientStatistics.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/statistics/IClientStatistics.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/statistics/IWorkloadStatistics.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/statistics/IWorkloadStatistics.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/statistics/WorkloadStatistics.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/statistics/WorkloadStatistics.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/workload/WorkloadUtil.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/workload/WorkloadUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/BinomialTransactionSizeGenerator.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/BinomialTransactionSizeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/TransactionGenerator.java" afterPath="$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/TransactionGenerator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/ITransaction.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/ITransaction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/RVSITransaction.java" afterPath="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/RVSITransaction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/conf/SiteConfig.java" afterPath="$PROJECT_DIR$/src/main/java/conf/SiteConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kvs/table/SingleTimestampedCellStore.java" afterPath="$PROJECT_DIR$/src/main/java/kvs/table/SingleTimestampedCellStore.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingLauncher.java" afterPath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingLauncher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/main/ClientLauncher.java" afterPath="$PROJECT_DIR$/src/main/java/main/ClientLauncher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingMainTest.java" afterPath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingMainTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/master/SIMaster.java" afterPath="$PROJECT_DIR$/src/main/java/master/SIMaster.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/membership/coordinator/CoordinatorFactory.java" afterPath="$PROJECT_DIR$/src/main/java/membership/coordinator/CoordinatorFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/master/twopc/MasterIn2PC.java" afterPath="$PROJECT_DIR$/src/main/java/master/twopc/MasterIn2PC.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/site/AbstractSite.java" afterPath="$PROJECT_DIR$/src/main/java/site/AbstractSite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/timing/CentralizedTimestampOracle.java" afterPath="$PROJECT_DIR$/src/main/java/timing/CentralizedTimestampOracle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/aliean.sh" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/aliean.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/twopc/coordinator/Abstract2PCCoordinator.java" afterPath="$PROJECT_DIR$/src/main/java/twopc/coordinator/Abstract2PCCoordinator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java" afterPath="$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java" afterPath="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCSequentialLockingCoordinator.java" afterPath="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCSequentialLockingCoordinator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/twopc/participant/I2PCParticipant.java" afterPath="$PROJECT_DIR$/src/main/java/twopc/participant/I2PCParticipant.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/alion.sh" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/alion.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/aliploy.sh" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/aliploy.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/client/cf-client.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/client/cf-client.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/client/site-client.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/client/site-client.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/client/workload.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/client/workload.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/master-ec1/sa-master-ec1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/master-ec1/sa-master-ec1.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/master-ec1/site-master-ec1.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/master-ec1/site-master-ec1.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/slave-ec2/site-slave-ec2.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/slave-ec2/site-slave-ec2.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/slave-ec3/site-slave-ec3.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/slave-ec3/site-slave-ec3.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/slave-nc3/site-slave-nc3.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/slave-nc3/site-slave-nc3.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/slave-sc2/site-slave-sc2.properties" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/slave-sc2/site-slave-sc2.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/benchmarking/batch/batch.properties" afterPath="$PROJECT_DIR$/src/main/resources/benchmarking/batch/batch.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/client/workload.properties" afterPath="$PROJECT_DIR$/src/main/resources/client/workload.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/logback.groovy" afterPath="$PROJECT_DIR$/src/main/resources/logback.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/twopc/coordinator/RVSI2PCPhaserCoordinatorStub.java" afterPath="$PROJECT_DIR$/src/test/java/twopc/coordinator/RVSI2PCPhaserCoordinatorStub.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/twopc/participant/ParticipantStub.java" afterPath="$PROJECT_DIR$/src/test/java/twopc/participant/ParticipantStub.java" />
     </list>
     <ignored path="chameleon-transactional-kvstore-maven.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -133,31 +125,101 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="workload.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Abstract2PCCoordinator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/Abstract2PCCoordinator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="571">
+              <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BenchmarkingStatistics.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/statistics/BenchmarkingStatistics.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="30" column="55" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BenchmarkingLauncher.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingLauncher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="206">
+              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WorkloadStatistics.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/statistics/WorkloadStatistics.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workload.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/client/workload.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+            <state relative-caret-position="315">
+              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="chameleon-test.log" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/logs/chameleon-test.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
-              <caret line="78" column="35" selection-start-line="78" selection-start-column="35" selection-end-line="78" selection-end-column="35" />
+            <state relative-caret-position="63">
+              <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SiteConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/conf/SiteConfig.java">
+      <file leaf-file-name="RVSI2PCPhaserCoordinatorStub.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/twopc/coordinator/RVSI2PCPhaserCoordinatorStub.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="47" column="54" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="54" />
+            <state relative-caret-position="637">
+              <caret line="56" column="18" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ParticipantStub.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/twopc/participant/ParticipantStub.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IClientStatistics.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/statistics/IClientStatistics.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MasterIn2PC.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/master/twopc/MasterIn2PC.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="616">
+              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -191,38 +253,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/benchmarking/batch/batch.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/batch/BatchGeneratorFromProperties.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/executor/Benchmarking.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/batch/IBatchGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/batch/IBenchmarkingGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/batch/BenchmarkingGeneratorFromProperties.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/batch/AbstractBatchRunner.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/batch/BatchRunner.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingMainTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/executor/ExponentialInterIssueTimeGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingLauncher.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/workload/WorkloadUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/ITransactionSizeGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/BinomialTransactionSizeGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/membership/coordinator/CoordinatorFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/FVVersionConstraint.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/RVSITransaction.java" />
-        <option value="$PROJECT_DIR$/src/main/java/timing/CentralizedTimestampOracle.java" />
-        <option value="$PROJECT_DIR$/src/main/java/master/SIMaster.java" />
-        <option value="$PROJECT_DIR$/logs/chameleon-test.log" />
-        <option value="$PROJECT_DIR$/logs/chameleon-test-coord.log" />
-        <option value="$PROJECT_DIR$/logs/chameleon-test-to.log" />
-        <option value="$PROJECT_DIR$/logs/MasterMainTest0.log" />
-        <option value="$PROJECT_DIR$/src/main/java/site/AbstractSite.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/logback.groovy" />
-        <option value="$PROJECT_DIR$/src/main/java/kvs/table/SingleTimestampedCellStore.java" />
-        <option value="$PROJECT_DIR$/logs/chameleon-test-master.log" />
-        <option value="$PROJECT_DIR$/src/main/resources/client/workload.properties" />
-        <option value="$PROJECT_DIR$/src/main/resources/aliyun/master-ec1/sa-master-ec1.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/slave-sc1/site-master-sc1.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/slave-sc1/sp-slave-sc1.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/slave-nc1/sp-slave-nc1.properties" />
@@ -240,8 +270,40 @@
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/cf-cf-master-sc1.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/cf-master-nc2/cf-cf-master-nc2.properties" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/aliyun/client/cf-client.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/aliyun/client/site-client.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingMainTest.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/client/workload.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/workload/WorkloadUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/batch/Batch.java" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/batch/BatchRunner.java" />
+        <option value="$PROJECT_DIR$/logs/chameleon-test-master.log" />
         <option value="$PROJECT_DIR$/src/main/java/conf/SiteConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/logback.groovy" />
+        <option value="$PROJECT_DIR$/logs/chameleon-test.log" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/TransactionGenerator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/site/AbstractSite.java" />
+        <option value="$PROJECT_DIR$/src/main/java/master/SIMaster.java" />
+        <option value="$PROJECT_DIR$/src/main/java/twopc/PrepareResults.java" />
+        <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java" />
+        <option value="$PROJECT_DIR$/src/main/java/twopc/PreparedResult.java" />
+        <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/Abstract2PCCoordinator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/twopc/TwoPCResult.java" />
+        <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/RVSITransaction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/executor/transaction/RVSITransactionExecutor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/main/ClientLauncher.java" />
+        <option value="$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCSequentialLockingCoordinator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/master/twopc/MasterIn2PC.java" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/statistics/IClientStatistics.java" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/executor/client/ClientExecutor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/statistics/ClientStatistics.java" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/statistics/IWorkloadStatistics.java" />
+        <option value="$PROJECT_DIR$/src/main/java/benchmarking/statistics/WorkloadStatistics.java" />
+        <option value="$PROJECT_DIR$/src/test/java/twopc/coordinator/RVSI2PCPhaserCoordinatorStub.java" />
+        <option value="$PROJECT_DIR$/src/test/java/twopc/participant/ParticipantStub.java" />
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/client/workload.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingLauncher.java" />
       </list>
     </option>
   </component>
@@ -539,8 +601,28 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches">
-        <subPane />
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Default">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="chameleon-transactional-kvstore-maven">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
       </pane>
       <pane id="ProjectPane">
         <subPane>
@@ -595,10 +677,6 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -618,37 +696,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="timing" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chameleon-transactional-kvstore-maven" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chameleon-transactional-kvstore-maven" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="aliyun" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -671,6 +719,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="twopc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -858,31 +910,11 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane">
+      <pane id="Scratches">
         <subPane />
       </pane>
-      <pane id="Scope">
-        <subPane subId="Problems" />
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Default">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="chameleon-transactional-kvstore-maven">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
+      <pane id="PackagesPane">
+        <subPane />
       </pane>
     </panes>
   </component>
@@ -932,28 +964,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources/aliyun/slave-nc3" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.BenchmarkingMainTest">
-    <configuration default="false" name="BenchmarkingMainTest" type="Application" factoryName="Application" temporary="true" show_console_on_std_out="true" show_console_on_std_err="true" nameIsGenerated="true">
-      <output_file path="$PROJECT_DIR$/logs/benchmarking.log" is_save="true" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="main.benchmarking.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="main.benchmarking.BenchmarkingMainTest" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="client/workload.properties client/site.properties client/cf.properties timing/to.properties" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="chameleon-transactional-kvstore-maven" />
-      <envs />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Application.AliBenchmarkingMainTest">
     <configuration default="false" name="Batch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1311,47 +1322,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="AliClientMainTest" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="main.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="main.ClientMainTest" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="aliyun/client/site-client.properties aliyun/client/cf-client.properties aliyun/client/to-client.properties" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="chameleon-transactional-kvstore-maven" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="AliBenchmarkingMainTest" type="Application" factoryName="Application" show_console_on_std_out="true" show_console_on_std_err="true">
-      <output_file path="$PROJECT_DIR$/logs/benchmarking.log" is_save="true" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="main.benchmarking.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="main.benchmarking.BenchmarkingMainTest" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="aliyun/client/workload.properties aliyun/client/site-client.properties aliyun/client/cf-client.properties aliyun/client/to-client.properties" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="chameleon-transactional-kvstore-maven" />
-      <envs />
-      <method />
-    </configuration>
     <list size="23">
       <item index="0" class="java.lang.String" itemvalue="Application.CentralizedTimestampOracleMainTest" />
       <item index="1" class="java.lang.String" itemvalue="Application.ClientMainTest" />
@@ -1370,20 +1340,19 @@
       <item index="14" class="java.lang.String" itemvalue="Application.AliClientMainTest" />
       <item index="15" class="java.lang.String" itemvalue="Application.AliBenchmarkingMainTest" />
       <item index="16" class="java.lang.String" itemvalue="Application.BatchRunnerMainTest" />
-      <item index="17" class="java.lang.String" itemvalue="Multirun.allinone" />
-      <item index="18" class="java.lang.String" itemvalue="Application.BenchmarkingMainTest" />
+      <item index="17" class="java.lang.String" itemvalue="Application.BenchmarkingMainTest" />
+      <item index="18" class="java.lang.String" itemvalue="Multirun.allinone" />
       <item index="19" class="java.lang.String" itemvalue="Application.Batch" />
       <item index="20" class="java.lang.String" itemvalue="JUnit.WorkloadGeneratorFromPropertiesTest" />
       <item index="21" class="java.lang.String" itemvalue="JUnit.ReadFirstRWRatioOperationTypeGeneratorTest.generateSeq" />
       <item index="22" class="java.lang.String" itemvalue="JUnit.CompoundKeyTest.equals" />
     </list>
     <recent_temporary>
-      <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.BenchmarkingMainTest" />
-        <item index="1" class="java.lang.String" itemvalue="Application.Batch" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.CompoundKeyTest.equals" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ReadFirstRWRatioOperationTypeGeneratorTest.generateSeq" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.WorkloadGeneratorFromPropertiesTest" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Application.Batch" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.CompoundKeyTest.equals" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.ReadFirstRWRatioOperationTypeGeneratorTest.generateSeq" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.WorkloadGeneratorFromPropertiesTest" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
@@ -1476,7 +1445,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43589744" sideWeight="0.48399487" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1484,14 +1453,13 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20744081" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44193912" sideWeight="0.1383547" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.099358976" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.102564104" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24351747" sideWeight="0.8616453" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24351747" sideWeight="0.8616453" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22773394" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15544872" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24689966" sideWeight="0.49786323" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12126068" sideWeight="0.6407186" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12713675" sideWeight="0.35928145" order="3" side_tool="true" content_ui="tabs" />
@@ -1512,6 +1480,7 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12873931" sideWeight="0.5138122" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960895" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Reviews" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24689966" sideWeight="0.49786323" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43589744" sideWeight="0.48399487" order="3" side_tool="false" content_ui="tabs" />
@@ -1583,35 +1552,23 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/kvs/table/AbstractTable.java</url>
-          <line>191</line>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingMainTest.java</url>
+          <line>21</line>
           <properties />
-          <option name="timeStamp" value="76" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/kvs/table/MultiTimestampedCellsStore.java</url>
-          <line>52</line>
-          <properties />
-          <option name="timeStamp" value="77" />
+          <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/BufferedUpdates.java</url>
-          <line>128</line>
+          <url>file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingLauncher.java</url>
+          <line>87</line>
           <properties />
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/kvs/table/AbstractTable.java</url>
-          <line>187</line>
-          <properties />
-          <option name="timeStamp" value="86" />
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="87" />
+      <option name="time" value="98" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1620,90 +1577,46 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/client/cf-client.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        <state relative-caret-position="105">
+          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/client/site-client.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/client/cf.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/membership/coordinator/CoordinatorMembership.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="42" column="32" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/context/AbstractClientContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1144">
+          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/rmi/RMIUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/batch/Batch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="79" column="17" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/timing/CentralizedTimestampOracle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="49" column="18" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/chameleon-test-to.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/MasterMainTest0.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/chameleon-test-coord.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/chameleon-test.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/master/SIMaster.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="267" column="18" selection-start-line="267" selection-start-column="18" selection-end-line="267" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kvs/compound/TimestampedCell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1282">
-          <caret line="78" column="34" selection-start-line="78" selection-start-column="34" selection-end-line="78" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kvs/table/AbstractTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1113">
-          <caret line="187" column="28" selection-start-line="187" selection-start-column="28" selection-end-line="187" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/slave/AbstractSlave.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="61" column="20" selection-start-line="61" selection-start-column="20" selection-end-line="61" selection-end-column="20" />
+        <state relative-caret-position="195">
+          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -1712,329 +1625,366 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kvs/table/SlaveTable.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/batch/BatchRunner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="14" column="25" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-          <folding>
-            <element signature="e#305#306#0" expanded="true" />
-            <element signature="e#351#352#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/slave/RCSlave.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/RVSITransaction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="102" column="8" selection-start-line="102" selection-start-column="8" selection-end-line="102" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/site/AbstractSite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="53" column="54" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="54" />
-          <folding>
-            <element signature="e#1806#1807#0" expanded="true" />
-            <element signature="e#1825#1826#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kvs/table/SingleTimestampedCellStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding>
-            <element signature="e#953#954#0" expanded="true" />
-            <element signature="e#1035#1036#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/benchmarking.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="-63">
+          <caret line="62" column="70" selection-start-line="62" selection-start-column="70" selection-end-line="62" selection-end-column="70" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/client/workload.properties">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/chameleon-test-to.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/ch/qos/logback/logback-classic/1.1.3/logback-classic-1.1.3.jar!/ch/qos/logback/classic/Logger.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="448" column="0" selection-start-line="448" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/workload/overall/WorkloadGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/workload/client/ClientWorkloadGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/BinomialTransactionSizeGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
-          <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/logback.groovy">
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/workload/operation/ZipfKeyGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding>
-            <element signature="e#452#510#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/master-nc2/sp-master-nc2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/BVVersionConstraint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="48" column="28" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/master-sc3/sp-master-sc3.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="16" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/master-ec1/site-master-ec1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/master-ec1/sa-master-ec1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-nc1/site-slave-nc1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-sc1/site-slave-sc1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-sc1/sp-slave-sc1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="16" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-nc1/sp-slave-nc1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-ec2/site-slave-ec2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-sc2/sp-slave-sc2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="16" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-ec2/sp-slave-ec2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/master-nc2/site-master-nc2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/master-nc2/sa-master-nc2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="4" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-sc2/site-slave-sc2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-nc3/site-slave-nc3.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-ec3/site-slave-ec3.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/master-sc3/site-master-sc3.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="31" selection-start-line="1" selection-start-column="31" selection-end-line="1" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/cf-cf-master-sc1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="34" selection-start-line="0" selection-start-column="34" selection-end-line="0" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/cf-master-nc2/cf-cf-master-nc2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="34" selection-start-line="0" selection-start-column="34" selection-end-line="0" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/cf-master-ec1/cf-cf-master-ec1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/master-sc3/sa-master-sc3.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-ec3/sp-slave-ec3.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/slave-nc3/sp-slave-nc3.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/to-master-ec1/to-to-master-ec1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/cf-master-nc2/to-cf-master-nc2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/cf-master-sc3/to-cf-master-sc1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/cf-master-ec1/to-cf-master-ec1.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="78" column="35" selection-start-line="78" selection-start-column="35" selection-end-line="78" selection-end-column="35" />
+        <state relative-caret-position="378">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/conf/SiteConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="47" column="54" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="54" />
+        <state relative-caret-position="315">
+          <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/misc/Launcher.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/lang/Class.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="2131" column="0" selection-start-line="2131" selection-start-column="0" selection-end-line="2131" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/instrument/InstrumentationImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="247" column="0" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/security/AccessController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="526" column="8" selection-start-line="526" selection-start-column="8" selection-end-line="526" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/jre/lib/rt.jar!/sun/misc/URLClassPath.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="407" column="0" selection-start-line="407" selection-start-column="0" selection-end-line="407" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/lang/ClassLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="435" column="0" selection-start-line="435" selection-start-column="0" selection-end-line="435" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/net/URLClassLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="678">
+          <caret line="380" column="0" selection-start-line="380" selection-start-column="0" selection-end-line="380" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/workload/transaction/TransactionGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/workload/overall/WorkloadGeneratorFromProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="74" column="49" selection-start-line="74" selection-start-column="49" selection-end-line="74" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/logback.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/site/AbstractSite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="93" column="20" selection-start-line="93" selection-start-column="20" selection-end-line="93" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingMainTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/master/SIMaster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="216" column="12" selection-start-line="216" selection-start-column="12" selection-end-line="216" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/CommitPhaserTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="68" column="15" selection-start-line="68" selection-start-column="15" selection-end-line="68" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/twopc/PreparedResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="38" column="82" selection-start-line="38" selection-start-column="82" selection-end-line="38" selection-end-column="82" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCSequentialLockingCoordinator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/master/twopc/MasterIn2PC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/statistics/IClientStatistics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/statistics/ClientStatistics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="63" column="52" selection-start-line="63" selection-start-column="52" selection-end-line="63" selection-end-column="52" />
+          <folding>
+            <element signature="e#693#694#0" expanded="true" />
+            <element signature="e#733#734#0" expanded="true" />
+            <element signature="e#773#774#0" expanded="true" />
+            <element signature="e#814#815#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/executor/client/ClientExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="44" column="20" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main/ClientLauncher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="132" column="37" selection-start-line="132" selection-start-column="37" selection-end-line="132" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/executor/transaction/RVSITransactionExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/RVSITransaction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="141" column="29" selection-start-line="141" selection-start-column="29" selection-end-line="141" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/twopc/TwoPCResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#953#954#0" expanded="true" />
+            <element signature="e#1021#1022#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/RVSI2PCPhaserCoordinator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="97" column="14" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/twopc/coordinator/Abstract2PCCoordinator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/statistics/BenchmarkingStatistics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="30" column="55" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/statistics/IWorkloadStatistics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/twopc/coordinator/RVSI2PCPhaserCoordinatorStub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="637">
+          <caret line="56" column="18" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/twopc/participant/ParticipantStub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/executor/overall/WorkloadExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/benchmarking/statistics/WorkloadStatistics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/client/workload.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+        <state relative-caret-position="315">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/chameleon-test.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingLauncher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
           <folding />
         </state>
       </provider>

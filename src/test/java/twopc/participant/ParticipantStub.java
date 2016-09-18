@@ -17,6 +17,7 @@ import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
 import master.AbstractMaster;
 import messaging.IMessageProducer;
+import twopc.PreparedResult;
 import twopc.coordinator.RVSI2PCPhaserCoordinatorStub;
 
 /**
@@ -38,7 +39,7 @@ public class ParticipantStub extends AbstractMaster implements I2PCParticipant {
     }
 
     @Override
-    public boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm) {
+    public PreparedResult prepare(ToCommitTransaction tx, VersionConstraintManager vcm) {
         LOGGER.debug("The participant [{}] is in Thread [{}].", this, Thread.currentThread());
 
         try {
@@ -50,7 +51,7 @@ public class ParticipantStub extends AbstractMaster implements I2PCParticipant {
 
         boolean prepared = rand.nextBoolean();
         LOGGER.info("In PREPARE phase, reply with [{}]", prepared);
-        return prepared;
+        return null;
     }
 
     @Override

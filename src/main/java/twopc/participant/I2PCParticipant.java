@@ -7,6 +7,7 @@ import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
+import twopc.PreparedResult;
 
 /**
  * Interface {@link I2PCParticipant} exposes 
@@ -27,7 +28,7 @@ public interface I2PCParticipant extends Remote {
      * @throws RemoteException
      * @throws TransactionExecutionException
      */
-	boolean prepare(ToCommitTransaction tx, VersionConstraintManager vcm)
+	PreparedResult prepare(ToCommitTransaction tx, VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException;
 
     /**

@@ -11,6 +11,7 @@ import java.util.concurrent.Phaser;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
 import client.clientlibrary.transaction.ToCommitTransaction;
+import twopc.PreparedResult;
 import twopc.participant.I2PCParticipant;
 
 import static conf.SiteConfig.simulateInterDCComm;
@@ -61,7 +62,10 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 
         simulateInterDCComm();
 
-        boolean preparedDecision = participant.prepare(tx, vcm);
+        PreparedResult preparedResult = participant.prepare(tx, vcm);
+        coord.preparedResults.put(participant, preparedResult);
+
+        boolean preparedDecision = preparedResult.isChecked();
         coord.preparedDecisions.put(participant, preparedDecision);
 
         phaser.arriveAndAwaitAdvance();
@@ -94,4 +98,5 @@ public final class CommitPhaserTask implements Callable<Boolean> {
                 .addValue(vcm)
                 .toString();
     }
+
 }

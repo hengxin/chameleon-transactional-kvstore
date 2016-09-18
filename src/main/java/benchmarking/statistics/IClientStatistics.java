@@ -7,9 +7,13 @@ package benchmarking.statistics;
 public interface IClientStatistics extends IStatistics {
     void incCommitted();
     void incAborted();
+    void incFalseVcChecked();
+    void incFalseWcfChecked();
 
     int countCommitted();
     int countAborted();
+    int countFalseVcChecked();
+    int countFalseWcfChecked();
 
     int countAll();
 }

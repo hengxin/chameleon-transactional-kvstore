@@ -24,6 +24,7 @@ import master.mvcc.StartCommitLogs;
 import messaging.IMessageProducer;
 import messaging.jms.master.JMSPublisher;
 import site.ITransactional;
+import twopc.PreparedResult;
 import twopc.participant.I2PCParticipant;
 
 import static twopc.coordinator.phaser.CommitPhaser.Phase.ABORT;
@@ -174,7 +175,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 	}
 
     @Override
-    public boolean prepare(@Nullable ToCommitTransaction tx, @Nullable VersionConstraintManager vcm)
+    public PreparedResult prepare(@Nullable ToCommitTransaction tx, @Nullable VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException {
         LOGGER.debug("[{}] begins the [{}] phase with tx [{}] and vcm [{}].",
                 this.getClass().getSimpleName(), PREPARE, tx, vcm);
@@ -183,7 +184,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
          * {@link VersionConstraintManager} is local to this method.
          * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free).
          */
-        Future<Boolean> prepareFuture = exec.submit(() -> {
+        Future<PreparedResult> prepareFuture = exec.submit(() -> {
             boolean vcChecked = true;
             if (vcm != null)  // FIXME: ensuring vcm not null
                 vcChecked = vcm.check(table);
@@ -207,7 +208,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
                         tx.getSts(), tx.getCts(), wcfChecked);
             }
 
-            return vcChecked && wcfChecked;
+            return new PreparedResult(vcChecked, wcfChecked);
         });
 
         LOGGER.debug("[{}] ends the [{}] phase with tx [{}] and vcm [{}].",
