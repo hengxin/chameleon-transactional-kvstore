@@ -3,3 +3,4 @@
 *.log
 *.swp
 /logs
+.idea/workspace.xml
