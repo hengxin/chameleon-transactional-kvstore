@@ -15,6 +15,13 @@ public class RVSITriple {
         this.k3 = k3;
     }
 
+    public RVSITriple(String rvsiStr) {
+        String[] rvsiParts = rvsiStr.split("-");
+        this.k1 = Integer.parseInt(rvsiParts[0]);
+        this.k2 = Integer.parseInt(rvsiParts[1]);
+        this.k3 = Integer.parseInt(rvsiParts[2]);
+    }
+
     public int getK1() { return k1; }
     public int getK2() { return k2; }
     public int getK3() { return k3; }
@@ -41,4 +48,7 @@ public class RVSITriple {
                 .toString();
     }
 
+    public static void main(String[] args) {
+        new RVSITriple("1-0-0");
+    }
 }

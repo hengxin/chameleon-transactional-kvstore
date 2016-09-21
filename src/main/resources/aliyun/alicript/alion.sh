@@ -29,7 +29,7 @@ echo "#################### Deploy and Run: Begin! ####################"
 
 for service in "${SERVICES[@]}"; do
 	echo "############### Deploy $service ###############"
-	$ALIPLOY -j="$ALIYUN_SERVICE_FULL_DIR/$service$JAR_EXTENSION" &
+	$ALIPLOY -j="$ALIYUN_SERVICE_FULL_DIR/$service$JAR_EXTENSION" & 
 done
 wait
 

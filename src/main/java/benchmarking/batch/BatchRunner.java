@@ -3,23 +3,15 @@ package benchmarking.batch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import benchmarking.statistics.BenchmarkingStatistics;
 import benchmarking.statistics.IWorkloadStatistics;
-import benchmarking.workload.WorkloadUtil;
 import main.benchmarking.BenchmarkingLauncher;
 import util.ScriptUtil;
 
-import static benchmarking.workload.WorkloadUtil.WorkloadParams.K1BV;
-import static benchmarking.workload.WorkloadUtil.WorkloadParams.K2FV;
-import static benchmarking.workload.WorkloadUtil.WorkloadParams.K3SV;
-import static benchmarking.workload.WorkloadUtil.WorkloadParams.MPL;
-import static benchmarking.workload.WorkloadUtil.WorkloadParams.RVSI;
-import static benchmarking.workload.WorkloadUtil.WorkloadParams.RW_RATIO;
 import static conf.SiteConfig.IS_IN_SIMULATION_MODE;
 
 /**
@@ -65,18 +57,15 @@ public class BatchRunner {
         for (double rwRatio : batch.getRwRatios()) {
             for (int mpl : batch.getMpls()) {
                 for (RVSITriple rvsiTriple : batch.getRvsiTriples()) {
-                    Properties prop = fillWorkloadProperties(rwRatio, mpl, rvsiTriple);
 
                     LOGGER.info("#####################################################");
                     LOGGER.info("Batch for [{}:{}:{}] starts.", rwRatio, mpl, rvsiTriple);
-
-                    destroy();
 
                     if (! IS_IN_SIMULATION_MODE)
                         setUp();
 
                     LOGGER.info("BenchmarkingLauncher starts.");
-                    IWorkloadStatistics workloadStat = new BenchmarkingLauncher(prop,
+                    IWorkloadStatistics workloadStat = new BenchmarkingLauncher(rwRatio, mpl, rvsiTriple,
                             siteProperties, cfProperties, toProperties)
                             .run();
                     LOGGER.info("BenchmarkingLauncher ends.");
@@ -93,20 +82,6 @@ public class BatchRunner {
                 }
             }
         }
-    }
-
-    private Properties fillWorkloadProperties(double rwRatio, int mpl, RVSITriple rvsiTriple) {
-        Properties prop = WorkloadUtil.DEFAULT_WORKLOAD_PROPERTIES;
-
-        prop.setProperty(MPL.param(), String.valueOf(mpl));
-        prop.setProperty(RW_RATIO.param(), String.valueOf(rwRatio));
-
-        prop.setProperty(RVSI.param(), rvsiTriple.rvsiParamVal());
-        prop.setProperty(K1BV.param(), String.valueOf(rvsiTriple.getK1()));
-        prop.setProperty(K2FV.param(), String.valueOf(rvsiTriple.getK2()));
-        prop.setProperty(K3SV.param(), String .valueOf(rvsiTriple.getK3()));
-
-        return prop;
     }
 
     // Process alionProc = new ProcessBuilder().inheritIO().command(ALION_SCRIPT).start();

@@ -27,7 +27,7 @@ public class WorkloadUtil {
     public enum WorkloadParams {
         SIZE_OF_KEYSPACE("sizeOfKeyspace", "5"),
         MPL("mpl", "5"),
-        NUMBER_OF_TRANSACTIONS("numberOfTransactions", "10"),
+        NUMBER_OF_TRANSACTIONS("numberOfTransactions", "1000"),
         MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION("maxNumberOfOperations", "20"),
         PROB_BINOMIAL("probBinomial", "50"),
         RW_RATIO("rwRatio", "2"),

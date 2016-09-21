@@ -30,7 +30,7 @@ appender("STDOUT", ConsoleAppender) {
 
 appender("FILE", FileAppender) {
 	file = "./logs/chameleon-test.log"
-    append = false
+    append = true
     encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
 }
 
@@ -53,7 +53,7 @@ appender("MASTER", FileAppender) {
     encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
 }
 
-appender("FILE", RollingFileAppender) {
+appender("BATCH", RollingFileAppender) {
 	file = "./logs/chameleon-aliyun-batch.log"
     append = true
     encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
@@ -64,6 +64,8 @@ appender("FILE", RollingFileAppender) {
 	}
 	triggeringPolicy(SizeBasedTriggeringPolicy) { maxFileSize = "2MB" }
 }
+
+logger("benchmarking.BenchmarkingLauncherScriptMainTest", INFO, ["BATCH"])
 
 // benchmarking
 logger("benchmarking.workload.transaction", INFO)
@@ -104,4 +106,4 @@ logger("rmi", ERROR)
 // util
 logger("util", ERROR)
 
-root(INFO, ["STDOUT", "FILE"])
+root(INFO, ["STDOUT", "FILE", "BATCH"])

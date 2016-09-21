@@ -22,30 +22,27 @@ public class ScriptUtil {
             try {
                 Process proc = Runtime.getRuntime().exec(cmd);
 
-                exec.submit( () -> {
                     try (BufferedReader brInput = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
 //                        brInput.lines().forEach( line -> {} );
                         String in;
                         while ((in = brInput.readLine()) != null)
-                            System.out.println(in);;
+                            ;
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
-                });
 
-                exec.submit( () -> {
                             try (BufferedReader brErr = new BufferedReader(new InputStreamReader(proc.getErrorStream()))) {
                                 String err;
                                 while ((err = brErr.readLine()) != null)
-                                    System.out.println(err);
+                                    ;
 //                    brErr.lines().forEach(LOGGER::info);
                             } catch (IOException ioe) {
                                 ioe.printStackTrace();
                             }
-                        });
 
-                proc.waitFor(15, TimeUnit.MINUTES);
-                proc.destroy();
+                boolean exitVal = proc.waitFor(15, TimeUnit.MINUTES);
+                if (exitVal)
+                    proc.destroy();
             } catch (IOException | InterruptedException ioie) {
                 ioie.printStackTrace();
             }

@@ -40,63 +40,20 @@
 						</goals>
 					</execution>
 
-                    <!-- for client: client -->
+                    <!-- for batch: batch -->
                     <execution>
-                        <id>client</id>
+                        <id>batch</id>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
-                                    <mainClass>main.ClientLauncher</mainClass>
+                                    <mainClass>main.benchmarking.BenchmarkingLauncherScriptMainTest</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>client</finalName>
-                            <finalName>aliyun/client</finalName>
-                        </configuration>
-                        <phase>package</phase> <!-- register to the packaging phase -->
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-
-                    <!-- for client on aliyun -->
-                    <execution>
-                        <id>client-aliyun</id>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <archive>
-                                <manifest>
-                                    <mainClass>main.ClientLauncher</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                            <finalName>aliyun/client</finalName>
-                        </configuration>
-                        <phase>package</phase> <!-- register to the packaging phase -->
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-
-                    <!-- for master: master -->
-                    <execution>
-                        <id>master</id>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <archive>
-                                <manifest>
-                                    <mainClass>main.MasterMainTest</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                            <finalName>master</finalName>
+                            <finalName>aliyun/batch</finalName>
                         </configuration>
                         <phase>package</phase> <!-- register to the packaging phase -->
                         <goals>
