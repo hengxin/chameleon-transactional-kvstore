@@ -1,12 +1,12 @@
 package benchmarking.executor.transaction;
 
 import benchmarking.workload.transaction.Transaction;
-import twopc.TwoPCResult;
+import twopc.TransactionCommitResult;
 
 /**
  * @author hengxin
  * @date 16-9-11
  */
 public interface ITransactionExecutor {
-    TwoPCResult execute(Transaction tx);
+    TransactionCommitResult execute(Transaction tx);
 }

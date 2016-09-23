@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 import benchmarking.executor.IInterIssueTimeGenerator;
 import benchmarking.executor.transaction.ITransactionExecutor;
-import benchmarking.statistics.IClientStatistics;
+import benchmarking.statistics.AbstractClientStatistics;
 import benchmarking.workload.client.ClientWorkload;
 import benchmarking.workload.transaction.Transaction;
-import twopc.TwoPCResult;
+import twopc.TransactionCommitResult;
 
 /**
  * @author hengxin
@@ -23,12 +23,11 @@ public class ClientExecutor implements IClientExecutor {
     private final ITransactionExecutor transactionExecutor;
     private final IInterIssueTimeGenerator interIssueTimeGenerator;
 
-    @Nullable
-    private final IClientStatistics clientStat;
+    private final @Nullable AbstractClientStatistics clientStat;
 
     public ClientExecutor(final ITransactionExecutor transactionExecutor,
                           final IInterIssueTimeGenerator interIssueTimeGenerator,
-                          final @Nullable IClientStatistics clientStat) {
+                          final @Nullable AbstractClientStatistics clientStat) {
         this.transactionExecutor = transactionExecutor;
         this.interIssueTimeGenerator = interIssueTimeGenerator;
 
@@ -53,25 +52,13 @@ public class ClientExecutor implements IClientExecutor {
                         ie.printStackTrace();
                     }
 
-                    TwoPCResult twoPCResult = transactionExecutor.execute(tx);
-
-                    if (clientStat != null) {
-                        if (twoPCResult.isCommitted())
-                            clientStat.incCommitted();
-                        else clientStat.incAborted();
-
-                        // more details
-                        if (! twoPCResult.isVcChecked())
-                            clientStat.incFalseVcChecked();
-                        if (! twoPCResult.isWcfChecked())
-                            clientStat.incFalseWcfChecked();
-                    }
+                    TransactionCommitResult transactionCommitResult = transactionExecutor.execute(tx);
+                    if (clientStat != null)
+                        clientStat.collect(transactionCommitResult);
                 });
     }
 
     @Override
-    public @Nullable IClientStatistics getClientStat() {
-        return clientStat;
-    }
+    public @Nullable AbstractClientStatistics getClientStat() { return clientStat; }
 
 }

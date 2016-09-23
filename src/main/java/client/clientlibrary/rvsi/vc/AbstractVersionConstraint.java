@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import client.clientlibrary.partitioning.IPartitioner;
+import client.clientlibrary.rvsi.vc.vcresult.VCCheckedResult;
 import kvs.table.AbstractTable;
 
 /**
@@ -34,10 +35,10 @@ public abstract class AbstractVersionConstraint implements Serializable {
      *
      * @implNote Extract more common logic from subclasses
      */
-	public boolean check(AbstractTable table) {
+	public VCCheckedResult check(AbstractTable table) {
         return vcEntries.stream()
                 .map(vce -> check(table, vce))
-                .allMatch(Boolean::booleanValue);
+                .reduce(VCCheckedResult.IDENTITY, VCCheckedResult::accumulate);
     }
 
     /**
@@ -47,7 +48,8 @@ public abstract class AbstractVersionConstraint implements Serializable {
      * @return {@code true} if this {@code vce} is satisfied against {@code table};
      *   {@code false}, otherwise.
      */
-    public abstract boolean check(AbstractTable table, VCEntry vce);
+    @NotNull
+    public abstract VCCheckedResult check(AbstractTable table, VCEntry vce);
 
     /**
      * Partition a version constraint into multiple ones according to some

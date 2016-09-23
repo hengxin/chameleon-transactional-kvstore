@@ -10,6 +10,8 @@ import java.io.Serializable;
 
 import javax.annotation.concurrent.Immutable;
 
+import client.clientlibrary.rvsi.vc.vcresult.VCCheckedResult;
+
 /**
  * @author hengxin
  * @date 16-9-18
@@ -19,34 +21,37 @@ public final class PreparedResult implements Serializable {
     private static final long serialVersionUID = -7995627777569816602L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PreparedResult.class);
-    public static final PreparedResult IDENTITY = new PreparedResult(true, true);
+    public static final PreparedResult IDENTITY = new PreparedResult(VCCheckedResult.IDENTITY, true);
 
-    private final boolean vcChecked;
+    private final VCCheckedResult vcCheckedResult;
     private final boolean wcfChecked;
 
-    private final boolean checked;
+    private final boolean prepareChecked;
 
-    public PreparedResult(boolean vcChecked, boolean wcfChecked) {
-        this.vcChecked = vcChecked;
+    public PreparedResult(final VCCheckedResult vcCheckedResult, boolean wcfChecked) {
+        this.vcCheckedResult = vcCheckedResult;
         this.wcfChecked = wcfChecked;
 
-        this.checked = this.vcChecked && this.wcfChecked;
+        this.prepareChecked = this.vcCheckedResult.isVcChecked() && this.wcfChecked;
     }
 
-    public static PreparedResult accumulate(final PreparedResult firstPreparedResult,
-                                            final PreparedResult secondPreparedResult) {
-        return new PreparedResult(firstPreparedResult.vcChecked && secondPreparedResult.vcChecked,
-                firstPreparedResult.wcfChecked && secondPreparedResult.wcfChecked);
+    public static PreparedResult accumulate(final PreparedResult fst,
+                                            final PreparedResult snd) {
+        return new PreparedResult(
+                VCCheckedResult.accumulate(fst.vcCheckedResult, snd.vcCheckedResult),
+                fst.wcfChecked && snd.wcfChecked);
     }
 
-    public boolean isVcChecked() { return vcChecked; }
+    public boolean isBVChecked() { return vcCheckedResult.isBvChecked(); }
+    public boolean isFVChecked() { return vcCheckedResult.isFvChecked(); }
+    public boolean isSVChecked() { return vcCheckedResult.isSvChecked(); }
+
+    public boolean isVcChecked() { return vcCheckedResult.isVcChecked(); }
     public boolean isWcfChecked() { return wcfChecked; }
-    public boolean isChecked() { return checked; }
+    public boolean isPrepareChecked() { return prepareChecked; }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(vcChecked, wcfChecked);
-    }
+    public int hashCode() { return Objects.hashCode(vcCheckedResult, wcfChecked); }
 
     @Override
     public boolean equals(Object obj) {
@@ -56,15 +61,16 @@ public final class PreparedResult implements Serializable {
             return false;
 
         PreparedResult that = (PreparedResult) obj;
-        return Objects.equal(this.vcChecked, that.vcChecked)
+        return Objects.equal(this.vcCheckedResult, that.vcCheckedResult)
                 && Objects.equal(this.wcfChecked, that.wcfChecked);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("vcChecked", vcChecked)
+                .add("vcCheckedResult", vcCheckedResult)
                 .add("wcfChecked", wcfChecked)
                 .toString();
     }
+
 }

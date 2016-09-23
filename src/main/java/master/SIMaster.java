@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
+import client.clientlibrary.rvsi.vc.vcresult.VCCheckedResult;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import context.AbstractContext;
 import exception.transaction.TransactionCommunicationException;
@@ -141,14 +142,14 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
 			  {@link VersionConstraintManager} is local to this method.
 			  Thus vc (version-constraint) can be checked separately from wcf (write-conflict free).
 			 */
-			boolean vcChecked = vcm.check(table);
+			VCCheckedResult vcChecked = vcm.check(table);
 			boolean wcfChecked;
 			boolean canCommitted = false;
 
 			logs.writeLock.lock();
 			try {
 				wcfChecked = logs.wcf(tx);
-				canCommitted = vcChecked && wcfChecked;
+				canCommitted = vcChecked.isVcChecked() && wcfChecked;
 
 				if (canCommitted) {	// (1) check
 					cts = new Timestamp(ts.incrementAndGet());	// (2) commit-timestamp; commit in "commit order"
@@ -186,10 +187,10 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
          * Thus vc (version-constraint) can be checked separately from wcf (write-conflict free).
          */
         Future<PreparedResult> prepareFuture = exec.submit(() -> {
-            boolean vcChecked = true;
+            VCCheckedResult vcCheckedResult = VCCheckedResult.IDENTITY;
             if (vcm != null)  // FIXME: ensuring vcm not null
-                vcChecked = vcm.check(table);
-            LOGGER.debug("Checking vcm [{}] is [{}].", vcm, vcChecked);
+                vcCheckedResult = vcm.check(table);
+            LOGGER.debug("Checking vcm [{}] is [{}].", vcm, vcCheckedResult);
 
             boolean wcfChecked = true;  // TODO: Putting wcf-checking before vc-checking?
             if (tx != null) {
@@ -198,7 +199,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
                     logs.writeLock.tryLock(5, TimeUnit.SECONDS);
                     LOGGER.debug("After writeLock.tryLock(): the logs.lock is [{}].", logs.lock);
                 } catch (InterruptedException ie) {
-                    return new PreparedResult(vcChecked, false);
+                    return new PreparedResult(vcCheckedResult, false);
                 }
 
                 wcfChecked = logs.wcf(tx);
@@ -207,7 +208,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
                         tx.getSts(), tx.getCts(), wcfChecked);
             }
 
-            return new PreparedResult(vcChecked, wcfChecked);
+            return new PreparedResult(vcCheckedResult, wcfChecked);
         });
 
         LOGGER.debug("[{}] ends the [{}] phase with tx [{}] and vcm [{}].",

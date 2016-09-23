@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import benchmarking.batch.RVSITriple;
 import benchmarking.statistics.BenchmarkingStatistics;
-import benchmarking.statistics.IWorkloadStatistics;
+import benchmarking.statistics.AbstractWorkloadStatistics;
 
 /**
  * @author hengxin
@@ -28,7 +28,7 @@ public class BenchmarkingLauncherScriptMainTest {
         LOGGER.info("Batch for [{}:{}:{}] begins.", rwRatio, mpl, rvsi);
 
         LOGGER.info("BenchmarkingLauncher starts.");
-        IWorkloadStatistics workloadStat = new BenchmarkingLauncher(rwRatio, mpl, rvsi,
+        AbstractWorkloadStatistics workloadStat = new BenchmarkingLauncher(rwRatio, mpl, rvsi,
                 siteProperties, cfProperties, toProperties)
                 .run();
         LOGGER.info("BenchmarkingLauncher ends.");

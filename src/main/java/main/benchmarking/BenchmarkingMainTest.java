@@ -3,7 +3,7 @@ package main.benchmarking;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import benchmarking.statistics.IWorkloadStatistics;
+import benchmarking.statistics.AbstractWorkloadStatistics;
 
 /**
  * @author hengxin
@@ -19,7 +19,7 @@ public class BenchmarkingMainTest {
         String toProperties = args[3];
 
         LOGGER.info("Benchmarking Main Test Begins!!!");
-        IWorkloadStatistics workloadStat =
+        AbstractWorkloadStatistics workloadStat =
                 new BenchmarkingLauncher(workloadProperties, siteProperties, cfProperties, toProperties)
                         .run();
 

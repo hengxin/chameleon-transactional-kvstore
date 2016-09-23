@@ -2,13 +2,13 @@ package kvs.table;
 
 import com.google.common.base.MoreObjects;
 
-import net.jcip.annotations.ThreadSafe;
-
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicReference;
+
+import javax.annotation.concurrent.ThreadSafe;
 
 import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;

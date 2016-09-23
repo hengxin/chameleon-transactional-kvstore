@@ -3,9 +3,9 @@ package kvs.component;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-import net.jcip.annotations.Immutable;
-
 import java.io.Serializable;
+
+import javax.annotation.concurrent.Immutable;
 
 import kvs.table.AbstractTable;
 

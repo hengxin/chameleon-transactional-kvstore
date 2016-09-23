@@ -4,9 +4,9 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
-import net.jcip.annotations.ThreadSafe;
-
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.concurrent.ThreadSafe;
 
 import kvs.component.Cell;
 import kvs.component.Ordinal;

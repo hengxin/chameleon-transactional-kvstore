@@ -2,12 +2,12 @@ package kvs.compound;
 
 import com.google.common.base.MoreObjects;
 
-import net.jcip.annotations.ThreadSafe;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import javax.annotation.concurrent.ThreadSafe;
 
 import client.clientlibrary.transaction.RVSITransaction;
 import kvs.component.Ordinal;

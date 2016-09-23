@@ -2,8 +2,6 @@ package client.clientlibrary.transaction;
 
 import com.google.common.base.MoreObjects;
 
-import net.jcip.annotations.NotThreadSafe;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -17,6 +15,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.annotation.concurrent.NotThreadSafe;
 
 import kvs.component.Cell;
 import kvs.component.Column;

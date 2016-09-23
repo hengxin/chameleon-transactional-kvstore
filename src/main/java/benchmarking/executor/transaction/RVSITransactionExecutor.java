@@ -15,7 +15,7 @@ import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
-import twopc.TwoPCResult;
+import twopc.TransactionCommitResult;
 
 /**
  * {@link RVSITransactionExecutor} wraps {@link Transaction}
@@ -34,7 +34,7 @@ public class RVSITransactionExecutor implements ITransactionExecutor {
     }
 
     @Override
-    public TwoPCResult execute(Transaction tx)
+    public TransactionCommitResult execute(Transaction tx)
             throws TransactionBeginException, TransactionReadException, TransactionEndException {
         ITransaction rvsiTx = new RVSITransaction(cctx);
 

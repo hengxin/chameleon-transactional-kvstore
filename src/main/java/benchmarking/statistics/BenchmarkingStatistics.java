@@ -13,16 +13,17 @@ public class BenchmarkingStatistics implements IStatistics {
     private final int mpl;
     private final RVSITriple rvsiTriple;
 
-    private final IWorkloadStatistics workloadStat;
+    private final AbstractWorkloadStatistics workloadStat;
 
     public BenchmarkingStatistics(double rwRatio, int mpl, final RVSITriple rvsiTriple,
-                                  IWorkloadStatistics workloadStat) {
+                                  AbstractWorkloadStatistics workloadStat) {
         this.rwRatio = rwRatio;
         this.mpl = mpl;
         this.rvsiTriple = rvsiTriple;
         this.workloadStat = workloadStat;
     }
 
+    @Override
     public String briefReport() {
         return MoreObjects.toStringHelper(this)
                 .add("rwRatio", rwRatio)

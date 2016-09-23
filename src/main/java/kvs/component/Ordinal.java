@@ -3,13 +3,13 @@ package kvs.component;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-import net.jcip.annotations.ThreadSafe;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
+
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * We denote the position of some version of a data item <code>x</code> in its 

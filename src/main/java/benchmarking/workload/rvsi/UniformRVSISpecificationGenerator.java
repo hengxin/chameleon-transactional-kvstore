@@ -46,9 +46,9 @@ public class UniformRVSISpecificationGenerator implements IRVSISpecificationGene
         svSpec.addSpec(cks, k3);
 
         RVSISpecificationManager rvsiSpecManager = new RVSISpecificationManager();
-        rvsiSpecManager.collectRVSISpecification(bvSpec)
-                .collectRVSISpecification(fvSpec)
-                .collectRVSISpecification(svSpec);
+        rvsiSpecManager.collect(bvSpec)
+                .collect(fvSpec)
+                .collect(svSpec);
 
         return rvsiSpecManager;
     }

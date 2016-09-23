@@ -1,68 +1,38 @@
 package benchmarking.statistics;
 
-import com.google.common.base.MoreObjects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import twopc.TransactionCommitResult;
 
 /**
  * @author hengxin
  * @date 16-9-15
  */
-public class ClientStatistics implements IClientStatistics {
-    private int numberOfCommittedTransactions = 0;
-    private int numberOfAbortedTransactions = 0;
-    private int numberOfTransactions = 0;
-    // more details
-    private int numberOfFalseVcChecked = 0;
-    private int numberOfFalseWcfChecked = 0;
+public class ClientStatistics extends AbstractClientStatistics {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientStatistics.class);
 
-    public void incCommitted() {
-        numberOfCommittedTransactions++;
+    private final List<TransactionCommitResult> transactionCommitResults = new ArrayList<>();
+
+    @Override
+    public void collect(TransactionCommitResult transactionCommitResult) {
+        transactionCommitResults.add(transactionCommitResult);
+
         numberOfTransactions++;
-    }
 
-    public void incAborted() {
-        numberOfAbortedTransactions++;
-        numberOfTransactions++;
-    }
+        if (transactionCommitResult.isCommitted())
+            numberOfCommittedTransactions++;
+        else numberOfAbortedTransactions++;
 
-    public void incFalseVcChecked() {
-        numberOfFalseVcChecked++;
-    }
+        if (! transactionCommitResult.isBVChecked()) numberOfFalseBVChecked++;
+        if (! transactionCommitResult.isFVChecked()) numberOfFalseFVChecked++;
+        if (! transactionCommitResult.isSVChecked()) numberOfFalseSVChecked++;
 
-    public void incFalseWcfChecked() {
-        numberOfFalseWcfChecked++;
-    }
-
-    @Override
-    public int countCommitted() { return numberOfCommittedTransactions; }
-
-    @Override
-    public int countAborted() { return numberOfAbortedTransactions; }
-
-    @Override
-    public int countFalseVcChecked() { return numberOfFalseVcChecked; }
-
-    @Override
-    public int countFalseWcfChecked() { return numberOfFalseWcfChecked; }
-
-    @Override
-    public int countAll() { return numberOfTransactions; }
-
-    @Override
-    public String briefReport() {
-        return summaryReport();
-    }
-
-    @Override
-    public String summaryReport() {
-        return MoreObjects.toStringHelper(this)
-                .add("#C", numberOfCommittedTransactions)
-                .add("#A", numberOfAbortedTransactions)
-                .add("#T", numberOfTransactions)
-                .add("#C/#T", (numberOfCommittedTransactions * 1.0) / numberOfTransactions)
-                .add("#A/#T", (numberOfAbortedTransactions * 1.0) / numberOfTransactions)
-                .add("#!VC", numberOfFalseVcChecked)
-                .add("#!WCF", numberOfFalseWcfChecked)
-                .toString();
+        if (! transactionCommitResult.isVcChecked()) numberOfFalseVcChecked++;
+        if (! transactionCommitResult.isWcfChecked()) numberOfFalseWcfChecked++;
     }
 
 }

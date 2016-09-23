@@ -2,7 +2,7 @@ package benchmarking.executor.overall;
 
 import org.jetbrains.annotations.Nullable;
 
-import benchmarking.statistics.IWorkloadStatistics;
+import benchmarking.statistics.AbstractWorkloadStatistics;
 
 /**
  * @author hengxin
@@ -10,6 +10,5 @@ import benchmarking.statistics.IWorkloadStatistics;
  */
 public interface IWorkloadExecutor {
     void execute();
-    @Nullable
-    IWorkloadStatistics getWorkloadStat();
+    @Nullable AbstractWorkloadStatistics getWorkloadStat();
 }

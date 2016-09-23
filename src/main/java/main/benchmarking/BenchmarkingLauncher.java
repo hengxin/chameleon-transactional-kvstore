@@ -20,7 +20,7 @@ import benchmarking.executor.overall.IWorkloadExecutor;
 import benchmarking.executor.overall.WorkloadExecutor;
 import benchmarking.executor.transaction.RVSITransactionExecutor;
 import benchmarking.statistics.ClientStatistics;
-import benchmarking.statistics.IWorkloadStatistics;
+import benchmarking.statistics.AbstractWorkloadStatistics;
 import benchmarking.statistics.WorkloadStatistics;
 import benchmarking.workload.WorkloadUtil;
 import benchmarking.workload.overall.Workload;
@@ -92,7 +92,7 @@ public class BenchmarkingLauncher {
                 siteProperties, cfProperties, toProperties);
     }
 
-    public @Nullable IWorkloadStatistics run() {
+    public @Nullable AbstractWorkloadStatistics run() {
         final int numberOfClients = workload.getNumberOfClients();
         List<IClientExecutor> clientExecutors = new ArrayList<>(numberOfClients);
 

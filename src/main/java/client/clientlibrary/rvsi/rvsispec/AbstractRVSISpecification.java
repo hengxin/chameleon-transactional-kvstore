@@ -129,7 +129,6 @@ public abstract class AbstractRVSISpecification {
 	
 	void setVceInfoList(List<VCEntryRawInfo> vce_info_list) { vceInfos = vce_info_list; }
 
-    @NotNull
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)

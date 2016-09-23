@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import benchmarking.executor.client.IClientExecutor;
-import benchmarking.statistics.IWorkloadStatistics;
+import benchmarking.statistics.AbstractWorkloadStatistics;
 import benchmarking.workload.client.ClientWorkload;
 import benchmarking.workload.overall.Workload;
 
@@ -21,8 +21,7 @@ public class WorkloadExecutor implements IWorkloadExecutor {
 
     private final Workload workload;
     private final List<IClientExecutor> clientExecutors;    // TODO: refactor to use {@link Iterable}
-    @Nullable
-    private final IWorkloadStatistics workloadStat;
+    private final @Nullable AbstractWorkloadStatistics workloadStat;
 
     /**
      * @param workload  {@link Workload} to be executed
@@ -32,7 +31,7 @@ public class WorkloadExecutor implements IWorkloadExecutor {
      */
     public WorkloadExecutor(final Workload workload,
                             final List<IClientExecutor> clientExecutors,
-                            @Nullable final IWorkloadStatistics workloadStat) {
+                            final @Nullable AbstractWorkloadStatistics workloadStat) {
         this.workload = workload;
         this.clientExecutors = clientExecutors;
         this.workloadStat = workloadStat;
@@ -58,5 +57,5 @@ public class WorkloadExecutor implements IWorkloadExecutor {
     }
 
     @Override
-    public @Nullable IWorkloadStatistics getWorkloadStat() { return workloadStat; }
+    public @Nullable AbstractWorkloadStatistics getWorkloadStat() { return workloadStat; }
 }

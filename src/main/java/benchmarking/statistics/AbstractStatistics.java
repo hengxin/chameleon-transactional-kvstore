@@ -2,37 +2,43 @@ package benchmarking.statistics;
 
 import com.google.common.base.MoreObjects;
 
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * @author hengxin
  * @date 16-9-15
  */
-public class WorkloadStatistics extends AbstractWorkloadStatistics {
-    private final List<AbstractClientStatistics> clientStats = new ArrayList<>();
+public abstract class AbstractStatistics implements IStatistics {
+    // brief overview
+    protected int numberOfTransactions = 0;
+    protected int numberOfCommittedTransactions = 0;
+    protected int numberOfAbortedTransactions = 0;
 
-    @Override
-    public void collect(final @Nullable AbstractClientStatistics clientStat) {
-        if (clientStat != null) {
-            clientStats.add(clientStat);
+    // details
+    protected int numberOfFalseVcChecked = 0;
+    protected int numberOfFalseWcfChecked = 0;
 
-            numberOfTransactions += clientStat.countAll();
-            numberOfCommittedTransactions += clientStat.countCommitted();
-            numberOfAbortedTransactions += clientStat.countAborted();
-            numberOfFalseVcChecked += clientStat.countFalseVcChecked();
-            numberOfFalseBVChecked += clientStat.countFalseBVChecked();
-            numberOfFalseFVChecked += clientStat.countFalseFVChecked();
-            numberOfFalseSVChecked += clientStat.countFalseSVChecked();
-            numberOfFalseWcfChecked += clientStat.countFalseWcfChecked();
-        }
-    }
+    // more details
+    protected int numberOfFalseBVChecked = 0;
+    protected int numberOfFalseFVChecked = 0;
+    protected int numberOfFalseSVChecked = 0;
+
+    public int countAll() { return numberOfTransactions; }
+    public int countCommitted() { return numberOfCommittedTransactions; }
+    public int countAborted() { return numberOfAbortedTransactions; }
+
+    public int countFalseVcChecked() { return numberOfFalseVcChecked; }
+    public int countFalseWcfChecked() { return numberOfFalseWcfChecked; }
+
+    public int countFalseBVChecked() { return numberOfFalseBVChecked; }
+    public int countFalseFVChecked() { return numberOfFalseFVChecked; }
+    public int countFalseSVChecked() { return numberOfFalseSVChecked; }
 
     @Override
     public String briefReport() {
+        return summaryReport();
+    }
+
+    @Override
+    public String summaryReport() {
         return MoreObjects.toStringHelper(this)
                 .add("#T", numberOfTransactions)
                 .add("#C", numberOfCommittedTransactions)
@@ -53,10 +59,8 @@ public class WorkloadStatistics extends AbstractWorkloadStatistics {
     }
 
     @Override
-    public String summaryReport() {
-        return clientStats.stream()
-                .map(AbstractClientStatistics::summaryReport)
-                .collect(Collectors.joining("; ", briefReport(), "."));
+    public String toString() {
+        return summaryReport();
     }
 
 }

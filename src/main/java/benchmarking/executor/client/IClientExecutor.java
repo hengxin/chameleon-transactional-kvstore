@@ -2,7 +2,7 @@ package benchmarking.executor.client;
 
 import org.jetbrains.annotations.Nullable;
 
-import benchmarking.statistics.IClientStatistics;
+import benchmarking.statistics.AbstractClientStatistics;
 import benchmarking.workload.client.ClientWorkload;
 
 /**
@@ -11,5 +11,5 @@ import benchmarking.workload.client.ClientWorkload;
  */
 public interface IClientExecutor {
     void execute(ClientWorkload clientWorkload);
-    @Nullable IClientStatistics getClientStat();
+    @Nullable AbstractClientStatistics getClientStat();
 }

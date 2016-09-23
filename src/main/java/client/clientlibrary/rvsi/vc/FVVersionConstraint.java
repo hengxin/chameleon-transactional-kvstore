@@ -9,6 +9,8 @@ import java.util.Map;
 
 import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
+import client.clientlibrary.rvsi.vc.vcresult.FVCheckedResult;
+import client.clientlibrary.rvsi.vc.vcresult.VCCheckedResult;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
@@ -18,10 +20,8 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Forward-view version constraint generated according to {@link FVSpecification}
- * and {@link QueryResults}.
- * 
- * @see {@link FVSpecification}
+ * Forward-view version constraint generated according to
+ * {@link FVSpecification} and {@link QueryResults}.
  * 
  * @author hengxin
  * @date Created on 11-16-2015
@@ -37,17 +37,18 @@ public final class FVVersionConstraint extends AbstractVersionConstraint {
      * @param vce  {@link VCEntry} to be checked
      * @return ord(x_j) - O_x(T_i.sts) < k2; see the paper.
      */
+    @NotNull
     @Override
-    public boolean check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
+    public VCCheckedResult check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
         ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
 
         long ord = tsCell.getOrdinal().getOrd();
-        boolean checked = (vce.getVceOrd().getOrd() - ord <= vce.getVceBound());
+        boolean fvChecked = (vce.getVceOrd().getOrd() - ord <= vce.getVceBound());
 
         LOGGER.info("Checking FVVersionConstraint [{} vs. vce: {}]: [{}] - [{}] <= [{}] with result [{}].",
-                tsCell, vce, vce.getVceOrd().getOrd(), ord, vce.getVceBound(), checked);
+                tsCell, vce, vce.getVceOrd().getOrd(), ord, vce.getVceBound(), fvChecked);
 
-        return checked;
+        return new FVCheckedResult(fvChecked);
     }
 
     @Override

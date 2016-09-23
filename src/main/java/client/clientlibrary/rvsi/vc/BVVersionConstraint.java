@@ -9,6 +9,8 @@ import java.util.Map;
 
 import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.rvsispec.BVSpecification;
+import client.clientlibrary.rvsi.vc.vcresult.BVCheckedResult;
+import client.clientlibrary.rvsi.vc.vcresult.VCCheckedResult;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
@@ -18,10 +20,8 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Backward-view version constraint generated according to {@link BVSpecification}
- * and {@link QueryResults}.
- * 
- * @see {@link BVSpecification}
+ * Backward-view version constraint generated according to
+ * {@link BVSpecification} and {@link QueryResults}.
  * 
  * @author hengxin
  * @date Created on 11-16-2015 
@@ -37,18 +37,19 @@ public final class BVVersionConstraint extends AbstractVersionConstraint {
      * @param vce  {@link VCEntry} to be checked
      * @return O_x(T_i.sts) - ord(x_j) <= k1; see the paper.
      */
+    @NotNull
     @Override
-    public boolean check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
+    public VCCheckedResult check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
         ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
         LOGGER.debug("TsCell to check is : [{}].", tsCell);
 
         long ord = tsCell.getOrdinal().getOrd();
-        boolean checked = (ord - vce.getVceOrd().getOrd() < vce.getVceBound());
+        boolean bvChecked = (ord - vce.getVceOrd().getOrd() < vce.getVceBound());
 
         LOGGER.info("Checking BVVersionConstraint [{} vs. {}]: [{}] - [{}] < [{}] with result [{}].",
-                tsCell, vce, ord, vce.getVceOrd().getOrd(), vce.getVceBound(), checked);
+                tsCell, vce, ord, vce.getVceOrd().getOrd(), vce.getVceBound(), bvChecked);
 
-        return checked;
+        return new BVCheckedResult(bvChecked);
     }
 
     @Override

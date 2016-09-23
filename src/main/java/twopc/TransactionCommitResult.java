@@ -12,35 +12,34 @@ import java.io.Serializable;
  * @author hengxin
  * @date 16-9-18
  */
-public final class TwoPCResult implements Serializable {
+public final class TransactionCommitResult implements Serializable {
     private static final long serialVersionUID = -6969611847596869005L;
-    private static final Logger LOGGER = LoggerFactory.getLogger(TwoPCResult.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransactionCommitResult.class);
 
     private final PreparedResult preparedResult;
     private final boolean isCommitted;
 
-    public TwoPCResult(PreparedResult preparedResult, boolean isCommitted) {
+    public TransactionCommitResult(PreparedResult preparedResult, boolean isCommitted) {
         this.preparedResult = preparedResult;
         this.isCommitted = isCommitted;
     }
 
-    public boolean isCommitted() { return isCommitted; }
+    public boolean isBVChecked() { return preparedResult.isBVChecked(); }
+    public boolean isFVChecked() { return preparedResult.isFVChecked(); }
+    public boolean isSVChecked() { return preparedResult.isSVChecked(); }
     public boolean isVcChecked() { return preparedResult.isVcChecked(); }
     public boolean isWcfChecked() { return preparedResult.isWcfChecked(); }
+    public boolean isCommitted() { return isCommitted; }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(preparedResult, isCommitted);
-    }
+    public int hashCode() { return Objects.hashCode(preparedResult, isCommitted); }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this)
-            return true;
-        if (obj == null || ! (obj instanceof TwoPCResult))
-            return false;
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != getClass()) return false;
 
-        TwoPCResult that = (TwoPCResult) obj;
+        TransactionCommitResult that = (TransactionCommitResult) obj;
         return Objects.equal(this.preparedResult, that.preparedResult)
                 && Objects.equal(this.isCommitted, that.isCommitted);
     }

@@ -10,6 +10,8 @@ import java.util.Map;
 import client.clientlibrary.partitioning.IPartitioner;
 import client.clientlibrary.rvsi.rvsispec.FVSpecification;
 import client.clientlibrary.rvsi.rvsispec.SVSpecification;
+import client.clientlibrary.rvsi.vc.vcresult.SVCheckedResult;
+import client.clientlibrary.rvsi.vc.vcresult.VCCheckedResult;
 import client.clientlibrary.transaction.QueryResults;
 import kvs.compound.ITimestampedCell;
 import kvs.table.AbstractTable;
@@ -38,17 +40,18 @@ public final class SVVersionConstraint extends AbstractVersionConstraint {
      * @param vce  {@link VCEntry} to be checked
      * @return O_x(T_l.cts) - ord(x_j) <= k3; see the paper.
      */
+    @NotNull
     @Override
-    public boolean check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
+    public VCCheckedResult check(@NotNull AbstractTable table, @NotNull VCEntry vce) {
         ITimestampedCell tsCell = table.getTimestampedCell(vce.getVceCk(), vce.getVceTs());
 
         long ord = tsCell.getOrdinal().getOrd();
-        boolean checked = (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
+        boolean svChecked = (ord - vce.getVceOrd().getOrd() <= vce.getVceBound());
 
         LOGGER.info("Checking SVVersionConstraint [{} vs. {}]: [{}] - [{}] <= [{}] with result [{}].",
-                tsCell, vce, ord, vce.getVceOrd().getOrd(), vce.getVceBound(), checked);
+                tsCell, vce, ord, vce.getVceOrd().getOrd(), vce.getVceBound(), svChecked);
 
-        return checked;
+        return new SVCheckedResult(svChecked);
     }
 
     @Override

@@ -6,9 +6,9 @@ package kvs.compound;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-import net.jcip.annotations.Immutable;
-
 import java.io.Serializable;
+
+import javax.annotation.concurrent.Immutable;
 
 import kvs.component.Column;
 import kvs.component.Row;

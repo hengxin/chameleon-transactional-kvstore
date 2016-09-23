@@ -29,7 +29,7 @@ public final class RVSISpecificationManager {
 	private final List<AbstractRVSISpecification> rvsiSpecs = new ArrayList<>();
 
 	@NotNull
-    public RVSISpecificationManager collectRVSISpecification(AbstractRVSISpecification rvsiSpec) {
+    public RVSISpecificationManager collect(AbstractRVSISpecification rvsiSpec) {
 		rvsiSpecs.add(rvsiSpec);
         return this;
 	}

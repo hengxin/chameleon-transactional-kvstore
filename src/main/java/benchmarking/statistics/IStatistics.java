@@ -1,8 +1,9 @@
 package benchmarking.statistics;
 
 /**
- * @author hengxin
- * @date 16-9-15
+ * {@link IStatistics} only supports brief/summary reports.
+ *
+ * Created by hengxin on 16-9-23.
  */
 public interface IStatistics {
     String briefReport();

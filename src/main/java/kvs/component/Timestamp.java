@@ -4,11 +4,11 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
-import net.jcip.annotations.Immutable;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+
+import javax.annotation.concurrent.Immutable;
 
 /**
  * @author hengxin

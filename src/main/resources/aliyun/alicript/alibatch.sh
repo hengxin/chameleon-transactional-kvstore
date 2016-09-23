@@ -27,26 +27,9 @@ siteProperties="$ALIYUN_DIR""site-client.properties"
 cfProperties="$ALIYUN_DIR""cf-client.properties"
 toProperties="$ALIYUN_DIR""to-client.properties"
 
-rvsisPlus=("3-3-1" "4-4-1" "2-2-1")
-mplsPlus=(10 15 20)
-
-echo "rwRatio = 0.5"
-sleep 5s
-
-$ALIEAN
-for rvsi in "${rvsisPlus[@]}"; do
-	for mpl in "${mplsPlus[@]}"; do
-		$ALION
-		java -jar $BATCH_JAR 0.5 $mpl $rvsi $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch
-		.log
-		$ALIEAN
-	done
-done
-
-
-rwRatios=(4 1 9)
-rvsis=("1-0-0" "3-3-1" "4-4-1" "2-2-1")
-mpls=(10 15 20)
+rwRatios=(4 0.5 1 9)
+rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-1" "2-2-1" "3-3-1" "4-4-1")
+mpls=(25 30 5)
 
 $ALIEAN
 for rwRatio in "${rwRatios[@]}"; do

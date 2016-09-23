@@ -16,7 +16,7 @@ import exception.transaction.TransactionExecutionException;
 import kvs.component.Timestamp;
 import rmi.IRMI;
 import twopc.PreparedResult;
-import twopc.TwoPCResult;
+import twopc.TransactionCommitResult;
 import twopc.participant.I2PCParticipant;
 
 /**
@@ -85,7 +85,7 @@ public abstract class Abstract2PCCoordinator implements Remote, IRMI, Serializab
 	 * @return {@code true} if 2PC protocol succeeds in committing; {@code false}, otherwise.
      * @throws RemoteException thrown if errors occur in remote accesses
 	 */
-	public abstract TwoPCResult execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
+	public abstract TransactionCommitResult execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException;
 
     public abstract boolean onPreparePhaseFinished()

@@ -28,7 +28,7 @@ import kvs.compound.CompoundKey;
 import kvs.compound.ITimestampedCell;
 import site.ISite;
 import timing.ITimestampOracle;
-import twopc.TwoPCResult;
+import twopc.TransactionCommitResult;
 
 import static conf.SiteConfig.simulateInterDCComm;
 
@@ -128,18 +128,18 @@ public class RVSITransaction implements ITransaction {
 	 *  to the application.
 	 */
 	@Override
-	public TwoPCResult end() throws TransactionEndException {
+	public TransactionCommitResult end() throws TransactionEndException {
 		VersionConstraintManager vcm = generateVCManager();
 		ToCommitTransaction tx = new ToCommitTransaction(sts, bufferedUpdates);
 		
 		try {
             simulateInterDCComm();
 
-            TwoPCResult twoPCResult = cctx.getCoord(tx, vcm).execute2PC(tx, vcm);
+            TransactionCommitResult transactionCommitResult = cctx.getCoord(tx, vcm).execute2PC(tx, vcm);
 
-            boolean isCommitted = twoPCResult.isCommitted();
+            boolean isCommitted = transactionCommitResult.isCommitted();
             LOGGER.debug("Tx [sts: {}] is committed: [{}].", tx.getSts(), isCommitted);
-            return twoPCResult;
+            return transactionCommitResult;
 		} catch (RemoteException re) {
 			throw new TransactionEndException(
 			        String.format("Transaction [%s] failed to commit due to RMI-related issues.", this),
@@ -161,7 +161,7 @@ public class RVSITransaction implements ITransaction {
 	 * 	an {@link AbstractRVSISpecification}
 	 */
 	public void collectRVSISpecification(AbstractRVSISpecification rvsiSpec) {
-		rvsiSpecManager.collectRVSISpecification(rvsiSpec);
+		rvsiSpecManager.collect(rvsiSpec);
 	}
 	
 	@NotNull

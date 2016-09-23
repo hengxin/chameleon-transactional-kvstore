@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import benchmarking.statistics.BenchmarkingStatistics;
-import benchmarking.statistics.IWorkloadStatistics;
+import benchmarking.statistics.AbstractWorkloadStatistics;
 import main.benchmarking.BenchmarkingLauncher;
 import util.ScriptUtil;
 
@@ -65,7 +65,7 @@ public class BatchRunner {
                         setUp();
 
                     LOGGER.info("BenchmarkingLauncher starts.");
-                    IWorkloadStatistics workloadStat = new BenchmarkingLauncher(rwRatio, mpl, rvsiTriple,
+                    AbstractWorkloadStatistics workloadStat = new BenchmarkingLauncher(rwRatio, mpl, rvsiTriple,
                             siteProperties, cfProperties, toProperties)
                             .run();
                     LOGGER.info("BenchmarkingLauncher ends.");

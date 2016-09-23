@@ -27,7 +27,7 @@ import membership.site.Member;
 import rmi.RMIUtil;
 import timing.ITimestampOracle;
 import twopc.PreparedResult;
-import twopc.TwoPCResult;
+import twopc.TransactionCommitResult;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 import util.PropertiesUtil;
@@ -73,7 +73,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 	}
 
 	@Override
-	public TwoPCResult execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
+	public TransactionCommitResult execute2PC(final ToCommitTransaction tx, final VersionConstraintManager vcm)
             throws RemoteException, TransactionExecutionException {
 		final Map<Integer, ToCommitTransaction> siteTxMap = cctx.partition(tx);
         final Map<Integer, VersionConstraintManager> siteVcmMap = cctx.partition(vcm);
@@ -95,7 +95,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
             throw new TransactionExecutionException(msg, ie);
 		}
 
-		return new TwoPCResult(preparedResult, isCommitted);
+		return new TransactionCommitResult(preparedResult, isCommitted);
 	}
 
     /**

@@ -65,7 +65,7 @@ public final class CommitPhaserTask implements Callable<Boolean> {
         PreparedResult preparedResult = participant.prepare(tx, vcm);
         coord.preparedResults.put(participant, preparedResult);
 
-        boolean preparedDecision = preparedResult.isChecked();
+        boolean preparedDecision = preparedResult.isPrepareChecked();
         coord.preparedDecisions.put(participant, preparedDecision);
 
         phaser.arriveAndAwaitAdvance();
