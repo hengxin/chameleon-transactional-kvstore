@@ -31,7 +31,7 @@ appender("STDOUT", ConsoleAppender) {
 appender("FILE", FileAppender) {
 	file = "./logs/chameleon-test.log"
     append = true
-    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
+    encoder(PatternLayoutEncoder) { pattern = "%d{HH:mm:ss} - %msg%n" }
 }
 
 

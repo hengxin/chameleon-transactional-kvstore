@@ -11,9 +11,9 @@
 #  REQUIREMENTS: ---
 #          BUGS: ---
 #         NOTES: ---
-#        AUTHOR: YOUR NAME ()-
-#  ORGANIZATION: 
-#       CREATED: 2016年09月18日 20:14
+#        AUTHOR: Hengfeng Wei (ant-hengxin)
+#  ORGANIZATION: ICS, NJU
+#       CREATED: 2016-09-18 20:14
 #      REVISION:  ---
 #===============================================================================
 
@@ -27,9 +27,13 @@ siteProperties="$ALIYUN_DIR""site-client.properties"
 cfProperties="$ALIYUN_DIR""cf-client.properties"
 toProperties="$ALIYUN_DIR""to-client.properties"
 
+# rwRatios=(4 0.5 1 9)
+# rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-1" "2-2-1" "3-3-1" "4-4-1")
+# mpls=(25 30 5)
+
 rwRatios=(4 0.5 1 9)
-rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-1" "2-2-1" "3-3-1" "4-4-1")
-mpls=(25 30 5)
+rvsis=("1-1-3" "1-1-4" "1-1-1" "1-1-2")
+mpls=(10 20 30)
 
 $ALIEAN
 for rwRatio in "${rwRatios[@]}"; do

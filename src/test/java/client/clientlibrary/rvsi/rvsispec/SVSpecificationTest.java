@@ -118,13 +118,13 @@ public final class SVSpecificationTest {
 		vce_info_xyzuv_list.add(vce_info_x_z_2);
 		vce_info_xyzuv_list.add(vce_info_y_z_2);
 		vce_info_xyzuv_list.add(vce_info_u_v_3);
-		
-		/**
-		 * <ol>
-		 * <li> [ x, ord(x), ts(z), bound_xyz]
-		 * <li> [ y, ord(y), ts(z), bound_xyz ]
-		 * <li> [ u, ord(u), ts(v), bound_uv ]
-		 * </ol>
+
+		/*
+		  <ol>
+		  <li> [ x, ord(x), ts(z), bound_xyz]
+		  <li> [ y, ord(y), ts(z), bound_xyz ]
+		  <li> [ u, ord(u), ts(v), bound_uv ]
+		  </ol>
 		 */
 		VCEntry vce_xz = new VCEntry(ck_rx_cx, ts_cell_x.getOrdinal(), ts_cell_z.getTS(), bound_wxyz);
 		VCEntry vce_yz = new VCEntry(ck_ry_cy, ts_cell_y.getOrdinal(), ts_cell_z.getTS(), bound_wxyz);
@@ -136,9 +136,9 @@ public final class SVSpecificationTest {
 		
 		sv_vc = new SVVersionConstraint(vce_xyzuv_list);
 		
-		/**
-		 * Initialize #svRvsiSpec as:
-	     * { {t, s} -> 1, {w, x, y, z} -> 2, {u, v} -> 3 }
+		/*
+		  Initialize #svRvsiSpec as:
+	      { {t, s} -> 1, {w, x, y, z} -> 2, {u, v} -> 3 }
 		 */
 		svRvsiSpec.addSpec(ck_set_ts, bound_ts);
 		svRvsiSpec.addSpec(ck_set_wxyz, bound_wxyz);

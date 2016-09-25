@@ -26,11 +26,18 @@ import util.PropertiesUtil;
 public final class SiteConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(SiteConfig.class);
 
-    // the following is for timestamp oracle
+    // for timestamp oracle
     @Language("Properties")
     public static final String DEFAULT_TO_PROPERTIES = "timing/to.properties";
+    // for coordinator factory
+    @Language("Properties")
+    public static final String DEFAULT_CF_PROPERTIES = "membership/coordinator/cf.properties";
+    @Language("Properties")
+    public final static String DEFAULT_CLIENT_COORD_FACTORY_PROPERTIES_FILE = "client/cf.properties";
 
     // the following are for site membership
+    @Language("Properties")
+    public final static String DEFAULT_CLIENT_SITE_PROPERTIES_FILE = "client/site.properties";
     @Language("Properties")
     public static final String DEFAULT_MASTER_SITE_PROPERTIES = "master/site.properties";
     @Language("Properties")
@@ -48,8 +55,8 @@ public final class SiteConfig {
     public static boolean IS_IN_SIMULATION_MODE = false;
     private static int intraDCDelay = 40;
     private static int interDCDelay = 3;
-    public static final NormalDistribution INTRA_DC_NORMAL_DIST = new NormalDistribution(intraDCDelay, 1);
-    public static final NormalDistribution INTER_DC_NORMAL_DIST = new NormalDistribution(interDCDelay, 1);
+    private static final NormalDistribution INTRA_DC_NORMAL_DIST = new NormalDistribution(intraDCDelay, 1);
+    private static final NormalDistribution INTER_DC_NORMAL_DIST = new NormalDistribution(interDCDelay, 1);
 
     public enum SiteConfigKey {
         HOST("host"),
@@ -90,8 +97,7 @@ public final class SiteConfig {
     public static void simulateInterDCComm() {
         if (SiteConfig.IS_IN_SIMULATION_MODE)
             try {
-//                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
-                TimeUnit.MILLISECONDS.sleep(interDCDelay);
+                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }
@@ -100,8 +106,7 @@ public final class SiteConfig {
     public static void simulateIntraDCComm() {
         if (SiteConfig.IS_IN_SIMULATION_MODE)
             try {
-//                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTRA_DC_NORMAL_DIST.sample()));
-                TimeUnit.MILLISECONDS.sleep(intraDCDelay);
+                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTRA_DC_NORMAL_DIST.sample()));
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }

@@ -11,10 +11,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import client.context.AbstractClientContext;
 import site.ISite;
 
-import static client.context.AbstractClientContext.DEFAULT_SITE_PROPERTIES_FILE;
+import static conf.SiteConfig.DEFAULT_CLIENT_SITE_PROPERTIES_FILE;
 
 /**
  * The {@link StaticSiteMembershipFromProperties} loads/maintains a global, static membership view
@@ -32,11 +31,9 @@ public final class StaticSiteMembershipFromProperties implements ISiteMembership
     @NotNull private final Map<Integer, ReplicationGroup> replGrps;
 
     /**
-     * Constructor with default site properties file: {@link AbstractClientContext#DEFAULT_SITE_PROPERTIES_FILE}
+     * Constructor with default site properties file: {@link conf.SiteConfig#DEFAULT_CLIENT_SITE_PROPERTIES_FILE}
      */
-    public StaticSiteMembershipFromProperties() {
-        this(DEFAULT_SITE_PROPERTIES_FILE);
-    }
+    public StaticSiteMembershipFromProperties() { this(DEFAULT_CLIENT_SITE_PROPERTIES_FILE); }
 
     /**
      * Constructor with properties file.
@@ -55,9 +52,7 @@ public final class StaticSiteMembershipFromProperties implements ISiteMembership
 
     @NotNull
     @Override
-    public Member getSelf() {
-        return self;
-    }
+    public Member getSelf() { return self; }
 
     @Override
     public int getReplGrpNo() { return replGrps.size(); }

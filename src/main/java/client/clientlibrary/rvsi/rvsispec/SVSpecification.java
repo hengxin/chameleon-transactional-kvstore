@@ -30,7 +30,7 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 * Extract {@link VCEntryRawInfo} for {@link SVVersionConstraint}. Each one
 	 * consists of two {@link KVItem}s and a staleness bound.
 	 * 
-	 * @param query_results
+	 * @param queryResults
 	 *            {@link QueryResults}
 	 * 
 	 * @example Suppose that the {@link SVSpecification} (inherited from
@@ -52,23 +52,21 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 *          <p>
 	 *          Note that [vce_info_kv = {t, Cell_t}, 3] is illegal to be an {@link SVVersionConstraint}.
 	 *          We also assume that "Cell_x < Cell_y < Cell_z" when sorted by their {@link Timestamp}s.
-	 * 
 	 */
 	@Override
-	public List<VCEntryRawInfo> extractVCEntryRawInfo(@NotNull QueryResults query_results) {
-		super.vceInfos = rvsiSpecMap.entrySet().stream()
+	public List<VCEntryRawInfo> extractVCEntryRawInfo(@NotNull QueryResults queryResults) {
+		vceInfos = rvsiSpecMap.entrySet().stream()
 				.flatMap(rvsiSpecEntry ->
-						expand(join(rvsiSpecEntry.getKey(), query_results), rvsiSpecEntry.getValue()).stream()
-					)
+						expand(join(rvsiSpecEntry.getKey(), queryResults), rvsiSpecEntry.getValue()).stream())
 				.collect(Collectors.toList());
-		return super.vceInfos;
+		return vceInfos;
 	}
 
 	/**
 	 * "Join" a set of {@link CompoundKey}s and a {@link QueryResults} which is a map of 
 	 * {@link CompoundKey} to {@link ITimestampedCell}, by their common {@link CompoundKey}.
 	 * 
-	 * @param ck_set a set of {@link CompoundKey}s
+	 * @param cks a set of {@link CompoundKey}s
 	 * @param queryResults {@link QueryResults} which is a map of
 	 *   {@link CompoundKey} to {@link ITimestampedCell}.
 	 * @return a </em>sorted</em> set of {@link KVItem}s, 
@@ -88,8 +86,8 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 *   { [x, Cell_x], [y, Cell_y], [z, Cell_z] }.
 	 * <p>
 	 */
-    SortedSet<KVItem> join(@NotNull Set<CompoundKey> ck_set, @NotNull QueryResults queryResults) {
-		return ck_set.stream()
+    SortedSet<KVItem> join(@NotNull Set<CompoundKey> cks, @NotNull QueryResults queryResults) {
+		return cks.stream()
 			.map(ck ->
 				queryResults.getTsCell(ck).map(tsCell -> new KVItem(ck, tsCell)))
 			.filter(Optional::isPresent)
@@ -105,7 +103,7 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 * This method aims to explicitly enumerate them, in the form of {@link VCEntryRawInfo} structures.
 	 * See the example below. 
 	 * 
-	 * @param kv_set a sorted set of {@link KVItem}s
+	 * @param kvs a sorted set of {@link KVItem}
 	 * @param bound staleness bound allowed
 	 * @return a list of {@link VCEntryRawInfo}, used for generating {@link SVVersionConstraint}
 	 * 
@@ -123,14 +121,14 @@ public class SVSpecification extends AbstractRVSISpecification {
 	 * <li>[ vce_info_kv = {y, Cell_y}, vce_info_kv_optional = {z, Cell_z}, vce_info_bound = 2] 
 	 * <p>
 	 */
-    List<VCEntryRawInfo> expand(@NotNull SortedSet<KVItem> kv_set, final int bound) {
-		if (kv_set.size() < 2)
+    List<VCEntryRawInfo> expand(@NotNull SortedSet<KVItem> kvs, final int bound) {
+		if (kvs.size() < 2)
 			return new ArrayList<>();
 
-		KVItem kv_optional = kv_set.last();
-		kv_set.remove(kv_optional);
-		return kv_set.stream()
-				.map(kv -> new VCEntryRawInfo(kv, kv_optional, bound))
+		KVItem kvItem = kvs.last();
+		kvs.remove(kvItem);
+		return kvs.stream()
+				.map(kv -> new VCEntryRawInfo(kv, kvItem, bound))
 				.collect(Collectors.toList());
 	}
 	

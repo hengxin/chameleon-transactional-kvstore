@@ -3,9 +3,6 @@ package benchmarking.statistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import twopc.TransactionCommitResult;
 
 /**
@@ -15,12 +12,8 @@ import twopc.TransactionCommitResult;
 public class ClientStatistics extends AbstractClientStatistics {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientStatistics.class);
 
-    private final List<TransactionCommitResult> transactionCommitResults = new ArrayList<>();
-
     @Override
     public void collect(TransactionCommitResult transactionCommitResult) {
-        transactionCommitResults.add(transactionCommitResult);
-
         numberOfTransactions++;
 
         if (transactionCommitResult.isCommitted())

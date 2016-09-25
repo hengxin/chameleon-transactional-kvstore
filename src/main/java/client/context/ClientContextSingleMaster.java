@@ -5,6 +5,10 @@ import org.jetbrains.annotations.NotNull;
 import client.clientlibrary.partitioning.SingleMasterSettingPartitioner;
 import site.ISite;
 
+import static conf.SiteConfig.DEFAULT_CLIENT_COORD_FACTORY_PROPERTIES_FILE;
+import static conf.SiteConfig.DEFAULT_CLIENT_SITE_PROPERTIES_FILE;
+import static conf.SiteConfig.DEFAULT_TO_PROPERTIES;
+
 /**
  * Provides context for transaction processing at the client side
  * in the <i>single-master-multiple-slave</i> setting. 
@@ -15,9 +19,9 @@ public class ClientContextSingleMaster extends AbstractClientContext {
     private static final long serialVersionUID = -3909286327773778797L;
 
     public ClientContextSingleMaster() {
-		this(DEFAULT_SITE_PROPERTIES_FILE,
-            DEFAULT_COORD_FACTORY_PROPERTIES_FILE,
-            DEFAULT_TO_PROPERTIES_FILE);
+		this(DEFAULT_CLIENT_SITE_PROPERTIES_FILE,
+                DEFAULT_CLIENT_COORD_FACTORY_PROPERTIES_FILE,
+                DEFAULT_TO_PROPERTIES);
 	}
 
 	public ClientContextSingleMaster(@NotNull String siteProperties,

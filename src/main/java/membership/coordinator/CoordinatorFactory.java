@@ -1,6 +1,5 @@
 package membership.coordinator;
 
-import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,9 @@ import twopc.coordinator.Abstract2PCCoordinator;
 import twopc.coordinator.RVSI2PCPhaserCoordinator;
 import util.PropertiesUtil;
 
+import static conf.SiteConfig.DEFAULT_CF_PROPERTIES;
+import static conf.SiteConfig.DEFAULT_TO_PROPERTIES;
+
 /**
  * {@link CoordinatorFactory} creates {@link Abstract2PCCoordinator} instances.
  * @author hengxin
@@ -25,9 +27,6 @@ import util.PropertiesUtil;
  */
 public class CoordinatorFactory implements ICoordinatorFactory, IRMI {
     private static final Logger LOGGER = LoggerFactory.getLogger(CoordinatorFactory.class);
-    @Language("Properties")
-    private static final String DEFAULT_CF_PROPERTIES = "membership/coordinator/cf.properties";
-    private static final String DEFAULT_TO_PROPERTIES = "timing/to.properties";
 
     private Member self;
     private final String toProperties;

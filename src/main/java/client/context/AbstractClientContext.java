@@ -1,6 +1,5 @@
 package client.context;
 
-import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,13 +39,6 @@ import twopc.coordinator.Abstract2PCCoordinator;
 public abstract class AbstractClientContext extends AbstractContext {
     private static final long serialVersionUID = 3378039247164492259L;
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractClientContext.class);
-
-    @Language("Properties")
-    public final static String DEFAULT_SITE_PROPERTIES_FILE = "client/site.properties";
-    @Language("Properties")
-    protected final static String DEFAULT_COORD_FACTORY_PROPERTIES_FILE = "client/cf.properties";
-    @Language("Properties")
-    public final static String DEFAULT_TO_PROPERTIES_FILE = "timing/to.properties";
 
     protected IPartitioner partitioner;
 
