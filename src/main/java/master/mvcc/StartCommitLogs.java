@@ -18,7 +18,7 @@ import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
-import util.intervaltree.IntervalTree;
+import utils.intervaltree.IntervalTree;
 
 /**
  * @author hengxin

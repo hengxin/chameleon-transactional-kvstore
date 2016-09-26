@@ -14,12 +14,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import benchmarking.workload.WorkloadUtil.WorkloadParams;
-import util.LogUtil;
+import utils.LogUtil;
 
-import static util.LogUtil.LOG_FILE_EXTENSION;
-import static util.LogUtil.LOG_FILE_PREFIX;
-import static util.LogUtil.LOG_FILE_SEP;
-import static util.LogUtil.extractParamVal;
+import static utils.LogUtil.LOG_FILE_EXTENSION;
+import static utils.LogUtil.LOG_FILE_PREFIX;
+import static utils.LogUtil.LOG_FILE_SEP;
+import static utils.LogUtil.extractParamVal;
 
 /**
  * {@Log} represents a log file.

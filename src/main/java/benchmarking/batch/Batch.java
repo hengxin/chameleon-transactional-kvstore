@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 import benchmarking.workload.overall.Workload;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.MPL;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.RVSI;

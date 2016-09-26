@@ -12,7 +12,7 @@ import benchmarking.workload.operation.ZipfKeyGenerator;
 import benchmarking.workload.rvsi.UniformRVSISpecificationGenerator;
 import benchmarking.workload.transaction.BinomialTransactionSizeGenerator;
 import benchmarking.workload.transaction.TransactionGenerator;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K1BV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K2FV;

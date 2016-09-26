@@ -15,7 +15,7 @@ import rmi.IRMI;
 import rmi.RMIUtil;
 import twopc.coordinator.Abstract2PCCoordinator;
 import twopc.coordinator.RVSI2PCPhaserCoordinator;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 import static conf.SiteConfig.DEFAULT_CF_PROPERTIES;
 import static conf.SiteConfig.DEFAULT_TO_PROPERTIES;

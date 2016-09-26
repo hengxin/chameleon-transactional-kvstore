@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
 
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 import static java.util.stream.Collectors.toMap;
 

@@ -13,7 +13,7 @@ import conf.SiteConfig;
 import membership.site.Member;
 import rmi.IRMI;
 import rmi.RMIUtil;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 /**
  * A simple centralized timestamp oracle.

@@ -15,11 +15,14 @@ public class RVSITriple {
         this.k3 = k3;
     }
 
+    /**
+     * @param rvsiStr <code>rvsiStr</code> should be in the form of "k1-k2-k3"
+     */
     public RVSITriple(String rvsiStr) {
         String[] rvsiParts = rvsiStr.split("-");
-        this.k1 = Integer.parseInt(rvsiParts[0]);
-        this.k2 = Integer.parseInt(rvsiParts[1]);
-        this.k3 = Integer.parseInt(rvsiParts[2]);
+        k1 = Integer.parseInt(rvsiParts[0]);
+        k2 = Integer.parseInt(rvsiParts[1]);
+        k3 = Integer.parseInt(rvsiParts[2]);
     }
 
     public int getK1() { return k1; }
@@ -30,13 +33,11 @@ public class RVSITriple {
      * @return "(k1, k2, k3)"
      */
     public String rvsiParamVal() {
-        StringBuilder sb = new StringBuilder();
-        sb.append('(')
-                .append(k1).append(',')
-                .append(k2).append(',')
-                .append(k3)
-                .append(')');
-        return sb.toString();
+        return "(" +
+                k1 + ',' +
+                k2 + ',' +
+                k3 +
+                ')';
     }
 
     @Override

@@ -1,4 +1,4 @@
-package util;
+package utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +49,11 @@ public class LogUtil {
         return extract(line, param.param() + "=", ",");
     }
 
+    /**
+     * Extract a String format of rvsi: just appending k1, k2, and k3
+     * @param line  a line containing rvsi
+     * @return  String format of rvsi
+     */
     public static String extractRvsi(final String line) {
         String rvsi = extract(line, "RVSITriple{", "}");
         return Arrays.stream(rvsi.split(","))

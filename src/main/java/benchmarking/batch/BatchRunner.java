@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import benchmarking.statistics.BenchmarkingStatistics;
 import benchmarking.statistics.AbstractWorkloadStatistics;
 import main.benchmarking.BenchmarkingLauncher;
-import util.ScriptUtil;
+import utils.ScriptUtil;
 
 import static conf.SiteConfig.IS_IN_SIMULATION_MODE;
 

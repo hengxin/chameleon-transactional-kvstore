@@ -30,7 +30,7 @@ import twopc.PreparedResult;
 import twopc.TransactionCommitResult;
 import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 import static conf.SiteConfig.simulateInterDCComm;
 import static java.util.stream.Collectors.toList;

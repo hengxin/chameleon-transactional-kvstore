@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 /**
  * {@link SiteConfig} collects configuration parameters for sites.

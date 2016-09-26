@@ -1,7 +1,7 @@
 /**
- * @copyright See {@link util.intervaltree#package-info.java}.
+ * @copyright See {@link utils.intervaltree#package-info.java}.
  */
-package util.intervaltree;
+package utils.intervaltree;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

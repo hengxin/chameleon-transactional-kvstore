@@ -8,7 +8,7 @@ import java.util.Properties;
 
 import conf.SiteConfig;
 import conf.SiteConfig.SiteConfigKey;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 /**
  * {@link SocketPortPropertiesUtil} parses the socket port properties file (sp.properties).

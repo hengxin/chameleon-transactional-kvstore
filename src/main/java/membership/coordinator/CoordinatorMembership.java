@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import client.context.AbstractClientContext;
 import rmi.RMIUtil;
 import twopc.coordinator.Abstract2PCCoordinator;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 /**
  * {@link CoordinatorMembership} maintains a collection of {@link CoordinatorFactory}s

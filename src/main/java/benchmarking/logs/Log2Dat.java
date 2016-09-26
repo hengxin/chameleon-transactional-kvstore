@@ -2,8 +2,8 @@ package benchmarking.logs;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import com.google.common.collect.TreeBasedTable;
 import com.google.common.io.Files;
 
 import org.slf4j.Logger;
@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.MPL;
 import static java.lang.String.valueOf;
 import static java.util.stream.Collectors.joining;
-import static util.LogUtil.extractAborts;
-import static util.LogUtil.extractParamVal;
-import static util.LogUtil.extractRvsi;
+import static utils.LogUtil.extractAborts;
+import static utils.LogUtil.extractParamVal;
+import static utils.LogUtil.extractRvsi;
 
 /**
  * @author hengxin
@@ -31,7 +31,7 @@ public class Log2Dat {
     private static final String DAT_EXTENSION = ".dat";
 
     private final String logFile;
-    private final Table<Integer, String, Double> logTable = HashBasedTable.create();
+    private final Table<Integer, RVSIColumn, Double> logTable = TreeBasedTable.create(Integer::compareTo, RVSIColumn.RVSI_COLUMN_COMPARATOR);
 
 //    private final Multimap<Integer, AbortRate> table = ArrayListMultimap.create();
 
@@ -63,6 +63,7 @@ public class Log2Dat {
 
     private void saveColTitle(String datFile) {
         String colTitle = logTable.columnKeySet().stream()
+                .map(RVSIColumn::getRVSIColumnTitle)
                 .collect(joining("\t", "\t", System.lineSeparator()));
 
         try {
@@ -85,7 +86,7 @@ public class Log2Dat {
     }
 
     private String getRow(int mpl) {
-        Map<String, Double> rowMap = logTable.row(mpl);
+        Map<RVSIColumn, Double> rowMap = logTable.row(mpl);
         return logTable.columnKeySet().stream()
                 .map(rowMap::get)
                 .map(String::valueOf)
@@ -100,13 +101,6 @@ public class Log2Dat {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
-        // fillTable Double.NaN for empty values
-        logTable.rowKeySet().forEach(row ->
-                logTable.columnKeySet().forEach(col -> {
-                    if (! logTable.contains(row, col))
-                        logTable.put(row, col, Double.NaN);
-                }));
     }
 
     private void fillTableRow(String line) {
@@ -119,9 +113,9 @@ public class Log2Dat {
     }
 
     private void put(int mpl, AbortRate abortRate) {
-        logTable.put(mpl, "all_" + abortRate.rvsi, abortRate.all);
-        logTable.put(mpl, "vc_" + abortRate.rvsi, abortRate.vc);
-        logTable.put(mpl, "wcf_" + abortRate.rvsi, abortRate.wcf);
+        logTable.put(mpl, new RVSIColumn(abortRate.rvsi, "all"), abortRate.all);
+        logTable.put(mpl, new RVSIColumn(abortRate.rvsi, "vc"), abortRate.vc);
+        logTable.put(mpl, new RVSIColumn(abortRate.rvsi, "wcf"), abortRate.wcf);
     }
 
     @Override
@@ -169,7 +163,6 @@ public class Log2Dat {
                     .addValue(wcf)
                     .toString();
         }
-
     }
 
 }

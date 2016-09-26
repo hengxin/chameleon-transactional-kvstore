@@ -1,4 +1,4 @@
-package util;
+package utils;
 
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;

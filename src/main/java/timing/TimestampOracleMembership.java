@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import rmi.RMIUtil;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 /**
  * @description {@link TimestampOracleMembership} is to

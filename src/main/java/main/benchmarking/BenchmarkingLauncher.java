@@ -28,7 +28,7 @@ import benchmarking.workload.overall.WorkloadGeneratorFromProperties;
 import client.clientlibrary.partitioning.ConsistentHashingDynamicPartitioner;
 import client.context.AbstractClientContext;
 import client.context.ClientContextMultiMaster;
-import util.PropertiesUtil;
+import utils.PropertiesUtil;
 
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K1BV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K2FV;
