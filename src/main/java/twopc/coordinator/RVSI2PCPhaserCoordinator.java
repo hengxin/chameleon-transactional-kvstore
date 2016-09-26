@@ -32,7 +32,7 @@ import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 import utils.PropertiesUtil;
 
-import static conf.SiteConfig.simulateInterDCComm;
+import static benchmarking.workload.network.NetworkDelayGenerator.simulateInterDCComm;
 import static java.util.stream.Collectors.toList;
 
 /**

@@ -30,7 +30,7 @@ import site.ISite;
 import timing.ITimestampOracle;
 import twopc.TransactionCommitResult;
 
-import static conf.SiteConfig.simulateInterDCComm;
+import static benchmarking.workload.network.NetworkDelayGenerator.simulateInterDCComm;
 
 /**
  * {@link RVSITransaction} is a kind of transactions with rvsi semantics

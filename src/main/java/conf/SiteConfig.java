@@ -1,6 +1,5 @@
 package conf;
 
-import org.apache.commons.math3.distribution.NormalDistribution;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -8,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import utils.PropertiesUtil;
 
@@ -50,13 +48,8 @@ public final class SiteConfig {
     public static final String DEFAULT_SOCKET_PORT_PROPERTIES = "messaging/socket/sp.properties";
     public static final int DEFAULT_SOCKET_PORT = 1111;
 
-    // FIXME move this functionality to a new package: simulation
     // for simulation
     public static boolean IS_IN_SIMULATION_MODE = false;
-    private static int intraDCDelay = 40;
-    private static int interDCDelay = 3;
-    private static final NormalDistribution INTRA_DC_NORMAL_DIST = new NormalDistribution(intraDCDelay, 1);
-    private static final NormalDistribution INTER_DC_NORMAL_DIST = new NormalDistribution(interDCDelay, 1);
 
     public enum SiteConfigKey {
         HOST("host"),
@@ -92,24 +85,6 @@ public final class SiteConfig {
      */
     public String getConfigValue(@NotNull final SiteConfigKey configKey) {
         return props.getProperty(configKey.getConfigKey());
-    }
-
-    public static void simulateInterDCComm() {
-        if (SiteConfig.IS_IN_SIMULATION_MODE)
-            try {
-                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTER_DC_NORMAL_DIST.sample()));
-            } catch (InterruptedException ie) {
-                ie.printStackTrace();
-            }
-    }
-
-    public static void simulateIntraDCComm() {
-        if (SiteConfig.IS_IN_SIMULATION_MODE)
-            try {
-                TimeUnit.MILLISECONDS.sleep(Math.round(SiteConfig.INTRA_DC_NORMAL_DIST.sample()));
-            } catch (InterruptedException ie) {
-                ie.printStackTrace();
-            }
     }
 
 }

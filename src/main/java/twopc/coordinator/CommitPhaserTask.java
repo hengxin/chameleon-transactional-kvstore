@@ -14,7 +14,7 @@ import client.clientlibrary.transaction.ToCommitTransaction;
 import twopc.PreparedResult;
 import twopc.participant.I2PCParticipant;
 
-import static conf.SiteConfig.simulateInterDCComm;
+import static benchmarking.workload.network.NetworkDelayGenerator.simulateIntraDCComm;
 import static twopc.coordinator.phaser.CommitPhaser.Phase.ABORT;
 import static twopc.coordinator.phaser.CommitPhaser.Phase.COMMIT;
 import static twopc.coordinator.phaser.CommitPhaser.Phase.PREPARE;
@@ -60,7 +60,7 @@ public final class CommitPhaserTask implements Callable<Boolean> {
 		LOGGER.debug("The Coord [{}] begins the [{}] phase with participant [{}].",
                 coord, PREPARE, participant);
 
-        simulateInterDCComm();
+        simulateIntraDCComm();
 
         PreparedResult preparedResult = participant.prepare(tx, vcm);
         coord.preparedResults.put(participant, preparedResult);
@@ -74,7 +74,7 @@ public final class CommitPhaserTask implements Callable<Boolean> {
             LOGGER.debug("The Coord [{}] begins the [{}] phase with participant [{}].",
                     coord, COMMIT, participant);
 
-            simulateInterDCComm();
+            simulateIntraDCComm();
 
             boolean committedDecision = participant.commit(tx, coord.cts);
             coord.committedDecisions.put(participant, committedDecision);

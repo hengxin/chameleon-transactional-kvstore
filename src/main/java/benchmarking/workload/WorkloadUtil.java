@@ -38,7 +38,10 @@ public class WorkloadUtil {
         K1BV("k1", "1"),
         K2FV("k2", "0"),
         K3SV("k3", "1"),
-        RVSI("rvsi", "(1,0,1)");
+        RVSI("rvsi", "(1,0,1)"),
+        SIMULATION("simulation", "false"),
+        INTRA_DC_DELAY("intraDCDelay", "5"),
+        INTER_DC_DELAY("interDCDelay", "40");
 
         private final String param;
         private final String val;

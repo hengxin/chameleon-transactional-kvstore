@@ -11,7 +11,7 @@ import java.net.SocketAddress;
 import messaging.AbstractMessage;
 import messaging.IMessageProducer;
 
-import static conf.SiteConfig.simulateIntraDCComm;
+import static benchmarking.workload.network.NetworkDelayGenerator.simulateInterDCComm;
 
 /**
  * {@link SocketMsgProducer} sends {@link AbstractMessage}
@@ -45,7 +45,7 @@ public class SocketMsgProducer implements IMessageProducer {
     @Override
     public void send(AbstractMessage msg) {
         try ( ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())) {
-            simulateIntraDCComm();
+            simulateInterDCComm();
 
             oos.writeObject(msg);
         } catch (IOException ioe) {

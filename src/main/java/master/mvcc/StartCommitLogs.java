@@ -74,17 +74,17 @@ public class StartCommitLogs {
 	 * <b>TODO</b> check the side-effects on the original underlying collections. 
 	 */
 	public boolean wcf(@NotNull ToCommitTransaction tx) {
-        Collection<BufferedUpdates> overlapping_tx_updates = containersOf(tx.getSts());
+        Collection<BufferedUpdates> overlappingTxUpdates = containersOf(tx.getSts());
 
         // collect all updated keys
-        Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.parallelStream()
+        Set<CompoundKey> overlappingUpdatedCks = overlappingTxUpdates.parallelStream()
                 .map(BufferedUpdates::getUpdatedCKeys)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
 
-        overlapping_updated_cks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());
+        overlappingUpdatedCks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());
 
-        return overlapping_updated_cks.isEmpty();
+        return overlappingUpdatedCks.isEmpty();
 	}
 
 	/**
