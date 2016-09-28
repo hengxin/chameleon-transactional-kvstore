@@ -56,7 +56,7 @@ appender("MASTER", FileAppender) {
 appender("BATCH", RollingFileAppender) {
 	file = "./logs/chameleon-aliyun-batch.log"
     append = true
-    encoder(PatternLayoutEncoder) { pattern = "%msg%n" }
+    encoder(PatternLayoutEncoder) { pattern = "%d{HH:mm:ss} - %msg%n" }
 	rollingPolicy(FixedWindowRollingPolicy) {
 		fileNamePattern = "./logs/chameleon-aliyun-batch.%i.log.zip"
 		minIndex = 1
