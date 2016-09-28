@@ -31,11 +31,17 @@ toProperties="$ALIYUN_DIR""to-client.properties"
 # rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-1" "2-2-1" "3-3-1" "4-4-1")
 # mpls=(25 30 5)
 
+
 rwRatios=(4 0.5 1 9)
 rvsis=("1-1-3" "1-1-4" "1-1-1" "1-1-2")
 mpls=(10 20 30)
 
 $ALIEAN
+
+$ALION
+java -jar $BATCH_JAR 4 10 "2-2-1" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
+$ALIEAN
+			
 for rwRatio in "${rwRatios[@]}"; do
 	for rvsi in "${rvsis[@]}"; do
 		for mpl in "${mpls[@]}"; do

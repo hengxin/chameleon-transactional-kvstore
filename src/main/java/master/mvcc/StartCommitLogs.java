@@ -1,11 +1,13 @@
 package master.mvcc;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -66,7 +68,7 @@ public class StartCommitLogs {
 	 * Check whether the {@link ToCommitTransaction} is write-conflict-free
      * w.r.t already committed transactions.
      *
-	 * @param tx the transaction to commit; it cannot be {@code null}
+	 * @param tx the transaction to commit; it cannot be {@code null}.
 	 * @return {@code true} if tx is write-conflict-free w.r.t committed transactions;
      *  {@code false}, otherwise.
 	 * 
@@ -74,7 +76,10 @@ public class StartCommitLogs {
 	 * <b>TODO</b> check the side-effects on the original underlying collections. 
 	 */
 	public boolean wcf(@NotNull ToCommitTransaction tx) {
-        Collection<BufferedUpdates> overlappingTxUpdates = containersOf(tx.getSts());
+        Collection<BufferedUpdates> overlappingTxUpdates = overlappingWith(tx.getSts());
+
+        if (overlappingTxUpdates == null)
+            return false;
 
         // collect all updated keys
         Set<CompoundKey> overlappingUpdatedCks = overlappingTxUpdates.parallelStream()
@@ -88,15 +93,28 @@ public class StartCommitLogs {
 	}
 
 	/**
+     * Get the collection of {@link BufferedUpdates} of committed transactions
+     * that overlap with the transaction starts with <code>sts</code>.
+     * The result can be <code>null</code>, meaning that an unexpected error occurs.
+     *
 	 * @param sts start-timestamp of a transaction
-	 * @return a collection of {@link BufferedUpdates} that contain @param sts
+	 * @return a collection of {@link BufferedUpdates} that overlap with with transaction
+     *      starts with <code>sts</code>.
+     *      If an unexpected error occurs, it returns <code>null</code>.
+     *
+     * @implNote See <a ref="https://github.com/hengxin/chameleon-transactional-kvstore/issues/35">When and how to check `wcf`? #35</a>
 	 */
-    @NotNull Collection<BufferedUpdates> containersOf(Timestamp sts) {
-		readLock.lock();
+	@Nullable
+    private Collection<BufferedUpdates> overlappingWith(Timestamp sts) {
 		try {
-			return startCommitLogs.searchContaining(sts, sts);
-		} finally {
+            readLock.tryLock(5, TimeUnit.SECONDS);
+		    return startCommitLogs.searchOverlapping(sts, Timestamp.TIMESTAMP_MAX);
+		} catch (InterruptedException ie) {
+            ie.printStackTrace();
+            return null;
+        } finally {
 			readLock.unlock();
 		}
 	}
+
 }

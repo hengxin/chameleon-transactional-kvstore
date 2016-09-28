@@ -18,7 +18,8 @@ import javax.annotation.concurrent.Immutable;
 public class Timestamp implements Comparable<Timestamp>, Serializable {
 	private static final long serialVersionUID = -4196523878242377170L;
 
-	public final static Timestamp TIMESTAMP_INIT = new Timestamp(0);
+	public static final Timestamp TIMESTAMP_INIT = new Timestamp(0);
+    public static final Timestamp TIMESTAMP_MAX = new Timestamp(Long.MAX_VALUE);
 
     private long ts = 0L;
 	
@@ -31,7 +32,7 @@ public class Timestamp implements Comparable<Timestamp>, Serializable {
 	}
 	
 	@Override
-	public int hashCode() { return Objects.hashCode(this.ts); }
+	public int hashCode() { return Objects.hashCode(ts); }
 
 	@Override
 	public boolean equals(Object o) {
@@ -47,7 +48,8 @@ public class Timestamp implements Comparable<Timestamp>, Serializable {
     @Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.add("ts", this.ts)
+				.add("ts", ts)
 				.toString();
 	}
+
 }
