@@ -23,7 +23,6 @@ public class BenchmarkingLauncherScriptMainTest {
         String cfProperties = args[4];
         String toProperties = args[5];
 
-
         LOGGER.info("#####################################################");
         LOGGER.info("Batch for [{}:{}:{}] begins.", rwRatio, mpl, rvsi);
 

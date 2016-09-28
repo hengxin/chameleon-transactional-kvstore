@@ -105,17 +105,18 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
      */
     @Override
     public boolean onPreparePhaseFinished() throws TransactionEndException {
-        toCommitDecision = preparedDecisions.values().stream().allMatch(decision -> decision);
+        toCommitDecision = preparedDecisions.values().stream()
+                .allMatch(decision -> decision);
 
         if (toCommitDecision)
             try {
                 simulateInterDCComm();
 
-                cts = new Timestamp(tsOracle.get());
-            } catch (RemoteException re) {
+                cts = new Timestamp(tsOracle.lockStsAndThenGetCts());
+            } catch (RemoteException | InterruptedException reie) {
                 toCommitDecision = false;
                 throw new TransactionEndException(String.format("Transaction [%s] failed to begin.", this),
-                        re.getCause());
+                        reie.getCause());
             }
 
         // more details about prepared results
@@ -129,11 +130,18 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
      * Check the decisions of all participants during the Phase#COMMIT phase,
      * and compute the final committed/abort state of the transaction:
      * the transaction is committed if and only if
-     * (1) #to_committed_decision is true </i>and</i>
-     * (2) #comitted_decisions of all participants are true.
+     * (1) {@link #toCommitDecision} is true </i>and</i>
+     * (2) {@link #committedDecisions} of all participants are true.
      */
     @Override
     public boolean onCommitPhaseFinished() {
+        try {
+            tsOracle.unlockSts();
+        } catch (RemoteException | InterruptedException reie) {
+            reie.printStackTrace();
+            return false;   // TODO: check the return value
+        }
+
         isCommitted = toCommitDecision
                 && committedDecisions.values().stream().allMatch(decision -> decision);
         return isCommitted;

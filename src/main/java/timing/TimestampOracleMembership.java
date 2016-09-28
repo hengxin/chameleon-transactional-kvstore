@@ -13,6 +13,7 @@ import utils.PropertiesUtil;
 /**
  * @description {@link TimestampOracleMembership} is to
  *  locate remote {@link ITimestampOracle} object.
+ *
  * @author hengxin
  * @date 16-8-30
  */

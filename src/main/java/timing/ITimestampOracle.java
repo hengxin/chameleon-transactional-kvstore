@@ -10,5 +10,7 @@ import java.rmi.RemoteException;
  * @date Created on Dec 27, 2015
  */
 public interface ITimestampOracle extends Remote {
-	int get() throws RemoteException;
+    int getSts() throws RemoteException, InterruptedException;
+    int lockStsAndThenGetCts() throws RemoteException, InterruptedException;
+    void unlockSts() throws RemoteException, InterruptedException;
 }

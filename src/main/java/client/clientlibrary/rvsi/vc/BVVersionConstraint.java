@@ -46,7 +46,7 @@ public final class BVVersionConstraint extends AbstractVersionConstraint {
         long ord = tsCell.getOrdinal().getOrd();
         boolean bvChecked = (ord - vce.getVceOrd().getOrd() < vce.getVceBound());
 
-        LOGGER.info("Checking BVVersionConstraint [{} vs. {}]: [{}] - [{}] < [{}] with result [{}].",
+        LOGGER.debug("Checking BVVersionConstraint [{} vs. {}]: [{}] - [{}] < [{}] with result [{}].",
                 tsCell, vce, ord, vce.getVceOrd().getOrd(), vce.getVceBound(), bvChecked);
 
         return new BVCheckedResult(bvChecked);

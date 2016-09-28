@@ -14,7 +14,7 @@ import utils.PropertiesUtil;
 
 /**
  * {@link SocketAddressPropertiesUtil} parses the sa.properties file
- * to get a list of {@link SocketAddress}es.
+ * to getTs a list of {@link SocketAddress}es.
  *
  * @author hengxin
  * @date 16-9-1

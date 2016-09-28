@@ -237,6 +237,8 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
                         tx.getBufferedUpdates().fillTsAndOrd(cts, ckOrdIndex));
                 LOGGER.debug("[{}] updates the start-commit-log", this.getClass().getSimpleName());
 
+                table.apply(tx);
+
                 LOGGER.debug("The logs.lock is [{}].", logs.lock);
                 logs.writeLock.unlock();
                 LOGGER.debug("After writeLock.unlock(): the logs.lock is [{}].", logs.lock);
@@ -249,14 +251,6 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
                 ieee.printStackTrace();
             }
 
-            /*
-              Chameleon does not require read operations of a transaction to
-              lookup the <i>latest</i> version before the sts of that transaction.
-              Thus it is not necessary for the master to synchronize the updates
-              to the underlying table with read operations, both guarded by the lock on #logs.
-             */
-            table.apply(tx);    // apply buffered-updates to the in-memory table
-
             LOGGER.debug("Propagate this transaction with cts: [{}].", cts);
             try {
                 super.messenger.ifPresent(messenger -> messenger.send(tx));    // propagate
@@ -266,7 +260,7 @@ public final class SIMaster extends AbstractMaster implements ITransactional, I2
         }
 
         if (tx != null)
-            LOGGER.debug("[{}] ends the [{}] phase with [tx: {}+{}].",
+            LOGGER.info("[{}] ends the [{}] phase with [tx: {}+{}].",
                 this.getClass().getSimpleName(), COMMIT, tx.getSts(), tx.getCts());
 
         return true;

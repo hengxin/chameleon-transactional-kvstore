@@ -27,21 +27,20 @@ siteProperties="$ALIYUN_DIR""site-client.properties"
 cfProperties="$ALIYUN_DIR""cf-client.properties"
 toProperties="$ALIYUN_DIR""to-client.properties"
 
-# rwRatios=(4 0.5 1 9)
-# rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-1" "2-2-1" "3-3-1" "4-4-1")
-# mpls=(25 30 5)
-
+##### for test only #####
+$ALIEAN
+$ALION
+java -jar $BATCH_JAR 4 2 "2-2-1" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
+$ALIEAN
+##### for test only #####
 
 rwRatios=(4 0.5 1 9)
-rvsis=("1-1-3" "1-1-4" "1-1-1" "1-1-2")
-mpls=(10 20 30)
+rvsis=("1-0-0" "2-0-0" "3-0-0" "1-1-0" "1-2-0" "1-3-0" "1-0-1" "1-0-2" "1-0-3" "2-1-1" "2-2-1" "2-1-2" "3-2-2" "3-3-2"
+"3-2-3" "1-1-1" "2-2-2" "3-3-3")
+mpls=(5 10 15 20 25 30)
 
 $ALIEAN
 
-$ALION
-java -jar $BATCH_JAR 4 10 "2-2-1" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
-$ALIEAN
-			
 for rwRatio in "${rwRatios[@]}"; do
 	for rvsi in "${rvsis[@]}"; do
 		for mpl in "${mpls[@]}"; do
@@ -51,11 +50,5 @@ for rwRatio in "${rwRatios[@]}"; do
 		done
 	done
 done
-# mpl: 5
 
-# "3-0-0"
-# "2-0-0" "1-1-0" "1-0-1"
-# "1-2-0" "1-0-2"
-# "4-0-0" "1-3-0" "1-0-3"
-# "1-1-1" "2-2-2" "3-3-3"
 echo "ALL DONE!"

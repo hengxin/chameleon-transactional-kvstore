@@ -45,7 +45,7 @@ public final class SlaveMembership extends AbstractStaticMembership {
 //			LOGGER.error("Cannot parseReplGrps this slave [{}] itself.", slave_opt);
 //			System.exit(1);	// fail fast
 //		}
-//		super.self = slave_opt.get();
+//		super.self = slave_opt.getTs();
 //
 //		// parseReplGrps the master of this slave
 //		this.master = Member.parseMember(master);

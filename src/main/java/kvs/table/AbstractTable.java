@@ -140,9 +140,9 @@ public abstract class AbstractTable {
 	 * @param tx transaction commit log of type {@link ToCommitTransaction}
 	 */
 	public void apply(@NotNull ToCommitTransaction tx) {
-	    LOGGER.info("Begin: apply tx.");
+	    LOGGER.debug("Begin: apply tx.");
 		this.apply(tx.getCts(), tx.getBufferedUpdates());
-        LOGGER.info("End: apply tx.");
+        LOGGER.debug("End: apply tx.");
 	}
 	
 	/**
@@ -151,19 +151,19 @@ public abstract class AbstractTable {
 	 * @param bufferedUpdates {@link BufferedUpdates} to be applied
 	 */
 	public void apply(@NotNull Timestamp cts, @NotNull BufferedUpdates bufferedUpdates) {
-	    LOGGER.info("Begin: apply cts and bufferedUpdates.");
+	    LOGGER.debug("Begin: apply cts and bufferedUpdates.");
 		bufferedUpdates.stream().forEach(item ->
 							put(item.getCK(), TimestampedCell.replaceTimestamp(cts, item.getTsCell())));
-        LOGGER.info("End: apply cts and bufferedUpdates.");
+        LOGGER.debug("End: apply cts and bufferedUpdates.");
 	}
 	
 	/**
 	 * Put data ({@link CompoundKey}, {@link ITimestampedCell}) into {@link #table}.
 	 */
 	public void put(@NotNull CompoundKey ck, ITimestampedCell tc) {
-	    LOGGER.info("Begin: put ck [{}] and tc [{}].", ck, tc);
+	    LOGGER.debug("Begin: put ck [{}] and tc [{}].", ck, tc);
 		put(ck.getRow(), ck.getCol(), tc);
-        LOGGER.info("End: put ck [{}] and tc [{}].", ck, tc);
+        LOGGER.debug("End: put ck [{}] and tc [{}].", ck, tc);
 	}
 	
 	/**

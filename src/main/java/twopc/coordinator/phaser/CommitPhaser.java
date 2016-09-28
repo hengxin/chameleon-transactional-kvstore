@@ -53,7 +53,7 @@ public final class CommitPhaser extends Phaser implements Serializable {
                 try {
                     toCommitDecision = coord.onPreparePhaseFinished();
                 } catch (TransactionEndException tee) {
-                    LOGGER.info(tee.getMessage());
+                    LOGGER.error(tee.getMessage());
                 }
                 LOGGER.debug("The commit/abort decision for the [{}] phase is [{}].", Phase.COMMIT, toCommitDecision);
 
@@ -66,7 +66,7 @@ public final class CommitPhaser extends Phaser implements Serializable {
                 return true;	// this phaser has finished its job.
 
             default:
-                throw new IllegalArgumentException("No Such a Phase");
+                throw new IllegalArgumentException(String.format("No Such a Phase: [%s]", phase));
         }
     }
 }

@@ -72,14 +72,14 @@ public class RVSITransaction implements ITransaction {
         LOGGER.debug("The tsOracle for generating sts is [{}].", tsOracle);
 
 		try {
-            sts = new Timestamp(tsOracle.get());
+            sts = new Timestamp(tsOracle.getSts());
 			LOGGER.debug("The transaction has successfully obtained a start-timestamp ({}).", sts);
 			return true;
-		} catch (RemoteException re) {
+		} catch (RemoteException | InterruptedException reie) {
             throw new TransactionBeginException(String.format("Transaction [%s] failed to begin.", this),
-                    re.getCause());
+                    reie.getCause());
 		}
-	}
+    }
 
 	@Nullable
     @Override

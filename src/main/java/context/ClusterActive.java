@@ -56,7 +56,7 @@ public final class ClusterActive {
 //			System.exit(1);	// fail fast
 //		}
 //
-//		return new ClusterActive(hibernate_cluster.cno, master_stub.get(),
+//		return new ClusterActive(hibernate_cluster.cno, master_stub.getTs(),
 //									AbstractSite.locateRMISites(hibernate_cluster.slaves));
 //	}
 	

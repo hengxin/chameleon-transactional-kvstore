@@ -45,7 +45,7 @@ public final class FVVersionConstraint extends AbstractVersionConstraint {
         long ord = tsCell.getOrdinal().getOrd();
         boolean fvChecked = (vce.getVceOrd().getOrd() - ord <= vce.getVceBound());
 
-        LOGGER.info("Checking FVVersionConstraint [{} vs. vce: {}]: [{}] - [{}] <= [{}] with result [{}].",
+        LOGGER.debug("Checking FVVersionConstraint [{} vs. vce: {}]: [{}] - [{}] <= [{}] with result [{}].",
                 tsCell, vce, vce.getVceOrd().getOrd(), ord, vce.getVceBound(), fvChecked);
 
         return new FVCheckedResult(fvChecked);

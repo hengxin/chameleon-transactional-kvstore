@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import conf.SiteConfig;
@@ -16,8 +17,9 @@ import rmi.RMIUtil;
 import utils.PropertiesUtil;
 
 /**
- * A simple centralized timestamp oracle.
+ * A simple *centralized* timestamp oracle.
  * The timestamp sequence starts from 0.
+ *
  * @author hengxin
  * @date Created on Dec 27, 2015
  */
@@ -26,6 +28,9 @@ public class CentralizedTimestampOracle implements ITimestampOracle, IRMI {
 
     private final AtomicInteger ts = new AtomicInteger();
     private Member self;
+
+    private static final int MAX_THREADS = 1_000;
+    private final Semaphore semaphore = new Semaphore(MAX_THREADS);
 
     public CentralizedTimestampOracle() { this(SiteConfig.DEFAULT_TO_PROPERTIES); }
 
@@ -44,13 +49,31 @@ public class CentralizedTimestampOracle implements ITimestampOracle, IRMI {
         }
     }
 
-	@Override
-	public int get() throws RemoteException {
-	    int time = ts.getAndIncrement();
-        LOGGER.info("Timeoracle returns timestamp [{}].", time);
-        return time;
-//	    return ts.getAndIncrement();
+	private int getTs() {
+	    return ts.getAndIncrement();
 	}
+
+    @Override
+    public void unlockSts()
+            throws RemoteException, InterruptedException {
+        semaphore.release();
+    }
+
+    @Override
+    public int getSts()
+            throws RemoteException, InterruptedException {
+        semaphore.acquire(MAX_THREADS);
+        semaphore.release(MAX_THREADS);
+
+        return getTs();
+    }
+
+    @Override
+    public int lockStsAndThenGetCts()
+            throws RemoteException, InterruptedException {
+        semaphore.acquire();
+        return getTs();
+    }
 
     @Override
     public void export() { RMIUtil.export(this, self.getHost(), self.getPort(), self.getRmiRegistryName()); }

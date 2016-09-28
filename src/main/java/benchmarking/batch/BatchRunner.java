@@ -51,9 +51,6 @@ public class BatchRunner {
     }
 
     public void run() {
-//        Arrays.stream(batch.getRwRatios()).forEachOrdered(rwRatio -> {
-//            Arrays.stream(batch.getMpls()).forEachOrdered(mpl -> {
-//                Arrays.stream(batch.getRvsiTriples()).forEachOrdered(rvsiTriple -> {
         for (double rwRatio : batch.getRwRatios()) {
             for (int mpl : batch.getMpls()) {
                 for (RVSITriple rvsiTriple : batch.getRvsiTriples()) {
