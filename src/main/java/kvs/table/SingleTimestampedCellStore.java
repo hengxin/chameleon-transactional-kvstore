@@ -15,11 +15,11 @@ import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
 
 /**
- * @author hengxin
- * @data Created on 11-10-2015
- * 
  * Implements the interface {@link ITimestampedCellStore}.
  * It maintains only a single {@link ITimestampedCell}.
+ *
+ * @author hengxin
+ * @date Created on 11-10-2015
  */
 @ThreadSafe
 public class SingleTimestampedCellStore implements ITimestampedCellStore {

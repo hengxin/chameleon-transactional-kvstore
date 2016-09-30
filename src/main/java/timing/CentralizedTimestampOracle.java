@@ -17,8 +17,14 @@ import rmi.RMIUtil;
 import utils.PropertiesUtil;
 
 /**
- * A simple *centralized* timestamp oracle.
+ * A simple <it>centralized</it> timestamp oracle.
  * The timestamp sequence starts from 0.
+ *
+ * To make the transaction commit phase atomic in 2PC protocol,
+ * It is necessary to prevent the events of getting new start timestamps
+ * between the time some transaction gets its commit timestamp and the time it actually commits.
+ *
+ * @see <a ref="https://github.com/hengxin/chameleon-transactional-kvstore/issues/37">ISSUE #37 Making the transaction commit phase atomic in 2PC protocol</a>
  *
  * @author hengxin
  * @date Created on Dec 27, 2015
@@ -59,13 +65,23 @@ public class CentralizedTimestampOracle implements ITimestampOracle, IRMI {
         semaphore.release();
     }
 
+    /**
+     * @return  start timestamp for some transaction
+     * @throws RemoteException
+     * @throws InterruptedException
+     *
+     * @implNote The only constraint is that {@link #getSts()} is blocked
+     *  if some threads are in {@link #lockStsAndThenGetCts()}.
+     *  The locking strategy employed here is coarse-grained and conservative,
+     *  hurting the system performance.
+     */
     @Override
     public int getSts()
             throws RemoteException, InterruptedException {
         semaphore.acquire(MAX_THREADS);
+        int sts = getTs();
         semaphore.release(MAX_THREADS);
-
-        return getTs();
+        return sts;
     }
 
     @Override

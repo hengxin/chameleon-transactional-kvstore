@@ -28,15 +28,14 @@ cfProperties="$ALIYUN_DIR""cf-client.properties"
 toProperties="$ALIYUN_DIR""to-client.properties"
 
 ##### for test only #####
-$ALIEAN
-$ALION
-java -jar $BATCH_JAR 4 2 "2-2-1" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
-$ALIEAN
+# $ALIEAN
+# $ALION
+# java -jar $BATCH_JAR 4 2 "2-2-1" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
+# $ALIEAN
 ##### for test only #####
 
 rwRatios=(4 0.5 1 9)
-rvsis=("1-0-0" "2-0-0" "3-0-0" "1-1-0" "1-2-0" "1-3-0" "1-0-1" "1-0-2" "1-0-3" "2-1-1" "2-2-1" "2-1-2" "3-2-2" "3-3-2"
-"3-2-3" "1-1-1" "2-2-2" "3-3-3")
+rvsis=("1-0-1" "1-0-2" "1-0-3" "2-1-1" "2-2-1" "2-1-2" "3-2-2" "3-3-2" "3-2-3")
 mpls=(5 10 15 20 25 30)
 
 $ALIEAN
@@ -52,3 +51,9 @@ for rwRatio in "${rwRatios[@]}"; do
 done
 
 echo "ALL DONE!"
+
+
+# "1-0-0" "2-0-0" "3-0-0" "1-1-0" "1-2-0" "1-3-0"
+# 2016-09-30: missing 4-30-"1-3-0" due to unexpected power off
+
+# not used: "1-1-1" "2-2-2" "3-3-3"
