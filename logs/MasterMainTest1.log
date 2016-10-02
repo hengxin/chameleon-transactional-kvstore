@@ -1,0 +1,6 @@
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/root/.m2/repository/ch/qos/logback/logback-classic/1.1.3/logback-classic-1.1.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/root/.m2/repository/org/apache/activemq/activemq-all/5.12.1/activemq-all-5.12.1.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
+09:29:39.671 [main] INFO  m.MasterLauncher <init> - SIMaster [SIMaster{Member{host=127.0.0.1, port=20000, rmiRegistryName=master1, rmiRegistryPort=1099}}] has been successfully launched.

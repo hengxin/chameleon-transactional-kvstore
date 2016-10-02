@@ -1,8 +1,6 @@
 /bin/
 /target/
-*.log
 *.swp
-/logs
 .idea/workspace.xml
 **/.idea/tasks.xml
 **/.idea/workspace.xml
