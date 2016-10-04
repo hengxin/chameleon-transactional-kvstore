@@ -34,8 +34,8 @@ toProperties="$ALIYUN_DIR""to-client.properties"
 # $ALIEAN
 ##### for test only #####
 
-rwRatios=(4 0.5 1 9)
-rvsis=("2-1-1" "2-2-1" "2-1-2" "2-2-2")
+rwRatios=(0.5 1 9)
+rvsis=("1-0-0" "2-0-0" "3-0-0" "1-1-0" "1-2-0" "1-3-0" "1-0-1" "1-0-2" "2-1-1" "2-2-1" "2-1-2" "2-2-2")
 mpls=(5 10 15 20 25 30)
 
 $ALIEAN
@@ -51,10 +51,3 @@ for rwRatio in "${rwRatios[@]}"; do
 done
 
 echo "ALL DONE!"
-
-
-# done: rwRatio=4; "1-0-0" "2-0-0" "3-0-0" "1-1-0" "1-2-0" "1-3-0" "1-0-1" "1-0-2"; mpls=(5 10 15 20 25 30)
-# 2016-09-30: missing 4-30-"1-3-0" due to unexpected power off
-# 2016-10-02: missing 4-"2-2-1"-(15, 20, 25, 30) due to JRMP connection establishment error
-
-# not used: "1-1-1" "2-2-2" (used) "3-3-3"
