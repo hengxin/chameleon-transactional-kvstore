@@ -61,10 +61,14 @@ public class Log2Dat {
         saveMplRows(datFile);
     }
 
+    /**
+     * The column titles are: mpl followed by rvsis, separated by "\t".
+     * @param datFile   file to store
+     */
     private void saveColTitle(String datFile) {
         String colTitle = logTable.columnKeySet().stream()
                 .map(RVSIColumn::getRVSIColumnTitle)
-                .collect(joining("\t", "\t", System.lineSeparator()));
+                .collect(joining("\t", "mpl\t", System.lineSeparator()));
 
         try {
             Files.append(colTitle, new File(datFile), Charsets.UTF_8);

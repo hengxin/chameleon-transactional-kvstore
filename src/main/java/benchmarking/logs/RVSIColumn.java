@@ -24,9 +24,7 @@ public class RVSIColumn implements Comparable<RVSIColumn> {
 
     public static final Comparator<RVSIColumn> RVSI_COLUMN_COMPARATOR = new Comparator<RVSIColumn>() {
         @Override
-        public int compare(RVSIColumn o1, RVSIColumn o2) {
-            return o1.compareTo(o2);
-        }
+        public int compare(RVSIColumn o1, RVSIColumn o2) { return o1.compareTo(o2); }
     };
 
     @Override
@@ -39,10 +37,10 @@ public class RVSIColumn implements Comparable<RVSIColumn> {
     }
 
     /**
-     * @return  String format of this rvsi column: {@link #type}_{@link #rvsi}
+     * @return  String format of this rvsi column: {@link #type}{@link #rvsi}
      */
     public String getRVSIColumnTitle() {
-        return type + "_" + rvsi;
+        return type + rvsi;
     }
 
     @Override

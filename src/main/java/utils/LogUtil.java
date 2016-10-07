@@ -67,7 +67,7 @@ public class LogUtil {
     }
 
     public static boolean containsData(String line) {
-        return line.startsWith("BatchRunner");
+        return line.contains("BatchRunner");
     }
 
 }
