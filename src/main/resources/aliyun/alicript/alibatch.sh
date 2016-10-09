@@ -39,13 +39,13 @@ toProperties="$ALIYUN_DIR""to-client.properties"
 # rvsis=("1-0-0" "2-0-0" "3-0-0" "1-1-0" "1-2-0" "1-3-0" "1-0-1" "1-0-2" "2-1-1" "2-2-1" "2-1-2" "2-2-2")
 # mpls=(5 10 15 20 25 30)
 
-##### for missing #####
-rwRatios=(1)
+rwRatios=(4)
+# rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-2" "2-2-1" "2-1-2" "1-2-0" "1-3-0" "1-0-1" "2-1-1" "2-2-2" "3-0-0")
+# rvsis=("1-0-1" "2-1-1" "2-2-2" "3-0-0")
 rvsis=("2-2-2")
-mpls=(10 15 20 25 30 35 40)
+mpls=(5 10 15 20 25 30)
 
 $ALIEAN
-
 for rwRatio in "${rwRatios[@]}"; do
 	for rvsi in "${rvsis[@]}"; do
 		for mpl in "${mpls[@]}"; do
