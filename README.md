@@ -1,4 +1,5 @@
-# chameleon-transactional-kvstore
+# chameleon-transactional-kvstore [![Build Status](https://travis-ci.org/hengxin/chameleon-transactional-kvstore.svg?branch=2pc)](https://travis-ci.org/hengxin/chameleon-transactional-kvstore)
+
 A distributed, partitioned, replicated, transactional, main-memory key-value data store prototype which implements RVSI.
 For details, please refer to [this wiki](https://github.com/hengxin/chameleon-transactional-kvstore/wiki).
 
