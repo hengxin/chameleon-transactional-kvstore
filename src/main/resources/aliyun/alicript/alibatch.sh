@@ -27,25 +27,21 @@ siteProperties="$ALIYUN_DIR""site-client.properties"
 cfProperties="$ALIYUN_DIR""cf-client.properties"
 toProperties="$ALIYUN_DIR""to-client.properties"
 
-##### for test only #####
-# $ALIEAN
-# $ALION
-# java -jar $BATCH_JAR 4 2 "2-2-1" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
-# $ALIEAN
-##### for test only #####
-
-##### batch #####
-# rwRatios=(9)
-# rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-2" "2-2-1" "2-1-2" "1-2-0" "1-3-0" "1-0-1" "2-1-1" "2-2-2" "3-0-0")
-# mpls=(5 10 15 20 25 30)
-
+##### for missing #####
 $ALIEAN
 $ALION
-java -jar $BATCH_JAR 9 30 "2-2-2" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
+java -jar $BATCH_JAR 9 25 "2-1-2" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
 $ALIEAN
+$ALION
+java -jar $BATCH_JAR 9 30 "2-1-2" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
+$ALIEAN
+##### for missing #####
 
-rwRatios=(9)
-rvsis=("3-0-0")
+##### batch #####
+rwRatios=(4 0.5 1 9)
+# rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-2" "2-2-1" "2-1-2")
+rvsis=()
+otherrvsis=("1-2-0" "1-3-0" "1-0-1" "2-1-1" "2-2-2" "3-0-0")
 mpls=(5 10 15 20 25 30)
 
 $ALIEAN

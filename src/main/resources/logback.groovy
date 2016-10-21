@@ -31,7 +31,7 @@ appender("STDOUT", ConsoleAppender) {
 appender("FILE", FileAppender) {
 	file = "./logs/chameleon-test.log"
     append = true
-    encoder(PatternLayoutEncoder) { pattern = "%d{HH:mm:ss} - %msg%n" }
+    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss} - %msg%n" }
 }
 
 
@@ -56,7 +56,7 @@ appender("MASTER", FileAppender) {
 appender("BATCH", RollingFileAppender) {
 	file = "./logs/chameleon-aliyun-batch.log"
     append = true
-    encoder(PatternLayoutEncoder) { pattern = "%d{HH:mm:ss} - %msg%n" }
+    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss} - %msg%n" }
 	rollingPolicy(FixedWindowRollingPolicy) {
 		fileNamePattern = "./logs/chameleon-aliyun-batch.%i.log.zip"
 		minIndex = 1
