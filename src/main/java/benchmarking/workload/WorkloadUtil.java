@@ -32,9 +32,10 @@ public class WorkloadUtil {
         PROB_BINOMIAL("probBinomial", "50"),
         RW_RATIO("rwRatio", "2"),
         ZIPF_EXPONENT("zipfExponent", "1"),
-        MEAN_TIME_INTER_TRANSACTIONS("meanTimeInterTransactions", "20"),
-        MIN_TIME_INTER_TRANSACTIONS("minTimeInterTransactions", "10"),
-        MAX_TIME_INTER_TRANSACTIONS("maxTimeInterTransactions", "50"),
+        // (20,10,50); (50, 20, 100)
+        MEAN_TIME_INTER_TRANSACTIONS("meanTimeInterTransactions", "50"),
+        MIN_TIME_INTER_TRANSACTIONS("minTimeInterTransactions", "20"),
+        MAX_TIME_INTER_TRANSACTIONS("maxTimeInterTransactions", "100"),
         K1BV("k1", "1"),
         K2FV("k2", "0"),
         K3SV("k3", "1"),

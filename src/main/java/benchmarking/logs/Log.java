@@ -34,6 +34,11 @@ public class Log implements ILogSplitter {
 
     public Log(String logFile) { this.logFile = logFile; }
 
+    /**
+     * Split a whole log record into several ones, according to {@code param}.
+     * @param param split according to this <code>param</code>
+     * @return file names of split logs
+     */
     @Override
     public Set<String> split(WorkloadParams param) {
         try {
@@ -48,6 +53,12 @@ public class Log implements ILogSplitter {
         return Collections.emptySet();
     }
 
+    /**
+     * Split a line.
+     * @param line  log line to split
+     * @param param to this {@code param} the {@code line} is split
+     * @return  file name for split log
+     */
     private String split(String line, WorkloadParams param) {
         String paramVal = extractParamVal(line, param);
         String splitFile = new File(logFile).getParent() + File.separator +
