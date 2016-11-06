@@ -6003,3 +6003,1022 @@ Batch for [9:30:1-1-2] ends.
 2016-10-28_23:12:18 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=28572, #A=1428, #!VC=35, #!WCF=1395, #!BV=0, #!FV=35, #!SV=0, #C/#T=0.9524, #A/#T=0.0476, #!VC/#T=0.0011666666666666668, #!WCF/#T=0.0465, #!BV/#T=0.0, #!FV/#T=0.0011666666666666668, #!SV/#T=0.0}}].
 2016-10-28_23:12:18 - Batch for [9:30:2-1-2] ends.
 2016-10-28_23:12:18 - #####################################################
+2016-10-29_16:00:15 - #####################################################
+2016-10-29_16:00:15 - Batch for [4:5:1-0-0] begins.
+2016-10-29_16:00:15 - BenchmarkingLauncher starts.
+2016-10-29_16:27:03 - BenchmarkingLauncher ends.
+2016-10-29_16:27:03 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=3733, #A=1267, #!VC=756, #!WCF=736, #!BV=72, #!FV=696, #!SV=178, #C/#T=0.7466, #A/#T=0.2534, #!VC/#T=0.1512, #!WCF/#T=0.1472, #!BV/#T=0.0144, #!FV/#T=0.1392, #!SV/#T=0.0356}}].
+2016-10-29_16:27:03 - Batch for [4:5:1-0-0] ends.
+2016-10-29_16:27:03 - #####################################################
+2016-10-29_16:29:16 - #####################################################
+2016-10-29_16:29:16 - Batch for [4:10:1-0-0] begins.
+2016-10-29_16:29:16 - BenchmarkingLauncher starts.
+2016-10-29_17:07:54 - BenchmarkingLauncher ends.
+2016-10-29_17:07:54 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=7122, #A=2878, #!VC=1704, #!WCF=1692, #!BV=130, #!FV=1597, #!SV=431, #C/#T=0.7122, #A/#T=0.2878, #!VC/#T=0.1704, #!WCF/#T=0.1692, #!BV/#T=0.013, #!FV/#T=0.1597, #!SV/#T=0.0431}}].
+2016-10-29_17:07:54 - Batch for [4:10:1-0-0] ends.
+2016-10-29_17:07:54 - #####################################################
+2016-10-29_17:10:07 - #####################################################
+2016-10-29_17:10:07 - Batch for [4:15:1-0-0] begins.
+2016-10-29_17:10:07 - BenchmarkingLauncher starts.
+2016-10-29_18:00:15 - BenchmarkingLauncher ends.
+2016-10-29_18:00:15 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=10466, #A=4534, #!VC=2691, #!WCF=2647, #!BV=236, #!FV=2491, #!SV=649, #C/#T=0.6977333333333333, #A/#T=0.3022666666666667, #!VC/#T=0.1794, #!WCF/#T=0.17646666666666666, #!BV/#T=0.015733333333333332, #!FV/#T=0.16606666666666667, #!SV/#T=0.04326666666666667}}].
+2016-10-29_18:00:15 - Batch for [4:15:1-0-0] ends.
+2016-10-29_18:00:15 - #####################################################
+2016-10-29_18:02:29 - #####################################################
+2016-10-29_18:02:29 - Batch for [4:20:1-0-0] begins.
+2016-10-29_18:02:29 - BenchmarkingLauncher starts.
+2016-10-29_19:17:27 - BenchmarkingLauncher ends.
+2016-10-29_19:17:27 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=13663, #A=6337, #!VC=3891, #!WCF=3679, #!BV=300, #!FV=3636, #!SV=931, #C/#T=0.68315, #A/#T=0.31685, #!VC/#T=0.19455, #!WCF/#T=0.18395, #!BV/#T=0.015, #!FV/#T=0.1818, #!SV/#T=0.04655}}].
+2016-10-29_19:17:27 - Batch for [4:20:1-0-0] ends.
+2016-10-29_19:17:27 - #####################################################
+2016-10-29_19:19:40 - #####################################################
+2016-10-29_19:19:40 - Batch for [4:25:1-0-0] begins.
+2016-10-29_19:19:40 - BenchmarkingLauncher starts.
+2016-10-29_20:49:57 - BenchmarkingLauncher ends.
+2016-10-29_20:49:57 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=17466, #A=7534, #!VC=4554, #!WCF=4460, #!BV=353, #!FV=4262, #!SV=1112, #C/#T=0.69864, #A/#T=0.30136, #!VC/#T=0.18216, #!WCF/#T=0.1784, #!BV/#T=0.01412, #!FV/#T=0.17048, #!SV/#T=0.04448}}].
+2016-10-29_20:49:57 - Batch for [4:25:1-0-0] ends.
+2016-10-29_20:49:57 - #####################################################
+2016-10-29_20:52:10 - #####################################################
+2016-10-29_20:52:10 - Batch for [4:30:1-0-0] begins.
+2016-10-29_20:52:10 - BenchmarkingLauncher starts.
+2016-10-29_22:34:33 - BenchmarkingLauncher ends.
+2016-10-29_22:34:33 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=20825, #A=9175, #!VC=5592, #!WCF=5331, #!BV=430, #!FV=5218, #!SV=1413, #C/#T=0.6941666666666667, #A/#T=0.30583333333333335, #!VC/#T=0.1864, #!WCF/#T=0.1777, #!BV/#T=0.014333333333333333, #!FV/#T=0.17393333333333333, #!SV/#T=0.0471}}].
+2016-10-29_22:34:33 - Batch for [4:30:1-0-0] ends.
+2016-10-29_22:34:33 - #####################################################
+2016-10-29_22:36:46 - #####################################################
+2016-10-29_22:36:46 - Batch for [4:5:2-0-0] begins.
+2016-10-29_22:36:46 - BenchmarkingLauncher starts.
+2016-10-29_23:03:56 - BenchmarkingLauncher ends.
+2016-10-29_23:03:56 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=3746, #A=1254, #!VC=792, #!WCF=726, #!BV=0, #!FV=778, #!SV=210, #C/#T=0.7492, #A/#T=0.2508, #!VC/#T=0.1584, #!WCF/#T=0.1452, #!BV/#T=0.0, #!FV/#T=0.1556, #!SV/#T=0.042}}].
+2016-10-29_23:03:56 - Batch for [4:5:2-0-0] ends.
+2016-10-29_23:03:56 - #####################################################
+2016-10-29_23:06:09 - #####################################################
+2016-10-29_23:06:09 - Batch for [4:10:2-0-0] begins.
+2016-10-29_23:06:09 - BenchmarkingLauncher starts.
+2016-10-29_23:44:54 - BenchmarkingLauncher ends.
+2016-10-29_23:44:54 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=7273, #A=2727, #!VC=1614, #!WCF=1594, #!BV=1, #!FV=1572, #!SV=411, #C/#T=0.7273, #A/#T=0.2727, #!VC/#T=0.1614, #!WCF/#T=0.1594, #!BV/#T=1.0E-4, #!FV/#T=0.1572, #!SV/#T=0.0411}}].
+2016-10-29_23:44:54 - Batch for [4:10:2-0-0] ends.
+2016-10-29_23:44:54 - #####################################################
+2016-10-29_23:47:07 - #####################################################
+2016-10-29_23:47:07 - Batch for [4:15:2-0-0] begins.
+2016-10-29_23:47:07 - BenchmarkingLauncher starts.
+2016-10-30_00:56:47 - #####################################################
+2016-10-30_00:56:47 - Batch for [4:20:2-0-0] begins.
+2016-10-30_00:56:47 - BenchmarkingLauncher starts.
+2016-10-30_02:02:43 - BenchmarkingLauncher ends.
+2016-10-30_02:02:43 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=13846, #A=6154, #!VC=3498, #!WCF=3759, #!BV=3, #!FV=3406, #!SV=909, #C/#T=0.6923, #A/#T=0.3077, #!VC/#T=0.1749, #!WCF/#T=0.18795, #!BV/#T=1.5E-4, #!FV/#T=0.1703, #!SV/#T=0.04545}}].
+2016-10-30_02:02:43 - Batch for [4:20:2-0-0] ends.
+2016-10-30_02:02:43 - #####################################################
+2016-10-30_02:04:57 - #####################################################
+2016-10-30_02:04:57 - Batch for [4:25:2-0-0] begins.
+2016-10-30_02:04:57 - BenchmarkingLauncher starts.
+2016-10-30_03:34:10 - BenchmarkingLauncher ends.
+2016-10-30_03:34:10 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=17507, #A=7493, #!VC=4456, #!WCF=4477, #!BV=8, #!FV=4351, #!SV=1203, #C/#T=0.70028, #A/#T=0.29972, #!VC/#T=0.17824, #!WCF/#T=0.17908, #!BV/#T=3.2E-4, #!FV/#T=0.17404, #!SV/#T=0.04812}}].
+2016-10-30_03:34:10 - Batch for [4:25:2-0-0] ends.
+2016-10-30_03:34:10 - #####################################################
+2016-10-30_03:36:24 - #####################################################
+2016-10-30_03:36:24 - Batch for [4:30:2-0-0] begins.
+2016-10-30_03:36:24 - BenchmarkingLauncher starts.
+2016-10-30_05:17:36 - BenchmarkingLauncher ends.
+2016-10-30_05:17:36 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=21064, #A=8936, #!VC=5254, #!WCF=5429, #!BV=7, #!FV=5114, #!SV=1382, #C/#T=0.7021333333333334, #A/#T=0.29786666666666667, #!VC/#T=0.17513333333333334, #!WCF/#T=0.18096666666666666, #!BV/#T=2.3333333333333333E-4, #!FV/#T=0.17046666666666666, #!SV/#T=0.046066666666666665}}].
+2016-10-30_05:17:36 - Batch for [4:30:2-0-0] ends.
+2016-10-30_05:17:36 - #####################################################
+2016-10-30_05:19:50 - #####################################################
+2016-10-30_05:19:50 - Batch for [4:5:1-1-0] begins.
+2016-10-30_05:19:50 - BenchmarkingLauncher starts.
+2016-10-30_05:46:33 - BenchmarkingLauncher ends.
+2016-10-30_05:46:33 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=4069, #A=931, #!VC=264, #!WCF=768, #!BV=63, #!FV=27, #!SV=212, #C/#T=0.8138, #A/#T=0.1862, #!VC/#T=0.0528, #!WCF/#T=0.1536, #!BV/#T=0.0126, #!FV/#T=0.0054, #!SV/#T=0.0424}}].
+2016-10-30_05:46:33 - Batch for [4:5:1-1-0] ends.
+2016-10-30_05:46:33 - #####################################################
+2016-10-30_05:48:46 - #####################################################
+2016-10-30_05:48:46 - Batch for [4:10:1-1-0] begins.
+2016-10-30_05:48:46 - BenchmarkingLauncher starts.
+2016-10-30_06:27:36 - BenchmarkingLauncher ends.
+2016-10-30_06:27:36 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=7830, #A=2170, #!VC=565, #!WCF=1791, #!BV=129, #!FV=49, #!SV=457, #C/#T=0.783, #A/#T=0.217, #!VC/#T=0.0565, #!WCF/#T=0.1791, #!BV/#T=0.0129, #!FV/#T=0.0049, #!SV/#T=0.0457}}].
+2016-10-30_06:27:36 - Batch for [4:10:1-1-0] ends.
+2016-10-30_06:27:36 - #####################################################
+2016-10-30_06:29:49 - #####################################################
+2016-10-30_06:29:49 - Batch for [4:15:1-1-0] begins.
+2016-10-30_06:29:49 - BenchmarkingLauncher starts.
+2016-10-30_07:21:11 - BenchmarkingLauncher ends.
+2016-10-30_07:21:11 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=11528, #A=3472, #!VC=871, #!WCF=2890, #!BV=224, #!FV=83, #!SV=691, #C/#T=0.7685333333333333, #A/#T=0.23146666666666665, #!VC/#T=0.05806666666666667, #!WCF/#T=0.19266666666666668, #!BV/#T=0.014933333333333333, #!FV/#T=0.005533333333333334, #!SV/#T=0.046066666666666665}}].
+2016-10-30_07:21:11 - Batch for [4:15:1-1-0] ends.
+2016-10-30_07:21:11 - #####################################################
+2016-10-30_07:23:24 - #####################################################
+2016-10-30_07:23:24 - Batch for [4:20:1-1-0] begins.
+2016-10-30_07:23:24 - BenchmarkingLauncher starts.
+2016-10-30_08:26:41 - BenchmarkingLauncher ends.
+2016-10-30_08:26:41 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=15163, #A=4837, #!VC=1285, #!WCF=3965, #!BV=359, #!FV=103, #!SV=999, #C/#T=0.75815, #A/#T=0.24185, #!VC/#T=0.06425, #!WCF/#T=0.19825, #!BV/#T=0.01795, #!FV/#T=0.00515, #!SV/#T=0.04995}}].
+2016-10-30_08:26:41 - Batch for [4:20:1-1-0] ends.
+2016-10-30_08:26:41 - #####################################################
+2016-10-30_08:28:54 - #####################################################
+2016-10-30_08:28:54 - Batch for [4:25:1-1-0] begins.
+2016-10-30_08:28:54 - BenchmarkingLauncher starts.
+2016-10-30_09:58:41 - BenchmarkingLauncher ends.
+2016-10-30_09:58:41 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=19303, #A=5697, #!VC=1398, #!WCF=4791, #!BV=400, #!FV=126, #!SV=1089, #C/#T=0.77212, #A/#T=0.22788, #!VC/#T=0.05592, #!WCF/#T=0.19164, #!BV/#T=0.016, #!FV/#T=0.00504, #!SV/#T=0.04356}}].
+2016-10-30_09:58:41 - Batch for [4:25:1-1-0] ends.
+2016-10-30_09:58:41 - #####################################################
+2016-10-30_10:00:54 - #####################################################
+2016-10-30_10:00:54 - Batch for [4:30:1-1-0] begins.
+2016-10-30_10:00:54 - BenchmarkingLauncher starts.
+2016-10-30_11:43:33 - BenchmarkingLauncher ends.
+2016-10-30_11:43:33 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=23007, #A=6993, #!VC=1802, #!WCF=5812, #!BV=438, #!FV=183, #!SV=1455, #C/#T=0.7669, #A/#T=0.2331, #!VC/#T=0.060066666666666664, #!WCF/#T=0.19373333333333334, #!BV/#T=0.0146, #!FV/#T=0.0061, #!SV/#T=0.0485}}].
+2016-10-30_11:43:33 - Batch for [4:30:1-1-0] ends.
+2016-10-30_11:43:33 - #####################################################
+2016-10-30_11:45:46 - #####################################################
+2016-10-30_11:45:46 - Batch for [4:5:1-0-2] begins.
+2016-10-30_11:45:46 - BenchmarkingLauncher starts.
+2016-10-30_12:12:40 - BenchmarkingLauncher ends.
+2016-10-30_12:12:40 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=5000, #C=3714, #A=1286, #!VC=766, #!WCF=769, #!BV=65, #!FV=711, #!SV=0, #C/#T=0.7428, #A/#T=0.2572, #!VC/#T=0.1532, #!WCF/#T=0.1538, #!BV/#T=0.013, #!FV/#T=0.1422, #!SV/#T=0.0}}].
+2016-10-30_12:12:40 - Batch for [4:5:1-0-2] ends.
+2016-10-30_12:12:40 - #####################################################
+2016-10-30_12:14:53 - #####################################################
+2016-10-30_12:14:53 - Batch for [4:10:1-0-2] begins.
+2016-10-30_12:14:53 - BenchmarkingLauncher starts.
+2016-10-30_12:53:24 - BenchmarkingLauncher ends.
+2016-10-30_12:53:24 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=10000, #C=7166, #A=2834, #!VC=1681, #!WCF=1629, #!BV=167, #!FV=1528, #!SV=1, #C/#T=0.7166, #A/#T=0.2834, #!VC/#T=0.1681, #!WCF/#T=0.1629, #!BV/#T=0.0167, #!FV/#T=0.1528, #!SV/#T=1.0E-4}}].
+2016-10-30_12:53:24 - Batch for [4:10:1-0-2] ends.
+2016-10-30_12:53:24 - #####################################################
+2016-10-30_12:55:37 - #####################################################
+2016-10-30_12:55:37 - Batch for [4:15:1-0-2] begins.
+2016-10-30_12:55:37 - BenchmarkingLauncher starts.
+2016-10-30_13:46:24 - BenchmarkingLauncher ends.
+2016-10-30_13:46:24 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=15000, #C=10495, #A=4505, #!VC=2699, #!WCF=2640, #!BV=246, #!FV=2484, #!SV=3, #C/#T=0.6996666666666667, #A/#T=0.30033333333333334, #!VC/#T=0.17993333333333333, #!WCF/#T=0.176, #!BV/#T=0.0164, #!FV/#T=0.1656, #!SV/#T=2.0E-4}}].
+2016-10-30_13:46:24 - Batch for [4:15:1-0-2] ends.
+2016-10-30_13:46:24 - #####################################################
+2016-10-30_13:48:38 - #####################################################
+2016-10-30_13:48:38 - Batch for [4:20:1-0-2] begins.
+2016-10-30_13:48:38 - BenchmarkingLauncher starts.
+2016-10-30_13:50:59 - #####################################################
+2016-10-30_13:50:59 - Batch for [4:25:1-0-2] begins.
+2016-10-30_13:50:59 - BenchmarkingLauncher starts.
+2016-10-30_15:20:38 - BenchmarkingLauncher ends.
+2016-10-30_15:20:38 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=25000, #C=17409, #A=7591, #!VC=4541, #!WCF=4527, #!BV=352, #!FV=4244, #!SV=3, #C/#T=0.69636, #A/#T=0.30364, #!VC/#T=0.18164, #!WCF/#T=0.18108, #!BV/#T=0.01408, #!FV/#T=0.16976, #!SV/#T=1.2E-4}}].
+2016-10-30_15:20:38 - Batch for [4:25:1-0-2] ends.
+2016-10-30_15:20:38 - #####################################################
+2016-10-30_15:22:51 - #####################################################
+2016-10-30_15:22:51 - Batch for [4:30:1-0-2] begins.
+2016-10-30_15:22:51 - BenchmarkingLauncher starts.
+2016-10-30_17:21:52 - BenchmarkingLauncher ends.
+2016-10-30_17:21:52 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=21321, #A=8679, #!VC=5287, #!WCF=5102, #!BV=443, #!FV=4913, #!SV=2, #C/#T=0.7107, #A/#T=0.2893, #!VC/#T=0.17623333333333333, #!WCF/#T=0.17006666666666667, #!BV/#T=0.014766666666666668, #!FV/#T=0.16376666666666667, #!SV/#T=6.666666666666667E-5}}].
+2016-10-30_17:21:52 - Batch for [4:30:1-0-2] ends.
+2016-10-30_17:21:52 - #####################################################
+2016-10-30_17:24:05 - #####################################################
+2016-10-30_17:24:05 - Batch for [4:5:2-2-1] begins.
+2016-10-30_17:24:05 - BenchmarkingLauncher starts.
+2016-10-30_17:52:00 - BenchmarkingLauncher ends.
+2016-10-30_17:52:00 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=5000, #C=4195, #A=805, #!VC=5, #!WCF=802, #!BV=1, #!FV=0, #!SV=4, #C/#T=0.839, #A/#T=0.161, #!VC/#T=0.001, #!WCF/#T=0.1604, #!BV/#T=2.0E-4, #!FV/#T=0.0, #!SV/#T=8.0E-4}}].
+2016-10-30_17:52:00 - Batch for [4:5:2-2-1] ends.
+2016-10-30_17:52:00 - #####################################################
+2016-10-30_17:54:14 - #####################################################
+2016-10-30_17:54:14 - Batch for [4:10:2-2-1] begins.
+2016-10-30_17:54:14 - BenchmarkingLauncher starts.
+2016-10-30_18:33:10 - BenchmarkingLauncher ends.
+2016-10-30_18:33:10 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=10000, #C=8161, #A=1839, #!VC=18, #!WCF=1827, #!BV=1, #!FV=0, #!SV=18, #C/#T=0.8161, #A/#T=0.1839, #!VC/#T=0.0018, #!WCF/#T=0.1827, #!BV/#T=1.0E-4, #!FV/#T=0.0, #!SV/#T=0.0018}}].
+2016-10-30_18:33:10 - Batch for [4:10:2-2-1] ends.
+2016-10-30_18:33:10 - #####################################################
+2016-10-30_18:35:23 - #####################################################
+2016-10-30_18:35:23 - Batch for [4:15:2-2-1] begins.
+2016-10-30_18:35:23 - BenchmarkingLauncher starts.
+2016-10-30_19:26:57 - BenchmarkingLauncher ends.
+2016-10-30_19:26:57 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=15000, #C=12011, #A=2989, #!VC=24, #!WCF=2974, #!BV=5, #!FV=1, #!SV=19, #C/#T=0.8007333333333333, #A/#T=0.19926666666666668, #!VC/#T=0.0016, #!WCF/#T=0.19826666666666667, #!BV/#T=3.333333333333333E-4, #!FV/#T=6.666666666666667E-5, #!SV/#T=0.0012666666666666666}}].
+2016-10-30_19:26:57 - Batch for [4:15:2-2-1] ends.
+2016-10-30_19:26:57 - #####################################################
+2016-10-30_19:29:11 - #####################################################
+2016-10-30_19:29:11 - Batch for [4:20:2-2-1] begins.
+2016-10-30_19:29:11 - BenchmarkingLauncher starts.
+2016-10-30_19:30:29 - #####################################################
+2016-10-30_19:30:29 - Batch for [4:25:2-2-1] begins.
+2016-10-30_19:30:29 - BenchmarkingLauncher starts.
+2016-10-30_21:01:37 - BenchmarkingLauncher ends.
+2016-10-30_21:01:37 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=25000, #C=20003, #A=4997, #!VC=55, #!WCF=4966, #!BV=7, #!FV=3, #!SV=47, #C/#T=0.80012, #A/#T=0.19988, #!VC/#T=0.0022, #!WCF/#T=0.19864, #!BV/#T=2.8E-4, #!FV/#T=1.2E-4, #!SV/#T=0.00188}}].
+2016-10-30_21:01:37 - Batch for [4:25:2-2-1] ends.
+2016-10-30_21:01:37 - #####################################################
+2016-10-30_21:03:50 - #####################################################
+2016-10-30_21:03:50 - Batch for [4:30:2-2-1] begins.
+2016-10-30_21:03:50 - BenchmarkingLauncher starts.
+2016-10-30_22:51:34 - BenchmarkingLauncher ends.
+2016-10-30_22:51:34 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=30000, #C=23870, #A=6130, #!VC=61, #!WCF=6096, #!BV=9, #!FV=6, #!SV=52, #C/#T=0.7956666666666666, #A/#T=0.20433333333333334, #!VC/#T=0.002033333333333333, #!WCF/#T=0.2032, #!BV/#T=3.0E-4, #!FV/#T=2.0E-4, #!SV/#T=0.0017333333333333333}}].
+2016-10-30_22:51:34 - Batch for [4:30:2-2-1] ends.
+2016-10-30_22:51:34 - #####################################################
+2016-10-30_22:53:47 - #####################################################
+2016-10-30_22:53:47 - Batch for [4:5:2-1-2] begins.
+2016-10-30_22:53:47 - BenchmarkingLauncher starts.
+2016-10-30_23:20:44 - BenchmarkingLauncher ends.
+2016-10-30_23:20:44 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=5000, #C=4151, #A=849, #!VC=21, #!WCF=840, #!BV=2, #!FV=19, #!SV=0, #C/#T=0.8302, #A/#T=0.1698, #!VC/#T=0.0042, #!WCF/#T=0.168, #!BV/#T=4.0E-4, #!FV/#T=0.0038, #!SV/#T=0.0}}].
+2016-10-30_23:20:44 - Batch for [4:5:2-1-2] ends.
+2016-10-30_23:20:44 - #####################################################
+2016-10-30_23:22:57 - #####################################################
+2016-10-30_23:22:57 - Batch for [4:10:2-1-2] begins.
+2016-10-30_23:22:57 - BenchmarkingLauncher starts.
+2016-10-31_00:02:11 - BenchmarkingLauncher ends.
+2016-10-31_00:02:11 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=10000, #C=8144, #A=1856, #!VC=50, #!WCF=1825, #!BV=3, #!FV=47, #!SV=0, #C/#T=0.8144, #A/#T=0.1856, #!VC/#T=0.005, #!WCF/#T=0.1825, #!BV/#T=3.0E-4, #!FV/#T=0.0047, #!SV/#T=0.0}}].
+2016-10-31_00:02:11 - Batch for [4:10:2-1-2] ends.
+2016-10-31_00:02:11 - #####################################################
+2016-10-31_00:04:24 - #####################################################
+2016-10-31_00:04:24 - Batch for [4:15:2-1-2] begins.
+2016-10-31_00:04:24 - BenchmarkingLauncher starts.
+2016-10-31_00:56:13 - BenchmarkingLauncher ends.
+2016-10-31_00:56:13 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=15000, #C=11955, #A=3045, #!VC=86, #!WCF=2993, #!BV=4, #!FV=81, #!SV=1, #C/#T=0.797, #A/#T=0.203, #!VC/#T=0.005733333333333333, #!WCF/#T=0.19953333333333334, #!BV/#T=2.666666666666667E-4, #!FV/#T=0.0054, #!SV/#T=6.666666666666667E-5}}].
+2016-10-31_00:56:13 - Batch for [4:15:2-1-2] ends.
+2016-10-31_00:56:13 - #####################################################
+2016-10-31_00:58:26 - #####################################################
+2016-10-31_00:58:26 - Batch for [4:20:2-1-2] begins.
+2016-10-31_00:58:26 - BenchmarkingLauncher starts.
+2016-10-31_02:02:23 - BenchmarkingLauncher ends.
+2016-10-31_02:02:23 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=20000, #C=15746, #A=4254, #!VC=132, #!WCF=4179, #!BV=5, #!FV=127, #!SV=0, #C/#T=0.7873, #A/#T=0.2127, #!VC/#T=0.0066, #!WCF/#T=0.20895, #!BV/#T=2.5E-4, #!FV/#T=0.00635, #!SV/#T=0.0}}].
+2016-10-31_02:02:23 - Batch for [4:20:2-1-2] ends.
+2016-10-31_02:02:23 - #####################################################
+2016-10-31_02:04:36 - #####################################################
+2016-10-31_02:04:36 - Batch for [4:25:2-1-2] begins.
+2016-10-31_02:04:36 - BenchmarkingLauncher starts.
+2016-10-31_03:34:30 - BenchmarkingLauncher ends.
+2016-10-31_03:34:30 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=25000, #C=19971, #A=5029, #!VC=165, #!WCF=4938, #!BV=5, #!FV=160, #!SV=2, #C/#T=0.79884, #A/#T=0.20116, #!VC/#T=0.0066, #!WCF/#T=0.19752, #!BV/#T=2.0E-4, #!FV/#T=0.0064, #!SV/#T=8.0E-5}}].
+2016-10-31_03:34:30 - Batch for [4:25:2-1-2] ends.
+2016-10-31_03:34:30 - #####################################################
+2016-10-31_03:36:43 - #####################################################
+2016-10-31_03:36:43 - Batch for [4:30:2-1-2] begins.
+2016-10-31_03:36:43 - BenchmarkingLauncher starts.
+2016-10-31_05:20:02 - BenchmarkingLauncher ends.
+2016-10-31_05:20:02 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=24017, #A=5983, #!VC=185, #!WCF=5878, #!BV=12, #!FV=173, #!SV=0, #C/#T=0.8005666666666666, #A/#T=0.19943333333333332, #!VC/#T=0.006166666666666667, #!WCF/#T=0.19593333333333332, #!BV/#T=4.0E-4, #!FV/#T=0.0057666666666666665, #!SV/#T=0.0}}].
+2016-10-31_05:20:02 - Batch for [4:30:2-1-2] ends.
+2016-10-31_05:20:02 - #####################################################
+2016-10-31_05:22:15 - #####################################################
+2016-10-31_05:22:15 - Batch for [0.5:5:1-0-0] begins.
+2016-10-31_05:22:15 - BenchmarkingLauncher starts.
+2016-10-31_05:41:56 - BenchmarkingLauncher ends.
+2016-10-31_05:41:56 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=3467, #A=1533, #!VC=88, #!WCF=1509, #!BV=31, #!FV=57, #!SV=42, #C/#T=0.6934, #A/#T=0.3066, #!VC/#T=0.0176, #!WCF/#T=0.3018, #!BV/#T=0.0062, #!FV/#T=0.0114, #!SV/#T=0.0084}}].
+2016-10-31_05:41:56 - Batch for [0.5:5:1-0-0] ends.
+2016-10-31_05:41:56 - #####################################################
+2016-10-31_05:44:17 - #####################################################
+2016-10-31_05:44:17 - Batch for [0.5:10:1-0-0] begins.
+2016-10-31_05:44:17 - BenchmarkingLauncher starts.
+2016-10-31_06:13:06 - BenchmarkingLauncher ends.
+2016-10-31_06:13:06 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=6474, #A=3526, #!VC=250, #!WCF=3454, #!BV=87, #!FV=173, #!SV=152, #C/#T=0.6474, #A/#T=0.3526, #!VC/#T=0.025, #!WCF/#T=0.3454, #!BV/#T=0.0087, #!FV/#T=0.0173, #!SV/#T=0.0152}}].
+2016-10-31_06:13:06 - Batch for [0.5:10:1-0-0] ends.
+2016-10-31_06:13:06 - #####################################################
+2016-10-31_06:15:19 - #####################################################
+2016-10-31_06:15:19 - Batch for [0.5:15:1-0-0] begins.
+2016-10-31_06:15:19 - BenchmarkingLauncher starts.
+2016-10-31_06:52:31 - BenchmarkingLauncher ends.
+2016-10-31_06:52:31 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=9521, #A=5479, #!VC=264, #!WCF=5400, #!BV=88, #!FV=182, #!SV=151, #C/#T=0.6347333333333334, #A/#T=0.3652666666666667, #!VC/#T=0.0176, #!WCF/#T=0.36, #!BV/#T=0.005866666666666667, #!FV/#T=0.012133333333333333, #!SV/#T=0.010066666666666666}}].
+2016-10-31_06:52:31 - Batch for [0.5:15:1-0-0] ends.
+2016-10-31_06:52:31 - #####################################################
+2016-10-31_06:54:45 - #####################################################
+2016-10-31_06:54:45 - Batch for [0.5:20:1-0-0] begins.
+2016-10-31_06:54:45 - BenchmarkingLauncher starts.
+2016-10-31_07:41:18 - BenchmarkingLauncher ends.
+2016-10-31_07:41:18 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=12248, #A=7752, #!VC=457, #!WCF=7599, #!BV=168, #!FV=298, #!SV=267, #C/#T=0.6124, #A/#T=0.3876, #!VC/#T=0.02285, #!WCF/#T=0.37995, #!BV/#T=0.0084, #!FV/#T=0.0149, #!SV/#T=0.01335}}].
+2016-10-31_07:41:18 - Batch for [0.5:20:1-0-0] ends.
+2016-10-31_07:41:18 - #####################################################
+2016-10-31_07:43:31 - #####################################################
+2016-10-31_07:43:31 - Batch for [0.5:25:1-0-0] begins.
+2016-10-31_07:43:31 - BenchmarkingLauncher starts.
+2016-10-31_08:49:40 - BenchmarkingLauncher ends.
+2016-10-31_08:49:40 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=15739, #A=9261, #!VC=481, #!WCF=9107, #!BV=169, #!FV=323, #!SV=277, #C/#T=0.62956, #A/#T=0.37044, #!VC/#T=0.01924, #!WCF/#T=0.36428, #!BV/#T=0.00676, #!FV/#T=0.01292, #!SV/#T=0.01108}}].
+2016-10-31_08:49:40 - Batch for [0.5:25:1-0-0] ends.
+2016-10-31_08:49:40 - #####################################################
+2016-10-31_08:51:53 - #####################################################
+2016-10-31_08:51:53 - Batch for [0.5:30:1-0-0] begins.
+2016-10-31_08:51:53 - BenchmarkingLauncher starts.
+2016-10-31_08:54:16 - #####################################################
+2016-10-31_08:54:16 - Batch for [0.5:5:2-0-0] begins.
+2016-10-31_08:54:16 - BenchmarkingLauncher starts.
+2016-10-31_09:14:06 - BenchmarkingLauncher ends.
+2016-10-31_09:14:06 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=3530, #A=1470, #!VC=62, #!WCF=1459, #!BV=1, #!FV=51, #!SV=37, #C/#T=0.706, #A/#T=0.294, #!VC/#T=0.0124, #!WCF/#T=0.2918, #!BV/#T=2.0E-4, #!FV/#T=0.0102, #!SV/#T=0.0074}}].
+2016-10-31_09:14:06 - Batch for [0.5:5:2-0-0] ends.
+2016-10-31_09:14:06 - #####################################################
+2016-10-31_09:16:19 - #####################################################
+2016-10-31_09:16:19 - Batch for [0.5:10:2-0-0] begins.
+2016-10-31_09:16:19 - BenchmarkingLauncher starts.
+2016-10-31_09:45:34 - BenchmarkingLauncher ends.
+2016-10-31_09:45:34 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=6493, #A=3507, #!VC=162, #!WCF=3470, #!BV=2, #!FV=125, #!SV=104, #C/#T=0.6493, #A/#T=0.3507, #!VC/#T=0.0162, #!WCF/#T=0.347, #!BV/#T=2.0E-4, #!FV/#T=0.0125, #!SV/#T=0.0104}}].
+2016-10-31_09:45:34 - Batch for [0.5:10:2-0-0] ends.
+2016-10-31_09:45:34 - #####################################################
+2016-10-31_09:47:47 - #####################################################
+2016-10-31_09:47:47 - Batch for [0.5:15:2-0-0] begins.
+2016-10-31_09:47:47 - BenchmarkingLauncher starts.
+2016-10-31_10:25:26 - BenchmarkingLauncher ends.
+2016-10-31_10:25:26 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=9354, #A=5646, #!VC=280, #!WCF=5597, #!BV=2, #!FV=230, #!SV=181, #C/#T=0.6236, #A/#T=0.3764, #!VC/#T=0.018666666666666668, #!WCF/#T=0.3731333333333333, #!BV/#T=1.3333333333333334E-4, #!FV/#T=0.015333333333333332, #!SV/#T=0.012066666666666667}}].
+2016-10-31_10:25:26 - Batch for [0.5:15:2-0-0] ends.
+2016-10-31_10:25:26 - #####################################################
+2016-10-31_10:27:39 - #####################################################
+2016-10-31_10:27:39 - Batch for [0.5:20:2-0-0] begins.
+2016-10-31_10:27:39 - BenchmarkingLauncher starts.
+2016-10-31_11:14:38 - BenchmarkingLauncher ends.
+2016-10-31_11:14:38 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=12228, #A=7772, #!VC=435, #!WCF=7684, #!BV=11, #!FV=337, #!SV=274, #C/#T=0.6114, #A/#T=0.3886, #!VC/#T=0.02175, #!WCF/#T=0.3842, #!BV/#T=5.5E-4, #!FV/#T=0.01685, #!SV/#T=0.0137}}].
+2016-10-31_11:14:38 - Batch for [0.5:20:2-0-0] ends.
+2016-10-31_11:14:38 - #####################################################
+2016-10-31_11:16:51 - #####################################################
+2016-10-31_11:16:51 - Batch for [0.5:25:2-0-0] begins.
+2016-10-31_11:16:51 - BenchmarkingLauncher starts.
+2016-10-31_12:23:17 - BenchmarkingLauncher ends.
+2016-10-31_12:23:17 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=15623, #A=9377, #!VC=558, #!WCF=9244, #!BV=15, #!FV=426, #!SV=350, #C/#T=0.62492, #A/#T=0.37508, #!VC/#T=0.02232, #!WCF/#T=0.36976, #!BV/#T=6.0E-4, #!FV/#T=0.01704, #!SV/#T=0.014}}].
+2016-10-31_12:23:17 - Batch for [0.5:25:2-0-0] ends.
+2016-10-31_12:23:17 - #####################################################
+2016-10-31_12:25:30 - #####################################################
+2016-10-31_12:25:30 - Batch for [0.5:30:2-0-0] begins.
+2016-10-31_12:25:30 - BenchmarkingLauncher starts.
+2016-10-31_13:41:03 - BenchmarkingLauncher ends.
+2016-10-31_13:41:03 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=18678, #A=11322, #!VC=602, #!WCF=11201, #!BV=25, #!FV=476, #!SV=376, #C/#T=0.6226, #A/#T=0.3774, #!VC/#T=0.020066666666666667, #!WCF/#T=0.3733666666666667, #!BV/#T=8.333333333333334E-4, #!FV/#T=0.015866666666666668, #!SV/#T=0.012533333333333334}}].
+2016-10-31_13:41:03 - Batch for [0.5:30:2-0-0] ends.
+2016-10-31_13:41:03 - #####################################################
+2016-10-31_13:43:16 - #####################################################
+2016-10-31_13:43:16 - Batch for [0.5:5:1-1-0] begins.
+2016-10-31_13:43:16 - BenchmarkingLauncher starts.
+2016-10-31_14:10:16 - BenchmarkingLauncher ends.
+2016-10-31_14:10:16 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=3385, #A=1615, #!VC=91, #!WCF=1579, #!BV=48, #!FV=8, #!SV=64, #C/#T=0.677, #A/#T=0.323, #!VC/#T=0.0182, #!WCF/#T=0.3158, #!BV/#T=0.0096, #!FV/#T=0.0016, #!SV/#T=0.0128}}].
+2016-10-31_14:10:16 - Batch for [0.5:5:1-1-0] ends.
+2016-10-31_14:10:16 - #####################################################
+2016-10-31_14:12:30 - #####################################################
+2016-10-31_14:12:30 - Batch for [0.5:10:1-1-0] begins.
+2016-10-31_14:12:30 - BenchmarkingLauncher starts.
+2016-10-31_14:41:08 - BenchmarkingLauncher ends.
+2016-10-31_14:41:08 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=6466, #A=3534, #!VC=148, #!WCF=3477, #!BV=70, #!FV=12, #!SV=119, #C/#T=0.6466, #A/#T=0.3534, #!VC/#T=0.0148, #!WCF/#T=0.3477, #!BV/#T=0.007, #!FV/#T=0.0012, #!SV/#T=0.0119}}].
+2016-10-31_14:41:08 - Batch for [0.5:10:1-1-0] ends.
+2016-10-31_14:41:08 - #####################################################
+2016-10-31_14:43:21 - #####################################################
+2016-10-31_14:43:21 - Batch for [0.5:15:1-1-0] begins.
+2016-10-31_14:43:21 - BenchmarkingLauncher starts.
+2016-10-31_15:21:12 - BenchmarkingLauncher ends.
+2016-10-31_15:21:12 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=9422, #A=5578, #!VC=197, #!WCF=5493, #!BV=103, #!FV=13, #!SV=150, #C/#T=0.6281333333333333, #A/#T=0.3718666666666667, #!VC/#T=0.013133333333333334, #!WCF/#T=0.3662, #!BV/#T=0.006866666666666667, #!FV/#T=8.666666666666666E-4, #!SV/#T=0.01}}].
+2016-10-31_15:21:12 - Batch for [0.5:15:1-1-0] ends.
+2016-10-31_15:21:12 - #####################################################
+2016-10-31_15:23:26 - #####################################################
+2016-10-31_15:23:26 - Batch for [0.5:20:1-1-0] begins.
+2016-10-31_15:23:26 - BenchmarkingLauncher starts.
+2016-10-31_16:09:47 - BenchmarkingLauncher ends.
+2016-10-31_16:09:47 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=12176, #A=7824, #!VC=323, #!WCF=7702, #!BV=144, #!FV=40, #!SV=252, #C/#T=0.6088, #A/#T=0.3912, #!VC/#T=0.01615, #!WCF/#T=0.3851, #!BV/#T=0.0072, #!FV/#T=0.002, #!SV/#T=0.0126}}].
+2016-10-31_16:09:47 - Batch for [0.5:20:1-1-0] ends.
+2016-10-31_16:09:47 - #####################################################
+2016-10-31_16:12:00 - #####################################################
+2016-10-31_16:12:00 - Batch for [0.5:25:1-1-0] begins.
+2016-10-31_16:12:00 - BenchmarkingLauncher starts.
+2016-10-31_17:18:22 - BenchmarkingLauncher ends.
+2016-10-31_17:18:22 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=15808, #A=9192, #!VC=376, #!WCF=9027, #!BV=193, #!FV=30, #!SV=291, #C/#T=0.63232, #A/#T=0.36768, #!VC/#T=0.01504, #!WCF/#T=0.36108, #!BV/#T=0.00772, #!FV/#T=0.0012, #!SV/#T=0.01164}}].
+2016-10-31_17:18:22 - Batch for [0.5:25:1-1-0] ends.
+2016-10-31_17:18:22 - #####################################################
+2016-10-31_17:20:35 - #####################################################
+2016-10-31_17:20:35 - Batch for [0.5:30:1-1-0] begins.
+2016-10-31_17:20:35 - BenchmarkingLauncher starts.
+2016-10-31_18:36:20 - BenchmarkingLauncher ends.
+2016-10-31_18:36:20 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=18681, #A=11319, #!VC=507, #!WCF=11121, #!BV=245, #!FV=49, #!SV=403, #C/#T=0.6227, #A/#T=0.3773, #!VC/#T=0.0169, #!WCF/#T=0.3707, #!BV/#T=0.008166666666666666, #!FV/#T=0.0016333333333333334, #!SV/#T=0.013433333333333334}}].
+2016-10-31_18:36:20 - Batch for [0.5:30:1-1-0] ends.
+2016-10-31_18:36:20 - #####################################################
+2016-10-31_18:38:34 - #####################################################
+2016-10-31_18:38:34 - Batch for [0.5:5:1-0-2] begins.
+2016-10-31_18:38:34 - BenchmarkingLauncher starts.
+2016-10-31_18:59:28 - BenchmarkingLauncher ends.
+2016-10-31_18:59:28 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=5000, #C=3386, #A=1614, #!VC=95, #!WCF=1584, #!BV=33, #!FV=64, #!SV=1, #C/#T=0.6772, #A/#T=0.3228, #!VC/#T=0.019, #!WCF/#T=0.3168, #!BV/#T=0.0066, #!FV/#T=0.0128, #!SV/#T=2.0E-4}}].
+2016-10-31_18:59:28 - Batch for [0.5:5:1-0-2] ends.
+2016-10-31_18:59:28 - #####################################################
+2016-10-31_19:01:41 - #####################################################
+2016-10-31_19:01:41 - Batch for [0.5:10:1-0-2] begins.
+2016-10-31_19:01:41 - BenchmarkingLauncher starts.
+2016-10-31_19:30:35 - BenchmarkingLauncher ends.
+2016-10-31_19:30:35 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=10000, #C=6438, #A=3562, #!VC=185, #!WCF=3507, #!BV=65, #!FV=121, #!SV=1, #C/#T=0.6438, #A/#T=0.3562, #!VC/#T=0.0185, #!WCF/#T=0.3507, #!BV/#T=0.0065, #!FV/#T=0.0121, #!SV/#T=1.0E-4}}].
+2016-10-31_19:30:35 - Batch for [0.5:10:1-0-2] ends.
+2016-10-31_19:30:35 - #####################################################
+2016-10-31_19:32:47 - #####################################################
+2016-10-31_19:32:47 - Batch for [0.5:15:1-0-2] begins.
+2016-10-31_19:32:47 - BenchmarkingLauncher starts.
+2016-10-31_20:08:23 - BenchmarkingLauncher ends.
+2016-10-31_20:08:23 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=15000, #C=9238, #A=5762, #!VC=376, #!WCF=5647, #!BV=133, #!FV=249, #!SV=5, #C/#T=0.6158666666666667, #A/#T=0.3841333333333333, #!VC/#T=0.025066666666666668, #!WCF/#T=0.37646666666666667, #!BV/#T=0.008866666666666667, #!FV/#T=0.0166, #!SV/#T=3.333333333333333E-4}}].
+2016-10-31_20:08:23 - Batch for [0.5:15:1-0-2] ends.
+2016-10-31_20:08:23 - #####################################################
+2016-10-31_20:10:36 - #####################################################
+2016-10-31_20:10:36 - Batch for [0.5:20:1-0-2] begins.
+2016-10-31_20:10:36 - BenchmarkingLauncher starts.
+2016-10-31_20:57:43 - BenchmarkingLauncher ends.
+2016-10-31_20:57:43 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=20000, #C=12180, #A=7820, #!VC=510, #!WCF=7661, #!BV=187, #!FV=337, #!SV=1, #C/#T=0.609, #A/#T=0.391, #!VC/#T=0.0255, #!WCF/#T=0.38305, #!BV/#T=0.00935, #!FV/#T=0.01685, #!SV/#T=5.0E-5}}].
+2016-10-31_20:57:43 - Batch for [0.5:20:1-0-2] ends.
+2016-10-31_20:57:43 - #####################################################
+2016-10-31_20:59:56 - #####################################################
+2016-10-31_20:59:56 - Batch for [0.5:25:1-0-2] begins.
+2016-10-31_20:59:56 - BenchmarkingLauncher starts.
+2016-10-31_22:06:34 - BenchmarkingLauncher ends.
+2016-10-31_22:06:34 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=25000, #C=15572, #A=9428, #!VC=684, #!WCF=9233, #!BV=240, #!FV=466, #!SV=5, #C/#T=0.62288, #A/#T=0.37712, #!VC/#T=0.02736, #!WCF/#T=0.36932, #!BV/#T=0.0096, #!FV/#T=0.01864, #!SV/#T=2.0E-4}}].
+2016-10-31_22:06:34 - Batch for [0.5:25:1-0-2] ends.
+2016-10-31_22:06:34 - #####################################################
+2016-10-31_22:08:47 - #####################################################
+2016-10-31_22:08:47 - Batch for [0.5:30:1-0-2] begins.
+2016-10-31_22:08:47 - BenchmarkingLauncher starts.
+2016-11-01_00:04:12 - #####################################################
+2016-11-01_00:04:12 - Batch for [0.5:5:2-2-1] begins.
+2016-11-01_00:04:12 - BenchmarkingLauncher starts.
+2016-11-01_01:55:35 - #####################################################
+2016-11-01_01:55:35 - Batch for [0.5:10:2-2-1] begins.
+2016-11-01_01:55:35 - BenchmarkingLauncher starts.
+2016-11-01_03:46:58 - #####################################################
+2016-11-01_03:46:58 - Batch for [0.5:15:2-2-1] begins.
+2016-11-01_03:46:58 - BenchmarkingLauncher starts.
+2016-11-01_05:38:21 - #####################################################
+2016-11-01_05:38:21 - Batch for [0.5:20:2-2-1] begins.
+2016-11-01_05:38:21 - BenchmarkingLauncher starts.
+2016-11-01_07:29:44 - #####################################################
+2016-11-01_07:29:44 - Batch for [0.5:25:2-2-1] begins.
+2016-11-01_07:29:44 - BenchmarkingLauncher starts.
+2016-11-01_09:21:06 - #####################################################
+2016-11-01_09:21:06 - Batch for [0.5:30:2-2-1] begins.
+2016-11-01_09:21:06 - BenchmarkingLauncher starts.
+2016-11-01_10:12:08 - #####################################################
+2016-11-01_10:12:08 - Batch for [0.5:5:2-1-2] begins.
+2016-11-01_10:12:08 - BenchmarkingLauncher starts.
+2016-11-01_10:15:30 - #####################################################
+2016-11-01_10:15:30 - Batch for [0.5:30:1-0-2] begins.
+2016-11-01_10:15:30 - BenchmarkingLauncher starts.
+2016-11-01_11:30:56 - BenchmarkingLauncher ends.
+2016-11-01_11:30:56 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=18565, #A=11435, #!VC=737, #!WCF=11229, #!BV=241, #!FV=513, #!SV=8, #C/#T=0.6188333333333333, #A/#T=0.38116666666666665, #!VC/#T=0.024566666666666667, #!WCF/#T=0.3743, #!BV/#T=0.008033333333333333, #!FV/#T=0.0171, #!SV/#T=2.666666666666667E-4}}].
+2016-11-01_11:30:56 - Batch for [0.5:30:1-0-2] ends.
+2016-11-01_11:30:56 - #####################################################
+2016-11-01_11:33:15 - #####################################################
+2016-11-01_11:33:15 - Batch for [0.5:5:2-2-1] begins.
+2016-11-01_11:33:15 - BenchmarkingLauncher starts.
+2016-11-01_11:53:03 - BenchmarkingLauncher ends.
+2016-11-01_11:53:03 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=5000, #C=3479, #A=1521, #!VC=2, #!WCF=1521, #!BV=0, #!FV=0, #!SV=2, #C/#T=0.6958, #A/#T=0.3042, #!VC/#T=4.0E-4, #!WCF/#T=0.3042, #!BV/#T=0.0, #!FV/#T=0.0, #!SV/#T=4.0E-4}}].
+2016-11-01_11:53:03 - Batch for [0.5:5:2-2-1] ends.
+2016-11-01_11:53:03 - #####################################################
+2016-11-01_11:55:16 - #####################################################
+2016-11-01_11:55:16 - Batch for [0.5:10:2-2-1] begins.
+2016-11-01_11:55:16 - BenchmarkingLauncher starts.
+2016-11-01_12:23:42 - BenchmarkingLauncher ends.
+2016-11-01_12:23:42 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=10000, #C=6567, #A=3433, #!VC=13, #!WCF=3426, #!BV=7, #!FV=0, #!SV=11, #C/#T=0.6567, #A/#T=0.3433, #!VC/#T=0.0013, #!WCF/#T=0.3426, #!BV/#T=7.0E-4, #!FV/#T=0.0, #!SV/#T=0.0011}}].
+2016-11-01_12:23:42 - Batch for [0.5:10:2-2-1] ends.
+2016-11-01_12:23:42 - #####################################################
+2016-11-01_12:25:55 - #####################################################
+2016-11-01_12:25:55 - Batch for [0.5:15:2-2-1] begins.
+2016-11-01_12:25:55 - BenchmarkingLauncher starts.
+2016-11-01_13:14:16 - BenchmarkingLauncher ends.
+2016-11-01_13:14:16 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=15000, #C=10131, #A=4869, #!VC=22, #!WCF=4864, #!BV=7, #!FV=5, #!SV=16, #C/#T=0.6754, #A/#T=0.3246, #!VC/#T=0.0014666666666666667, #!WCF/#T=0.32426666666666665, #!BV/#T=4.6666666666666666E-4, #!FV/#T=3.333333333333333E-4, #!SV/#T=0.0010666666666666667}}].
+2016-11-01_13:14:16 - Batch for [0.5:15:2-2-1] ends.
+2016-11-01_13:14:16 - #####################################################
+2016-11-01_13:16:29 - #####################################################
+2016-11-01_13:16:29 - Batch for [0.5:20:2-2-1] begins.
+2016-11-01_13:16:29 - BenchmarkingLauncher starts.
+2016-11-01_14:03:36 - BenchmarkingLauncher ends.
+2016-11-01_14:03:36 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=20000, #C=12380, #A=7620, #!VC=32, #!WCF=7611, #!BV=13, #!FV=3, #!SV=25, #C/#T=0.619, #A/#T=0.381, #!VC/#T=0.0016, #!WCF/#T=0.38055, #!BV/#T=6.5E-4, #!FV/#T=1.5E-4, #!SV/#T=0.00125}}].
+2016-11-01_14:03:36 - Batch for [0.5:20:2-2-1] ends.
+2016-11-01_14:03:36 - #####################################################
+2016-11-01_14:05:49 - #####################################################
+2016-11-01_14:05:49 - Batch for [0.5:25:2-2-1] begins.
+2016-11-01_14:05:49 - BenchmarkingLauncher starts.
+2016-11-01_15:20:10 - BenchmarkingLauncher ends.
+2016-11-01_15:20:10 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=25000, #C=15599, #A=9401, #!VC=57, #!WCF=9387, #!BV=14, #!FV=16, #!SV=43, #C/#T=0.62396, #A/#T=0.37604, #!VC/#T=0.00228, #!WCF/#T=0.37548, #!BV/#T=5.6E-4, #!FV/#T=6.4E-4, #!SV/#T=0.00172}}].
+2016-11-01_15:20:10 - Batch for [0.5:25:2-2-1] ends.
+2016-11-01_15:20:10 - #####################################################
+2016-11-01_15:22:23 - #####################################################
+2016-11-01_15:22:23 - Batch for [0.5:30:2-2-1] begins.
+2016-11-01_15:22:23 - BenchmarkingLauncher starts.
+2016-11-01_16:42:27 - BenchmarkingLauncher ends.
+2016-11-01_16:42:27 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=30000, #C=18573, #A=11427, #!VC=51, #!WCF=11410, #!BV=11, #!FV=11, #!SV=38, #C/#T=0.6191, #A/#T=0.3809, #!VC/#T=0.0017, #!WCF/#T=0.38033333333333336, #!BV/#T=3.6666666666666667E-4, #!FV/#T=3.6666666666666667E-4, #!SV/#T=0.0012666666666666666}}].
+2016-11-01_16:42:27 - Batch for [0.5:30:2-2-1] ends.
+2016-11-01_16:42:27 - #####################################################
+2016-11-01_16:44:40 - #####################################################
+2016-11-01_16:44:40 - Batch for [0.5:5:2-1-2] begins.
+2016-11-01_16:44:40 - BenchmarkingLauncher starts.
+2016-11-01_17:12:37 - BenchmarkingLauncher ends.
+2016-11-01_17:12:37 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=5000, #C=3422, #A=1578, #!VC=21, #!WCF=1574, #!BV=4, #!FV=16, #!SV=5, #C/#T=0.6844, #A/#T=0.3156, #!VC/#T=0.0042, #!WCF/#T=0.3148, #!BV/#T=8.0E-4, #!FV/#T=0.0032, #!SV/#T=0.001}}].
+2016-11-01_17:12:37 - Batch for [0.5:5:2-1-2] ends.
+2016-11-01_17:12:37 - #####################################################
+2016-11-01_17:14:50 - #####################################################
+2016-11-01_17:14:50 - Batch for [0.5:10:2-1-2] begins.
+2016-11-01_17:14:50 - BenchmarkingLauncher starts.
+2016-11-01_17:43:36 - BenchmarkingLauncher ends.
+2016-11-01_17:43:36 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=10000, #C=6539, #A=3461, #!VC=4, #!WCF=3461, #!BV=0, #!FV=4, #!SV=0, #C/#T=0.6539, #A/#T=0.3461, #!VC/#T=4.0E-4, #!WCF/#T=0.3461, #!BV/#T=0.0, #!FV/#T=4.0E-4, #!SV/#T=0.0}}].
+2016-11-01_17:43:36 - Batch for [0.5:10:2-1-2] ends.
+2016-11-01_17:43:36 - #####################################################
+2016-11-01_17:45:49 - #####################################################
+2016-11-01_17:45:49 - Batch for [0.5:15:2-1-2] begins.
+2016-11-01_17:45:49 - BenchmarkingLauncher starts.
+2016-11-01_18:23:35 - BenchmarkingLauncher ends.
+2016-11-01_18:23:35 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=15000, #C=9379, #A=5621, #!VC=27, #!WCF=5616, #!BV=5, #!FV=21, #!SV=2, #C/#T=0.6252666666666666, #A/#T=0.3747333333333333, #!VC/#T=0.0018, #!WCF/#T=0.3744, #!BV/#T=3.333333333333333E-4, #!FV/#T=0.0014, #!SV/#T=1.3333333333333334E-4}}].
+2016-11-01_18:23:35 - Batch for [0.5:15:2-1-2] ends.
+2016-11-01_18:23:35 - #####################################################
+2016-11-01_18:25:48 - #####################################################
+2016-11-01_18:25:48 - Batch for [0.5:20:2-1-2] begins.
+2016-11-01_18:25:48 - BenchmarkingLauncher starts.
+2016-11-01_19:12:53 - BenchmarkingLauncher ends.
+2016-11-01_19:12:53 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=20000, #C=12153, #A=7847, #!VC=49, #!WCF=7840, #!BV=9, #!FV=38, #!SV=4, #C/#T=0.60765, #A/#T=0.39235, #!VC/#T=0.00245, #!WCF/#T=0.392, #!BV/#T=4.5E-4, #!FV/#T=0.0019, #!SV/#T=2.0E-4}}].
+2016-11-01_19:12:53 - Batch for [0.5:20:2-1-2] ends.
+2016-11-01_19:12:53 - #####################################################
+2016-11-01_19:15:06 - #####################################################
+2016-11-01_19:15:06 - Batch for [0.5:25:2-1-2] begins.
+2016-11-01_19:15:06 - BenchmarkingLauncher starts.
+2016-11-01_20:22:32 - BenchmarkingLauncher ends.
+2016-11-01_20:22:32 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=25000, #C=15693, #A=9307, #!VC=51, #!WCF=9300, #!BV=9, #!FV=42, #!SV=3, #C/#T=0.62772, #A/#T=0.37228, #!VC/#T=0.00204, #!WCF/#T=0.372, #!BV/#T=3.6E-4, #!FV/#T=0.00168, #!SV/#T=1.2E-4}}].
+2016-11-01_20:22:32 - Batch for [0.5:25:2-1-2] ends.
+2016-11-01_20:22:32 - #####################################################
+2016-11-01_20:24:47 - #####################################################
+2016-11-01_20:24:47 - Batch for [0.5:30:2-1-2] begins.
+2016-11-01_20:24:48 - BenchmarkingLauncher starts.
+2016-11-01_21:40:49 - BenchmarkingLauncher ends.
+2016-11-01_21:40:49 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=18620, #A=11380, #!VC=64, #!WCF=11366, #!BV=17, #!FV=47, #!SV=3, #C/#T=0.6206666666666667, #A/#T=0.37933333333333336, #!VC/#T=0.0021333333333333334, #!WCF/#T=0.3788666666666667, #!BV/#T=5.666666666666667E-4, #!FV/#T=0.0015666666666666667, #!SV/#T=1.0E-4}}].
+2016-11-01_21:40:49 - Batch for [0.5:30:2-1-2] ends.
+2016-11-01_21:40:49 - #####################################################
+2016-11-02_11:34:19 - #####################################################
+2016-11-02_11:34:19 - Batch for [1:5:1-0-0] begins.
+2016-11-02_11:34:19 - BenchmarkingLauncher starts.
+2016-11-02_11:58:36 - BenchmarkingLauncher ends.
+2016-11-02_11:58:36 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=3422, #A=1578, #!VC=231, #!WCF=1505, #!BV=70, #!FV=169, #!SV=121, #C/#T=0.6844, #A/#T=0.3156, #!VC/#T=0.0462, #!WCF/#T=0.301, #!BV/#T=0.014, #!FV/#T=0.0338, #!SV/#T=0.0242}}].
+2016-11-02_11:58:36 - Batch for [1:5:1-0-0] ends.
+2016-11-02_11:58:36 - #####################################################
+2016-11-02_12:00:49 - #####################################################
+2016-11-02_12:00:49 - Batch for [1:10:1-0-0] begins.
+2016-11-02_12:00:49 - BenchmarkingLauncher starts.
+2016-11-02_12:35:40 - BenchmarkingLauncher ends.
+2016-11-02_12:35:40 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=6245, #A=3755, #!VC=489, #!WCF=3635, #!BV=122, #!FV=379, #!SV=241, #C/#T=0.6245, #A/#T=0.3755, #!VC/#T=0.0489, #!WCF/#T=0.3635, #!BV/#T=0.0122, #!FV/#T=0.0379, #!SV/#T=0.0241}}].
+2016-11-02_12:35:40 - Batch for [1:10:1-0-0] ends.
+2016-11-02_12:35:40 - #####################################################
+2016-11-02_12:37:53 - #####################################################
+2016-11-02_12:37:53 - Batch for [1:15:1-0-0] begins.
+2016-11-02_12:37:53 - BenchmarkingLauncher starts.
+2016-11-02_13:19:35 - BenchmarkingLauncher ends.
+2016-11-02_13:19:35 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=9149, #A=5851, #!VC=755, #!WCF=5651, #!BV=185, #!FV=589, #!SV=393, #C/#T=0.6099333333333333, #A/#T=0.3900666666666667, #!VC/#T=0.050333333333333334, #!WCF/#T=0.3767333333333333, #!BV/#T=0.012333333333333333, #!FV/#T=0.039266666666666665, #!SV/#T=0.0262}}].
+2016-11-02_13:19:35 - Batch for [1:15:1-0-0] ends.
+2016-11-02_13:19:35 - #####################################################
+2016-11-02_13:21:49 - #####################################################
+2016-11-02_13:21:49 - Batch for [1:20:1-0-0] begins.
+2016-11-02_13:21:49 - BenchmarkingLauncher starts.
+2016-11-02_14:17:43 - BenchmarkingLauncher ends.
+2016-11-02_14:17:43 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=11908, #A=8092, #!VC=1148, #!WCF=7800, #!BV=274, #!FV=896, #!SV=628, #C/#T=0.5954, #A/#T=0.4046, #!VC/#T=0.0574, #!WCF/#T=0.39, #!BV/#T=0.0137, #!FV/#T=0.0448, #!SV/#T=0.0314}}].
+2016-11-02_14:17:43 - Batch for [1:20:1-0-0] ends.
+2016-11-02_14:17:43 - #####################################################
+2016-11-02_14:21:56 - #####################################################
+2016-11-02_14:21:56 - Batch for [1:25:1-0-0] begins.
+2016-11-02_14:21:56 - BenchmarkingLauncher starts.
+2016-11-02_15:33:00 - BenchmarkingLauncher ends.
+2016-11-02_15:33:00 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=9212, #A=15788, #!VC=12404, #!WCF=7999, #!BV=498, #!FV=12148, #!SV=3677, #C/#T=0.36848, #A/#T=0.63152, #!VC/#T=0.49616, #!WCF/#T=0.31996, #!BV/#T=0.01992, #!FV/#T=0.48592, #!SV/#T=0.14708}}].
+2016-11-02_15:33:00 - Batch for [1:25:1-0-0] ends.
+2016-11-02_15:33:00 - #####################################################
+2016-11-02_15:35:13 - #####################################################
+2016-11-02_15:35:13 - Batch for [1:30:1-0-0] begins.
+2016-11-02_15:35:13 - BenchmarkingLauncher starts.
+2016-11-02_17:00:11 - BenchmarkingLauncher ends.
+2016-11-02_17:00:11 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=18030, #A=11970, #!VC=1667, #!WCF=11579, #!BV=338, #!FV=1353, #!SV=899, #C/#T=0.601, #A/#T=0.399, #!VC/#T=0.05556666666666667, #!WCF/#T=0.3859666666666667, #!BV/#T=0.011266666666666666, #!FV/#T=0.0451, #!SV/#T=0.029966666666666666}}].
+2016-11-02_17:00:11 - Batch for [1:30:1-0-0] ends.
+2016-11-02_17:00:11 - #####################################################
+2016-11-02_17:02:24 - #####################################################
+2016-11-02_17:02:24 - Batch for [1:5:2-0-0] begins.
+2016-11-02_17:02:24 - BenchmarkingLauncher starts.
+2016-11-02_17:24:27 - BenchmarkingLauncher ends.
+2016-11-02_17:24:27 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=3478, #A=1522, #!VC=132, #!WCF=1500, #!BV=0, #!FV=119, #!SV=75, #C/#T=0.6956, #A/#T=0.3044, #!VC/#T=0.0264, #!WCF/#T=0.3, #!BV/#T=0.0, #!FV/#T=0.0238, #!SV/#T=0.015}}].
+2016-11-02_17:24:27 - Batch for [1:5:2-0-0] ends.
+2016-11-02_17:24:27 - #####################################################
+2016-11-02_17:26:40 - #####################################################
+2016-11-02_17:26:40 - Batch for [1:10:2-0-0] begins.
+2016-11-02_17:26:40 - BenchmarkingLauncher starts.
+2016-11-02_17:58:33 - BenchmarkingLauncher ends.
+2016-11-02_17:58:33 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=6274, #A=3726, #!VC=428, #!WCF=3640, #!BV=6, #!FV=367, #!SV=270, #C/#T=0.6274, #A/#T=0.3726, #!VC/#T=0.0428, #!WCF/#T=0.364, #!BV/#T=6.0E-4, #!FV/#T=0.0367, #!SV/#T=0.027}}].
+2016-11-02_17:58:33 - Batch for [1:10:2-0-0] ends.
+2016-11-02_17:58:33 - #####################################################
+2016-11-02_18:00:46 - #####################################################
+2016-11-02_18:00:46 - Batch for [1:15:2-0-0] begins.
+2016-11-02_18:00:46 - BenchmarkingLauncher starts.
+2016-11-02_18:47:27 - BenchmarkingLauncher ends.
+2016-11-02_18:47:27 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=9195, #A=5805, #!VC=670, #!WCF=5684, #!BV=9, #!FV=588, #!SV=382, #C/#T=0.613, #A/#T=0.387, #!VC/#T=0.04466666666666667, #!WCF/#T=0.37893333333333334, #!BV/#T=6.0E-4, #!FV/#T=0.0392, #!SV/#T=0.025466666666666665}}].
+2016-11-02_18:47:27 - Batch for [1:15:2-0-0] ends.
+2016-11-02_18:47:27 - #####################################################
+2016-11-02_18:49:45 - #####################################################
+2016-11-02_18:49:45 - Batch for [1:20:2-0-0] begins.
+2016-11-02_18:49:45 - BenchmarkingLauncher starts.
+2016-11-02_19:54:08 - BenchmarkingLauncher ends.
+2016-11-02_19:54:08 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=12592, #A=7408, #!VC=954, #!WCF=7231, #!BV=15, #!FV=829, #!SV=529, #C/#T=0.6296, #A/#T=0.3704, #!VC/#T=0.0477, #!WCF/#T=0.36155, #!BV/#T=7.5E-4, #!FV/#T=0.04145, #!SV/#T=0.02645}}].
+2016-11-02_19:54:08 - Batch for [1:20:2-0-0] ends.
+2016-11-02_19:54:08 - #####################################################
+2016-11-02_19:56:23 - #####################################################
+2016-11-02_19:56:23 - Batch for [1:25:2-0-0] begins.
+2016-11-02_19:56:23 - BenchmarkingLauncher starts.
+2016-11-02_21:10:42 - BenchmarkingLauncher ends.
+2016-11-02_21:10:42 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=15253, #A=9747, #!VC=1321, #!WCF=9496, #!BV=18, #!FV=1150, #!SV=741, #C/#T=0.61012, #A/#T=0.38988, #!VC/#T=0.05284, #!WCF/#T=0.37984, #!BV/#T=7.2E-4, #!FV/#T=0.046, #!SV/#T=0.02964}}].
+2016-11-02_21:10:42 - Batch for [1:25:2-0-0] ends.
+2016-11-02_21:10:42 - #####################################################
+2016-11-02_21:12:57 - #####################################################
+2016-11-02_21:12:57 - Batch for [1:30:2-0-0] begins.
+2016-11-02_21:12:57 - BenchmarkingLauncher starts.
+2016-11-02_22:36:23 - BenchmarkingLauncher ends.
+2016-11-02_22:36:23 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=18159, #A=11841, #!VC=1411, #!WCF=11545, #!BV=20, #!FV=1204, #!SV=795, #C/#T=0.6053, #A/#T=0.3947, #!VC/#T=0.04703333333333334, #!WCF/#T=0.38483333333333336, #!BV/#T=6.666666666666666E-4, #!FV/#T=0.04013333333333333, #!SV/#T=0.0265}}].
+2016-11-02_22:36:23 - Batch for [1:30:2-0-0] ends.
+2016-11-02_22:36:23 - #####################################################
+2016-11-02_22:38:36 - #####################################################
+2016-11-02_22:38:36 - Batch for [1:5:1-1-0] begins.
+2016-11-02_22:38:36 - BenchmarkingLauncher starts.
+2016-11-02_23:00:47 - BenchmarkingLauncher ends.
+2016-11-02_23:00:47 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=3364, #A=1636, #!VC=138, #!WCF=1602, #!BV=41, #!FV=17, #!SV=119, #C/#T=0.6728, #A/#T=0.3272, #!VC/#T=0.0276, #!WCF/#T=0.3204, #!BV/#T=0.0082, #!FV/#T=0.0034, #!SV/#T=0.0238}}].
+2016-11-02_23:00:47 - Batch for [1:5:1-1-0] ends.
+2016-11-02_23:00:47 - #####################################################
+2016-11-02_23:03:00 - #####################################################
+2016-11-02_23:03:00 - Batch for [1:10:1-1-0] begins.
+2016-11-02_23:03:00 - BenchmarkingLauncher starts.
+2016-11-02_23:34:30 - BenchmarkingLauncher ends.
+2016-11-02_23:34:30 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=6292, #A=3708, #!VC=326, #!WCF=3617, #!BV=103, #!FV=41, #!SV=276, #C/#T=0.6292, #A/#T=0.3708, #!VC/#T=0.0326, #!WCF/#T=0.3617, #!BV/#T=0.0103, #!FV/#T=0.0041, #!SV/#T=0.0276}}].
+2016-11-02_23:34:30 - Batch for [1:10:1-1-0] ends.
+2016-11-02_23:34:30 - #####################################################
+2016-11-02_23:36:43 - #####################################################
+2016-11-02_23:36:43 - Batch for [1:15:1-1-0] begins.
+2016-11-02_23:36:43 - BenchmarkingLauncher starts.
+2016-11-03_00:18:15 - BenchmarkingLauncher ends.
+2016-11-03_00:18:15 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=9077, #A=5923, #!VC=501, #!WCF=5750, #!BV=181, #!FV=59, #!SV=407, #C/#T=0.6051333333333333, #A/#T=0.39486666666666664, #!VC/#T=0.0334, #!WCF/#T=0.38333333333333336, #!BV/#T=0.012066666666666667, #!FV/#T=0.003933333333333333, #!SV/#T=0.027133333333333332}}].
+2016-11-03_00:18:15 - Batch for [1:15:1-1-0] ends.
+2016-11-03_00:18:15 - #####################################################
+2016-11-03_00:20:29 - #####################################################
+2016-11-03_00:20:29 - Batch for [1:20:1-1-0] begins.
+2016-11-03_00:20:29 - BenchmarkingLauncher starts.
+2016-11-03_01:11:57 - BenchmarkingLauncher ends.
+2016-11-03_01:11:57 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=11855, #A=8145, #!VC=760, #!WCF=7913, #!BV=247, #!FV=106, #!SV=649, #C/#T=0.59275, #A/#T=0.40725, #!VC/#T=0.038, #!WCF/#T=0.39565, #!BV/#T=0.01235, #!FV/#T=0.0053, #!SV/#T=0.03245}}].
+2016-11-03_01:11:57 - Batch for [1:20:1-1-0] ends.
+2016-11-03_01:11:57 - #####################################################
+2016-11-03_01:14:10 - #####################################################
+2016-11-03_01:14:10 - Batch for [1:25:1-1-0] begins.
+2016-11-03_01:14:10 - BenchmarkingLauncher starts.
+2016-11-03_02:27:26 - BenchmarkingLauncher ends.
+2016-11-03_02:27:26 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=15181, #A=9819, #!VC=892, #!WCF=9547, #!BV=302, #!FV=119, #!SV=731, #C/#T=0.60724, #A/#T=0.39276, #!VC/#T=0.03568, #!WCF/#T=0.38188, #!BV/#T=0.01208, #!FV/#T=0.00476, #!SV/#T=0.02924}}].
+2016-11-03_02:27:26 - Batch for [1:25:1-1-0] ends.
+2016-11-03_02:27:26 - #####################################################
+2016-11-03_02:29:45 - #####################################################
+2016-11-03_02:29:45 - Batch for [1:30:1-1-0] begins.
+2016-11-03_02:29:45 - BenchmarkingLauncher starts.
+2016-11-03_03:53:37 - BenchmarkingLauncher ends.
+2016-11-03_03:53:37 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=18309, #A=11691, #!VC=1002, #!WCF=11378, #!BV=356, #!FV=124, #!SV=820, #C/#T=0.6103, #A/#T=0.3897, #!VC/#T=0.0334, #!WCF/#T=0.37926666666666664, #!BV/#T=0.011866666666666666, #!FV/#T=0.0041333333333333335, #!SV/#T=0.027333333333333334}}].
+2016-11-03_03:53:37 - Batch for [1:30:1-1-0] ends.
+2016-11-03_03:53:37 - #####################################################
+2016-11-03_03:55:50 - #####################################################
+2016-11-03_03:55:50 - Batch for [1:5:1-0-2] begins.
+2016-11-03_03:55:50 - BenchmarkingLauncher starts.
+2016-11-03_04:17:39 - BenchmarkingLauncher ends.
+2016-11-03_04:17:39 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=5000, #C=3338, #A=1662, #!VC=243, #!WCF=1601, #!BV=52, #!FV=195, #!SV=1, #C/#T=0.6676, #A/#T=0.3324, #!VC/#T=0.0486, #!WCF/#T=0.3202, #!BV/#T=0.0104, #!FV/#T=0.039, #!SV/#T=2.0E-4}}].
+2016-11-03_04:17:39 - Batch for [1:5:1-0-2] ends.
+2016-11-03_04:17:39 - #####################################################
+2016-11-03_04:19:52 - #####################################################
+2016-11-03_04:19:52 - Batch for [1:10:1-0-2] begins.
+2016-11-03_04:19:52 - BenchmarkingLauncher starts.
+2016-11-03_04:51:07 - BenchmarkingLauncher ends.
+2016-11-03_04:51:07 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=10000, #C=6344, #A=3656, #!VC=436, #!WCF=3560, #!BV=96, #!FV=350, #!SV=3, #C/#T=0.6344, #A/#T=0.3656, #!VC/#T=0.0436, #!WCF/#T=0.356, #!BV/#T=0.0096, #!FV/#T=0.035, #!SV/#T=3.0E-4}}].
+2016-11-03_04:51:07 - Batch for [1:10:1-0-2] ends.
+2016-11-03_04:51:07 - #####################################################
+2016-11-03_04:53:20 - #####################################################
+2016-11-03_04:53:20 - Batch for [1:15:1-0-2] begins.
+2016-11-03_04:53:20 - BenchmarkingLauncher starts.
+2016-11-03_05:34:41 - BenchmarkingLauncher ends.
+2016-11-03_05:34:41 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=15000, #C=9228, #A=5772, #!VC=746, #!WCF=5574, #!BV=173, #!FV=582, #!SV=2, #C/#T=0.6152, #A/#T=0.3848, #!VC/#T=0.04973333333333333, #!WCF/#T=0.3716, #!BV/#T=0.011533333333333333, #!FV/#T=0.0388, #!SV/#T=1.3333333333333334E-4}}].
+2016-11-03_05:34:41 - Batch for [1:15:1-0-2] ends.
+2016-11-03_05:34:41 - #####################################################
+2016-11-03_05:36:54 - #####################################################
+2016-11-03_05:36:54 - Batch for [1:20:1-0-2] begins.
+2016-11-03_05:36:54 - BenchmarkingLauncher starts.
+2016-11-03_06:28:13 - BenchmarkingLauncher ends.
+2016-11-03_06:28:13 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=20000, #C=11678, #A=8322, #!VC=1151, #!WCF=8025, #!BV=273, #!FV=899, #!SV=5, #C/#T=0.5839, #A/#T=0.4161, #!VC/#T=0.05755, #!WCF/#T=0.40125, #!BV/#T=0.01365, #!FV/#T=0.04495, #!SV/#T=2.5E-4}}].
+2016-11-03_06:28:13 - Batch for [1:20:1-0-2] ends.
+2016-11-03_06:28:13 - #####################################################
+2016-11-03_06:30:26 - #####################################################
+2016-11-03_06:30:26 - Batch for [1:25:1-0-2] begins.
+2016-11-03_06:30:26 - BenchmarkingLauncher starts.
+2016-11-03_07:43:29 - BenchmarkingLauncher ends.
+2016-11-03_07:43:29 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=25000, #C=15197, #A=9803, #!VC=1242, #!WCF=9477, #!BV=277, #!FV=978, #!SV=4, #C/#T=0.60788, #A/#T=0.39212, #!VC/#T=0.04968, #!WCF/#T=0.37908, #!BV/#T=0.01108, #!FV/#T=0.03912, #!SV/#T=1.6E-4}}].
+2016-11-03_07:43:29 - Batch for [1:25:1-0-2] ends.
+2016-11-03_07:43:29 - #####################################################
+2016-11-03_07:45:42 - #####################################################
+2016-11-03_07:45:42 - Batch for [1:30:1-0-2] begins.
+2016-11-03_07:45:42 - BenchmarkingLauncher starts.
+2016-11-03_09:08:59 - BenchmarkingLauncher ends.
+2016-11-03_09:08:59 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=18062, #A=11938, #!VC=1631, #!WCF=11520, #!BV=370, #!FV=1302, #!SV=9, #C/#T=0.6020666666666666, #A/#T=0.3979333333333333, #!VC/#T=0.05436666666666667, #!WCF/#T=0.384, #!BV/#T=0.012333333333333333, #!FV/#T=0.0434, #!SV/#T=3.0E-4}}].
+2016-11-03_09:08:59 - Batch for [1:30:1-0-2] ends.
+2016-11-03_09:08:59 - #####################################################
+2016-11-03_09:11:12 - #####################################################
+2016-11-03_09:11:12 - Batch for [1:5:2-2-1] begins.
+2016-11-03_09:11:12 - BenchmarkingLauncher starts.
+2016-11-03_09:33:01 - BenchmarkingLauncher ends.
+2016-11-03_09:33:01 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=5000, #C=3451, #A=1549, #!VC=17, #!WCF=1547, #!BV=3, #!FV=1, #!SV=17, #C/#T=0.6902, #A/#T=0.3098, #!VC/#T=0.0034, #!WCF/#T=0.3094, #!BV/#T=6.0E-4, #!FV/#T=2.0E-4, #!SV/#T=0.0034}}].
+2016-11-03_09:33:01 - Batch for [1:5:2-2-1] ends.
+2016-11-03_09:33:01 - #####################################################
+2016-11-03_09:35:14 - #####################################################
+2016-11-03_09:35:14 - Batch for [1:10:2-2-1] begins.
+2016-11-03_09:35:14 - BenchmarkingLauncher starts.
+2016-11-03_10:07:03 - BenchmarkingLauncher ends.
+2016-11-03_10:07:04 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=10000, #C=6439, #A=3561, #!VC=24, #!WCF=3556, #!BV=6, #!FV=1, #!SV=21, #C/#T=0.6439, #A/#T=0.3561, #!VC/#T=0.0024, #!WCF/#T=0.3556, #!BV/#T=6.0E-4, #!FV/#T=1.0E-4, #!SV/#T=0.0021}}].
+2016-11-03_10:07:04 - Batch for [1:10:2-2-1] ends.
+2016-11-03_10:07:04 - #####################################################
+2016-11-03_10:09:17 - #####################################################
+2016-11-03_10:09:17 - Batch for [1:15:2-2-1] begins.
+2016-11-03_10:09:17 - BenchmarkingLauncher starts.
+2016-11-03_10:51:05 - BenchmarkingLauncher ends.
+2016-11-03_10:51:05 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=15000, #C=9346, #A=5654, #!VC=33, #!WCF=5648, #!BV=7, #!FV=2, #!SV=29, #C/#T=0.6230666666666667, #A/#T=0.37693333333333334, #!VC/#T=0.0022, #!WCF/#T=0.37653333333333333, #!BV/#T=4.6666666666666666E-4, #!FV/#T=1.3333333333333334E-4, #!SV/#T=0.0019333333333333333}}].
+2016-11-03_10:51:05 - Batch for [1:15:2-2-1] ends.
+2016-11-03_10:51:05 - #####################################################
+2016-11-03_10:53:18 - #####################################################
+2016-11-03_10:53:18 - Batch for [1:20:2-2-1] begins.
+2016-11-03_10:53:18 - BenchmarkingLauncher starts.
+2016-11-03_11:44:54 - BenchmarkingLauncher ends.
+2016-11-03_11:44:54 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=20000, #C=12036, #A=7964, #!VC=62, #!WCF=7953, #!BV=11, #!FV=7, #!SV=56, #C/#T=0.6018, #A/#T=0.3982, #!VC/#T=0.0031, #!WCF/#T=0.39765, #!BV/#T=5.5E-4, #!FV/#T=3.5E-4, #!SV/#T=0.0028}}].
+2016-11-03_11:44:54 - Batch for [1:20:2-2-1] ends.
+2016-11-03_11:44:54 - #####################################################
+2016-11-03_11:47:09 - #####################################################
+2016-11-03_11:47:09 - Batch for [1:25:2-2-1] begins.
+2016-11-03_11:47:09 - BenchmarkingLauncher starts.
+2016-11-03_13:04:37 - BenchmarkingLauncher ends.
+2016-11-03_13:04:37 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=25000, #C=15598, #A=9402, #!VC=65, #!WCF=9390, #!BV=15, #!FV=7, #!SV=55, #C/#T=0.62392, #A/#T=0.37608, #!VC/#T=0.0026, #!WCF/#T=0.3756, #!BV/#T=6.0E-4, #!FV/#T=2.8E-4, #!SV/#T=0.0022}}].
+2016-11-03_13:04:37 - Batch for [1:25:2-2-1] ends.
+2016-11-03_13:04:37 - #####################################################
+2016-11-03_13:06:50 - #####################################################
+2016-11-03_13:06:50 - Batch for [1:30:2-2-1] begins.
+2016-11-03_13:06:50 - BenchmarkingLauncher starts.
+2016-11-03_14:30:34 - BenchmarkingLauncher ends.
+2016-11-03_14:30:34 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=30000, #C=18473, #A=11527, #!VC=95, #!WCF=11518, #!BV=12, #!FV=10, #!SV=90, #C/#T=0.6157666666666667, #A/#T=0.3842333333333333, #!VC/#T=0.0031666666666666666, #!WCF/#T=0.38393333333333335, #!BV/#T=4.0E-4, #!FV/#T=3.333333333333333E-4, #!SV/#T=0.003}}].
+2016-11-03_14:30:34 - Batch for [1:30:2-2-1] ends.
+2016-11-03_14:30:34 - #####################################################
+2016-11-03_14:32:47 - #####################################################
+2016-11-03_14:32:47 - Batch for [1:5:2-1-2] begins.
+2016-11-03_14:32:47 - BenchmarkingLauncher starts.
+2016-11-03_14:54:55 - BenchmarkingLauncher ends.
+2016-11-03_14:54:55 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=5000, #C=3410, #A=1590, #!VC=19, #!WCF=1586, #!BV=3, #!FV=16, #!SV=0, #C/#T=0.682, #A/#T=0.318, #!VC/#T=0.0038, #!WCF/#T=0.3172, #!BV/#T=6.0E-4, #!FV/#T=0.0032, #!SV/#T=0.0}}].
+2016-11-03_14:54:55 - Batch for [1:5:2-1-2] ends.
+2016-11-03_14:54:55 - #####################################################
+2016-11-03_14:57:09 - #####################################################
+2016-11-03_14:57:09 - Batch for [1:10:2-1-2] begins.
+2016-11-03_14:57:09 - BenchmarkingLauncher starts.
+2016-11-03_15:28:50 - BenchmarkingLauncher ends.
+2016-11-03_15:28:50 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=10000, #C=6334, #A=3666, #!VC=33, #!WCF=3665, #!BV=0, #!FV=32, #!SV=2, #C/#T=0.6334, #A/#T=0.3666, #!VC/#T=0.0033, #!WCF/#T=0.3665, #!BV/#T=0.0, #!FV/#T=0.0032, #!SV/#T=2.0E-4}}].
+2016-11-03_15:28:50 - Batch for [1:10:2-1-2] ends.
+2016-11-03_15:28:50 - #####################################################
+2016-11-03_15:31:03 - #####################################################
+2016-11-03_15:31:03 - Batch for [1:15:2-1-2] begins.
+2016-11-03_15:31:03 - BenchmarkingLauncher starts.
+2016-11-03_16:17:48 - BenchmarkingLauncher ends.
+2016-11-03_16:17:48 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=15000, #C=9146, #A=5854, #!VC=65, #!WCF=5849, #!BV=6, #!FV=59, #!SV=1, #C/#T=0.6097333333333333, #A/#T=0.39026666666666665, #!VC/#T=0.004333333333333333, #!WCF/#T=0.38993333333333335, #!BV/#T=4.0E-4, #!FV/#T=0.003933333333333333, #!SV/#T=6.666666666666667E-5}}].
+2016-11-03_16:17:48 - Batch for [1:15:2-1-2] ends.
+2016-11-03_16:17:48 - #####################################################
+2016-11-03_16:20:01 - #####################################################
+2016-11-03_16:20:01 - Batch for [1:20:2-1-2] begins.
+2016-11-03_16:20:01 - BenchmarkingLauncher starts.
+2016-11-03_17:11:46 - BenchmarkingLauncher ends.
+2016-11-03_17:11:46 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=20000, #C=12065, #A=7935, #!VC=90, #!WCF=7924, #!BV=11, #!FV=77, #!SV=8, #C/#T=0.60325, #A/#T=0.39675, #!VC/#T=0.0045, #!WCF/#T=0.3962, #!BV/#T=5.5E-4, #!FV/#T=0.00385, #!SV/#T=4.0E-4}}].
+2016-11-03_17:11:46 - Batch for [1:20:2-1-2] ends.
+2016-11-03_17:11:46 - #####################################################
+2016-11-03_17:14:00 - #####################################################
+2016-11-03_17:14:00 - Batch for [1:25:2-1-2] begins.
+2016-11-03_17:14:00 - BenchmarkingLauncher starts.
+2016-11-04_11:54:43 - #####################################################
+2016-11-04_11:54:43 - Batch for [1:25:2-1-2] begins.
+2016-11-04_11:54:43 - BenchmarkingLauncher starts.
+2016-11-04_13:09:22 - BenchmarkingLauncher ends.
+2016-11-04_13:09:22 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=25000, #C=15525, #A=9475, #!VC=106, #!WCF=9460, #!BV=16, #!FV=89, #!SV=4, #C/#T=0.621, #A/#T=0.379, #!VC/#T=0.00424, #!WCF/#T=0.3784, #!BV/#T=6.4E-4, #!FV/#T=0.00356, #!SV/#T=1.6E-4}}].
+2016-11-04_13:09:22 - Batch for [1:25:2-1-2] ends.
+2016-11-04_13:09:22 - #####################################################
+2016-11-04_13:11:36 - #####################################################
+2016-11-04_13:11:36 - Batch for [1:30:2-1-2] begins.
+2016-11-04_13:11:36 - BenchmarkingLauncher starts.
+2016-11-04_14:35:19 - BenchmarkingLauncher ends.
+2016-11-04_14:35:19 - BatchRunner: [BenchmarkingStatistics{rwRatio=1.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=18347, #A=11653, #!VC=144, #!WCF=11637, #!BV=19, #!FV=122, #!SV=8, #C/#T=0.6115666666666667, #A/#T=0.38843333333333335, #!VC/#T=0.0048, #!WCF/#T=0.3879, #!BV/#T=6.333333333333333E-4, #!FV/#T=0.004066666666666666, #!SV/#T=2.666666666666667E-4}}].
+2016-11-04_14:35:19 - Batch for [1:30:2-1-2] ends.
+2016-11-04_14:35:19 - #####################################################
+2016-11-04_14:37:39 - #####################################################
+2016-11-04_14:37:39 - Batch for [9:5:1-0-0] begins.
+2016-11-04_14:37:39 - BenchmarkingLauncher starts.
+2016-11-04_15:05:41 - BenchmarkingLauncher ends.
+2016-11-04_15:05:41 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=4315, #A=685, #!VC=569, #!WCF=162, #!BV=37, #!FV=538, #!SV=38, #C/#T=0.863, #A/#T=0.137, #!VC/#T=0.1138, #!WCF/#T=0.0324, #!BV/#T=0.0074, #!FV/#T=0.1076, #!SV/#T=0.0076}}].
+2016-11-04_15:05:41 - Batch for [9:5:1-0-0] ends.
+2016-11-04_15:05:41 - #####################################################
+2016-11-04_15:07:54 - #####################################################
+2016-11-04_15:07:54 - Batch for [9:10:1-0-0] begins.
+2016-11-04_15:07:54 - BenchmarkingLauncher starts.
+2016-11-04_15:48:53 - BenchmarkingLauncher ends.
+2016-11-04_15:48:53 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=8599, #A=1401, #!VC=1137, #!WCF=342, #!BV=77, #!FV=1067, #!SV=40, #C/#T=0.8599, #A/#T=0.1401, #!VC/#T=0.1137, #!WCF/#T=0.0342, #!BV/#T=0.0077, #!FV/#T=0.1067, #!SV/#T=0.004}}].
+2016-11-04_15:48:53 - Batch for [9:10:1-0-0] ends.
+2016-11-04_15:48:53 - #####################################################
+2016-11-04_15:51:06 - #####################################################
+2016-11-04_15:51:06 - Batch for [9:15:1-0-0] begins.
+2016-11-04_15:51:06 - BenchmarkingLauncher starts.
+2016-11-04_16:44:51 - BenchmarkingLauncher ends.
+2016-11-04_16:44:51 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=12693, #A=2307, #!VC=1897, #!WCF=591, #!BV=100, #!FV=1811, #!SV=101, #C/#T=0.8462, #A/#T=0.1538, #!VC/#T=0.12646666666666667, #!WCF/#T=0.0394, #!BV/#T=0.006666666666666667, #!FV/#T=0.12073333333333333, #!SV/#T=0.006733333333333333}}].
+2016-11-04_16:44:51 - Batch for [9:15:1-0-0] ends.
+2016-11-04_16:44:51 - #####################################################
+2016-11-04_16:47:04 - #####################################################
+2016-11-04_16:47:04 - Batch for [9:20:1-0-0] begins.
+2016-11-04_16:47:04 - BenchmarkingLauncher starts.
+2016-11-04_18:08:43 - BenchmarkingLauncher ends.
+2016-11-04_18:08:43 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=17010, #A=2990, #!VC=2447, #!WCF=759, #!BV=164, #!FV=2293, #!SV=92, #C/#T=0.8505, #A/#T=0.1495, #!VC/#T=0.12235, #!WCF/#T=0.03795, #!BV/#T=0.0082, #!FV/#T=0.11465, #!SV/#T=0.0046}}].
+2016-11-04_18:08:43 - Batch for [9:20:1-0-0] ends.
+2016-11-04_18:08:43 - #####################################################
+2016-11-04_18:10:58 - #####################################################
+2016-11-04_18:10:58 - Batch for [9:25:1-0-0] begins.
+2016-11-04_18:10:58 - BenchmarkingLauncher starts.
+2016-11-04_19:48:34 - BenchmarkingLauncher ends.
+2016-11-04_19:48:34 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=20988, #A=4012, #!VC=3250, #!WCF=1052, #!BV=226, #!FV=3058, #!SV=163, #C/#T=0.83952, #A/#T=0.16048, #!VC/#T=0.13, #!WCF/#T=0.04208, #!BV/#T=0.00904, #!FV/#T=0.12232, #!SV/#T=0.00652}}].
+2016-11-04_19:48:34 - Batch for [9:25:1-0-0] ends.
+2016-11-04_19:48:34 - #####################################################
+2016-11-04_19:50:49 - #####################################################
+2016-11-04_19:50:49 - Batch for [9:30:1-0-0] begins.
+2016-11-04_19:50:49 - BenchmarkingLauncher starts.
+2016-11-04_21:31:56 - BenchmarkingLauncher ends.
+2016-11-04_21:31:56 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=25308, #A=4692, #!VC=3818, #!WCF=1216, #!BV=283, #!FV=3560, #!SV=190, #C/#T=0.8436, #A/#T=0.1564, #!VC/#T=0.12726666666666667, #!WCF/#T=0.04053333333333333, #!BV/#T=0.009433333333333334, #!FV/#T=0.11866666666666667, #!SV/#T=0.006333333333333333}}].
+2016-11-04_21:31:56 - Batch for [9:30:1-0-0] ends.
+2016-11-04_21:31:56 - #####################################################
+2016-11-04_21:34:11 - #####################################################
+2016-11-04_21:34:11 - Batch for [9:5:2-0-0] begins.
+2016-11-04_21:34:11 - BenchmarkingLauncher starts.
+2016-11-04_22:16:18 - BenchmarkingLauncher ends.
+2016-11-04_22:16:18 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=4377, #A=623, #!VC=499, #!WCF=168, #!BV=0, #!FV=499, #!SV=26, #C/#T=0.8754, #A/#T=0.1246, #!VC/#T=0.0998, #!WCF/#T=0.0336, #!BV/#T=0.0, #!FV/#T=0.0998, #!SV/#T=0.0052}}].
+2016-11-04_22:16:18 - Batch for [9:5:2-0-0] ends.
+2016-11-04_22:16:18 - #####################################################
+2016-11-04_22:18:30 - #####################################################
+2016-11-04_22:18:30 - Batch for [9:10:2-0-0] begins.
+2016-11-04_22:18:30 - BenchmarkingLauncher starts.
+2016-11-04_22:56:50 - BenchmarkingLauncher ends.
+2016-11-04_22:56:50 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=8641, #A=1359, #!VC=1069, #!WCF=403, #!BV=0, #!FV=1069, #!SV=43, #C/#T=0.8641, #A/#T=0.1359, #!VC/#T=0.1069, #!WCF/#T=0.0403, #!BV/#T=0.0, #!FV/#T=0.1069, #!SV/#T=0.0043}}].
+2016-11-04_22:56:50 - Batch for [9:10:2-0-0] ends.
+2016-11-04_22:56:50 - #####################################################
+2016-11-04_22:59:03 - #####################################################
+2016-11-04_22:59:03 - Batch for [9:15:2-0-0] begins.
+2016-11-04_22:59:03 - BenchmarkingLauncher starts.
+2016-11-04_23:52:10 - BenchmarkingLauncher ends.
+2016-11-04_23:52:10 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=12758, #A=2242, #!VC=1812, #!WCF=595, #!BV=2, #!FV=1804, #!SV=91, #C/#T=0.8505333333333334, #A/#T=0.14946666666666666, #!VC/#T=0.1208, #!WCF/#T=0.03966666666666667, #!BV/#T=1.3333333333333334E-4, #!FV/#T=0.12026666666666666, #!SV/#T=0.006066666666666666}}].
+2016-11-04_23:52:10 - Batch for [9:15:2-0-0] ends.
+2016-11-04_23:52:10 - #####################################################
+2016-11-04_23:54:23 - #####################################################
+2016-11-04_23:54:23 - Batch for [9:20:2-0-0] begins.
+2016-11-04_23:54:23 - BenchmarkingLauncher starts.
+2016-11-05_01:17:55 - BenchmarkingLauncher ends.
+2016-11-05_01:17:55 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=17137, #A=2863, #!VC=2307, #!WCF=756, #!BV=0, #!FV=2296, #!SV=111, #C/#T=0.85685, #A/#T=0.14315, #!VC/#T=0.11535, #!WCF/#T=0.0378, #!BV/#T=0.0, #!FV/#T=0.1148, #!SV/#T=0.00555}}].
+2016-11-05_01:17:55 - Batch for [9:20:2-0-0] ends.
+2016-11-05_01:17:55 - #####################################################
+2016-11-05_01:20:09 - #####################################################
+2016-11-05_01:20:09 - Batch for [9:25:2-0-0] begins.
+2016-11-05_01:20:09 - BenchmarkingLauncher starts.
+2016-11-05_02:55:58 - BenchmarkingLauncher ends.
+2016-11-05_02:55:58 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=21220, #A=3780, #!VC=2976, #!WCF=1096, #!BV=1, #!FV=2970, #!SV=153, #C/#T=0.8488, #A/#T=0.1512, #!VC/#T=0.11904, #!WCF/#T=0.04384, #!BV/#T=4.0E-5, #!FV/#T=0.1188, #!SV/#T=0.00612}}].
+2016-11-05_02:55:58 - Batch for [9:25:2-0-0] ends.
+2016-11-05_02:55:58 - #####################################################
+2016-11-05_02:58:11 - #####################################################
+2016-11-05_02:58:11 - Batch for [9:30:2-0-0] begins.
+2016-11-05_02:58:11 - BenchmarkingLauncher starts.
+2016-11-05_04:45:45 - BenchmarkingLauncher ends.
+2016-11-05_04:45:45 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=25551, #A=4449, #!VC=3597, #!WCF=1186, #!BV=4, #!FV=3577, #!SV=203, #C/#T=0.8517, #A/#T=0.1483, #!VC/#T=0.1199, #!WCF/#T=0.03953333333333333, #!BV/#T=1.3333333333333334E-4, #!FV/#T=0.11923333333333333, #!SV/#T=0.0067666666666666665}}].
+2016-11-05_04:45:45 - Batch for [9:30:2-0-0] ends.
+2016-11-05_04:45:45 - #####################################################
+2016-11-05_04:47:58 - #####################################################
+2016-11-05_04:47:58 - Batch for [9:5:1-1-0] begins.
+2016-11-05_04:47:58 - BenchmarkingLauncher starts.
+2016-11-05_05:15:56 - BenchmarkingLauncher ends.
+2016-11-05_05:15:56 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=4740, #A=260, #!VC=68, #!WCF=199, #!BV=44, #!FV=4, #!SV=24, #C/#T=0.948, #A/#T=0.052, #!VC/#T=0.0136, #!WCF/#T=0.0398, #!BV/#T=0.0088, #!FV/#T=8.0E-4, #!SV/#T=0.0048}}].
+2016-11-05_05:15:56 - Batch for [9:5:1-1-0] ends.
+2016-11-05_05:15:56 - #####################################################
+2016-11-05_05:18:09 - #####################################################
+2016-11-05_05:18:09 - Batch for [9:10:1-1-0] begins.
+2016-11-05_05:18:09 - BenchmarkingLauncher starts.
+2016-11-05_05:58:52 - BenchmarkingLauncher ends.
+2016-11-05_05:58:52 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=9470, #A=530, #!VC=144, #!WCF=395, #!BV=89, #!FV=9, #!SV=56, #C/#T=0.947, #A/#T=0.053, #!VC/#T=0.0144, #!WCF/#T=0.0395, #!BV/#T=0.0089, #!FV/#T=9.0E-4, #!SV/#T=0.0056}}].
+2016-11-05_05:58:52 - Batch for [9:10:1-1-0] ends.
+2016-11-05_05:58:52 - #####################################################
+2016-11-05_06:01:05 - #####################################################
+2016-11-05_06:01:05 - Batch for [9:15:1-1-0] begins.
+2016-11-05_06:01:05 - BenchmarkingLauncher starts.
+2016-11-05_06:55:01 - BenchmarkingLauncher ends.
+2016-11-05_06:55:01 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=14096, #A=904, #!VC=267, #!WCF=653, #!BV=152, #!FV=21, #!SV=112, #C/#T=0.9397333333333333, #A/#T=0.06026666666666667, #!VC/#T=0.0178, #!WCF/#T=0.043533333333333334, #!BV/#T=0.010133333333333333, #!FV/#T=0.0014, #!SV/#T=0.007466666666666667}}].
+2016-11-05_06:55:01 - Batch for [9:15:1-1-0] ends.
+2016-11-05_06:55:01 - #####################################################
+2016-11-05_06:57:14 - #####################################################
+2016-11-05_06:57:14 - Batch for [9:20:1-1-0] begins.
+2016-11-05_06:57:14 - BenchmarkingLauncher starts.
+2016-11-05_08:04:00 - BenchmarkingLauncher ends.
+2016-11-05_08:04:00 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=18773, #A=1227, #!VC=326, #!WCF=916, #!BV=182, #!FV=28, #!SV=146, #C/#T=0.93865, #A/#T=0.06135, #!VC/#T=0.0163, #!WCF/#T=0.0458, #!BV/#T=0.0091, #!FV/#T=0.0014, #!SV/#T=0.0073}}].
+2016-11-05_08:04:00 - Batch for [9:20:1-1-0] ends.
+2016-11-05_08:04:00 - #####################################################
+2016-11-05_08:06:15 - #####################################################
+2016-11-05_08:06:15 - Batch for [9:25:1-1-0] begins.
+2016-11-05_08:06:15 - BenchmarkingLauncher starts.
+2016-11-05_09:42:11 - BenchmarkingLauncher ends.
+2016-11-05_09:42:11 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=25000, #C=23436, #A=1564, #!VC=437, #!WCF=1154, #!BV=237, #!FV=40, #!SV=196, #C/#T=0.93744, #A/#T=0.06256, #!VC/#T=0.01748, #!WCF/#T=0.04616, #!BV/#T=0.00948, #!FV/#T=0.0016, #!SV/#T=0.00784}}].
+2016-11-05_09:42:11 - Batch for [9:25:1-1-0] ends.
+2016-11-05_09:42:11 - #####################################################
+2016-11-05_09:44:25 - #####################################################
+2016-11-05_09:44:25 - Batch for [9:30:1-1-0] begins.
+2016-11-05_09:44:25 - BenchmarkingLauncher starts.
+2016-11-05_11:33:11 - BenchmarkingLauncher ends.
+2016-11-05_11:33:12 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=1, k3=0}, workloadStat=WorkloadStatistics{#T=30000, #C=28187, #A=1813, #!VC=486, #!WCF=1365, #!BV=272, #!FV=35, #!SV=217, #C/#T=0.9395666666666667, #A/#T=0.06043333333333333, #!VC/#T=0.0162, #!WCF/#T=0.0455, #!BV/#T=0.009066666666666667, #!FV/#T=0.0011666666666666668, #!SV/#T=0.007233333333333333}}].
+2016-11-05_11:33:12 - Batch for [9:30:1-1-0] ends.
+2016-11-05_11:33:12 - #####################################################
+2016-11-05_11:35:27 - #####################################################
+2016-11-05_11:35:27 - Batch for [9:5:1-0-2] begins.
+2016-11-05_11:35:27 - BenchmarkingLauncher starts.
+2016-11-05_12:03:19 - BenchmarkingLauncher ends.
+2016-11-05_12:03:19 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=5000, #C=4357, #A=643, #!VC=544, #!WCF=138, #!BV=34, #!FV=510, #!SV=0, #C/#T=0.8714, #A/#T=0.1286, #!VC/#T=0.1088, #!WCF/#T=0.0276, #!BV/#T=0.0068, #!FV/#T=0.102, #!SV/#T=0.0}}].
+2016-11-05_12:03:19 - Batch for [9:5:1-0-2] ends.
+2016-11-05_12:03:19 - #####################################################
+2016-11-05_12:05:32 - #####################################################
+2016-11-05_12:05:32 - Batch for [9:10:1-0-2] begins.
+2016-11-05_12:05:32 - BenchmarkingLauncher starts.
+2016-11-05_12:46:06 - BenchmarkingLauncher ends.
+2016-11-05_12:46:06 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=10000, #C=8480, #A=1520, #!VC=1209, #!WCF=417, #!BV=80, #!FV=1137, #!SV=0, #C/#T=0.848, #A/#T=0.152, #!VC/#T=0.1209, #!WCF/#T=0.0417, #!BV/#T=0.008, #!FV/#T=0.1137, #!SV/#T=0.0}}].
+2016-11-05_12:46:06 - Batch for [9:10:1-0-2] ends.
+2016-11-05_12:46:06 - #####################################################
+2016-11-05_12:48:19 - #####################################################
+2016-11-05_12:48:19 - Batch for [9:15:1-0-2] begins.
+2016-11-05_12:48:19 - BenchmarkingLauncher starts.
+2016-11-05_13:41:54 - BenchmarkingLauncher ends.
+2016-11-05_13:41:54 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=15000, #C=12705, #A=2295, #!VC=1863, #!WCF=612, #!BV=123, #!FV=1752, #!SV=0, #C/#T=0.847, #A/#T=0.153, #!VC/#T=0.1242, #!WCF/#T=0.0408, #!BV/#T=0.0082, #!FV/#T=0.1168, #!SV/#T=0.0}}].
+2016-11-05_13:41:54 - Batch for [9:15:1-0-2] ends.
+2016-11-05_13:41:54 - #####################################################
+2016-11-05_13:44:08 - #####################################################
+2016-11-05_13:44:08 - Batch for [9:20:1-0-2] begins.
+2016-11-05_13:44:08 - BenchmarkingLauncher starts.
+2016-11-05_14:50:47 - BenchmarkingLauncher ends.
+2016-11-05_14:50:47 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=20000, #C=16661, #A=3339, #!VC=2735, #!WCF=823, #!BV=170, #!FV=2580, #!SV=0, #C/#T=0.83305, #A/#T=0.16695, #!VC/#T=0.13675, #!WCF/#T=0.04115, #!BV/#T=0.0085, #!FV/#T=0.129, #!SV/#T=0.0}}].
+2016-11-05_14:50:47 - Batch for [9:20:1-0-2] ends.
+2016-11-05_14:50:47 - #####################################################
+2016-11-05_14:53:00 - #####################################################
+2016-11-05_14:53:00 - Batch for [9:25:1-0-2] begins.
+2016-11-05_14:53:00 - BenchmarkingLauncher starts.
+2016-11-05_16:27:41 - BenchmarkingLauncher ends.
+2016-11-05_16:27:41 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=25, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=25000, #C=21116, #A=3884, #!VC=3188, #!WCF=986, #!BV=246, #!FV=2967, #!SV=0, #C/#T=0.84464, #A/#T=0.15536, #!VC/#T=0.12752, #!WCF/#T=0.03944, #!BV/#T=0.00984, #!FV/#T=0.11868, #!SV/#T=0.0}}].
+2016-11-05_16:27:41 - Batch for [9:25:1-0-2] ends.
+2016-11-05_16:27:41 - #####################################################
+2016-11-05_16:29:54 - #####################################################
+2016-11-05_16:29:54 - Batch for [9:30:1-0-2] begins.
+2016-11-05_16:29:54 - BenchmarkingLauncher starts.
+2016-11-05_18:16:46 - BenchmarkingLauncher ends.
+2016-11-05_18:16:46 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=30, rvsiTriple=RVSITriple{k1=1, k2=0, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=25283, #A=4717, #!VC=3825, #!WCF=1212, #!BV=249, #!FV=3601, #!SV=0, #C/#T=0.8427666666666667, #A/#T=0.15723333333333334, #!VC/#T=0.1275, #!WCF/#T=0.0404, #!BV/#T=0.0083, #!FV/#T=0.12003333333333334, #!SV/#T=0.0}}].
+2016-11-05_18:16:46 - Batch for [9:30:1-0-2] ends.
+2016-11-05_18:16:46 - #####################################################
+2016-11-05_18:19:01 - #####################################################
+2016-11-05_18:19:01 - Batch for [9:5:2-2-1] begins.
+2016-11-05_18:19:01 - BenchmarkingLauncher starts.
+2016-11-05_18:46:58 - BenchmarkingLauncher ends.
+2016-11-05_18:46:58 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=5000, #C=4835, #A=165, #!VC=0, #!WCF=165, #!BV=0, #!FV=0, #!SV=0, #C/#T=0.967, #A/#T=0.033, #!VC/#T=0.0, #!WCF/#T=0.033, #!BV/#T=0.0, #!FV/#T=0.0, #!SV/#T=0.0}}].
+2016-11-05_18:46:58 - Batch for [9:5:2-2-1] ends.
+2016-11-05_18:46:58 - #####################################################
+2016-11-05_18:49:11 - #####################################################
+2016-11-05_18:49:11 - Batch for [9:10:2-2-1] begins.
+2016-11-05_18:49:11 - BenchmarkingLauncher starts.
+2016-11-05_19:30:18 - BenchmarkingLauncher ends.
+2016-11-05_19:30:18 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=10000, #C=9555, #A=445, #!VC=1, #!WCF=444, #!BV=0, #!FV=1, #!SV=0, #C/#T=0.9555, #A/#T=0.0445, #!VC/#T=1.0E-4, #!WCF/#T=0.0444, #!BV/#T=0.0, #!FV/#T=1.0E-4, #!SV/#T=0.0}}].
+2016-11-05_19:30:18 - Batch for [9:10:2-2-1] ends.
+2016-11-05_19:30:18 - #####################################################
+2016-11-05_19:32:32 - #####################################################
+2016-11-05_19:32:32 - Batch for [9:15:2-2-1] begins.
+2016-11-05_19:32:32 - BenchmarkingLauncher starts.
+2016-11-05_20:26:43 - BenchmarkingLauncher ends.
+2016-11-05_20:26:43 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=15000, #C=14323, #A=677, #!VC=1, #!WCF=676, #!BV=1, #!FV=0, #!SV=0, #C/#T=0.9548666666666666, #A/#T=0.04513333333333333, #!VC/#T=6.666666666666667E-5, #!WCF/#T=0.045066666666666665, #!BV/#T=6.666666666666667E-5, #!FV/#T=0.0, #!SV/#T=0.0}}].
+2016-11-05_20:26:43 - Batch for [9:15:2-2-1] ends.
+2016-11-05_20:26:43 - #####################################################
+2016-11-05_20:28:56 - #####################################################
+2016-11-05_20:28:56 - Batch for [9:20:2-2-1] begins.
+2016-11-05_20:28:56 - BenchmarkingLauncher starts.
+2016-11-05_21:36:56 - BenchmarkingLauncher ends.
+2016-11-05_21:36:56 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=20000, #C=19041, #A=959, #!VC=8, #!WCF=952, #!BV=5, #!FV=1, #!SV=2, #C/#T=0.95205, #A/#T=0.04795, #!VC/#T=4.0E-4, #!WCF/#T=0.0476, #!BV/#T=2.5E-4, #!FV/#T=5.0E-5, #!SV/#T=1.0E-4}}].
+2016-11-05_21:36:56 - Batch for [9:20:2-2-1] ends.
+2016-11-05_21:36:56 - #####################################################
+2016-11-05_21:39:09 - #####################################################
+2016-11-05_21:39:09 - Batch for [9:25:2-2-1] begins.
+2016-11-05_21:39:09 - BenchmarkingLauncher starts.
+2016-11-05_23:14:08 - BenchmarkingLauncher ends.
+2016-11-05_23:14:08 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=25000, #C=23906, #A=1094, #!VC=5, #!WCF=1090, #!BV=1, #!FV=0, #!SV=4, #C/#T=0.95624, #A/#T=0.04376, #!VC/#T=2.0E-4, #!WCF/#T=0.0436, #!BV/#T=4.0E-5, #!FV/#T=0.0, #!SV/#T=1.6E-4}}].
+2016-11-05_23:14:08 - Batch for [9:25:2-2-1] ends.
+2016-11-05_23:14:08 - #####################################################
+2016-11-05_23:16:21 - #####################################################
+2016-11-05_23:16:21 - Batch for [9:30:2-2-1] begins.
+2016-11-05_23:16:21 - BenchmarkingLauncher starts.
+2016-11-06_01:04:52 - BenchmarkingLauncher ends.
+2016-11-06_01:04:52 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#T=30000, #C=28656, #A=1344, #!VC=2, #!WCF=1342, #!BV=2, #!FV=0, #!SV=0, #C/#T=0.9552, #A/#T=0.0448, #!VC/#T=6.666666666666667E-5, #!WCF/#T=0.04473333333333333, #!BV/#T=6.666666666666667E-5, #!FV/#T=0.0, #!SV/#T=0.0}}].
+2016-11-06_01:04:52 - Batch for [9:30:2-2-1] ends.
+2016-11-06_01:04:52 - #####################################################
+2016-11-06_01:07:05 - #####################################################
+2016-11-06_01:07:05 - Batch for [9:5:2-1-2] begins.
+2016-11-06_01:07:05 - BenchmarkingLauncher starts.
+2016-11-06_01:35:12 - BenchmarkingLauncher ends.
+2016-11-06_01:35:12 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=5, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=5000, #C=4811, #A=189, #!VC=8, #!WCF=183, #!BV=0, #!FV=8, #!SV=1, #C/#T=0.9622, #A/#T=0.0378, #!VC/#T=0.0016, #!WCF/#T=0.0366, #!BV/#T=0.0, #!FV/#T=0.0016, #!SV/#T=2.0E-4}}].
+2016-11-06_01:35:12 - Batch for [9:5:2-1-2] ends.
+2016-11-06_01:35:12 - #####################################################
+2016-11-06_01:37:25 - #####################################################
+2016-11-06_01:37:25 - Batch for [9:10:2-1-2] begins.
+2016-11-06_01:37:25 - BenchmarkingLauncher starts.
+2016-11-06_02:18:07 - BenchmarkingLauncher ends.
+2016-11-06_02:18:07 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=10000, #C=9599, #A=401, #!VC=23, #!WCF=382, #!BV=0, #!FV=23, #!SV=0, #C/#T=0.9599, #A/#T=0.0401, #!VC/#T=0.0023, #!WCF/#T=0.0382, #!BV/#T=0.0, #!FV/#T=0.0023, #!SV/#T=0.0}}].
+2016-11-06_02:18:07 - Batch for [9:10:2-1-2] ends.
+2016-11-06_02:18:07 - #####################################################
+2016-11-06_02:20:20 - #####################################################
+2016-11-06_02:20:20 - Batch for [9:15:2-1-2] begins.
+2016-11-06_02:20:20 - BenchmarkingLauncher starts.
+2016-11-06_03:13:45 - BenchmarkingLauncher ends.
+2016-11-06_03:13:45 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=15000, #C=14330, #A=670, #!VC=18, #!WCF=654, #!BV=0, #!FV=18, #!SV=0, #C/#T=0.9553333333333334, #A/#T=0.04466666666666667, #!VC/#T=0.0012, #!WCF/#T=0.0436, #!BV/#T=0.0, #!FV/#T=0.0012, #!SV/#T=0.0}}].
+2016-11-06_03:13:45 - Batch for [9:15:2-1-2] ends.
+2016-11-06_03:13:45 - #####################################################
+2016-11-06_03:15:58 - #####################################################
+2016-11-06_03:15:58 - Batch for [9:20:2-1-2] begins.
+2016-11-06_03:15:58 - BenchmarkingLauncher starts.
+2016-11-06_04:22:49 - BenchmarkingLauncher ends.
+2016-11-06_04:22:49 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=20000, #C=19023, #A=977, #!VC=35, #!WCF=943, #!BV=3, #!FV=32, #!SV=0, #C/#T=0.95115, #A/#T=0.04885, #!VC/#T=0.00175, #!WCF/#T=0.04715, #!BV/#T=1.5E-4, #!FV/#T=0.0016, #!SV/#T=0.0}}].
+2016-11-06_04:22:49 - Batch for [9:20:2-1-2] ends.
+2016-11-06_04:22:49 - #####################################################
+2016-11-06_04:25:02 - #####################################################
+2016-11-06_04:25:02 - Batch for [9:25:2-1-2] begins.
+2016-11-06_04:25:02 - BenchmarkingLauncher starts.
+2016-11-06_05:59:16 - BenchmarkingLauncher ends.
+2016-11-06_05:59:16 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=25, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=25000, #C=23844, #A=1156, #!VC=41, #!WCF=1119, #!BV=4, #!FV=37, #!SV=0, #C/#T=0.95376, #A/#T=0.04624, #!VC/#T=0.00164, #!WCF/#T=0.04476, #!BV/#T=1.6E-4, #!FV/#T=0.00148, #!SV/#T=0.0}}].
+2016-11-06_05:59:16 - Batch for [9:25:2-1-2] ends.
+2016-11-06_05:59:16 - #####################################################
+2016-11-06_06:01:29 - #####################################################
+2016-11-06_06:01:29 - Batch for [9:30:2-1-2] begins.
+2016-11-06_06:01:29 - BenchmarkingLauncher starts.
+2016-11-06_07:50:07 - BenchmarkingLauncher ends.
+2016-11-06_07:50:07 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=30, rvsiTriple=RVSITriple{k1=2, k2=1, k3=2}, workloadStat=WorkloadStatistics{#T=30000, #C=28639, #A=1361, #!VC=66, #!WCF=1301, #!BV=1, #!FV=65, #!SV=1, #C/#T=0.9546333333333333, #A/#T=0.045366666666666666, #!VC/#T=0.0022, #!WCF/#T=0.043366666666666664, #!BV/#T=3.3333333333333335E-5, #!FV/#T=0.0021666666666666666, #!SV/#T=3.3333333333333335E-5}}].
+2016-11-06_07:50:07 - Batch for [9:30:2-1-2] ends.
+2016-11-06_07:50:07 - #####################################################
