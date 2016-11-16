@@ -1,0 +1,6 @@
+{
+  "name": "Chameleon-transactional-kvstore",
+  "tagline": "A distributed, partitioned, replicated, transactional, main-memory key-value data store prototype which implements RVSI.",
+  "body": "# chameleon-transactional-kvstore [![Build Status](https://travis-ci.org/hengxin/chameleon-transactional-kvstore.svg?branch=2pc)](https://travis-ci.org/hengxin/chameleon-transactional-kvstore)\r\n\r\nA distributed, partitioned, replicated, transactional, main-memory key-value data store prototype which implements RVSI.\r\nFor details, please refer to [this wiki](https://github.com/hengxin/chameleon-transactional-kvstore/wiki).\r\n\r\n# Branches\r\n\r\n- master: `Chameleon` when restricted to the master-slave replication mechanism.\r\n- 2pc: the current working branch; `Chameleon` with both master-slave replication and data partitions among masters.\r\n\r\n# Events\r\n\r\n- 01-15-2016 I have something more urgent to do. Thus no guarantee on extensive commits as usual. I will be back in about 2 or 3 months.\r\n- 04-xx-2016 Come back.\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
