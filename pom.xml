@@ -61,6 +61,27 @@
                         </goals>
                     </execution>
 
+                    <!-- for masters -->
+                    <execution>
+                        <id>master</id>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>main.MasterMainTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>/master</finalName>
+                        </configuration>
+                        <phase>package</phase> <!-- register to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+
                     <!-- for masters on aliyun: master-ec1 -->
                     <execution>
                         <id>master-ec1</id>

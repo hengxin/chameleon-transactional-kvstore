@@ -32,20 +32,26 @@ public class WorkloadUtil {
         PROB_BINOMIAL("probBinomial", "50"),
         RW_RATIO("rwRatio", "2"),
         ZIPF_EXPONENT("zipfExponent", "1"),
-        // (20,10,50); (50, 20, 100); (100, 50, 200)
-        MEAN_TIME_INTER_TRANSACTIONS("meanTimeInterTransactions", "50"),
-        MIN_TIME_INTER_TRANSACTIONS("minTimeInterTransactions", "20"),
-        MAX_TIME_INTER_TRANSACTIONS("maxTimeInterTransactions", "100"),
+        // (20,10,50); (50, 20, 100);
+        // (500, 200, 1000);
+        MEAN_TIME_INTER_TRANSACTIONS("meanTimeInterTransactions", "5"),
+        MIN_TIME_INTER_TRANSACTIONS("minTimeInterTransactions", "0"),
+        MAX_TIME_INTER_TRANSACTIONS("maxTimeInterTransactions", "10"),
+
         K1BV("k1", "1"),
         K2FV("k2", "0"),
         K3SV("k3", "1"),
         RVSI("rvsi", "(1,0,1)"),
+
         SIMULATION("simulation", "false"),
-        INTRA_DC_DELAY("intraDCDelay", "5"),
-        INTER_DC_DELAY("interDCDelay", "40");
+        // default values are for the single-datacenter scenario
+        TWO_PC_DELAY("twopcDelay", "5"),
+        REPILCATION_DELAY("replicationDelay", "5"),
+        ISSUE_DELAY("issueDelay", "20"),
+        TIME_ORACLE_DELAY("timeOracleDelay", "5");
 
         private final String param;
-        private final String val;
+        private String val;
 
         WorkloadParams(String param, String val) {
             this.param = param;
@@ -54,15 +60,21 @@ public class WorkloadUtil {
 
         public String param() { return param; }
         public String val() { return val; }
-
+        public void setVal(String val) { this.val = val; }
     }
 
     private static void setProperty(@NotNull WorkloadParams param) {
         DEFAULT_WORKLOAD_PROPERTIES.setProperty(param.param, param.val);
     }
 
+    public static void setWorkloadParams(@NotNull Properties prop) {
+        Arrays.stream(WorkloadParams.values())
+                .forEach(param -> param.setVal(prop.getProperty(param.param())));
+    }
+
     @Override
     public String toString() {
+        // TODO: return the actual values
         return DEFAULT_WORKLOAD_PROPERTIES.toString();
     }
 

@@ -15,13 +15,20 @@ public class BenchmarkingLauncherScriptMainTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(BenchmarkingLauncherScriptMainTest.class);
 
     public static void main(String[] args) {
+        // parameters for workload generator
         String rwRatio = args[0];
         String mpl = args[1];
         String rvsi = args[2];
 
+        // properties files
         String siteProperties = args[3];
         String cfProperties = args[4];
         String toProperties = args[5];
+
+        // parameters for workload executor
+//        String meanTimeInterTransactions = args[6];
+//        String minTimeInterTransactions = args[7];
+//        String maxTimeInterTransactions = args[8];
 
         LOGGER.info("#####################################################");
         LOGGER.info("Batch for [{}:{}:{}] begins.", rwRatio, mpl, rvsi);

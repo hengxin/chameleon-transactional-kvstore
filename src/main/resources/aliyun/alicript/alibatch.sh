@@ -35,16 +35,26 @@ $ALIEAN
 # $ALIEAN
 
 # $ALION
-# java -jar $BATCH_JAR 1 30 "2-1-2" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
+# java -jar $BATCH_JAR 4 20 "2-0-0" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
+# $ALIEAN
+
+# $ALION
+# java -jar $BATCH_JAR 4 25 "1-0-2" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
+# $ALIEAN
+#
+# $ALION
+# java -jar $BATCH_JAR 4 30 "1-0-2" $siteProperties $cfProperties $toProperties 2> error-bath.log >> batch.log
 # $ALIEAN
 ##### for missing #####
 
 ##### batch #####
-rwRatios=(4 0.5 1 9)
-# rvsis=("2-0-0" "1-1-0" "1-0-2" "2-2-1" "2-1-2")
-rvsis=("1-0-0" "2-0-0" "1-1-0" "1-0-2" "2-2-1" "2-1-2")
-# # otherrvsis=("1-2-0" "1-3-0" "1-0-1" "2-1-1" "2-2-2" "3-0-0")
-mpls=(5 10 15 20 25 30)
+# rwRatios=(4 0.5 1 9)
+rwRatios=(0.5 1 4)
+rvsis=("1-0-0" "2-0-0")
+mpls=(20)
+# # otherrvsis=("1-2-0" "1-3-0" "1-0-1" "1-0-2" "2-2-1" "2-1-2""2-1-1" "2-2-2" "3-0-0")
+# mpls=(5 10 15 20 25 30)
+# mpls=(10 15 20 25 30)
 
 $ALIEAN
 for rwRatio in "${rwRatios[@]}"; do

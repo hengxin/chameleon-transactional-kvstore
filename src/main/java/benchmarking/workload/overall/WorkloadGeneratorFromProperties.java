@@ -32,42 +32,44 @@ import static benchmarking.workload.WorkloadUtil.WorkloadParams.ZIPF_EXPONENT;
 public class WorkloadGeneratorFromProperties implements IWorkloadGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkloadGeneratorFromProperties.class);
 
-    private Properties prop;
-
     /**
      *  Constructor which uses {@link WorkloadUtil#DEFAULT_WORKLOAD_PROPERTIES}
      */
-    public WorkloadGeneratorFromProperties() { prop = WorkloadUtil.DEFAULT_WORKLOAD_PROPERTIES; }
+    public WorkloadGeneratorFromProperties() { }
 
-    public WorkloadGeneratorFromProperties(Properties prop) { this.prop = prop; }
+    public WorkloadGeneratorFromProperties(Properties prop) {
+        WorkloadUtil.setWorkloadParams(prop);
+        LOGGER.info("WorkloadParams are [{}].", prop.toString());
+    }
 
     public WorkloadGeneratorFromProperties(final String workloadProperties) {
         try {
-            prop = PropertiesUtil.load(workloadProperties);
+            Properties prop = PropertiesUtil.load(workloadProperties);
+            WorkloadUtil.setWorkloadParams(prop);
+            LOGGER.info("WorkloadParams are [{}].", prop.toString());
         } catch (IOException ioe) {
             LOGGER.error("Failed to load workload parameters from workload properties [{}] due to [{}].",
                     workloadProperties, ioe);
-            prop = WorkloadUtil.DEFAULT_WORKLOAD_PROPERTIES;
+            LOGGER.info("WorkloadParams are [{}].", WorkloadUtil.DEFAULT_WORKLOAD_PROPERTIES.toString());
         }
     }
 
     @Override
     public Workload generate() {
-        int sizeOfKeyspace = Integer.parseInt(prop.getProperty(SIZE_OF_KEYSPACE.param()));
-        int mpl = Integer.parseInt(prop.getProperty(MPL.param()));
+        int sizeOfKeyspace = Integer.parseInt(SIZE_OF_KEYSPACE.val());
+        int mpl = Integer.parseInt(MPL.val());
 
-        int numberOfTransactions = Integer.parseInt(prop.getProperty(NUMBER_OF_TRANSACTIONS.param()));
+        int numberOfTransactions = Integer.parseInt(NUMBER_OF_TRANSACTIONS.val());
 
-        int maxNumberOfOperationsPerTransaction = Integer.parseInt(
-                prop.getProperty(MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION.param()));
-        int probBinomial = Integer.parseInt(prop.getProperty(PROB_BINOMIAL.param()));
+        int maxNumberOfOperationsPerTransaction = Integer.parseInt(MAX_NUMBER_OF_OPERATIONS_PER_TRANSACTION.val());
+        int probBinomial = Integer.parseInt(PROB_BINOMIAL.val());
 
-        double rwRatio = Double.parseDouble(prop.getProperty(RW_RATIO.param()));
-        int zipfExponent = Integer.parseInt(prop.getProperty(ZIPF_EXPONENT.param()));
+        double rwRatio = Double.parseDouble(RW_RATIO.val());
+        int zipfExponent = Integer.parseInt(ZIPF_EXPONENT.val());
 
-        int k1 = Integer.parseInt(prop.getProperty(K1BV.param()));
-        int k2 = Integer.parseInt(prop.getProperty(K2FV.param()));
-        int k3 = Integer.parseInt(prop.getProperty(K3SV.param()));
+        int k1 = Integer.parseInt(K1BV.val());
+        int k2 = Integer.parseInt(K2FV.val());
+        int k3 = Integer.parseInt(K3SV.val());
 
         IWorkloadGenerator workloadGenerator =
                 new WorkloadGenerator(mpl,

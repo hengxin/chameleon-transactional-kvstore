@@ -60,6 +60,8 @@ public class BenchmarkingLauncher {
                 ConsistentHashingDynamicPartitioner.INSTANCE);
         workload = new WorkloadGeneratorFromProperties(workloadProperties).generate();
 
+        LOGGER.info("Workload has been generated.");
+
         try {
             prop = PropertiesUtil.load(workloadProperties);
         } catch (IOException ioe) {
@@ -67,12 +69,18 @@ public class BenchmarkingLauncher {
         }
     }
 
+    /**
+     * Launch benchmarking using {@code workloadProperties} objects
+     * and {@code siteProperties}, {@code cfProperties}, and {@code toProperties} properties files
+     */
     public BenchmarkingLauncher(final Properties workloadProperties,
                                 final String siteProperties, final String cfProperties, final String toProperties) {
         cctx = new ClientContextMultiMaster(siteProperties, cfProperties, toProperties,
                 ConsistentHashingDynamicPartitioner.INSTANCE);
         prop = workloadProperties;
         workload = new WorkloadGeneratorFromProperties(prop).generate();
+
+        LOGGER.info("Workload has been generated.");
     }
 
     public BenchmarkingLauncher(final double rwRatio, final int mpl, final RVSITriple rvsiTriple,

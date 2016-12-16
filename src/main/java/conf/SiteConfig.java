@@ -48,9 +48,6 @@ public final class SiteConfig {
     public static final String DEFAULT_SOCKET_PORT_PROPERTIES = "messaging/socket/sp.properties";
     public static final int DEFAULT_SOCKET_PORT = 1111;
 
-    // for simulation
-    public static boolean IS_IN_SIMULATION_MODE = false;
-
     public enum SiteConfigKey {
         HOST("host"),
         PORT("port"),

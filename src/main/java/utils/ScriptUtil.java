@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author hengxin
@@ -16,35 +16,35 @@ import java.util.concurrent.TimeUnit;
  */
 public class ScriptUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScriptUtil.class);
-    private static ExecutorService exec = Executors.newCachedThreadPool();
+    private static ExecutorService execs = Executors.newCachedThreadPool();
 
-    public static void exec(String[] cmd) {
+    public static Process exec(String[] cmd) {
+//        execs.submit( () -> {
             try {
+                LOGGER.info(Arrays.toString(cmd));
+
                 Process proc = Runtime.getRuntime().exec(cmd);
 
-                    try (BufferedReader brInput = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
-//                        brInput.lines().forEach( line -> {} );
-                        String in;
-                        while ((in = brInput.readLine()) != null)
-                            ;
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
-                    }
+                try (BufferedReader brInput = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
+                    brInput.lines().forEach(LOGGER::info);
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
 
-                            try (BufferedReader brErr = new BufferedReader(new InputStreamReader(proc.getErrorStream()))) {
-                                String err;
-                                while ((err = brErr.readLine()) != null)
-                                    ;
-//                    brErr.lines().forEach(LOGGER::info);
-                            } catch (IOException ioe) {
-                                ioe.printStackTrace();
-                            }
+                try (BufferedReader brErr = new BufferedReader(new InputStreamReader(proc.getErrorStream()))) {
+                    brErr.lines().forEach(LOGGER::error);
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
 
-                boolean exitVal = proc.waitFor(15, TimeUnit.MINUTES);
-                if (exitVal)
-                    proc.destroy();
-            } catch (IOException | InterruptedException ioie) {
-                ioie.printStackTrace();
+                return proc;
+//                boolean exitVal = proc.waitFor(15, TimeUnit.MINUTES);
+//                if (exitVal)
+//                    proc.destroy();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
             }
+//        });
+        return null;
     }
 }

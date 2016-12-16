@@ -1,0 +1,63 @@
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/hengxin/.m2/repository/ch/qos/logback/logback-classic/1.1.3/logback-classic-1.1.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/hengxin/.m2/repository/org/apache/activemq/activemq-all/5.12.1/activemq-all-5.12.1.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
+16:26:32,101 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.groovy] at [file:/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/target/classes/logback.groovy]
+16:26:32,974 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+16:26:32,976 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Naming appender as [STDOUT]
+16:26:33,095 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+16:26:33,095 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Naming appender as [FILE]
+16:26:33,097 |-INFO in ch.qos.logback.core.FileAppender[FILE] - File property is set to [./logs/chameleon-test.log]
+16:26:33,099 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+16:26:33,099 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Naming appender as [BENCHMAIN]
+16:26:33,100 |-INFO in ch.qos.logback.core.FileAppender[BENCHMAIN] - File property is set to [./logs/chameleon-benchmarking-main-test.log]
+16:26:33,101 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+16:26:33,101 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Naming appender as [TO]
+16:26:33,103 |-INFO in ch.qos.logback.core.FileAppender[TO] - File property is set to [./logs/chameleon-test-to.log]
+16:26:33,103 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+16:26:33,103 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Naming appender as [COORD]
+16:26:33,105 |-INFO in ch.qos.logback.core.FileAppender[COORD] - File property is set to [./logs/chameleon-test-coord.log]
+16:26:33,105 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+16:26:33,105 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Naming appender as [MASTER]
+16:26:33,107 |-INFO in ch.qos.logback.core.FileAppender[MASTER] - File property is set to [./logs/chameleon-test-master.log]
+16:26:33,112 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:26:33,112 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Naming appender as [BATCH]
+16:26:33,122 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@795509d9 - Will use zip compression
+16:26:33,122 |-WARN in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@795509d9 - Large window sizes are not allowed.
+16:26:33,122 |-WARN in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@795509d9 - MaxIndex reduced to 21
+16:26:33,128 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[BATCH] - Active log file name: ./logs/chameleon-aliyun-batch.log
+16:26:33,128 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[BATCH] - File property is set to [./logs/chameleon-aliyun-batch.log]
+16:26:33,130 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [benchmarking.BenchmarkingLauncherScriptMainTest] to INFO
+16:26:33,137 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Attaching appender named [BATCH] to Logger[benchmarking.BenchmarkingLauncherScriptMainTest]
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [benchmarking.workload.transaction] to INFO
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [benchmarking.executor.client.ClientExecutor] to INFO
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [benchmarking.workload.overall.WorkloadGeneratorFromProperties] to INFO
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Attaching appender named [BENCHMAIN] to Logger[benchmarking.workload.overall.WorkloadGeneratorFromProperties]
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [main.benchmarking.BenchmarkingMainTest] to INFO
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Attaching appender named [BENCHMAIN] to Logger[main.benchmarking.BenchmarkingMainTest]
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [client.context] to INFO
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [slave.context] to INFO
+16:26:33,138 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [master.context] to INFO
+16:26:33,139 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [kvs.table.AbstractTable] to INFO
+16:26:33,139 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [kvs.table.MultiTimestampedCellsStore] to INFO
+16:26:33,139 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [client.clientlibrary.rvsi.vc] to INFO
+16:26:33,139 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [client.clientlibrary.transaction.RVSITransaction] to INFO
+16:26:33,139 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [client.clientlibrary.transaction.BufferedUpdates] to INFO
+16:26:33,139 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [master.SIMaster] to INFO
+16:26:33,139 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Attaching appender named [FILE] to Logger[master.SIMaster]
+16:26:33,140 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Attaching appender named [MASTER] to Logger[master.SIMaster]
+16:26:33,140 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [twopc.coordinator.phaser.CommitPhaser] to INFO
+16:26:33,140 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [messaging.socket] to INFO
+16:26:33,140 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [rmi] to ERROR
+16:26:33,140 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [util] to ERROR
+16:26:33,142 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Setting level of logger [ROOT] to INFO
+16:26:33,142 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Attaching appender named [STDOUT] to Logger[ROOT]
+16:26:33,142 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Attaching appender named [FILE] to Logger[ROOT]
+16:26:33,142 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@19e4653c - Attaching appender named [BATCH] to Logger[ROOT]
+
+16:26:33.151 [main] INFO  m.b.BenchmarkingMainTest main - ########## Benchmarking Main Test Begins!!! ##########
+16:26:33.323 [main] INFO  b.w.o.WorkloadGeneratorFromProperties <init> - WorkloadParams are [{maxTimeInterTransactions=0, zipfExponent=1, mpl=20, issueDelay=5, probBinomial=50, maxNumberOfOperations=20, simulation=true, k3=0, k2=0, rwRatio=1, k1=1, timeOracleDelay=20, minTimeInterTransactions=0, twopcDelay=20, replicationDelay=20, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=100}].
+16:26:33.431 [main] INFO  m.b.BenchmarkingLauncher <init> - Workload has been generated.
+16:27:21.899 [main] INFO  m.b.BenchmarkingMainTest main - WorkloadStatistics{#T=2000, #C=1287, #A=713, #!VC=380, #!WCF=407, #!BV=352, #!FV=39, #!SV=225, #C/#T=0.6435, #A/#T=0.3565, #!VC/#T=0.19, #!WCF/#T=0.2035, #!BV/#T=0.176, #!FV/#T=0.0195, #!SV/#T=0.1125}
+16:27:21.900 [main] INFO  m.b.BenchmarkingMainTest main - ########## Benchmarking Main Test Finished!!! ##########

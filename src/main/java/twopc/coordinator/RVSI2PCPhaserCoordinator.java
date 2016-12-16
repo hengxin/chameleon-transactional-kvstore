@@ -32,7 +32,7 @@ import twopc.coordinator.phaser.CommitPhaser;
 import twopc.participant.I2PCParticipant;
 import utils.PropertiesUtil;
 
-import static benchmarking.workload.network.NetworkDelayGenerator.simulateInterDCComm;
+import static benchmarking.workload.network.NetworkDelayGenerator.simulateTimeOracleComm;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -110,7 +110,7 @@ public class RVSI2PCPhaserCoordinator extends Abstract2PCCoordinator {
 
         if (toCommitDecision)
             try {
-                simulateInterDCComm();
+                simulateTimeOracleComm();
 
                 cts = new Timestamp(tsOracle.lockStsAndThenGetCts());
             } catch (RemoteException | InterruptedException reie) {

@@ -34,6 +34,23 @@ appender("FILE", FileAppender) {
     encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss} - %msg%n" }
 }
 
+appender("BENCHMAIN", FileAppender) {
+    file = "./logs/chameleon-benchmarking-main-test.log"
+    append = true
+    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss} - %msg%n" }
+}
+
+appender("BENCHBATCHMAIN", RollingFileAppender) {
+    file = "./logs/chameleon-benchmarking-batch-main-test.log"
+    append = true
+    encoder(PatternLayoutEncoder) { pattern = "%d{yyyy-MM-dd_HH:mm:ss} - %msg%n" }
+    rollingPolicy(FixedWindowRollingPolicy) {
+        fileNamePattern = "./logs/chameleon-benchmarking-batch-main-test.%i.log.zip"
+        minIndex = 1
+        maxIndex = 100
+    }
+    triggeringPolicy(SizeBasedTriggeringPolicy) { maxFileSize = "5MB" }
+}
 
 appender("TO", FileAppender) {
     file = "./logs/chameleon-test-to.log"
@@ -70,6 +87,9 @@ logger("benchmarking.BenchmarkingLauncherScriptMainTest", INFO, ["BATCH"])
 // benchmarking
 logger("benchmarking.workload.transaction", INFO)
 logger("benchmarking.executor.client.ClientExecutor", INFO)
+logger("benchmarking.workload.overall.WorkloadGeneratorFromProperties", INFO, ["BENCHMAIN", "BENCHBATCHMAIN"])
+logger("main.benchmarking.BenchmarkingMainTest", INFO, ["BENCHMAIN"])
+logger("main.benchmarking.BenchmarkingBatchMainTest", INFO, ["BENCHBATCHMAIN"])
 
 // context
 logger("client.context", INFO)

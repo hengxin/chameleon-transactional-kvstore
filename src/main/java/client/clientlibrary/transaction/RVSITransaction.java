@@ -30,7 +30,7 @@ import site.ISite;
 import timing.ITimestampOracle;
 import twopc.TransactionCommitResult;
 
-import static benchmarking.workload.network.NetworkDelayGenerator.simulateInterDCComm;
+import static benchmarking.workload.network.NetworkDelayGenerator.simulateClientIssueComm;
 
 /**
  * {@link RVSITransaction} is a kind of transactions with rvsi semantics
@@ -66,7 +66,7 @@ public class RVSITransaction implements ITransaction {
 	 */
 	@Override
 	public boolean begin() throws TransactionBeginException {
-        simulateInterDCComm();
+        simulateClientIssueComm();
 
         ITimestampOracle tsOracle = cctx.getTsOracle();
         LOGGER.debug("The tsOracle for generating sts is [{}].", tsOracle);
@@ -92,7 +92,7 @@ public class RVSITransaction implements ITransaction {
         // then contact the remote site
 		ISite site = cctx.getReadSite(new CompoundKey(r, c));
 		try {
-            simulateInterDCComm();
+            simulateClientIssueComm();
 
 			tsCell = site.get(r, c);
 			queryResults.put(new CompoundKey(r, c), tsCell);
@@ -133,7 +133,7 @@ public class RVSITransaction implements ITransaction {
 		ToCommitTransaction tx = new ToCommitTransaction(sts, bufferedUpdates);
 		
 		try {
-            simulateInterDCComm();
+            simulateClientIssueComm();
 
             TransactionCommitResult transactionCommitResult = cctx.getCoord(tx, vcm).execute2PC(tx, vcm);
 

@@ -12,12 +12,11 @@ import benchmarking.statistics.AbstractWorkloadStatistics;
 import main.benchmarking.BenchmarkingLauncher;
 import utils.ScriptUtil;
 
-import static conf.SiteConfig.IS_IN_SIMULATION_MODE;
-
 /**
  * @author hengxin
  * @date 16-9-15
  */
+@Deprecated
 public class BatchRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(BatchRunner.class);
     private static ExecutorService exec = Executors.newCachedThreadPool();
@@ -58,8 +57,8 @@ public class BatchRunner {
                     LOGGER.info("#####################################################");
                     LOGGER.info("Batch for [{}:{}:{}] starts.", rwRatio, mpl, rvsiTriple);
 
-                    if (! IS_IN_SIMULATION_MODE)
-                        setUp();
+//                    if (! IS_IN_SIMULATION_MODE)
+//                        setUp();
 
                     LOGGER.info("BenchmarkingLauncher starts.");
                     AbstractWorkloadStatistics workloadStat = new BenchmarkingLauncher(rwRatio, mpl, rvsiTriple,
@@ -71,8 +70,8 @@ public class BatchRunner {
                             workloadStat);
                     LOGGER.info("BatchRunner: [{}].", benchmarkingStat.briefReport());
 
-                    if (! IS_IN_SIMULATION_MODE)
-                        destroy();
+//                    if (! IS_IN_SIMULATION_MODE)
+//                        destroy();
 
                     LOGGER.info("Batch for [{}:{}:{}] ends.", rwRatio, mpl, rvsiTriple);
                     LOGGER.info("#####################################################");
