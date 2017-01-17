@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,56 +36,48 @@ public class BenchmarkingBatchMainTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(BenchmarkingBatchMainTest.class);
     private static ExecutorService exec = Executors.newCachedThreadPool();
 
-    private static final String PWD = "/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/src/main" +
-            "/java/main/";
     private static final String JAR_DIR = "/home/hengxin/idea-projects/chameleon-transactional-kvstore-maven/target/";
 
-    private static List<Process> processes = new ArrayList<>();
+    private static String[] chameleonProcesses = new String[] { "slave.jar", "master.jar", "cf.jar", "to.jar" };
 
     private static void startChameleon() throws InterruptedException {
         String[] slaveIds = new String[] { "00", "01", "10", "11", "20", "21" };
         for (String slaveId : slaveIds) {
             exec.submit(() ->
-                    processes.add(
-                            ScriptUtil.exec(new String[]{"java", "-cp", JAR_DIR + "slave.jar", "main.SlaveMainTest",
-                                    "slave/site-slave" + slaveId + ".properties",
-                                    "messaging/socket/sp" + slaveId + ".properties"})));
+                    ScriptUtil.exec(new String[]{"java", "-cp", JAR_DIR + "slave.jar", "main.SlaveMainTest",
+                            "slave/site-slave" + slaveId + ".properties",
+                            "messaging/socket/sp" + slaveId + ".properties"}));
             TimeUnit.SECONDS.sleep(5);
         }
 
         String[] masterIds = new String[] { "0", "1", "2" };
         for (String masterId : masterIds) {
             exec.submit(() ->
-                    processes.add(
-                            ScriptUtil.exec(new String[]{"java", "-cp", JAR_DIR + "master.jar", "main.MasterMainTest",
-                                    "master/site-master" + masterId + ".properties",
-                                    "messaging/socket/sa" + masterId + ".properties"})));
+                    ScriptUtil.exec(new String[]{"java", "-cp", JAR_DIR + "master.jar", "main.MasterMainTest",
+                            "master/site-master" + masterId + ".properties",
+                            "messaging/socket/sa" + masterId + ".properties"}));
             TimeUnit.SECONDS.sleep(5);
         }
 
         for (String masterId : masterIds) {
             exec.submit(() ->
-                    processes.add(
-                            ScriptUtil.exec(new String[]{"java", "-cp", JAR_DIR + "cf.jar", "main.CoordinatorFactoryMainTest",
-                                    "membership/coordinator/cf" + masterId + ".properties",
-                                    "timing/to.properties"})));
+                    ScriptUtil.exec(new String[]{"java", "-cp", JAR_DIR + "cf.jar", "main.CoordinatorFactoryMainTest",
+                            "membership/coordinator/cf" + masterId + ".properties",
+                            "timing/to.properties"}));
             TimeUnit.SECONDS.sleep(5);
         }
 
         exec.submit(() ->
-                processes.add(
-                        ScriptUtil.exec(new String[]{"java", "-cp", JAR_DIR + "to.jar", "main.CentralizedTimestampOracleMainTest",
-                                "timing/to.properties"})));
-        TimeUnit.SECONDS.sleep(5);
+                ScriptUtil.exec(new String[]{"java", "-cp", JAR_DIR + "to.jar", "main.CentralizedTimestampOracleMainTest",
+                        "timing/to.properties"}));
     }
 
-    private static void destroyChameleon() {
-        for (Process proc : processes)
-            proc.destroyForcibly();
+    private static void destroyChameleon() throws IOException {
+        ScriptUtil.exec(new String[] { Paths.get(".").toAbsolutePath().normalize()
+                .toAbsolutePath() + "/src/main/java/utils/kill.sh" });
     }
 
     public static void main(String[] args) throws IOException {
-
         String workloadProperties = args[0];
         String siteProperties = args[1];
         String cfProperties = args[2];
@@ -97,8 +88,8 @@ public class BenchmarkingBatchMainTest {
         // set simulation mode
         workProp.setProperty(SIMULATION.param(), "true");
 
-        String[] sizesOfKeyspace = new String[]{"4", "5", "7"};
-        String[] rwRatios = new String[]{"0.5", "1", "4", "9"};
+        String[] sizesOfKeyspace = new String[]{"7"}; // 3, 4, 5, 7
+        String[] rwRatios = new String[]{"9"}; // 0.5, 1, 4, 9
         String[] issueDelays = new String[]{"2", "3", "4", "5", "10", "15", "20"};
         String[] otherDelays = new String[]{"10", "20", "50", "100"};
 
@@ -125,12 +116,7 @@ public class BenchmarkingBatchMainTest {
                         // run benchmarking with workload parameters above
                         try {
                             startChameleon();
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        }
-
-                        try {
-                            TimeUnit.SECONDS.sleep(5);
+                            TimeUnit.SECONDS.sleep(10);
                         } catch (InterruptedException ie) {
                             ie.printStackTrace();
                         }
