@@ -1,49 +1,37 @@
 package slave;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import exception.MemberParseException;
+import conf.SiteConfig;
 import exception.SiteException;
-import jms.AbstractJMSParticipant;
-import jms.slave.JMSCommitLogSubscriber;
+import messaging.socket.SocketMsgListener2;
 import site.AbstractSite;
 import slave.context.SlaveContext;
 
-public class SlaveLauncher
-{
+public class SlaveLauncher {
 	private final static Logger LOGGER = LoggerFactory.getLogger(SlaveLauncher.class);
-	
-	private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "slave/membership-slave.properties";
 
 	/**
-	 * Launch with default properties file, which is
-	 * {@value #MASTER_MEMBERSHIP_PROPERTIES_FILE}.
-	 * @throws SiteException 
-	 * @throws MemberParseException 
+     * Constructor with default site.properties ({@value SiteConfig#DEFAULT_SLAVE_SITE_PROPERTIES})
+     * and default sp.properties ({@value SiteConfig#DEFAULT_SOCKET_PORT_PROPERTIES}).
+	 * @throws SiteException
 	 */
-	public SlaveLauncher() throws SiteException, MemberParseException
-	{
-		this(MASTER_MEMBERSHIP_PROPERTIES_FILE);
+	public SlaveLauncher() throws SiteException {
+		this(SiteConfig.DEFAULT_SLAVE_SITE_PROPERTIES, SiteConfig.DEFAULT_SOCKET_PORT_PROPERTIES);
 	}
 	
 	/**
 	 * Launch with user-specified properties file.
-	 * @param file
-	 * 		Path of the properties file.
+	 * @param siteProperties path of the properties file.
 	 * @throws SiteException 
-	 * @throws MemberParseException 
 	 */
-	public SlaveLauncher(String file) throws SiteException, MemberParseException
-	{
-		SlaveContext context = new SlaveContext(file);
-		AbstractSite slave = new RCSlave(context);
-		
-		AbstractJMSParticipant subscriber = new JMSCommitLogSubscriber();
-		slave.registerAsJMSParticipant(subscriber);
-		
-		slave.export();
-		
+	public SlaveLauncher(@NotNull String siteProperties, String spProperties) throws SiteException {
+		SlaveContext context = new SlaveContext(siteProperties);
+        AbstractSite slave = new RCSlave(context, new SocketMsgListener2(spProperties));
+
 		LOGGER.info("Slave [{}] has been successfully launched.", slave);
 	}
+
 }

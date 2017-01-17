@@ -4,11 +4,21 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import client.clientlibrary.transaction.RVSITransactionTest;
+import client.clientlibrary.partitioning.PartitioningTestSuite;
+import client.clientlibrary.rvsi.RVSITestSuite;
+import client.clientlibrary.transaction.TransactionTestSuite;
 
+/**
+ * Test suite for this package {@link client.clientlibrary}.
+ * @author hengxin
+ * @date Created on Dec 6, 2015
+ */
 @RunWith(Suite.class)
-@SuiteClasses({ RVSITransactionTest.class })
-public class ClientLibraryTestSuite
-{
+@SuiteClasses({ 
+	PartitioningTestSuite.class,
+	RVSITestSuite.class,
+	TransactionTestSuite.class
+	})
+public class ClientLibraryTestSuite {
 
 }

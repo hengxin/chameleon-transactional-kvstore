@@ -1,12 +1,21 @@
 package client.clientlibrary.transaction;
 
-import java.util.Objects;
-
 import com.google.common.base.MoreObjects;
 
-import ch.qos.logback.core.helpers.ThrowableToStringArray;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+import java.util.Objects;
+
+import client.clientlibrary.partitioning.IPartitioner;
 import kvs.component.Timestamp;
-import messages.AbstractMessage;
+import messaging.AbstractMessage;
+import site.ISite;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author hengxin
@@ -15,41 +24,84 @@ import messages.AbstractMessage;
  * <p> To represent the transaction which is about to commit;
  * It consists of a transaction's start-timestamp and buffered updates.
  */
-public class ToCommitTransaction extends AbstractMessage
-{
+public class ToCommitTransaction extends AbstractMessage {
 	private static final long serialVersionUID = -137070517043340731L;
 
-	private final Timestamp sts;
-	private final BufferedUpdates bufferedUpdates;
+	@NotNull private final Timestamp sts;
+    private Timestamp cts;
+	@NotNull private final BufferedUpdates updates;
 	
-	public ToCommitTransaction(Timestamp sts, BufferedUpdates updates)
-	{
+	public ToCommitTransaction(@NotNull Timestamp sts, @NotNull BufferedUpdates updates) {
 		this.sts = sts;
-		this.bufferedUpdates = updates;
+		this.updates = updates;
 	}
 
-	public Timestamp getSts()
-	{
-		return sts;
-	}
+	@NotNull
+    public Timestamp getSts() { return sts; }
+    public Timestamp getCts() { return cts; }
+    public void setCts(@NotNull final Timestamp cts) { this.cts = cts; }
 
-	public BufferedUpdates getBufferedUpdates()
-	{
-		return bufferedUpdates;
+    @NotNull
+    public BufferedUpdates getBufferedUpdates() { return updates; }
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(sts, updates);
 	}
 	
 	@Override
-	public int hashCode()
-	{
-		return Objects.hash(this.sts, this.bufferedUpdates);
+	public boolean equals(Object o) {
+		if(o == this)
+			return true;
+		if(o == null || o.getClass() != this.getClass())
+			return false;
+
+		ToCommitTransaction that = (ToCommitTransaction) o;
+		
+		return Objects.equals(this.sts, that.sts)
+				&& Objects.equals(this.updates, that.updates);
 	}
-	
-	@Override
-	public String toString()
-	{
+
+    /**
+     * Partition a {@link ToCommitTransaction} into multiple ones, according to
+     * {@link IPartitioner}.
+     *
+     * @param partitioner instance of {@link IPartitioner}
+     * @param buckets	number of buckets (i.e., {@link ISite})
+     * @return a map from the index of an {@link ISite} to the sub-{@link ToCommitTransaction} it is responsible for
+     *
+     * @see <a href="http://stackoverflow.com/q/34648849/1833118">groupingBy and collectingAndThen@stackoverflow</a>
+     */
+    public Map<Integer, ToCommitTransaction> partition(@NotNull IPartitioner partitioner, int buckets) {
+        return getBufferedUpdates().stream()
+                .collect(groupingBy(item -> partitioner.locateSiteIndexFor(item.getCK(), buckets),
+                        collectingAndThen(toList(), items -> new ToCommitTransaction(sts, new BufferedUpdates(items)))));
+    }
+
+	/**
+	 * Merges two {@link ToCommitTransaction}s and returns a new one. The original {@link ToCommitTransaction}s
+	 * are not modified.
+	 * @param firstTx	{@link ToCommitTransaction} to be merged
+	 * @param secondTx {@link ToCommitTransaction} to be merged
+	 * @return	a new {@link ToCommitTransaction}
+	 * 
+	 * @throws AssertionError if the two {@link ToCommitTransaction}s to be merged have different (start-)timestamps.
+	 */
+	@NotNull
+    public static ToCommitTransaction merge(@NotNull ToCommitTransaction firstTx, @NotNull ToCommitTransaction secondTx) {
+		Timestamp sts = firstTx.sts;
+		assertEquals("Two ToCommitTransactions be to merged should have the same timestamp.", sts, secondTx.sts);
+		return new ToCommitTransaction(sts, BufferedUpdates.merge(firstTx.updates, secondTx.updates));
+	}
+
+	@NotNull
+    @Override
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.addValue(this.sts)
-				.addValue(this.bufferedUpdates)
+				.addValue(sts)
+                .addValue(cts)
+				.addValue(updates)
 				.toString();
 	}
+
 }

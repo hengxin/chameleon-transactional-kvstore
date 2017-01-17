@@ -1,11 +1,15 @@
 package kvs.component;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.google.common.base.MoreObjects;
-
-import net.jcip.annotations.ThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * We denote the position of some version of a data item <code>x</code> in its 
@@ -22,43 +26,52 @@ import net.jcip.annotations.ThreadSafe;
  *  	Why are two AtomicIntegers never equal? @ StackOverflow</a>
  */
 @ThreadSafe
-public final class Ordinal implements Serializable
-{
+public final class Ordinal implements Serializable {
 	private static final long serialVersionUID = -8037347322531588752L;
 
-	public final static Ordinal ORDINAL_INIT = new Ordinal(0L);
+	@NotNull
+    private final AtomicLong ord;
 	
-	private final AtomicLong ord;	
-	
-	public Ordinal(long ord)
-	{
-		this.ord = new AtomicLong(ord);
-	}
-	
+	public Ordinal(long ord) { this.ord = new AtomicLong(ord); }
+
+    /**
+     * @return a <it>new</it> initial ordinal with value of 0L
+     */
+	public static Ordinal ORDINAL_INIT() { return new Ordinal(0L); }
+
 	/**
 	 * Atomically increments by one the current ordinal.
-	 * @return
-	 * 	the <i>new</i> updated ordinal.
+	 * @return 	the <i>new</i> updated ordinal.
 	 */
-	public Ordinal incrementAndGet()
-	{
-		return new Ordinal(this.ord.incrementAndGet());
-	}
+	@NotNull
+    public Ordinal incrementAndGet() { return new Ordinal(ord.incrementAndGet()); }
+
+	public long getOrd() { return ord.get(); }
 	
 	/**
-	 * @return
-	 * 	the {@link #ord} value
+	 * Needed for possible equal-testing methods.
+	 * For example, CollectionUtils#isEqualCollection()
+	 * of org.apache.commons.collections4 uses {@link Map} internally.
 	 */
-	public long getOrd()
-	{
-		return this.ord.get();
+	@Override
+	public int hashCode() { return Objects.hashCode(ord.get()); }
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o == this)
+			return true;
+        if (o == null || !(this.getClass() == o.getClass()))
+            return false;
+
+        Ordinal that = (Ordinal) o;
+		return this.getOrd() == that.getOrd();
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.add("ord", this.ord)
+				.add("ord", ord)
 				.toString();
 	}
+
 }

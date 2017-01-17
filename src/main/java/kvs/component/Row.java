@@ -3,11 +3,13 @@
  */
 package kvs.component;
 
-import java.io.Serializable;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
 
 import kvs.table.AbstractTable;
 
@@ -17,37 +19,22 @@ import kvs.table.AbstractTable;
  * 
  * Row keys of the {@link AbstractTable}.
  */
-public class Row implements Comparable<Row>, Serializable
-{
+public class Row implements Comparable<Row>, Serializable {
 	private static final long serialVersionUID = -971488511398300319L;
 
-	private final String row_key;
+	private final String row;
 	
-	public Row(String key)
-	{
-		this.row_key = key;
-	}
-	
-	public String getRowKey()
-	{
-		return this.row_key;
-	}
+	public Row(String key) { this.row = key; }
+	public String getRow() { return this.row; }
 
 	@Override
-	public int compareTo(Row that)
-	{
-		return ComparisonChain.start().compare(this.row_key, that.row_key).result();
-	}
+	public int compareTo(@NotNull Row that) { return ComparisonChain.start().compare(this.row, that.row).result(); }
 	
 	@Override
-	public int hashCode() 
-	{
-		return Objects.hashCode(this.row_key);
-	}
+	public int hashCode() { return Objects.hashCode(this.row); }
 	
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		if(o == this)
 			return true;
 		if(o == null)
@@ -56,12 +43,13 @@ public class Row implements Comparable<Row>, Serializable
 			return false;
 		
 		Row that = (Row) o;
-		return Objects.equal(this.row_key, that.row_key);
+		return Objects.equal(this.row, that.row);
 	}
 	
-	@Override
-	public String toString()
-	{
-		return MoreObjects.toStringHelper(this).add("row_key", this.row_key).toString();
+    @Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+                .add("row", row)
+                .toString();
 	}
 }

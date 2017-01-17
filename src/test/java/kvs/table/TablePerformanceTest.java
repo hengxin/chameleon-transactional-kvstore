@@ -2,6 +2,7 @@ package kvs.table;
 
 import java.util.Random;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +30,8 @@ public class TablePerformanceTest
 
 	private Thread timer;
 	
-	private	Random rand = new Random();
+	@NotNull
+    private	Random rand = new Random();
 	
 	private final String[] string_range = new String[RANGE];
 	private final Row[] row_range = new Row[RANGE];

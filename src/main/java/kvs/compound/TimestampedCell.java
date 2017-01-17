@@ -4,11 +4,15 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.concurrent.ThreadSafe;
+
 import kvs.component.Cell;
 import kvs.component.Ordinal;
 import kvs.component.Timestamp;
-import net.jcip.annotations.Immutable;
-import net.jcip.annotations.ThreadSafe;
+
+import static kvs.component.Ordinal.ORDINAL_INIT;
 
 /**
  * A {@link TimestampedCell} is a {@link Cell} associated with a {@link Timestamp} (beside its {@link Ordinal}).
@@ -17,15 +21,12 @@ import net.jcip.annotations.ThreadSafe;
  * @date Created on 11-10-2015
  * 
  * @implNote
- * 	A {@link TimestampedCell} is uniquely identified by its {@value #ts} ({@link Timestamp}) field.
+ * 	A {@link TimestampedCell} is uniquely identified by its {@link #ts} ({@link Timestamp}) field.
  *  See its {@link #compareTo(ITimestampedCell)}, {@link #hashCode()}, and {@link #equals(Object)}.
- * 
- * <p> FIXME How to update {@link #ord}???
+ *  <p> Builder design pattern???
  */
-@Immutable
 @ThreadSafe
-public class TimestampedCell implements ITimestampedCell
-{
+public class TimestampedCell implements ITimestampedCell {
 	private static final long serialVersionUID = -764314996680845231L;
 
 	private final Timestamp ts; 
@@ -33,22 +34,21 @@ public class TimestampedCell implements ITimestampedCell
 	private final Cell cell; 
 	
 	/**
-	 * Initial value: {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
+	 * Initial value: {@link Timestamp#TIMESTAMP_INIT}, {@link Ordinal#ORDINAL_INIT}, and {@link Cell#CELL_INIT}
 	 */
 	public final static TimestampedCell TIMESTAMPED_CELL_INIT = new TimestampedCell();
 	
 	/**
-	 * Default constructor with {@value Timestamp#TIMESTAMP_INIT}, {@value Ordinal#ORDINAL_INIT}, and {@value Cell#CELL_INIT}
+	 * Default constructor with {@link Timestamp#TIMESTAMP_INIT}, {@link Ordinal#ORDINAL_INIT},
+     * and {@link Cell#CELL_INIT}
 	 */
-	public TimestampedCell() 
-	{
-		this.ts = Timestamp.TIMESTAMP_INIT;
-		this.ord = Ordinal.ORDINAL_INIT;
-		this.cell = Cell.CELL_INIT;
+	public TimestampedCell() {
+		ts = Timestamp.TIMESTAMP_INIT;
+		ord = ORDINAL_INIT();
+		cell = Cell.CELL_INIT;
 	}
 	
-	public TimestampedCell(Timestamp ts, Ordinal ord, Cell c)
-	{
+	public TimestampedCell(Timestamp ts, Ordinal ord, Cell c) {
 		this.ts = ts;
 		this.ord = ord;
 		this.cell = c;
@@ -59,47 +59,39 @@ public class TimestampedCell implements ITimestampedCell
 	 * @param ts {@link Timestamp}
 	 * @param c {@link Cell}
 	 */
-	public TimestampedCell(Timestamp ts, Cell c)
-	{
+	public TimestampedCell(Timestamp ts, Cell c) {
 		this.ts = ts;
 		this.cell = c;
-		this.ord = Ordinal.ORDINAL_INIT;
+		this.ord = ORDINAL_INIT();
 	}
 	
 	/**
 	 * Constructor with only {@link #cell}, if {@link #ts} and {@link #ord} are not relevant. 
 	 * @param cell
 	 */
-	public TimestampedCell(Cell cell)
-	{
+	public TimestampedCell(Cell cell) {
 		this.cell = cell;
 		this.ts = Timestamp.TIMESTAMP_INIT;
-		this.ord = Ordinal.ORDINAL_INIT;
+		this.ord = ORDINAL_INIT();
 	}
 
-	@Override
-	public Timestamp getTS()
-	{
-		return this.ts;
-	}
-	
-	public Ordinal getOrdinal()
-	{
-		return this.ord;
+	@NotNull
+    public static TimestampedCell replaceTimestamp(Timestamp ts, @NotNull ITimestampedCell tsCell) {
+		return new TimestampedCell(ts, tsCell.getOrdinal(), tsCell.getCell());
 	}
 	
 	@Override
-	public Cell getCell()
-	{
-		return this.cell;
-	}
+	public Timestamp getTS() { return ts; }
+	public Ordinal getOrdinal() { return ord; }
+	
+	@Override
+	public Cell getCell() { return cell; }
 	
 	/**
 	 * Compared by their {@link #ts} (of class {@link Timestamp}).
 	 */
 	@Override
-	public int compareTo(ITimestampedCell that)
-	{
+	public int compareTo(@NotNull ITimestampedCell that) {
 		return ComparisonChain.start().compare(this.ts, ((TimestampedCell) that).ts).result();
 	}
 
@@ -108,8 +100,7 @@ public class TimestampedCell implements ITimestampedCell
 	 * Consistent with {@link #compareTo(ITimestampedCell)}.
 	 */
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		return Objects.hashCode(this.ts); 
 	}
 	
@@ -118,8 +109,7 @@ public class TimestampedCell implements ITimestampedCell
 	 * Consistent with {@link #compareTo(ITimestampedCell)}.
 	 */
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		if(o == this)
 			return true;
 		if(o == null)
@@ -131,11 +121,12 @@ public class TimestampedCell implements ITimestampedCell
 		return Objects.equal(this.ts, that.ts);
 	}
 
-	@Override
-	public String toString()
-	{
+	@NotNull
+    @Override
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
 				.addValue(this.ts).addValue(this.ord).addValue(this.cell)
 				.toString();
 	}
+
 }

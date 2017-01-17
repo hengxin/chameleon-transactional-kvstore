@@ -2,8 +2,17 @@ package kvs.compound;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.google.common.collect.ComparisonChain;
 
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+import java.util.Comparator;
+
+import kvs.component.Cell;
+import kvs.component.Column;
+import kvs.component.Row;
 import kvs.component.Timestamp;
 
 /**
@@ -13,71 +22,66 @@ import kvs.component.Timestamp;
  * @author hengxin
  * @date Created on 11-29-2015
  */
-public class KVItem implements Comparable<KVItem>
-{
-	private final CompoundKey ck;
-	private final ITimestampedCell ts_cell;
-	
-	public KVItem(final CompoundKey ck, ITimestampedCell ts_cell)
-	{
-		this.ck = ck;
-		this.ts_cell = ts_cell;
-	}
-	
-	public CompoundKey getCk()
-	{
-		return ck;
-	}
-	
-	public ITimestampedCell getTscell()
-	{
-		return ts_cell;
-	}
+public final class KVItem implements Serializable {
+	private static final long serialVersionUID = 2520894384542543711L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(KVItem.class);
 
-	/**
-	 * Compared by {@link #ts_cell}, which is (see {@link TimestampedCell}) 
-	 * in turn sorted by {@link Timestamp}.
-	 */
-	@Override
-	public int compareTo(KVItem that)
-	{
-		return ComparisonChain.start().compare(this.ts_cell, that.ts_cell).result();
+	private final CompoundKey ck;
+	private final ITimestampedCell tsCell;
+	
+	public KVItem(final Row r, final Column c, final Cell cell) {
+		this(new CompoundKey(r, c), new TimestampedCell(cell));
+	}
+	
+	public KVItem(final CompoundKey ck, final Cell cell) {
+		this(ck, new TimestampedCell(cell));
+	}
+	
+	public KVItem(final CompoundKey ck, ITimestampedCell tsCell) {
+		this.ck = ck;
+		this.tsCell = tsCell;
 	}
 	
 	/**
-	 * Only hashCode {@link #ts_cell}.
-	 * Consistent with {@link #compareTo(KVItem)}.
+	 * {@link Comparator} for {@link KVItem} by their {@link #tsCell}, which in turn compared by {@link Timestamp}.
+	 * <p>
+	 * <b>Note:</b> This ordering is not consistent with {@link #hashCode()} and {@link #equals(Object)}.
+	 */
+	public static final Comparator<KVItem> COMPARATOR_BY_TIMESTAMP = Comparator.comparing(KVItem::getTsCell);
+	
+	public CompoundKey getCK() { return ck; }
+	public ITimestampedCell getTsCell() { return tsCell; }
+	
+	/**
+	 * Only hashCode {@link #ck}.
 	 */
 	@Override
-	public int hashCode()
-	{
-		return Objects.hashCode(this.ts_cell);
+	public int hashCode() {
+		return Objects.hashCode(ck);
 	}
 	
 	/**
-	 * Only check {@link #ts_cell}.
-	 * Consistent with {@link #compareTo(KVItem)}.
+	 * Only check {@link #ck}.
 	 */
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(@Nullable Object o) {
 		if(o == this)
 			return true;
 		if(o == null)
 			return false;
-		if(! (this.getClass() == o.getClass()))
+		if(this.getClass() != o.getClass())
 			return false;
 		
 		KVItem that = (KVItem) o;
-		return Objects.equal(this.ts_cell, that.ts_cell);
+		return Objects.equal(this.ck, that.ck);
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.addValue(this.ck)
-				.addValue(this.ts_cell)
+				.addValue(ck)
+				.addValue(tsCell)
 				.toString();
 	}
+
 }

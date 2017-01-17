@@ -1,5 +1,7 @@
 package kvs.table.table2;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -16,12 +18,11 @@ import kvs.table.AbstractTable;
  * @author hengxin
  * @date Created on Dec 19, 2015
  */
-public class AbstractTable2
-{
+public class AbstractTable2 {
 	private final ConcurrentMap<Row, Columns> table = new ConcurrentHashMap<>();
 	
-	public ITimestampedCell get(Row row, Column col)
-	{
+	@Nullable
+    public ITimestampedCell get(Row row, Column col) {
 //		this.table.computeIfAbsent(row, Columns::new)
 		return null;
 	}

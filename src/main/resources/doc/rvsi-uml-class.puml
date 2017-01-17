@@ -1,0 +1,48 @@
+@startuml
+
+class RVSISpecificationManager {
+  rvsiSpecs : List<AbstractRVSISpecification>
+  VersionConstraintManager : generateVCManager()
+}
+
+abstract class AbstractRVSISpecification {
+  vceInfos : List<VCEntryRawInfo>
+}
+
+class BVSpecification
+class FVSpecification
+class SVSpecification
+
+class VCEntryRawInfo
+
+RVSISpecificationManager o- AbstractRVSISpecification
+AbstractRVSISpecification o- VCEntryRawInfo
+
+AbstractRVSISpecification <|-- BVSpecification
+AbstractRVSISpecification <|-- FVSpecification
+AbstractRVSISpecification <|-- SVSpecification
+
+RVSISpecificationManager -- VersionConstraintManager : generate >
+
+class VersionConstraintManager {
+  vcList : List<AbstractVersionConstraint>
+}
+
+abstract class AbstractVersionConstraint {
+  vcEntries : List<VCEntry>
+}
+
+class BVVersionConstraint
+class FVVersionConstraint
+class SVVersionConstraint
+
+class VCEntry
+
+VersionConstraintManager o-- AbstractVersionConstraint
+AbstractVersionConstraint o- VCEntry
+
+AbstractVersionConstraint <|-- BVVersionConstraint
+AbstractVersionConstraint <|-- FVVersionConstraint
+AbstractVersionConstraint <|-- SVVersionConstraint
+
+@enduml

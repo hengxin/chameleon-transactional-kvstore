@@ -1,27 +1,27 @@
 package rmi;
 
-import exception.SiteException;
+import exception.rmi.RMIRegistryException;
 
 /**
- * Using Java-RMI as the mechanism of synchronous communication
- * between clients and the remote sites.
- * 
+ * Interface {@link IRMI} exposes {@link #export()} and {@link #reclaim()}
+ * operations for remote RMI accesses. 
  * @author hengxin
  * @date Created on 12-03-2015
  */
-public interface IRMI
-{
-	/** 
+public interface IRMI {
+
+    int RMI_REGISTRY_PORT = 1099;
+
+	/**
 	 * A remote object (is able to and) exports itself for remote accesses.
-	 * 
-	 * @throws SiteException if an error occurs during export.
+	 * @throws RMIRegistryException if an error occurs during export.
 	 */
-	public void export() throws SiteException;
+    void export();
 	
 	/**
 	 * A remote object reclaims itself from remote accesses.
-	 * 
-	 * @throws SiteException if an error occurs during reclaim.
+	 * @throws RMIRegistryException if an error occurs during reclaim.
 	 */
-	public void reclaim() throws SiteException;
+    void reclaim();
+
 }

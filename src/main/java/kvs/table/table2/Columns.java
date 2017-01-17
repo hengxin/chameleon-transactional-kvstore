@@ -1,5 +1,8 @@
 package kvs.table.table2;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -11,17 +14,14 @@ import kvs.table.ITimestampedCellStore;
  * @author hengxin
  * @date Created on Dec 19, 2015
  */
-public class Columns
-{
-	private final ConcurrentMap<Column, ITimestampedCellStore> columns;
+public class Columns {
+	@NotNull
+    private final ConcurrentMap<Column, ITimestampedCellStore> columns;
 	
-	public Columns(Row row)
-	{
-		this.columns = new ConcurrentHashMap<>();
-	}
+	public Columns(Row row) { columns = new ConcurrentHashMap<>(); }
 	
-	public ITimestampedCellStore get(Column col)
-	{
+	@Nullable
+    public ITimestampedCellStore get(Column col) {
 //		return this.columns.computeIfAbsent(col -> )
 		return null;
 	}

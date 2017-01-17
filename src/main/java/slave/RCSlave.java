@@ -1,63 +1,54 @@
 package slave;
 
-import java.rmi.RemoteException;
+import org.jetbrains.annotations.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import client.clientlibrary.rvsi.rvsimanager.VersionConstraintManager;
-import client.clientlibrary.transaction.ToCommitTransaction;
-import context.IContext;
-import exception.transaction.TransactionExecutionException;
-import jms.AbstractJMSParticipant;
-import kvs.component.Timestamp;
+import context.AbstractContext;
 import kvs.table.SlaveTable;
-import messages.AbstractMessage;
-import messages.IMessageConsumer;
-import site.AbstractSite;
+import messaging.IMessageListener;
+import messaging.IMessageListener2;
+import messaging.jms.slave.JMSSubscriber;
+import site.ITransactional;
 
 /**
- * A slave only need to enforce the "Read Committed" isolation on {@link SlaveTable}.
- * 
+ * A {@link RCSlave} only needs to enforce the "Read Committed" isolation
+ * on the underlying {@link super#table}.
+ * <p>Note that in the architecture, slave sites are not involved in the
+ * distributed transaction protocol. Therefore, {@link RCSlave} does not
+ * implement interface {@link ITransactional}.
  * @author hengxin
  * @date Created on 11-25-2015
  */
-public class RCSlave extends AbstractSite implements IMessageConsumer
-{
-	private final static Logger LOGGER = LoggerFactory.getLogger(RCSlave.class);
-	
-	public RCSlave(IContext context)
-	{
-		super(context);
-		super.table = new SlaveTable();
-	}
+public final class RCSlave extends AbstractSlave {
 
 	/**
-	 * {@inheritDoc}
+	 * Constructor with {@link SlaveTable} as the default underlying table
+	 * and with {@link JMSSubscriber} as the default underlying 
+	 * mechanism for receiving message.
+	 * @param context	context for this slave site
 	 */
-	@Override
-	public void onMessage(AbstractMessage msg)
-	{
-		LOGGER.info("Receiving commit log [{}].", msg);
-		super.table.apply((ToCommitTransaction) msg);
-	}
-	
-	@Override
-	public void registerAsJMSParticipant(AbstractJMSParticipant jmser)
-	{
-		super.registerAsJMSParticipant(jmser);
-		jmser.bindto(this);
+	public RCSlave(AbstractContext context) {
+		super(context, new JMSSubscriber());
+		table = new SlaveTable();
 	}
 
-	@Override
-	public Timestamp start() throws RemoteException, TransactionExecutionException
-	{
-		throw new UnsupportedOperationException("Slaves do not support transaction start.");
+	public RCSlave(AbstractContext context, @Nullable IMessageListener2 listener2) {
+	    super(context, listener2);
+        table = new SlaveTable();
+    }
+
+	/**
+	 * Constructor with {@link SlaveTable} as the default underlying table
+	 * and with user-specified {@link IMessageListener} as the underlying
+	 * mechanism of message communication.
+	 * @param context	context for the master site
+	 * @param listener	the underlying mechanism of receiving messages; 
+	 * 	it can be {@code null} if this slave site does not receive messages. 
+	 * @implNote
+	 *   FIXME removing the default {@link SlaveTable}; putting it into the parameters.
+	 */
+	@Deprecated
+	public RCSlave(AbstractContext context, @Nullable IMessageListener listener) {
+		super(context, listener);
 	}
 
-	@Override
-	public boolean commit(ToCommitTransaction tx, VersionConstraintManager vc_manager) throws RemoteException
-	{
-		throw new UnsupportedOperationException("Slaves do not support transaction commit.");
-	}
 }

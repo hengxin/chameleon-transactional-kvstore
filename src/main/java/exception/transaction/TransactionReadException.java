@@ -5,12 +5,8 @@ package exception.transaction;
  * @author hengxin
  * @date Created on Dec 12, 2015
  */
-public class TransactionReadException extends TransactionExecutionException
-{
+public class TransactionReadException extends TransactionExecutionException {
 	private static final long serialVersionUID = 7167807521238568552L;
 
-	public TransactionReadException(String msg, Throwable cause)
-	{
-		super(msg, cause);
-	}
+	public TransactionReadException(String msg, Throwable cause) { super(msg, cause); }
 }

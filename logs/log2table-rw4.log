@@ -1,0 +1,84 @@
+#####################################################
+Batch for [4:10:1-0-0] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#C=6946, #A=3054, #!VC=2057, #!WCF=1606, #T=10000, #C/#T=0.6946, #A/#T=0.3054, #!VC/#T=0.2057, #!WCF/#T=0.1606}}].
+Batch for [4:10:1-0-0] ends.
+#####################################################
+#####################################################
+Batch for [4:15:1-0-0] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#C=10222, #A=4778, #!VC=3204, #!WCF=2579, #T=15000, #C/#T=0.6814666666666667, #A/#T=0.31853333333333333, #!VC/#T=0.2136, #!WCF/#T=0.17193333333333333}}].
+Batch for [4:15:1-0-0] ends.
+#####################################################
+#####################################################
+Batch for [4:20:1-0-0] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#C=13164, #A=6836, #!VC=4584, #!WCF=3697, #T=20000, #C/#T=0.6582, #A/#T=0.3418, #!VC/#T=0.2292, #!WCF/#T=0.18485}}].
+Batch for [4:20:1-0-0] ends.
+#####################################################
+#####################################################
+Batch for [4:10:3-3-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=3, k2=3, k3=1}, workloadStat=WorkloadStatistics{#C=8154, #A=1846, #!VC=22, #!WCF=1834, #T=10000, #C/#T=0.8154, #A/#T=0.1846, #!VC/#T=0.0022, #!WCF/#T=0.1834}}].
+Batch for [4:10:3-3-1] ends.
+#####################################################
+#####################################################
+Batch for [4:15:3-3-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=3, k2=3, k3=1}, workloadStat=WorkloadStatistics{#C=12073, #A=2927, #!VC=45, #!WCF=2902, #T=15000, #C/#T=0.8048666666666666, #A/#T=0.19513333333333333, #!VC/#T=0.003, #!WCF/#T=0.19346666666666668}}].
+Batch for [4:15:3-3-1] ends.
+#####################################################
+#####################################################
+Batch for [4:20:3-3-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=3, k2=3, k3=1}, workloadStat=WorkloadStatistics{#C=16009, #A=3991, #!VC=41, #!WCF=3972, #T=20000, #C/#T=0.80045, #A/#T=0.19955, #!VC/#T=0.00205, #!WCF/#T=0.1986}}].
+Batch for [4:20:3-3-1] ends.
+#####################################################
+#####################################################
+Batch for [4:10:4-4-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=4, k2=4, k3=1}, workloadStat=WorkloadStatistics{#C=8173, #A=1827, #!VC=21, #!WCF=1817, #T=10000, #C/#T=0.8173, #A/#T=0.1827, #!VC/#T=0.0021, #!WCF/#T=0.1817}}].
+Batch for [4:10:4-4-1] ends.
+#####################################################
+#####################################################
+Batch for [4:15:4-4-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=4, k2=4, k3=1}, workloadStat=WorkloadStatistics{#C=12079, #A=2921, #!VC=29, #!WCF=2904, #T=15000, #C/#T=0.8052666666666667, #A/#T=0.19473333333333334, #!VC/#T=0.0019333333333333333, #!WCF/#T=0.1936}}].
+Batch for [4:15:4-4-1] ends.
+#####################################################
+#####################################################
+Batch for [4:20:4-4-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=4, k2=4, k3=1}, workloadStat=WorkloadStatistics{#C=15843, #A=4157, #!VC=53, #!WCF=4129, #T=20000, #C/#T=0.79215, #A/#T=0.20785, #!VC/#T=0.00265, #!WCF/#T=0.20645}}].
+Batch for [4:20:4-4-1] ends.
+#####################################################
+#####################################################
+Batch for [4:10:2-2-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=10, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#C=8132, #A=1868, #!VC=13, #!WCF=1862, #T=10000, #C/#T=0.8132, #A/#T=0.1868, #!VC/#T=0.0013, #!WCF/#T=0.1862}}].
+Batch for [4:10:2-2-1] ends.
+#####################################################
+#####################################################
+Batch for [4:15:2-2-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=15, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#C=12156, #A=2844, #!VC=37, #!WCF=2826, #T=15000, #C/#T=0.8104, #A/#T=0.1896, #!VC/#T=0.0024666666666666665, #!WCF/#T=0.1884}}].
+Batch for [4:15:2-2-1] ends.
+#####################################################
+#####################################################
+Batch for [4:20:2-2-1] begins.
+BenchmarkingLauncher starts.
+BenchmarkingLauncher ends.
+BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=2, k3=1}, workloadStat=WorkloadStatistics{#C=15796, #A=4204, #!VC=64, #!WCF=4169, #T=20000, #C/#T=0.7898, #A/#T=0.2102, #!VC/#T=0.0032, #!WCF/#T=0.20845}}].
+Batch for [4:20:2-2-1] ends.
+#####################################################

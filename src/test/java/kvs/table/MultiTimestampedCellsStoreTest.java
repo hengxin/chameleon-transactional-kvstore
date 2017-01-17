@@ -2,6 +2,7 @@ package kvs.table;
 
 import static org.junit.Assert.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,11 +13,15 @@ import kvs.compound.TimestampedCell;
 
 public class MultiTimestampedCellsStoreTest
 {
-	private ITimestampedCellStore multi_ts_cells_store = new MultiTimestampedCellsStore();
+	@NotNull
+    private ITimestampedCellStore multi_ts_cells_store = new MultiTimestampedCellsStore();
 	
-	private ITimestampedCell ts_cell_0L = new TimestampedCell();
-	private ITimestampedCell ts_cell_2L = new TimestampedCell(new Timestamp(2L), new Cell("TS_CELL_2L"));
-	private ITimestampedCell ts_cell_4L = new TimestampedCell(new Timestamp(4L), new Cell("TS_CELL_4L"));
+	@NotNull
+    private ITimestampedCell ts_cell_0L = new TimestampedCell();
+	@NotNull
+    private ITimestampedCell ts_cell_2L = new TimestampedCell(new Timestamp(2L), new Cell("TS_CELL_2L"));
+	@NotNull
+    private ITimestampedCell ts_cell_4L = new TimestampedCell(new Timestamp(4L), new Cell("TS_CELL_4L"));
 
 	@Before
 	public void setUp() throws Exception

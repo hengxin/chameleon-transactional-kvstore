@@ -1,22 +1,26 @@
 package master.mvcc;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
+
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
+
 import client.clientlibrary.transaction.BufferedUpdates;
 import client.clientlibrary.transaction.ToCommitTransaction;
-import intervaltree.IntervalTree;
 import kvs.component.Timestamp;
 import kvs.compound.CompoundKey;
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
+import utils.intervaltree.IntervalTree;
 
 /**
  * @author hengxin
@@ -30,18 +34,20 @@ import net.jcip.annotations.ThreadSafe;
  * @licenceNote 
  * 	The {@link IntervalTree} implementation used here is credited to gds12/IntervalTree
  *  (see <a href="https://github.com/gds12/IntervalTree">gds12/IntervalTree AT GitHub</a>).
+ *
+ * TODO Using <a href="https://github.com/lowasser/intervaltree">lowasser/intervaltree@GitHub</a>.
  */
 @ThreadSafe
-public class StartCommitLogs
-{
+public class StartCommitLogs {
 	private final static Logger LOGGER = LoggerFactory.getLogger(StartCommitLogs.class);
 	
-	@GuardedBy("read_lock, write_lock")
-	private IntervalTree<Timestamp, BufferedUpdates> start_commit_logs = new IntervalTree<>();
+	@NotNull
+    @GuardedBy("readLock, writeLock")
+	private IntervalTree<Timestamp, BufferedUpdates> startCommitLogs = new IntervalTree<>();
 
-	private final ReadWriteLock lock = new ReentrantReadWriteLock();
-	public final Lock read_lock = this.lock.readLock();
-	public final Lock write_lock = this.lock.writeLock();
+	public final ReadWriteLock lock = new ReentrantReadWriteLock();
+	private final Lock readLock = lock.readLock();
+	public final Lock writeLock = lock.writeLock();
 	
 	/**
 	 * Adding a new start-commit-log of a transaction
@@ -49,56 +55,66 @@ public class StartCommitLogs
 	 * @param cts commit-timestamp
 	 * @param updates buffered updates
 	 */
-	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) 
-	{
-		this.write_lock.lock();
-		try
-		{
-			this.start_commit_logs.put(sts, cts, updates);
-		} finally
-		{
-			this.write_lock.unlock();
+	public void addStartCommitLog(Timestamp sts, Timestamp cts, BufferedUpdates updates) {
+        writeLock.lock();
+		try {
+			startCommitLogs.put(sts, cts, updates);
+		} finally {
+			writeLock.unlock();
 		}
 	}
 	
 	/**
-	 * Check whether the {@link ToCommitTransaction} is write-conflict-free w.r.t already committed transactions.
-	 * @param tx the transaction to commit
-	 * @return {@code true} if tx is write-conflict-free w.r.t committed transactions. {@code false}, otherwise.
+	 * Check whether the {@link ToCommitTransaction} is write-conflict-free
+     * w.r.t already committed transactions.
+     *
+	 * @param tx the transaction to commit; it cannot be {@code null}.
+	 * @return {@code true} if tx is write-conflict-free w.r.t committed transactions;
+     *  {@code false}, otherwise.
 	 * 
 	 * <p>
 	 * <b>TODO</b> check the side-effects on the original underlying collections. 
 	 */
-	public boolean wcf(ToCommitTransaction tx)
-	{
-		Collection<BufferedUpdates> overlapping_tx_updates;
-		overlapping_tx_updates = this.containersOf(tx.getSts()); 
-		
-		// collect all updated keys
-		Set<CompoundKey> overlapping_updated_cks = overlapping_tx_updates.stream()
-				.reduce(new HashSet<CompoundKey>(), 
-						(acc_cks, buffered_updates) -> { acc_cks.addAll(buffered_updates.getUpdatedCKeys()); return acc_cks; }, 
-						(acc_cks_1, acc_cks_2) -> { acc_cks_1.addAll(acc_cks_2); return acc_cks_1; }
-						);
-				
-		overlapping_updated_cks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());
-		
-		return overlapping_updated_cks.isEmpty();
+	public boolean wcf(@NotNull ToCommitTransaction tx) {
+        Collection<BufferedUpdates> overlappingTxUpdates = overlappingWith(tx.getSts());
+
+        if (overlappingTxUpdates == null)
+            return false;
+
+        // collect all updated keys
+        Set<CompoundKey> overlappingUpdatedCks = overlappingTxUpdates.parallelStream()
+                .map(BufferedUpdates::getUpdatedCKeys)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+
+        overlappingUpdatedCks.retainAll(tx.getBufferedUpdates().getUpdatedCKeys());
+
+        return overlappingUpdatedCks.isEmpty();
 	}
 
 	/**
+     * Get the collection of {@link BufferedUpdates} of committed transactions
+     * that overlap with the transaction starts with <code>sts</code>.
+     * The result can be <code>null</code>, meaning that an unexpected error occurs.
+     *
 	 * @param sts start-timestamp of a transaction
-	 * @return a collection of {@link BufferedUpdates} that contain @param sts
+	 * @return a collection of {@link BufferedUpdates} that overlap with with transaction
+     *      starts with <code>sts</code>.
+     *      If an unexpected error occurs, it returns <code>null</code>.
+     *
+     * @implNote See <a ref="https://github.com/hengxin/chameleon-transactional-kvstore/issues/35">When and how to check `wcf`? #35</a>
 	 */
-	protected Collection<BufferedUpdates> containersOf(Timestamp sts) 
-	{
-		this.read_lock.lock();
-		try
-		{
-			return this.start_commit_logs.searchContaining(sts, sts);
-		} finally
-		{
-			this.read_lock.unlock();
+	@Nullable
+    private Collection<BufferedUpdates> overlappingWith(Timestamp sts) {
+		try {
+            readLock.tryLock(5, TimeUnit.SECONDS);
+		    return startCommitLogs.searchOverlapping(sts, Timestamp.TIMESTAMP_MAX);
+		} catch (InterruptedException ie) {
+            ie.printStackTrace();
+            return null;
+        } finally {
+			readLock.unlock();
 		}
 	}
+
 }

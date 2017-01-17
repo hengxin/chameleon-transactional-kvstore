@@ -1,6 +1,7 @@
 package client.clientlibrary.transaction;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import client.clientlibrary.rvsi.rvsispec.AbstractRVSISpecification;
@@ -22,18 +23,16 @@ import kvs.compound.TimestampedCell;
  * @author hengxin
  * @date Created on 11-11-2015
  */
-public class QueryResults
-{
+public final class QueryResults {
+
 	// TODO WARNING: using multi-hashmap if multiple reads on a data item are allowed in a transaction.
 	private final Map<CompoundKey, ITimestampedCell> query_results = new ConcurrentHashMap<>();
 	
-	public void put(CompoundKey ck, ITimestampedCell ts_cell)
-	{
+	public void put(CompoundKey ck, ITimestampedCell ts_cell) {
 		this.query_results.put(ck, ts_cell);
 	}
 	
-	public ITimestampedCell getTsCell(CompoundKey ck)
-	{
-		return this.query_results.get(ck);
+	public Optional<ITimestampedCell> getTsCell(CompoundKey ck) {
+		return Optional.ofNullable(this.query_results.get(ck));
 	}
 }

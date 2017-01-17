@@ -13,7 +13,6 @@ import client.clientlibrary.transaction.ToCommitTransaction;
  * 		Thus {@link ISlave} does not extend {@link Remote}.
  */
 @Deprecated
-public interface ISlave
-{
+public interface ISlave {
 	public void apply(ToCommitTransaction tx);
 }

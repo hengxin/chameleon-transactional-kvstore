@@ -3,12 +3,14 @@
  */
 package client.clientlibrary.transaction;
 
+import exception.transaction.TransactionBeginException;
 import exception.transaction.TransactionEndException;
 import exception.transaction.TransactionReadException;
 import kvs.component.Cell;
 import kvs.component.Column;
 import kvs.component.Row;
 import kvs.compound.ITimestampedCell;
+import twopc.TransactionCommitResult;
 
 /**
  * Transactional operations issued at the client side, 
@@ -17,10 +19,9 @@ import kvs.compound.ITimestampedCell;
  * @author hengxin
  * @date 10-27-2015
  */
-public interface ITransaction
-{
-	public boolean begin();
-	public ITimestampedCell read(Row r, Column c) throws TransactionReadException;
-	public boolean write(Row r, Column c, Cell data);
-	public boolean end() throws TransactionEndException;
+public interface ITransaction {
+	boolean begin() throws TransactionBeginException;
+	ITimestampedCell read(Row r, Column c) throws TransactionReadException;
+	void write(Row r, Column c, Cell data);
+	TransactionCommitResult end() throws TransactionEndException;
 }

@@ -1,56 +1,62 @@
 package kvs.table;
 
+import com.google.common.base.MoreObjects;
+
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.google.common.base.MoreObjects;
+import javax.annotation.concurrent.ThreadSafe;
 
 import kvs.component.Timestamp;
 import kvs.compound.ITimestampedCell;
 import kvs.compound.TimestampedCell;
-import net.jcip.annotations.ThreadSafe;
 
 /**
- * @author hengxin
- * @data Created on 11-10-2015
- * 
  * Implements the interface {@link ITimestampedCellStore}.
  * It maintains only a single {@link ITimestampedCell}.
+ *
+ * @author hengxin
+ * @date Created on 11-10-2015
  */
 @ThreadSafe
-public class SingleTimestampedCellStore implements ITimestampedCellStore
-{
-	private AtomicReference<ITimestampedCell> single_ts_cell;
+public class SingleTimestampedCellStore implements ITimestampedCellStore {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SingleTimestampedCellStore.class);
+
+    @NotNull private final AtomicReference<ITimestampedCell> singleTsCell;
 	
 	/**
-	 * Default constructor: initialize this store with {@value TimestampedCell#TIMESTAMPED_CELL_INIT}
+	 * Default constructor: initialize this store with {@link TimestampedCell#TIMESTAMPED_CELL_INIT}
 	 */
-	public SingleTimestampedCellStore() 
-	{
-		this.single_ts_cell = new AtomicReference<ITimestampedCell>(TimestampedCell.TIMESTAMPED_CELL_INIT);
+	public SingleTimestampedCellStore() {
+		singleTsCell = new AtomicReference<>(TimestampedCell.TIMESTAMPED_CELL_INIT);
 	}
 
 	/**
 	 * Constructor: initialize this store with @param ts_cell
-	 * @param ts_cell an {@link ITimestampedCell}
+	 * @param tsCell an {@link ITimestampedCell}
 	 */
-	public SingleTimestampedCellStore(ITimestampedCell ts_cell)
-	{
-		this.single_ts_cell = new AtomicReference<ITimestampedCell>(ts_cell);
+	public SingleTimestampedCellStore(ITimestampedCell tsCell) {
+		singleTsCell = new AtomicReference<>(tsCell);
 	}
 
 	/**
-	 * Replace the current value if @param ts_cell is newer than 
-	 * the value of {@link #single_ts_cell}.
-	 * 
+	 * Replace the current value <i>if</i> @param ts_cell is newer than 
+	 * the value of {@link #singleTsCell}.
 	 * @implNote
 	 * This "if-greater-then-swap" semantics is implemented using 
 	 * {@link AtomicReference#getAndUpdate(java.util.function.UnaryOperator)}.
 	 * See <a href = "http://stackoverflow.com/a/27347133/1833118">Greater-than compare-and-swap</a>
 	 */
 	@Override
-	public void put(ITimestampedCell ts_cell)
-	{
-		this.single_ts_cell.getAndUpdate(x -> x.compareTo(ts_cell) < 0 ? ts_cell : x);
+	public void put(@NotNull ITimestampedCell tsCell) {
+        LOGGER.debug("Slave receives [{}]. Is it newer than [{}]: [{}].",
+                tsCell,
+                singleTsCell.get(),
+                singleTsCell.get().compareTo(tsCell) < 0);
+		singleTsCell.getAndUpdate(x -> x.compareTo(tsCell) < 0 ? tsCell : x);
 	}
 
 	/**
@@ -58,31 +64,25 @@ public class SingleTimestampedCellStore implements ITimestampedCellStore
 	 * Ignore the {@link Timestamp} parameter.
 	 */
 	@Override
-	public ITimestampedCell get(Timestamp ts)
-	{
-		return this.get();
-	}
+	public ITimestampedCell get(Timestamp ts) { return get(); }
 
 	@Override
-	public ITimestampedCell get()
-	{
-		return this.single_ts_cell.get();
-	}
+	public ITimestampedCell get() { return singleTsCell.get(); }
 
-	@Override
-	public String toString()
-	{
+	@NotNull
+    @Override
+	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.addValue(this.single_ts_cell.get())
+				.addValue(singleTsCell.get())
 				.toString();
 	}
 
 	/**
-	 * @throws {@link UnspportedOperationException}
+	 * @throws {@link UnsupportedOperationException}
 	 */
 	@Override
-	public void startGCDaemon()
-	{
+	public void startGCDaemon() {
 		throw new UnsupportedOperationException("GC is not supported for SingleTimestampedStore.");
 	}
+
 }

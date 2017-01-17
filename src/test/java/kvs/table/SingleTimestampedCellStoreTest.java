@@ -2,6 +2,7 @@ package kvs.table;
 
 import static org.junit.Assert.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,8 @@ import kvs.compound.TimestampedCell;
  */
 public class SingleTimestampedCellStoreTest
 {
-	private ITimestampedCellStore store = new SingleTimestampedCellStore();
+	@NotNull
+    private ITimestampedCellStore store = new SingleTimestampedCellStore();
 
 	/**
 	 * @throws java.lang.Exception

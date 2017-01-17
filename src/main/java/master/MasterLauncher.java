@@ -1,13 +1,13 @@
 package master;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import exception.MemberParseException;
+import conf.SiteConfig;
 import exception.SiteException;
-import jms.AbstractJMSParticipant;
-import jms.master.JMSCommitLogPublisher;
 import master.context.MasterContext;
+import messaging.socket.SocketMsgBroadcastProducer;
 import site.AbstractSite;
 
 /**
@@ -16,40 +16,32 @@ import site.AbstractSite;
  * @author hengxin
  * @date Created on 10-28-2015
  */
-public class MasterLauncher
-{
+public class MasterLauncher {
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(MasterLauncher.class);
-	
-	private final static String MASTER_MEMBERSHIP_PROPERTIES_FILE = "master/membership-master.properties";
 
 	/**
-	 * Launch with default properties file, which is
-	 * {@value #MASTER_MEMBERSHIP_PROPERTIES_FILE}.
-	 * @throws SiteException 
-	 * @throws MemberParseException 
+     * Constructor with default site.properties ({@value SiteConfig#DEFAULT_MASTER_SITE_PROPERTIES})
+     * and default sa.properties ({@value SiteConfig#DEFAULT_SOCKET_ADDRESS_PROPERTIES}).
+	 * @throws SiteException
 	 */
-	public MasterLauncher() throws SiteException, MemberParseException
-	{
-		this(MASTER_MEMBERSHIP_PROPERTIES_FILE);
+	public MasterLauncher() {
+		this(SiteConfig.DEFAULT_MASTER_SITE_PROPERTIES, SiteConfig.DEFAULT_SOCKET_ADDRESS_PROPERTIES);
 	}
 	
 	/**
 	 * Launch with user-specified properties file.
-	 * @param file
-	 * 		Path of the properties file.
+	 * @param siteProperties path of the site.properties file for site memebership
+     * @param saProperties  path of the sa.properties file for socket addresses
 	 * @throws SiteException 
-	 * @throws MemberParseException 
 	 */
-	public MasterLauncher(String file) throws SiteException, MemberParseException
-	{
-		MasterContext context = new MasterContext(file);
-		AbstractSite master = new SIMaster(context);
-		
-		AbstractJMSParticipant publisher = new JMSCommitLogPublisher();
-		master.registerAsJMSParticipant(publisher);
-		
-		master.export();
-		
-		LOGGER.info("Master [{}] has been successfully launched.", master);
+	public MasterLauncher(@NotNull String siteProperties, @NotNull String saProperties) {
+		MasterContext context = new MasterContext(siteProperties);
+//		AbstractSite siMaster = new SIMaster(context);  // this constructor is with JMS communication
+
+        AbstractSite siMaster = new SIMaster(context,
+                new SocketMsgBroadcastProducer(saProperties));
+		LOGGER.info("SIMaster [{}] has been successfully launched.", siMaster);
 	}
+
 }
