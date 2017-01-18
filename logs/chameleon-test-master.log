@@ -1,0 +1,13 @@
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=4}+Timestamp{ts=6}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=5}+Timestamp{ts=7}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=0}+Timestamp{ts=9}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=10}+Timestamp{ts=14}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=15}+Timestamp{ts=18}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=28}+Timestamp{ts=30}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=34}+Timestamp{ts=36}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=35}+Timestamp{ts=38}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=40}+Timestamp{ts=42}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=43}+Timestamp{ts=44}].
+IMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=40}+Timestamp{ts=42}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=43}+Timestamp{ts=44}].
+[SIMaster] ends the [COMMIT] phase with [tx: Timestamp{ts=43}+Timestamp{ts=44}].
