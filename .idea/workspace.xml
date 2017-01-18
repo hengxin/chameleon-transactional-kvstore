@@ -2,58 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ccc00351-abac-42ec-8adb-e4df30921258" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/hengxin.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/root.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/file.template.settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_19_0_rc2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_jms_jms_1_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_activemq_activemq_all_5_12_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_collections4_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_math3_3_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_all_2_4_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_all_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_15_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/intervaltree_master.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/AliBenchmarkingMainTest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/AliClientMainTest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/BatchRunnerMainTest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/BenchmarkingMainTest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/CentralizedTimestampOracleMainTest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/ClientMainTest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/CoordinatorFactoryMainTest__0_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/CoordinatorFactoryMainTest__1_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/CoordinatorFactoryMainTest__2_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/MasterMainTest__0_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/MasterMainTest__1_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/MasterMainTest__2_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/SlaveMainTest__00_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/SlaveMainTest__01_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/SlaveMainTest__10_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/SlaveMainTest__11_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/SlaveMainTest__20_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/SlaveMainTest__21_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/allinone.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chameleon-transactional-kvstore-maven.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logback.groovy" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.classpath" afterPath="$PROJECT_DIR$/.classpath" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.1.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.1.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.10.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.10.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.11.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.11.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.12.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.12.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.13.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.13.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.14.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.14.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.15.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.15.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.16.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.16.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.17.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.17.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.18.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.18.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.19.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.19.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.2.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.2.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.20.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.20.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.21.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.21.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.3.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.3.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.4.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.4.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.5.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.5.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.6.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.6.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.7.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.7.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.8.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.8.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.9.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.9.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/master/SIMaster.class" afterPath="$PROJECT_DIR$/target/classes/master/SIMaster.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chameleon-transactional-kvstore-maven.iml" afterPath="$PROJECT_DIR$/chameleon-transactional-kvstore-maven.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/MasterMainTest0.log" afterPath="$PROJECT_DIR$/logs/MasterMainTest0.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/MasterMainTest1.log" afterPath="$PROJECT_DIR$/logs/MasterMainTest1.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/MasterMainTest2.log" afterPath="$PROJECT_DIR$/logs/MasterMainTest2.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.log" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log" afterPath="$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-benchmarking-main-test.log" afterPath="$PROJECT_DIR$/logs/chameleon-benchmarking-main-test.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-test-master.log" afterPath="$PROJECT_DIR$/logs/chameleon-test-master.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java" afterPath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java" />
     </list>
     <ignored path="chameleon-transactional-kvstore-maven.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -125,23 +105,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SVVersionConstraint.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SVVersionConstraint.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="22" column="2" lean-forward="false" selection-start-line="22" selection-start-column="2" selection-end-line="22" selection-end-column="2" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="84">
+              <caret line="4" column="15" lean-forward="false" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".classpath" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.classpath">
+      <file leaf-file-name="BenchmarkingBatchMainTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="223">
+              <caret line="91" column="62" lean-forward="false" selection-start-line="91" selection-start-column="62" selection-end-line="91" selection-end-column="62" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chameleon-benchmarking-batch-main-test.log" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="695">
+              <caret line="419" column="83" lean-forward="false" selection-start-line="419" selection-start-column="83" selection-end-line="419" selection-end-column="83" />
               <folding />
             </state>
           </provider>
@@ -161,11 +149,31 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java" />
+        <option value="$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log" />
+        <option value="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java" />
       </list>
     </option>
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="MavenProjectNavigator">
-    <treeState />
+    <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="chameleon-transactional-kvstore-maven" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+    </treeState>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="27" />
@@ -193,6 +201,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -200,11 +209,14 @@
               <option name="myItemId" value="chameleon-transactional-kvstore-maven" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chameleon-transactional-kvstore-maven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -229,7 +241,30 @@
       </pane>
     </panes>
   </component>
-  <component name="RunManager" selected="Application.AliBenchmarkingMainTest">
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager" selected="Application.BenchmarkingBatchMainTest">
+    <configuration default="false" name="BenchmarkingBatchMainTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="main.benchmarking.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="main.benchmarking.BenchmarkingBatchMainTest" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="client/workload.properties client/site.properties client/cf.properties timing/to.properties" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="chameleon-transactional-kvstore-maven" />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -260,6 +295,41 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CabalRunConfiguration" factoryName="Haskell">
+      <module name="" />
+      <setting name="executableName" value="" />
+      <setting name="parameters" value="" />
+      <setting name="workingDir" value="" />
+      <environmetVariables />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -281,6 +351,27 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Java Scratch" factoryName="Java Scratch">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SCRATCH_FILE_ID" value="0" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="Multirun" factoryName="Multirun" separateTabs="true" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="false" delayTime="0">
       <method />
     </configuration>
@@ -292,55 +383,33 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method />
-    </configuration>
-    <list size="19">
-      <item index="0" class="java.lang.String" itemvalue="Application.AliBenchmarkingMainTest" />
-      <item index="1" class="java.lang.String" itemvalue="Application.AliClientMainTest" />
-      <item index="2" class="java.lang.String" itemvalue="Application.BatchRunnerMainTest" />
-      <item index="3" class="java.lang.String" itemvalue="Application.BenchmarkingMainTest" />
-      <item index="4" class="java.lang.String" itemvalue="Application.CentralizedTimestampOracleMainTest" />
-      <item index="5" class="java.lang.String" itemvalue="Application.ClientMainTest" />
-      <item index="6" class="java.lang.String" itemvalue="Application.CoordinatorFactoryMainTest (0)" />
-      <item index="7" class="java.lang.String" itemvalue="Application.CoordinatorFactoryMainTest (1)" />
-      <item index="8" class="java.lang.String" itemvalue="Application.CoordinatorFactoryMainTest (2)" />
-      <item index="9" class="java.lang.String" itemvalue="Application.MasterMainTest (0)" />
-      <item index="10" class="java.lang.String" itemvalue="Application.MasterMainTest (1)" />
-      <item index="11" class="java.lang.String" itemvalue="Application.MasterMainTest (2)" />
-      <item index="12" class="java.lang.String" itemvalue="Application.SlaveMainTest (00)" />
-      <item index="13" class="java.lang.String" itemvalue="Application.SlaveMainTest (01)" />
-      <item index="14" class="java.lang.String" itemvalue="Application.SlaveMainTest (10)" />
-      <item index="15" class="java.lang.String" itemvalue="Application.SlaveMainTest (11)" />
-      <item index="16" class="java.lang.String" itemvalue="Application.SlaveMainTest (20)" />
-      <item index="17" class="java.lang.String" itemvalue="Application.SlaveMainTest (21)" />
+    <list size="20">
+      <item index="0" class="java.lang.String" itemvalue="Application.CentralizedTimestampOracleMainTest" />
+      <item index="1" class="java.lang.String" itemvalue="Application.ClientMainTest" />
+      <item index="2" class="java.lang.String" itemvalue="Application.CoordinatorFactoryMainTest (0)" />
+      <item index="3" class="java.lang.String" itemvalue="Application.CoordinatorFactoryMainTest (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Application.CoordinatorFactoryMainTest (2)" />
+      <item index="5" class="java.lang.String" itemvalue="Application.MasterMainTest (0)" />
+      <item index="6" class="java.lang.String" itemvalue="Application.MasterMainTest (1)" />
+      <item index="7" class="java.lang.String" itemvalue="Application.MasterMainTest (2)" />
+      <item index="8" class="java.lang.String" itemvalue="Application.SlaveMainTest (00)" />
+      <item index="9" class="java.lang.String" itemvalue="Application.SlaveMainTest (01)" />
+      <item index="10" class="java.lang.String" itemvalue="Application.SlaveMainTest (10)" />
+      <item index="11" class="java.lang.String" itemvalue="Application.SlaveMainTest (11)" />
+      <item index="12" class="java.lang.String" itemvalue="Application.SlaveMainTest (20)" />
+      <item index="13" class="java.lang.String" itemvalue="Application.SlaveMainTest (21)" />
+      <item index="14" class="java.lang.String" itemvalue="Application.AliBenchmarkingMainTest" />
+      <item index="15" class="java.lang.String" itemvalue="Application.AliClientMainTest" />
+      <item index="16" class="java.lang.String" itemvalue="Application.BatchRunnerMainTest" />
+      <item index="17" class="java.lang.String" itemvalue="Application.BenchmarkingMainTest" />
       <item index="18" class="java.lang.String" itemvalue="Multirun.allinone" />
+      <item index="19" class="java.lang.String" itemvalue="Application.BenchmarkingBatchMainTest" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Application.BenchmarkingBatchMainTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SbtLocalSettings">
     <option name="externalProjectsViewState">
@@ -381,23 +450,26 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20744081" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44193912" sideWeight="0.1383547" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.075854704" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.49041712" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="GhcMod" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32468995" sideWeight="0.8616453" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2378805" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="GhcMod" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16292734" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Cabal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16613248" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Cabal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12126068" sideWeight="0.6407186" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.49333334" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12713675" sideWeight="0.35928145" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37429538" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43589744" sideWeight="0.48399487" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -407,12 +479,9 @@
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="News Feed" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37429538" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Code Iris" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16132478" sideWeight="0.6593002" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20744081" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" x="100" y="120" width="1720" height="853" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32468995" sideWeight="0.8616453" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12873931" sideWeight="0.5138122" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960895" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Run with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -509,28 +578,11 @@
     </breakpoint-manager>
     <watches-manager />
   </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/transaction/ToCommitTransaction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="40" column="24" lean-forward="false" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/master/mvcc/StartCommitLogs.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="41" column="11" lean-forward="false" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kvs/table/SingleTimestampedCellStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="57" column="16" lean-forward="false" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kvs/table/AbstractTable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-69">
@@ -572,7 +624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1512">
           <caret line="72" column="37" lean-forward="false" selection-start-line="72" selection-start-column="37" selection-end-line="72" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -624,17 +675,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/client/clientlibrary/rvsi/vc/SVVersionConstraint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="22" column="2" lean-forward="false" selection-start-line="22" selection-start-column="2" selection-end-line="22" selection-end-column="2" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="84">
+          <caret line="4" column="15" lean-forward="false" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main/SlaveMainTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="695">
+          <caret line="419" column="83" lean-forward="false" selection-start-line="419" selection-start-column="83" selection-end-line="419" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="91" column="62" lean-forward="false" selection-start-line="91" selection-start-column="62" selection-end-line="91" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>
