@@ -88,8 +88,8 @@ public class BenchmarkingBatchMainTest {
         // set simulation mode
         workProp.setProperty(SIMULATION.param(), "true");
 
-        String[] sizesOfKeyspace = new String[]{"5"}; // 3, 4, 5, 7
-        String[] rwRatios = new String[]{"0.5", "1", "4", "9"}; // 0.5, 1, 4, 9
+        String[] sizesOfKeyspace = new String[]{"7"}; // 3, 4, 5, 7
+        String[] rwRatios = new String[]{"1", "4", "9"}; // 0.5, 1, 4, 9
         String[] issueDelays = new String[]{"2", "3", "4", "5", "10", "15", "20"};
         String[] otherDelays = new String[]{"10", "20", "50", "100"};
 

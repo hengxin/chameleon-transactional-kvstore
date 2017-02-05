@@ -2,10 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ccc00351-abac-42ec-8adb-e4df30921258" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.1.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.1.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.10.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.10.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.11.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.11.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.12.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.12.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.13.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.13.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.14.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.14.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.15.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.15.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.16.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.16.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.17.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.17.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.18.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.18.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.19.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.19.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.2.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.2.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.20.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.20.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.21.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.21.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.3.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.3.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.4.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.4.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.5.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.5.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.6.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.6.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.7.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.7.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.8.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.8.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.9.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.9.log.zip" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.log" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-benchmarking-main-test.log" afterPath="$PROJECT_DIR$/logs/chameleon-benchmarking-main-test.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-test-master.log" afterPath="$PROJECT_DIR$/logs/chameleon-test-master.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java" afterPath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java" />
     </list>
     <ignored path="chameleon-transactional-kvstore-maven.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,18 +113,8 @@
       <file leaf-file-name="BenchmarkingBatchMainTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="96" column="47" lean-forward="false" selection-start-line="96" selection-start-column="47" selection-end-line="96" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chameleon-benchmarking-batch-main-test.log" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="695">
-              <caret line="419" column="83" lean-forward="false" selection-start-line="419" selection-start-column="83" selection-end-line="419" selection-end-column="83" />
+            <state relative-caret-position="168">
+              <caret line="98" column="44" lean-forward="false" selection-start-line="98" selection-start-column="44" selection-end-line="98" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -173,7 +186,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -188,7 +200,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -211,6 +222,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -435,7 +448,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2378805" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="GhcMod" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16613248" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17200854" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Cabal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12126068" sideWeight="0.6407186" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.49333334" order="1" side_tool="false" content_ui="tabs" />
@@ -662,22 +675,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
           <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="695">
-          <caret line="419" column="83" lean-forward="false" selection-start-line="419" selection-start-column="83" selection-end-line="419" selection-end-column="83" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="96" column="47" lean-forward="false" selection-start-line="96" selection-start-column="47" selection-end-line="96" selection-end-column="47" />
+        <state relative-caret-position="168">
+          <caret line="98" column="44" lean-forward="false" selection-start-line="98" selection-start-column="44" selection-end-line="98" selection-end-column="44" />
           <folding />
         </state>
       </provider>
