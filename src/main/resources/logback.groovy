@@ -82,7 +82,7 @@ appender("BATCH", RollingFileAppender) {
 	triggeringPolicy(SizeBasedTriggeringPolicy) { maxFileSize = "2MB" }
 }
 
-logger("benchmarking.BenchmarkingLauncherScriptMainTest", INFO, ["BATCH"])
+//  logger("benchmarking.BenchmarkingLauncherScriptMainTest", INFO, ["BATCH"])
 
 // benchmarking
 logger("benchmarking.workload.transaction", INFO)
@@ -126,4 +126,4 @@ logger("rmi", ERROR)
 // util
 logger("util", ERROR)
 
-root(INFO, ["STDOUT", "FILE", "BATCH"])
+root(INFO, ["STDOUT", "FILE"]) // "BATCH"
