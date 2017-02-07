@@ -33,8 +33,6 @@ public class Log2Dat {
     private final String logFile;
     private final Table<Integer, RVSIColumn, Double> logTable = TreeBasedTable.create(Integer::compareTo, RVSIColumn.RVSI_COLUMN_COMPARATOR);
 
-//    private final Multimap<Integer, AbortRate> table = ArrayListMultimap.create();
-
     public Log2Dat(String logFile) { this.logFile = logFile; }
 
     /**
