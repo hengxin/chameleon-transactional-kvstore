@@ -7975,3 +7975,15 @@ Batch for [9:30:1-1-2] ends.
 2016-12-10_04:14:42 - BatchRunner: [BenchmarkingStatistics{rwRatio=4.0, mpl=20, rvsiTriple=RVSITriple{k1=2, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=13495, #A=6505, #!VC=4034, #!WCF=3808, #!BV=0, #!FV=3951, #!SV=957, #C/#T=0.67475, #A/#T=0.32525, #!VC/#T=0.2017, #!WCF/#T=0.1904, #!BV/#T=0.0, #!FV/#T=0.19755, #!SV/#T=0.04785}}].
 2016-12-10_04:14:42 - Batch for [4:20:2-0-0] ends.
 2016-12-10_04:14:42 - #####################################################
+2017-02-10_11:32:25 - #####################################################
+2017-02-10_11:32:25 - Batch for [0.5:20:1-0-0] begins.
+2017-02-10_11:32:25 - BenchmarkingLauncher starts.
+2017-02-10_11:32:28 - WorkloadParams are [{maxTimeInterTransactions=10, zipfExponent=1, mpl=20, rvsi=(1,0,0), issueDelay=20, probBinomial=50, maxNumberOfOperations=20, simulation=false, k3=0, k2=0, rwRatio=0.5, k1=1, timeOracleDelay=5, minTimeInterTransactions=0, twopcDelay=5, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-10_12:24:26 - BenchmarkingLauncher ends.
+2017-02-10_12:24:26 - BatchRunner: [BenchmarkingStatistics{rwRatio=0.5, mpl=20, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=20000, #C=12844, #A=7156, #!VC=652, #!WCF=6968, #!BV=217, #!FV=452, #!SV=374, #C/#T=0.6422, #A/#T=0.3578, #!VC/#T=0.0326, #!WCF/#T=0.3484, #!BV/#T=0.01085, #!FV/#T=0.0226, #!SV/#T=0.0187}}].
+2017-02-10_12:24:26 - Batch for [0.5:20:1-0-0] ends.
+2017-02-10_12:24:26 - #####################################################
+2017-02-10_12:26:40 - #####################################################
+2017-02-10_12:26:40 - Batch for [0.5:20:2-0-0] begins.
+2017-02-10_12:26:40 - BenchmarkingLauncher starts.
+2017-02-10_12:26:44 - WorkloadParams are [{maxTimeInterTransactions=10, zipfExponent=1, mpl=20, rvsi=(2,0,0), issueDelay=20, probBinomial=50, maxNumberOfOperations=20, simulation=false, k3=0, k2=0, rwRatio=0.5, k1=2, timeOracleDelay=5, minTimeInterTransactions=0, twopcDelay=5, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
