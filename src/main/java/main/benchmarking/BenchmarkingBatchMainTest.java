@@ -88,49 +88,57 @@ public class BenchmarkingBatchMainTest {
         // set simulation mode
         workProp.setProperty(SIMULATION.param(), "true");
 
-        String[] sizesOfKeyspace = new String[]{"4"}; // 3, 4, 5, 7
-        String[] rwRatios = new String[]{"0.5"}; // 0.5, 1, 4, 9
-        String[] issueDelays = new String[]{"4", "5", "10", "15", "20"};  // 2, 3, 4, 5, 10, 15, 20
-        String[] otherDelays = new String[]{"10", "20", "50", "100"};   // 10, 20, 50, 100
+        // 3, 4, 5 (fixed now), 6, 7
+        String[] sizesOfKeyspace = new String[]{"5"};
+        // 0.5, 1, 4, 9
+        String[] rwRatios = new String[]{"1", "4"};
+        // 2, 5, 10, 15, 20, 30
+        String[] issueDelays = new String[]{"15"}; // (done: 2, 5, 10, 20,) 30 (partial), 50
+        // 2, 3, 4, 5, 10, 15, 20, 30
+        String[] replicationDelays = new String[]{"2", "5", "10"};
+        // 10, 20, 30, 50, 100
+        String[] otherDelays = new String[]{"10", "20", "30", "50"};
 
         // set k1, k2, and k3
-        workProp.setProperty(K1BV.param(), "2");
+        workProp.setProperty(K1BV.param(), "1");
         workProp.setProperty(K2FV.param(), "0");
-        workProp.setProperty(K3SV.param(), "1");
+        workProp.setProperty(K3SV.param(), "0");
 
         for (String sizeOfKeyspace : sizesOfKeyspace)
             for (String rwRatio : rwRatios)
                 for (String issueDelay : issueDelays)
-                    for (String otherDelay : otherDelays) {
-                        LOGGER.info("sizeOfKeyspace [{}]; rwRatio [{}]; issueDelay [{}]; otherDelay [{}].",
-                                sizeOfKeyspace, rwRatio, issueDelay, otherDelay);
+                    for (String replicationDelay : replicationDelays)
+                        for (String otherDelay : otherDelays) {
+                            LOGGER.info("sizeOfKeyspace [{}]; rwRatio [{}]; "
+                                    + "issueDelay [{}]; replicationDelay [{}]; otherDelay [{}].",
+                                    sizeOfKeyspace, rwRatio, issueDelay, replicationDelay, otherDelay);
 
-                        // set workload parameters
-                        workProp.setProperty(SIZE_OF_KEYSPACE.param(), sizeOfKeyspace);
-                        workProp.setProperty(RW_RATIO.param(), rwRatio);
-                        workProp.setProperty(ISSUE_DELAY.param(), issueDelay);
-                        workProp.setProperty(TWO_PC_DELAY.param(), otherDelay);
-                        workProp.setProperty(REPILCATION_DELAY.param(), otherDelay);
-                        workProp.setProperty(TIME_ORACLE_DELAY.param(), otherDelay);
+                            // set workload parameters
+                            workProp.setProperty(SIZE_OF_KEYSPACE.param(), sizeOfKeyspace);
+                            workProp.setProperty(RW_RATIO.param(), rwRatio);
+                            workProp.setProperty(ISSUE_DELAY.param(), issueDelay);
+                            workProp.setProperty(TWO_PC_DELAY.param(), otherDelay);
+                            workProp.setProperty(REPILCATION_DELAY.param(), replicationDelay);
+                            workProp.setProperty(TIME_ORACLE_DELAY.param(), otherDelay);
 
-                        // run benchmarking with workload parameters above
-                        try {
-                            startChameleon();
-                            TimeUnit.SECONDS.sleep(10);
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
+                            // run benchmarking with workload parameters above
+                            try {
+                                startChameleon();
+                                TimeUnit.SECONDS.sleep(10);
+                            } catch (InterruptedException ie) {
+                                ie.printStackTrace();
+                            }
+
+                            LOGGER.info("########## Benchmarking Batch Main Test Begins!!! ##########");
+                            AbstractWorkloadStatistics workloadStat =
+                                    new BenchmarkingLauncher(workProp, siteProperties, cfProperties, toProperties)
+                                            .run();
+
+                            if (workloadStat != null)
+                                LOGGER.info(workloadStat.briefReport());
+                            LOGGER.info("########## Benchmarking Batch Main Test Finished!!! ##########");
+
+                            destroyChameleon();
                         }
-
-                        LOGGER.info("########## Benchmarking Batch Main Test Begins!!! ##########");
-                        AbstractWorkloadStatistics workloadStat =
-                                new BenchmarkingLauncher(workProp, siteProperties, cfProperties, toProperties)
-                                        .run();
-
-                        if (workloadStat != null)
-                            LOGGER.info(workloadStat.briefReport());
-                        LOGGER.info("########## Benchmarking Batch Main Test Finished!!! ##########");
-
-                        destroyChameleon();
-                    }
     }
 }
