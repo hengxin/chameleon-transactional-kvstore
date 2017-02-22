@@ -88,21 +88,21 @@ public class BenchmarkingBatchMainTest {
         // set simulation mode
         workProp.setProperty(SIMULATION.param(), "true");
 
-        // 3, 4, 5 (fixed now), 6, 7
+        // 3, 5 (fixed now), 7
         String[] sizesOfKeyspace = new String[]{"5"};
         // 0.5, 1, 4, 9
-        String[] rwRatios = new String[]{"1", "4"};
+        String[] rwRatios = new String[]{"1", "4", "0.5"}; // 0.5, 1, 4, 9
+        // 2, 5, 10, 15, 20
+        String[] issueDelays = new String[]{"2", "5", "10", "15", "20"};
         // 2, 5, 10, 15, 20, 30
-        String[] issueDelays = new String[]{"15"}; // (done: 2, 5, 10, 20,) 30 (partial), 50
-        // 2, 3, 4, 5, 10, 15, 20, 30
-        String[] replicationDelays = new String[]{"2", "5", "10"};
+        String[] replicationDelays = new String[]{"2", "5", "10", "15", "20", "30"};
         // 10, 20, 30, 50, 100
         String[] otherDelays = new String[]{"10", "20", "30", "50"};
 
-        // set k1, k2, and k3
-        workProp.setProperty(K1BV.param(), "1");
-        workProp.setProperty(K2FV.param(), "0");
-        workProp.setProperty(K3SV.param(), "0");
+        // set k1, k2, and k3: (1,0,0)  (2,0,1)
+        workProp.setProperty(K1BV.param(), "2");
+        workProp.setProperty(K2FV.param(), "1");
+        workProp.setProperty(K3SV.param(), "1");
 
         for (String sizeOfKeyspace : sizesOfKeyspace)
             for (String rwRatio : rwRatios)
