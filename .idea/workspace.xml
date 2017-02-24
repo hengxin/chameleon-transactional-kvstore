@@ -2,22 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ccc00351-abac-42ec-8adb-e4df30921258" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/alilog.sh" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hs_err_pid26111.log" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hs_err_pid26365.log" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hs_err_pid26477.log" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.1.log.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.10.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.11.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.12.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.13.log.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.14.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.15.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.16.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.17.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.18.log.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.19.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.2.log.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.20.log.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.21.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.3.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.4.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.5.log.zip" afterPath="" />
@@ -25,20 +20,17 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.7.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.8.log.zip" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.9.log.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-benchmarking-main-test.log" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-test-coord.log" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-test-master.log" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-test-to.log" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/logs/rvsilog.sh" afterPath="$PROJECT_DIR$/logs/locallog.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-benchmarking-batch-main-test.log" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-rw9.0.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.14.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.14.log.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.20.log.zip" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.20.log.zip" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.log" afterPath="$PROJECT_DIR$/logs/chameleon-aliyun-batch.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log" afterPath="$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-benchmarking-main-test.log" afterPath="$PROJECT_DIR$/logs/chameleon-benchmarking-main-test.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/chameleon-test-master.log" afterPath="$PROJECT_DIR$/logs/chameleon-test-master.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java" afterPath="$PROJECT_DIR$/src/main/java/main/benchmarking/BenchmarkingBatchMainTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/batch.log" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/batch.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv.log" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/alilog.sh" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/alilog.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-0.5.dat" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-0.5.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-1.0.dat" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-1.0.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-4.0.dat" afterPath="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-4.0.dat" />
     </list>
     <ignored path="chameleon-transactional-kvstore-maven.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -133,8 +125,8 @@
       <file leaf-file-name="alilog.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/alilog.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="78" column="2" lean-forward="false" selection-start-line="78" selection-start-column="2" selection-end-line="78" selection-end-column="2" />
+            <state relative-caret-position="378">
+              <caret line="82" column="81" lean-forward="false" selection-start-line="82" selection-start-column="81" selection-end-line="82" selection-end-column="81" />
               <folding />
             </state>
           </provider>
@@ -143,8 +135,8 @@
       <file leaf-file-name="chameleon-aliyun-batch-bvfvsv-0.5.dat" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-0.5.dat">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state relative-caret-position="126">
+              <caret line="6" column="76" lean-forward="false" selection-start-line="6" selection-start-column="76" selection-end-line="6" selection-end-column="76" />
               <folding />
             </state>
           </provider>
@@ -163,18 +155,8 @@
       <file leaf-file-name="chameleon-aliyun-batch-bvfvsv-4.0.dat" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-4.0.dat">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chameleon-aliyun-batch-bvfvsv.dat" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv.dat">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
+            <state relative-caret-position="0">
+              <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -231,8 +213,8 @@
         <option value="$PROJECT_DIR$/logs/chameleon-benchmarking-batch-main-test.log" />
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-1.0.dat" />
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-4.0.dat" />
-        <option value="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/alilog.sh" />
         <option value="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-rw9.0.log" />
+        <option value="$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/alilog.sh" />
       </list>
     </option>
   </component>
@@ -464,36 +446,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chameleon-transactional-kvstore-maven" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chameleon-transactional-kvstore-maven" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="benchmarking" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -783,7 +735,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20744081" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44193912" sideWeight="0.1383547" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.075854704" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.075854704" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32468995" sideWeight="0.8616453" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2378805" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1221,18 +1173,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv.dat">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-rw9.0.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-4.0.dat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="483">
+          <caret line="23" column="74" lean-forward="false" selection-start-line="23" selection-start-column="74" selection-end-line="23" selection-end-column="74" />
           <folding />
         </state>
       </provider>
@@ -1245,26 +1189,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-0.5.dat">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv.dat">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="37" lean-forward="false" selection-start-line="0" selection-start-column="37" selection-end-line="0" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-rw9.0.log">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-4.0.dat">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="23" column="74" lean-forward="false" selection-start-line="23" selection-start-column="74" selection-end-line="23" selection-end-column="74" />
+        <state relative-caret-position="0">
+          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/chameleon-aliyun-batch-bvfvsv-0.5.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="76" lean-forward="false" selection-start-line="6" selection-start-column="76" selection-end-line="6" selection-end-column="76" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/aliyun/alicript/logs/alilog.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="78" column="2" lean-forward="false" selection-start-line="78" selection-start-column="2" selection-end-line="78" selection-end-column="2" />
+        <state relative-caret-position="378">
+          <caret line="82" column="81" lean-forward="false" selection-start-line="82" selection-start-column="81" selection-end-line="82" selection-end-column="81" />
           <folding />
         </state>
       </provider>

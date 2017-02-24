@@ -53,7 +53,7 @@ while read line; do
 		done
 		ratio_rvsi_abort_map[$rwRatio, $mpl, $rvsi]="${rvsi_abort_dat[@]}"
 		
-		unset kvsiAbortDat
+		unset rvsi_abort_dat
 		lno=0
 	fi
 done < $log
@@ -79,7 +79,8 @@ done
 # writing column labels at the beginning of each file
 for rvsi in "${rvsiArray[@]}"; do
 	for param in "${abortParams[@]}"; do
-		rvsi_abort_txt=("${rvsi_abort_txt[@]}" $param$rvsi)
+		abortLbl=$(echo $param | cut -d "/" -f1)
+		rvsi_abort_txt=("${rvsi_abort_txt[@]}" ${abortLbl,,}$rvsi)  # to smallcase
 	done
 done
 

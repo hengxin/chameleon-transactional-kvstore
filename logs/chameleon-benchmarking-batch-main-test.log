@@ -476,3 +476,36 @@
 2017-02-24_14:06:57 - sizeOfKeyspace [5]; rwRatio [4]; issueDelay [5]; replicationDelay [30]; otherDelay [50].
 2017-02-24_14:08:07 - ########## Benchmarking Batch Main Test Begins!!! ##########
 2017-02-24_14:08:07 - WorkloadParams are [{maxTimeInterTransactions=0, zipfExponent=1, mpl=30, issueDelay=5, probBinomial=50, maxNumberOfOperations=20, simulation=true, k3=1, k2=0, rwRatio=4, k1=2, timeOracleDelay=50, minTimeInterTransactions=0, twopcDelay=50, replicationDelay=30, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-24_14:19:50 - WorkloadStatistics{#T=30000, #C=21237, #A=8763, #!VC=5183, #!WCF=5260, #!BV=17, #!FV=5168, #!SV=71, #C/#T=0.7079, #A/#T=0.2921, #!VC/#T=0.17276666666666668, #!WCF/#T=0.17533333333333334, #!BV/#T=5.666666666666667E-4, #!FV/#T=0.17226666666666668, #!SV/#T=0.0023666666666666667}
+2017-02-24_14:19:50 - ########## Benchmarking Batch Main Test Finished!!! ##########
+2017-02-24_14:19:50 - sizeOfKeyspace [5]; rwRatio [4]; issueDelay [10]; replicationDelay [5]; otherDelay [10].
+2017-02-24_14:21:00 - ########## Benchmarking Batch Main Test Begins!!! ##########
+2017-02-24_14:21:00 - WorkloadParams are [{maxTimeInterTransactions=0, zipfExponent=1, mpl=30, issueDelay=10, probBinomial=50, maxNumberOfOperations=20, simulation=true, k3=1, k2=0, rwRatio=4, k1=2, timeOracleDelay=10, minTimeInterTransactions=0, twopcDelay=10, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-24_14:32:42 - WorkloadStatistics{#T=30000, #C=21067, #A=8933, #!VC=5347, #!WCF=5329, #!BV=14, #!FV=5333, #!SV=78, #C/#T=0.7022333333333334, #A/#T=0.2977666666666667, #!VC/#T=0.17823333333333333, #!WCF/#T=0.17763333333333334, #!BV/#T=4.6666666666666666E-4, #!FV/#T=0.17776666666666666, #!SV/#T=0.0026}
+2017-02-24_14:32:42 - ########## Benchmarking Batch Main Test Finished!!! ##########
+2017-02-24_14:32:42 - sizeOfKeyspace [5]; rwRatio [4]; issueDelay [10]; replicationDelay [5]; otherDelay [20].
+2017-02-24_14:33:52 - ########## Benchmarking Batch Main Test Begins!!! ##########
+2017-02-24_14:33:52 - WorkloadParams are [{maxTimeInterTransactions=0, zipfExponent=1, mpl=30, issueDelay=10, probBinomial=50, maxNumberOfOperations=20, simulation=true, k3=1, k2=0, rwRatio=4, k1=2, timeOracleDelay=20, minTimeInterTransactions=0, twopcDelay=20, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-24_14:45:34 - WorkloadStatistics{#T=30000, #C=21133, #A=8867, #!VC=5344, #!WCF=5264, #!BV=15, #!FV=5331, #!SV=56, #C/#T=0.7044333333333334, #A/#T=0.29556666666666664, #!VC/#T=0.17813333333333334, #!WCF/#T=0.17546666666666666, #!BV/#T=5.0E-4, #!FV/#T=0.1777, #!SV/#T=0.0018666666666666666}
+2017-02-24_14:45:34 - ########## Benchmarking Batch Main Test Finished!!! ##########
+2017-02-24_14:45:34 - sizeOfKeyspace [5]; rwRatio [4]; issueDelay [10]; replicationDelay [5]; otherDelay [30].
+2017-02-24_14:46:44 - ########## Benchmarking Batch Main Test Begins!!! ##########
+2017-02-24_14:46:44 - WorkloadParams are [{maxTimeInterTransactions=0, zipfExponent=1, mpl=30, issueDelay=10, probBinomial=50, maxNumberOfOperations=20, simulation=true, k3=1, k2=0, rwRatio=4, k1=2, timeOracleDelay=30, minTimeInterTransactions=0, twopcDelay=30, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-24_14:58:29 - WorkloadStatistics{#T=30000, #C=21228, #A=8772, #!VC=5254, #!WCF=5201, #!BV=13, #!FV=5241, #!SV=59, #C/#T=0.7076, #A/#T=0.2924, #!VC/#T=0.17513333333333334, #!WCF/#T=0.17336666666666667, #!BV/#T=4.333333333333333E-4, #!FV/#T=0.1747, #!SV/#T=0.0019666666666666665}
+2017-02-24_14:58:29 - ########## Benchmarking Batch Main Test Finished!!! ##########
+2017-02-24_14:58:29 - sizeOfKeyspace [5]; rwRatio [4]; issueDelay [10]; replicationDelay [5]; otherDelay [50].
+2017-02-24_14:59:39 - ########## Benchmarking Batch Main Test Begins!!! ##########
+2017-02-24_14:59:39 - WorkloadParams are [{maxTimeInterTransactions=0, zipfExponent=1, mpl=30, issueDelay=10, probBinomial=50, maxNumberOfOperations=20, simulation=true, k3=1, k2=0, rwRatio=4, k1=2, timeOracleDelay=50, minTimeInterTransactions=0, twopcDelay=50, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-24_15:11:17 - WorkloadStatistics{#T=30000, #C=21201, #A=8799, #!VC=5260, #!WCF=5209, #!BV=14, #!FV=5247, #!SV=67, #C/#T=0.7067, #A/#T=0.2933, #!VC/#T=0.17533333333333334, #!WCF/#T=0.17363333333333333, #!BV/#T=4.6666666666666666E-4, #!FV/#T=0.1749, #!SV/#T=0.0022333333333333333}
+2017-02-24_15:11:17 - ########## Benchmarking Batch Main Test Finished!!! ##########
+2017-02-24_15:11:17 - sizeOfKeyspace [5]; rwRatio [4]; issueDelay [10]; replicationDelay [10]; otherDelay [10].
+2017-02-24_15:12:27 - ########## Benchmarking Batch Main Test Begins!!! ##########
+2017-02-24_15:12:27 - WorkloadParams are [{maxTimeInterTransactions=0, zipfExponent=1, mpl=30, issueDelay=10, probBinomial=50, maxNumberOfOperations=20, simulation=true, k3=1, k2=0, rwRatio=4, k1=2, timeOracleDelay=10, minTimeInterTransactions=0, twopcDelay=10, replicationDelay=10, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-24_15:24:13 - WorkloadStatistics{#T=30000, #C=21091, #A=8909, #!VC=5359, #!WCF=5233, #!BV=12, #!FV=5348, #!SV=71, #C/#T=0.7030333333333333, #A/#T=0.29696666666666666, #!VC/#T=0.17863333333333334, #!WCF/#T=0.17443333333333333, #!BV/#T=4.0E-4, #!FV/#T=0.17826666666666666, #!SV/#T=0.0023666666666666667}
+2017-02-24_15:24:13 - ########## Benchmarking Batch Main Test Finished!!! ##########
+2017-02-24_15:24:13 - sizeOfKeyspace [5]; rwRatio [4]; issueDelay [10]; replicationDelay [10]; otherDelay [20].
+2017-02-24_15:25:23 - ########## Benchmarking Batch Main Test Begins!!! ##########
+2017-02-24_15:25:23 - WorkloadParams are [{maxTimeInterTransactions=0, zipfExponent=1, mpl=30, issueDelay=10, probBinomial=50, maxNumberOfOperations=20, simulation=true, k3=1, k2=0, rwRatio=4, k1=2, timeOracleDelay=20, minTimeInterTransactions=0, twopcDelay=20, replicationDelay=10, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-24_15:37:12 - WorkloadStatistics{#T=30000, #C=21146, #A=8854, #!VC=5380, #!WCF=5214, #!BV=11, #!FV=5371, #!SV=64, #C/#T=0.7048666666666666, #A/#T=0.29513333333333336, #!VC/#T=0.17933333333333334, #!WCF/#T=0.1738, #!BV/#T=3.6666666666666667E-4, #!FV/#T=0.17903333333333332, #!SV/#T=0.0021333333333333334}
+2017-02-24_15:37:12 - ########## Benchmarking Batch Main Test Finished!!! ##########
+2017-02-24_15:37:12 - sizeOfKeyspace [5]; rwRatio [4]; issueDelay [10]; replicationDelay [10]; otherDelay [30].
