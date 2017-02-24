@@ -90,18 +90,19 @@ public class BenchmarkingBatchMainTest {
 
         // 3, 5 (fixed now), 7
         String[] sizesOfKeyspace = new String[]{"5"};
-        // 0.5, 1, 4, 9
-        String[] rwRatios = new String[]{"1", "4", "0.5"}; // 0.5, 1, 4, 9
-        // 2, 5, 10, 15, 20
-        String[] issueDelays = new String[]{"2", "5", "10", "15", "20"};
+        // 0.5, 1, 4
+        String[] rwRatios = new String[]{"4", "0.5"}; // to be done: 0.5, 4
+        // (2, deprecated) 5, 10, 15, 20
+        // (done: 5, 10, 15,) 20
+        String[] issueDelays = new String[]{"5", "10", "15", "20"};
         // 2, 5, 10, 15, 20, 30
-        String[] replicationDelays = new String[]{"2", "5", "10", "15", "20", "30"};
+        String[] replicationDelays = new String[]{"5", "10", "15", "20", "30"};
         // 10, 20, 30, 50, 100
         String[] otherDelays = new String[]{"10", "20", "30", "50"};
 
-        // set k1, k2, and k3: (1,0,0)  (2,0,1)
+        // set k1, k2, and k3: (1,0,0) (2,1,1) (2,0,1)
         workProp.setProperty(K1BV.param(), "2");
-        workProp.setProperty(K2FV.param(), "1");
+        workProp.setProperty(K2FV.param(), "0");
         workProp.setProperty(K3SV.param(), "1");
 
         for (String sizeOfKeyspace : sizesOfKeyspace)

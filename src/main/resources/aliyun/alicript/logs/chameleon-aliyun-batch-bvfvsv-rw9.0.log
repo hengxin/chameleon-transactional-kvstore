@@ -1,0 +1,24 @@
+2017-02-19_12:12:03 - #####################################################
+2017-02-19_12:12:03 - Batch for [9:5:1-0-0] begins.
+2017-02-19_12:12:03 - BenchmarkingLauncher starts.
+2017-02-19_12:12:07 - WorkloadParams are [{maxTimeInterTransactions=10, zipfExponent=1, mpl=5, rvsi=(1,0,0), issueDelay=20, probBinomial=50, maxNumberOfOperations=20, simulation=false, k3=0, k2=0, rwRatio=9.0, k1=1, timeOracleDelay=5, minTimeInterTransactions=0, twopcDelay=5, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-19_12:44:52 - BenchmarkingLauncher ends.
+2017-02-19_12:44:52 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=5, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=5000, #C=4299, #A=701, #!VC=577, #!WCF=182, #!BV=30, #!FV=550, #!SV=26, #C/#T=0.8598, #A/#T=0.1402, #!VC/#T=0.1154, #!WCF/#T=0.0364, #!BV/#T=0.006, #!FV/#T=0.11, #!SV/#T=0.0052}}].
+2017-02-19_12:44:52 - Batch for [9:5:1-0-0] ends.
+2017-02-19_12:44:52 - #####################################################
+2017-02-19_12:47:06 - #####################################################
+2017-02-19_12:47:06 - Batch for [9:10:1-0-0] begins.
+2017-02-19_12:47:06 - BenchmarkingLauncher starts.
+2017-02-19_12:47:09 - WorkloadParams are [{maxTimeInterTransactions=10, zipfExponent=1, mpl=10, rvsi=(1,0,0), issueDelay=20, probBinomial=50, maxNumberOfOperations=20, simulation=false, k3=0, k2=0, rwRatio=9.0, k1=1, timeOracleDelay=5, minTimeInterTransactions=0, twopcDelay=5, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-19_13:37:16 - BenchmarkingLauncher ends.
+2017-02-19_13:37:16 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=10, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=10000, #C=8495, #A=1505, #!VC=1273, #!WCF=341, #!BV=49, #!FV=1227, #!SV=48, #C/#T=0.8495, #A/#T=0.1505, #!VC/#T=0.1273, #!WCF/#T=0.0341, #!BV/#T=0.0049, #!FV/#T=0.1227, #!SV/#T=0.0048}}].
+2017-02-19_13:37:16 - Batch for [9:10:1-0-0] ends.
+2017-02-19_13:37:16 - #####################################################
+2017-02-19_13:39:31 - #####################################################
+2017-02-19_13:39:31 - Batch for [9:15:1-0-0] begins.
+2017-02-19_13:39:31 - BenchmarkingLauncher starts.
+2017-02-19_13:39:35 - WorkloadParams are [{maxTimeInterTransactions=10, zipfExponent=1, mpl=15, rvsi=(1,0,0), issueDelay=20, probBinomial=50, maxNumberOfOperations=20, simulation=false, k3=0, k2=0, rwRatio=9.0, k1=1, timeOracleDelay=5, minTimeInterTransactions=0, twopcDelay=5, replicationDelay=5, sizeOfKeyspace=5, meanTimeInterTransactions=5, numberOfTransactions=1000}].
+2017-02-19_14:43:35 - BenchmarkingLauncher ends.
+2017-02-19_14:43:35 - BatchRunner: [BenchmarkingStatistics{rwRatio=9.0, mpl=15, rvsiTriple=RVSITriple{k1=1, k2=0, k3=0}, workloadStat=WorkloadStatistics{#T=15000, #C=12494, #A=2506, #!VC=2095, #!WCF=603, #!BV=83, #!FV=2022, #!SV=92, #C/#T=0.8329333333333333, #A/#T=0.16706666666666667, #!VC/#T=0.13966666666666666, #!WCF/#T=0.0402, #!BV/#T=0.005533333333333334, #!FV/#T=0.1348, #!SV/#T=0.0061333333333333335}}].
+2017-02-19_14:43:35 - Batch for [9:15:1-0-0] ends.
+2017-02-19_14:43:35 - #####################################################
