@@ -24,7 +24,7 @@ RECORD_LINE=8
 
 declare -a rwRatioArray=(0.5 1.0 4.0)
 declare -a mplArray=(5 10 15 20 25 30)
-declare -a rvsiArray=(100 110 200 212 221)
+declare -a rvsiArray=(100 110 111 200 201 211 212 221)
 
 declare -A param_val_map
 declare -A ratio_rvsi_abort_map
