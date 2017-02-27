@@ -18,6 +18,7 @@ import static benchmarking.workload.WorkloadUtil.WorkloadParams.ISSUE_DELAY;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K1BV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K2FV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K3SV;
+import static benchmarking.workload.WorkloadUtil.WorkloadParams.NUMBER_OF_TRANSACTIONS;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.REPILCATION_DELAY;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.RW_RATIO;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.SIMULATION;
@@ -91,36 +92,44 @@ public class BenchmarkingBatchMainTest {
         // 3, 5 (fixed now), 7
         String[] sizesOfKeyspace = new String[]{"5"};
         // 0.5, 1, 4
-        String[] rwRatios = new String[]{"4"}; // to be done:
-        // (2, deprecated) 5, 10, 15, 20
-        // (done: 5, 10, 15,) 20
-        String[] issueDelays = new String[]{"15", "20"};
+        String[] rwRatios = new String[]{"0.5"};
+        // (2, deprecated) 5, 10, 12, 15, 20
+        String[] issueDelays = new String[]{"20"};
         // 5, 10, 15, 20, 30
-        String[] replicationDelays = new String[]{"5", "10", "15", "20"};
+        String[] replicationDelays = new String[]{"5"};
         // 10, 20, 30, 40, 50, 100
-        String[] otherDelays = new String[]{"10", "20", "30", "40"};
+        String[] twopcDelays = new String[]{"20"};
+        // k1, k2, and k3: 100, 110, 111, 200, 201, 211
+        String[] rvsis = new String[]{"111", "200", "201", "211"};
+
+        // missing
+        // issueDelay = 5, rvsi: 200, 201, 211
 
         // set k1, k2, and k3: 100, 211, 201, 110, [to be done: (111, 200)]
-        workProp.setProperty(K1BV.param(), "1");
-        workProp.setProperty(K2FV.param(), "1");
-        workProp.setProperty(K3SV.param(), "1");
 
         for (String sizeOfKeyspace : sizesOfKeyspace)
             for (String rwRatio : rwRatios)
                 for (String issueDelay : issueDelays)
                     for (String replicationDelay : replicationDelays)
-                        for (String otherDelay : otherDelays) {
+                        for (String twopcDelay : twopcDelays)
+                            for (String rvsi : rvsis)
+                        {
                             LOGGER.info("sizeOfKeyspace [{}]; rwRatio [{}]; "
-                                    + "issueDelay [{}]; replicationDelay [{}]; otherDelay [{}].",
-                                    sizeOfKeyspace, rwRatio, issueDelay, replicationDelay, otherDelay);
+                                    + "issueDelay [{}]; replicationDelay [{}]; twopcDelay [{}]; rvsi [{}]",
+                                    sizeOfKeyspace, rwRatio, issueDelay, replicationDelay, twopcDelay, rvsi);
 
                             // set workload parameters
                             workProp.setProperty(SIZE_OF_KEYSPACE.param(), sizeOfKeyspace);
+                            workProp.setProperty(NUMBER_OF_TRANSACTIONS.param(), "800");
                             workProp.setProperty(RW_RATIO.param(), rwRatio);
                             workProp.setProperty(ISSUE_DELAY.param(), issueDelay);
-                            workProp.setProperty(TWO_PC_DELAY.param(), otherDelay);
+                            workProp.setProperty(TWO_PC_DELAY.param(), twopcDelay);
                             workProp.setProperty(REPILCATION_DELAY.param(), replicationDelay);
-                            workProp.setProperty(TIME_ORACLE_DELAY.param(), otherDelay);
+                            workProp.setProperty(TIME_ORACLE_DELAY.param(), twopcDelay);
+
+                            workProp.setProperty(K1BV.param(), String.valueOf(rvsi.charAt(0)));
+                            workProp.setProperty(K2FV.param(), String.valueOf(rvsi.charAt(1)));
+                            workProp.setProperty(K3SV.param(), String.valueOf(rvsi.charAt(2)));
 
                             // run benchmarking with workload parameters above
                             try {
