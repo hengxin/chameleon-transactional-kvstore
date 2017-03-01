@@ -18,7 +18,6 @@ import static benchmarking.workload.WorkloadUtil.WorkloadParams.ISSUE_DELAY;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K1BV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K2FV;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.K3SV;
-import static benchmarking.workload.WorkloadUtil.WorkloadParams.NUMBER_OF_TRANSACTIONS;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.REPILCATION_DELAY;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.RW_RATIO;
 import static benchmarking.workload.WorkloadUtil.WorkloadParams.SIMULATION;
@@ -92,20 +91,21 @@ public class BenchmarkingBatchMainTest {
         // 3, 5 (fixed now), 7
         String[] sizesOfKeyspace = new String[]{"5"};
         // 0.5, 1, 4
-        String[] rwRatios = new String[]{"0.5"};
-        // (2, deprecated) 5, 10, 12, 15, 20
-        String[] issueDelays = new String[]{"20"};
+        String[] rwRatios = new String[]{"4"};
+        // (2, deprecated) 5 (done), 8 (done), 10 (done), 12, 15, 18, 20
+//        String[] issueDelays = new String[]{"15", "18", "20"};
+        String[] issueDelays = new String[]{"10"};
+
         // 5, 10, 15, 20, 30
         String[] replicationDelays = new String[]{"5"};
         // 10, 20, 30, 40, 50, 100
         String[] twopcDelays = new String[]{"20"};
         // k1, k2, and k3: 100, 110, 111, 200, 201, 211
-        String[] rvsis = new String[]{"111", "200", "201", "211"};
+//        String[] rvsis = new String[]{"100", "110", "111", "200", "201", "211"};
+        String[] rvsis = new String[]{"211"};
 
         // missing
-        // issueDelay = 5, rvsi: 200, 201, 211
-
-        // set k1, k2, and k3: 100, 211, 201, 110, [to be done: (111, 200)]
+        // issueDelay = 10, rvsi: 211
 
         for (String sizeOfKeyspace : sizesOfKeyspace)
             for (String rwRatio : rwRatios)
@@ -120,7 +120,7 @@ public class BenchmarkingBatchMainTest {
 
                             // set workload parameters
                             workProp.setProperty(SIZE_OF_KEYSPACE.param(), sizeOfKeyspace);
-                            workProp.setProperty(NUMBER_OF_TRANSACTIONS.param(), "800");
+//                            workProp.setProperty(NUMBER_OF_TRANSACTIONS.param(), "800");
                             workProp.setProperty(RW_RATIO.param(), rwRatio);
                             workProp.setProperty(ISSUE_DELAY.param(), issueDelay);
                             workProp.setProperty(TWO_PC_DELAY.param(), twopcDelay);
