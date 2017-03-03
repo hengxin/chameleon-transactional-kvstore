@@ -17,7 +17,7 @@ abortParams=(VC/#T WCF/#T BV/#T FV/#T SV/#T)
 
 RECORD_LINE=5
 
-declare -a issueDelayArray=(5 10 12 15 20)
+declare -a issueDelayArray=(5 8 10 12 15 18 20)
 declare -a rvsiArray=(100 110 111 200 201 211)
 declare -A param_val_map
 declare -A issueDelay_rvsi_abort_map

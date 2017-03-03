@@ -5,3 +5,4 @@
 **/.idea/tasks.xml
 **/.idea/workspace.xml
 /logs/chameleon-test.log
+/logs/*.zip
