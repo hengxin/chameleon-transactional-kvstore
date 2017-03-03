@@ -9,3 +9,7 @@ For details, please refer to [this wiki](https://github.com/hengxin/chameleon-tr
 - 2pc: the current working branch; `Chameleon` with both master-slave replication and data partitions among masters.
 
 ***Note:*** The `2pc` branch has been merged into the `master` branch.
+
+# Info.
+
+***For experimental results, please refer to [this wiki](https://github.com/hengxin/chameleon-transactional-kvstore/wiki/Experimental-Results-for-the-VLDB-Paper).***
